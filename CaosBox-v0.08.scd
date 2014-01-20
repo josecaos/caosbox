@@ -236,4 +236,4 @@ Tdef(\randtime,{
 "/home/josecaos/Desktop/CaosBox-v0.08/CaosBox-GUI_4-v0.08.scd".load;
 "/home/josecaos/Desktop/CaosBox-v0.08/CaosBox_liveCodePad-v0.08.scd".openOS;
 });
-//end of fle
+//end of file
