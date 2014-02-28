@@ -442,48 +442,32 @@ StaticText(~w,Rect(920,635,99,20)).string_("Clear Percs:").align_(\center).backg
 									})};
 //
 (//Bienvenida
-Task({	1.do{nil;3.wait};
-		1.do{"\/ ".postln; "CaosBox v0.08".scramble.postln;0.125.wait};
-		1.do{"\/\ ".postln; "CaosBox v0.08".scramble.postln;0.135.wait};
-		1.do{"\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.145.wait};
-		1.do{"\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.155.wait};
-		1.do{"\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.165.wait};
-		1.do{"\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.175.wait};
-		1.do{"\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.185.wait};
-		1.do{"\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.195.wait};
-		1.do{"\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.2.wait};
-		1.do{"\/\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.235.wait};
-		1.do{"\/\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.245.wait};
-		1.do{"\/\/\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.255.wait};
-		1.do{"\/\/\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.265.wait};
-		1.do{"\/\/\/\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.275.wait};
-		1.do{"\/\/\/\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.285.wait};
-		1.do{"\/\/\/\/\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.295.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.3.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.335.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.345.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.355.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.365.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.375.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.385.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.395.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.4.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.425.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.455.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.495.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.545.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ ".postln; "CaosBox v0.08".scramble.postln;0.6.wait};
-		1.do{"\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ ".postln; "CaosBox v0.08".scramble.postln;0.7.wait};
+Task({|i|	
+	var izq="x", der="+",crece=Array.new(32);
+	var creseq=Pseq([0,1],31).asStream;
+	i=0;
+		1.do{nil;2.wait};
+		31.do{ 
+					if(i>=0,{crece.add(if(creseq.next==1,{izq},{der}));
+							 crece.postln;
+							 "CaosBox v0.08".rotate(i-5).postln});
+				i=i+1;
+				0.125.wait;
+			 }; 
+		1.do{crece.add(izq);crece.postln;"CaosBox v0.08".postln;0.125.wait};
 		1.do{"Bienvenido a CaosBox v0.08.".postln;
-				play{EnvGen.ar(Env.perc(0.015,1),doneAction:2)*
-						RHPF.ar(LFPulse.ar({XLine.ar(252.10760.rand,880.10760.rand,1)}.dup(6),rrand(0.01,0.5),rrand(0.1,0.5),0.5)*
-									LFNoise2.ar(4.32.rand),XLine.ar(60,10760.rand,0.5),0.25)
-						!2};
+				play{
+				var noise=[LFNoise0,LFNoise1,LFNoise2].choose;
+				EnvGen.ar(Env.perc(0.015,4),doneAction:2)*
+				RHPF.ar(LFPulse.ar([{XLine.ar(252.10760.rand,880.10760.rand,1)}.dup(3),
+							Phasor.kr(Impulse.kr(4),1,252.10760.rand,880.10760.rand)],
+								rrand(0.01,0.5),rrand(0.1,0.5),0.5)*
+				noise.ar(8.32.rand),XLine.ar(60,10760.rand,0.5),0.25)!2};
 					2.wait;};
-		1.do{"CaosBox es una maquina para hacer liveCoding + Techno|Breakbeat.".postln; 
-				"CaosBox is a liveCoding Machine for Techno|Breakbeat music.".postln;1.wait};
+		1.do{"CaosBox es una maquina para liveCodear 'algorave' con la libreria CaosPercLib. \n"
+				"CaosBox is a liveCoding Machine for improvising 'algorave' music with CaosPercLib.".postln;1.wait};
 		1.do{"escrito/written: @joseCao5 web: http://www.mixfuckedup.net".postln;1.wait};
-		1.do{"Se ha abierto el GUI y el documento: CaosBox liveCodePad v008.scd - Escribe ahi el Codigo para CaosBox GUI v008:".postln;0.25.wait}
+		1.do{"Se ha abierto el GUI y el doc: CaosBox liveCodePad v008.scd - Escribe ahi el Codigo para CaosBox GUI:".postln;0.25.wait}
 		}).play;
 );
 );
