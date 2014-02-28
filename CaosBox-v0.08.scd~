@@ -6,7 +6,7 @@
 (// * evalua todo en esta linea
 s.waitForBoot{//
 (//variables
-~url="/home/josecaos/.ssh/caosbox008/"; //ajusta esta URL por la de tu sistema
+~filepath="/home/josecaos/.ssh/caosbox008/" //ajusta esta URL por la de tu sistema
 ~bombo=Array.fill(32,nil);
 ~tarola=Array.fill(32,nil);
 ~contras=Array.fill(32,nil);
@@ -231,11 +231,11 @@ Tdef(\randtime,{
 });
 );
 //archivos complementarios
-(~url ++ "CaosBox_liveCodePad-v0.08.scd").load;
-(~url ++ "GUI/CaosBox-GUI-v0.08.scd").load;
-(~url ++ "GUI/CaosBox-GUI_2-v0.08.scd").load;
-(~url ++ "GUI/CaosBox-GUI_3-v0.08.scd").load;
-(~url ++ "GUI/CaosBox-GUI_4-v0.08.scd").load;
-(~url ++ "CaosBox_liveCodePad-v0.08.scd").openOS;
+(~filepath ++ "CaosBox_liveCodePad-v0.08.scd").load;
+(~filepath ++ "GUI/CaosBox-GUI-v0.08.scd").load;
+(~filepath ++ "GUI/CaosBox-GUI_2-v0.08.scd").load;
+(~filepath ++ "GUI/CaosBox-GUI_3-v0.08.scd").load;
+(~filepath ++ "GUI/CaosBox-GUI_4-v0.08.scd").load;
+(~filepath +/+ "CaosBox_liveCodePad-v0.08.scd").openOS;
 });
 //end of file
