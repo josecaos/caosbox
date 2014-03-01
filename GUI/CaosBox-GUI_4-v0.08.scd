@@ -4,7 +4,7 @@
 ~rqmaxmin=ControlSpec(0.01,1,\lin,0.01,0.5);
 //Filter Aux tag
 ~filttag=StaticText(~w,Rect(575,290,205,12));
-~filttag.string_("Filter-> code out to channel:").align_(\center).background_(Color(0.85,0.85,0.85));
+~filttag.string_("Filters-> code out to channel:").align_(\center).background_(Color(0.85,0.85,0.85));
 //Lowpass tag
 ~lowfiltag=StaticText(~w,Rect(575,305,205,12));
 ~lowfiltag.string_("LowPassFilter:58").align_(\center).background_(Color(0.75,0.75,0.75));
@@ -100,15 +100,21 @@ StaticText(~w,Rect(785,12,155,15)).string_("Frequency Analizer:").align_(\center
 ~f.active_(false);
 //granulator
 ~grandcolor=Color(0,rrand(0.01,0.5),rrand(0.01,0.5));
-StaticText(~w,Rect(785,290,235,12)).string_("Granulator-> code out to channel: 64").align_(\center).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(785,290,235,12)).string_("Granulator-> code out to" ).align_(\center).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(785,305,235,12)).string_(" channel: 64").align_(\center).background_(Color(0.85,0.85,0.85));
 //granulator out
-~grainpop=PopUpMenu(~w,Rect(785,305,235,30)).items=["Granulator Out to Master","Granulator Out to Reverb",
-														"Granulator Out to Delay","Granulator Out to Pitch"];
+~grainpop=PopUpMenu(~w,Rect(785,320,235,15)).items=["Granulator Out to Master","Granulator Out to Reverb",
+														"Granulator Out to Delay","Granulator Out to Pitch",
+															"Granulator Out to RLPF","Granulator Out to RHPF",
+																"Granulator Out to BPF"];
 ~grainpop.background_(~grandcolor).stringColor_(Color.gray(0.5));
 ~grainpop.action={|menu| if(menu.value==0,{~grains.set(\out,50)});
 						  if(menu.value==1,{~grains.set(\out,52)});
 						  if(menu.value==2,{~grains.set(\out,54)});
 						  if(menu.value==3,{~grains.set(\out,56)});
+						  if(menu.value==4,{~grains.set(\out,58)});
+						  if(menu.value==5,{~grains.set(\out,60)});
+						  if(menu.value==6,{~grains.set(\out,62)});						  
 						  };
 //granulator values
 ~gtparam=ControlSpec.new(4,32,\lin,1,4);

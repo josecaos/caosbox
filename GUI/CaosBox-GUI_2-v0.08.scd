@@ -1,4 +1,4 @@
-(//CaosBox GUI 2 v0.07 - bajos, ambientes, sintes
+(//CaosBox GUI 2 v0.07 - secuencias bajos, ambientes, sintetizadores
 //bajo
 ~t7=StaticText(~w,Rect(5,132,53,15));//track7
 ~t7.string_("Bajo:").align_(\left).background_(Color(0.25,0.25,0.25));

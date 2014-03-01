@@ -6,7 +6,7 @@
 (// * evalua todo en esta linea
 s.waitForBoot{//
 (//variables
-~url="/home/josecaos/.ssh/caosbox008/"; //ajusta esta URL por la de tu sistema
+~url="/home/josecaos/.ssh/caosbox008/";//ajusta esta URL por la de tu sistema
 ~bombo=Array.fill(32,nil);
 ~tarola=Array.fill(32,nil);
 ~contras=Array.fill(32,nil);
@@ -20,6 +20,7 @@ s.waitForBoot{//
 ~sinte=Array.fill(32,nil);
 ~sinte2=Array.fill(32,nil);
 ~in=Array.fill(32,nil);
+~clock=TempoClock.tempo=94/60;
 ~indice=0; 
 ~tiempos=0.25;
 ~autoreverbmix=[0,0.4,0.75];
@@ -120,7 +121,7 @@ Tdef(\secuencias,{
 		~bombo2[~indice].play;
 		~tarola2[~indice].play;
 		~contras2[~indice].play;
-		~bajo[~indice].set(\trig,1,~bassmel.next);//enciende la secuencia del bajo
+		~bajo[~indice].set(\trig,1,~bassmel.next);
 		~bajo2[~indice].set(\t_trig,1);
 		~ambiente[~indice].set(\t_trig,1);
 		~ambiente2[~indice].set(\t_trig,1);
@@ -231,11 +232,11 @@ Tdef(\randtime,{
 });
 );
 //archivos complementarios
-(~url ++ "CaosBox_liveCodePad-v0.08.scd").load;
-(~url ++ "GUI/CaosBox-GUI-v0.08.scd").load;
-(~url ++ "GUI/CaosBox-GUI_2-v0.08.scd").load;
-(~url ++ "GUI/CaosBox-GUI_3-v0.08.scd").load;
-(~url ++ "GUI/CaosBox-GUI_4-v0.08.scd").load;
-(~url ++ "CaosBox_liveCodePad-v0.08.scd").openOS;
+(~url +/+ "CaosBox_liveCodePad-v0.08.scd").load;
+(~url +/+ "GUI/CaosBox-GUI-v0.08.scd").load;
+(~url +/+ "GUI/CaosBox-GUI_2-v0.08.scd").load;
+(~url +/+ "GUI/CaosBox-GUI_3-v0.08.scd").load;
+(~url +/+ "GUI/CaosBox-GUI_4-v0.08.scd").load;
+(~url +/+ "CaosBox_liveCodePad-v0.08.scd").openOS;
 });
 //end of file

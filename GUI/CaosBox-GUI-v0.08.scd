@@ -1,5 +1,5 @@
-(//CaosBox GUI v0.08 - percusiones y algunos botones "depende de CaosBox-GUI_2-v0.08.scd y CaosBox-GUI_3-v0.08.scd"
-~w=Window.new("CaosBox v0.08 a #liveCodingMachine for Techno|BreakBeat music by @joseCao5",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
+(//CaosBox GUI v0.08 - percusiones, botones de contrl, bienvenida
+~w=Window.new("CaosBox v0.08 a #liveCodingMachine for Algoravin' music by @joseCao5",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
 ~t1=StaticText(~w,Rect(5,12,53,15));//track1
 ~t1.string_("Bombo:").align_(\left).background_(Color(0.85,0.85,0.85));
 //bombo steps
@@ -446,7 +446,7 @@ Task({|i|
 	var izq="x", der="+",crece=Array.new(32);
 	var creseq=Pseq([0,1],31).asStream;
 	i=0;
-		1.do{nil;2.wait};
+		1.do{nil;3.wait};
 		31.do{ 
 					if(i>=0,{crece.add(if(creseq.next==1,{izq},{der}));
 							 crece.postln;
@@ -458,11 +458,15 @@ Task({|i|
 		1.do{"Bienvenido a CaosBox v0.08.".postln;
 				play{
 				var noise=[LFNoise0,LFNoise1,LFNoise2].choose;
-				EnvGen.ar(Env.perc(0.015,4),doneAction:2)*
-				RHPF.ar(LFPulse.ar([{XLine.ar(252.10760.rand,880.10760.rand,1)}.dup(3),
-							Phasor.kr(Impulse.kr(4),1,252.10760.rand,880.10760.rand)],
-								rrand(0.01,0.5),rrand(0.1,0.5),0.5)*
-				noise.ar(8.32.rand),XLine.ar(60,10760.rand,0.5),0.25)!2};
+				var linea=[XLine,Line].choose;
+				EnvGen.ar(Env.perc(0.02,5),doneAction:2)*
+				FreeVerb.ar(
+					RHPF.ar(
+						LFPulse.ar([{XLine.ar(120.10760.rand,10760.320.rand,rrand(1,5))}.dup(4),
+							Phasor.kr(Impulse.kr(4),1,119.10760.rand,120.10760.rand)],
+								rrand(0.01,0.2),rrand(0.1,0.5),0.5)*
+						noise.ar(8.32.rand),XLine.ar(rrand(60,10760),rrand(10760,60),0.5),rrand(0.15,0.5)),
+					linea.kr(0.01,0.5,2),1,0.025)!2};
 					2.wait;};
 		1.do{"CaosBox es una maquina para liveCodear 'algorave' con la libreria CaosPercLib. \n"
 				"CaosBox is a liveCoding Machine for improvising 'algorave' music with CaosPercLib.".postln;1.wait};
