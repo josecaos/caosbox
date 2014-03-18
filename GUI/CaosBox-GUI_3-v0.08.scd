@@ -37,7 +37,7 @@
 //resetea secuencias In
 ~delin=Button(~w,Rect(765,252,15,15));
 ~delin.states=[[" X ",Color.black,Color.red]];
-~delin.action={|val|if(val.value==0,{"La Line de Entrada se ha eliminado con exito!".postln;
+~delin.action={|val|if(val.value==0,{"LineIn have been cleared!".postln;
 										~in.put((0..31),nil);
 										~insteps1.value=0;~insteps2.value=0;
 										~insteps3.value=0;~insteps4.value=0;
@@ -57,8 +57,8 @@
 										~insteps31.value=0;~insteps32.value=0;										
 										})};	
 //line In attack and release knobs
-~inattknob=EZKnob(~w,Rect(785,251,81,17),nil,ControlSpec(0.01,0.25,\lin,0.001,0.1,\att),{|a| a.value.postln;~entrada.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
-~inrelknob=EZKnob(~w,Rect(870,251,81,17),nil,ControlSpec(0.05,0.5,\lin,0.001,0.1,\rel),{|a| a.value.postln;~entrada.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
+~inattknob=EZKnob(~w,Rect(785,251,81,17),nil,ControlSpec(0.01,0.25,\lin,0.001,0.1,\att),{|a| a.value;~entrada.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
+~inrelknob=EZKnob(~w,Rect(870,251,81,17),nil,ControlSpec(0.05,0.5,\lin,0.001,0.1,\rel),{|a| a.value;~entrada.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
 //steps
 ~t14=StaticText(~w,Rect(5,272,53,15));//track14
 ~t14.string_("Steps:").align_(\left).background_(Color(0,0.9,0));
@@ -226,8 +226,8 @@ StaticText(~w,Rect(390,497,70,15)).string_("Cub/Lin").align_(\center).background
 ~bott=Button(~w,Rect(390,515,70,22));
 ~bott.states=[["CombC",Color.white,Color.gray(0.25)],
       			  ["CombL",Color.black,Color.gray(0.35)]];
-~bott.action={|val|if(val.value==0,{~mastdel.set(\delind,0);"-> Delay Cubico".postcln},
-        							{~mastdel.set(\delind,1);"-> Delay Lineal".postcln})};
+~bott.action={|val|if(val.value==0,{~mastdel.set(\delind,0);"->Delay Cubico<-".postcln},
+        							{~mastdel.set(\delind,1);"->Delay Lineal<-".postcln})};
 //delay time
 ~auxt=StaticText(~w,Rect(390,320,35,15));//
 ~auxt.string_("time").align_(\center).background_(Color(0.5,0.5,0.5));
