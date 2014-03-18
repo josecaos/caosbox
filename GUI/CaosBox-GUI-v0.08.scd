@@ -1,5 +1,5 @@
 (//CaosBox GUI v0.08 - percusiones, botones de contrl, bienvenida
-~w=Window.new("CaosBox v0.08 a #liveCodingMachine for Algoravin' music by @joseCao5",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
+~w=Window.new("CaosBox v0.08 #liveCodingMachine for Algorave music by @joseCao5",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
 ~t1=StaticText(~w,Rect(5,12,53,15));//track1
 ~t1.string_("Bombo:").align_(\left).background_(Color(0.85,0.85,0.85));
 //bombo steps
@@ -38,7 +38,7 @@
 //resetea secuencias bombo
 ~delbombo=Button(~w,Rect(765,12,15,15));
 ~delbombo.states=[[" X ",Color.black,Color.red]];
-~delbombo.action={|val|if(val.value==0,{"El Bombo se ha eliminado con exito!".postln;
+~delbombo.action={|val|if(val.value==0,{"Kick have been cleared!".postln;
 										~bombo.put((0..31),nil);
 										~bsteps1.value=0;~bsteps2.value=0;
 										~bsteps3.value=0;~bsteps4.value=0;
@@ -95,7 +95,7 @@
 //resetea secuencias tarola
 ~deltarola=Button(~w,Rect(765,32,15,15));
 ~deltarola.states=[[" X ",Color.black,Color.red]];
-~deltarola.action={|val|if(val.value==0,{"La Tarola se ha eliminado con exito!".postln;
+~deltarola.action={|val|if(val.value==0,{"Snare have been cleared!".postln;
 										~tarola.put((0..31),nil);
 										~tsteps1.value=0;~tsteps2.value=0;
 										~tsteps3.value=0;~tsteps4.value=0;
@@ -152,7 +152,7 @@
 //resetea secuencias contratiempos
 ~delcontras=Button(~w,Rect(765,52,15,15));
 ~delcontras.states=[[" X ",Color.black,Color.red]];
-~delcontras.action={|val|if(val.value==0,{"Los Contratiempos se han eliminado con exito!".postln;
+~delcontras.action={|val|if(val.value==0,{"Hihats have been cleared!".postln;
 										~contras.put((0..31),nil);
 										~hsteps1.value=0;~hsteps2.value=0;
 										~hsteps3.value=0;~hsteps4.value=0;
@@ -209,7 +209,7 @@
 //resetea secuencias bombo2
 ~delbombo2=Button(~w,Rect(765,72,15,15));
 ~delbombo2.states=[[" X ",Color.black,Color.red]];
-~delbombo2.action={|val|if(val.value==0,{"El Bombo se ha eliminado con exito!".postln;
+~delbombo2.action={|val|if(val.value==0,{"Kick have been cleared!".postln;
 										~bombo2.put((0..31),nil);
 										~b2steps1.value=0;~b2steps2.value=0;
 										~b2steps3.value=0;~b2steps4.value=0;
@@ -266,7 +266,7 @@
 //resetea secuencias tarola2
 ~deltarola2=Button(~w,Rect(765,92,15,15));
 ~deltarola2.states=[[" X ",Color.black,Color.red]];
-~deltarola2.action={|val|if(val.value==0,{"La tarola se ha eliminado con exito!".postln;
+~deltarola2.action={|val|if(val.value==0,{"Snare have been cleared!".postln;
 										~tarola2.put((0..31),nil);
 										~t2steps1.value=0;~t2steps2.value=0;
 										~t2steps3.value=0;~t2steps4.value=0;
@@ -323,7 +323,7 @@
 //resetea secuencias contratiempos2
 ~delcontras2=Button(~w,Rect(765,112,15,15));
 ~delcontras2.states=[[" X ",Color.black,Color.red]];
-~delcontras2.action={|val|if(val.value==0,{"Los Contratiempos se han eliminado con exito!".postln;
+~delcontras2.action={|val|if(val.value==0,{"Hihats have been cleared!".postln;
 										~contras2.put((0..31),nil);
 										~h2steps1.value=0;~h2steps2.value=0;
 										~h2steps3.value=0;~h2steps4.value=0;
@@ -346,15 +346,15 @@
 StaticText(~w,Rect(5,635,270,15)).string_("Beat:").align_(\center).background_(Color(0.65,0.65,0.65));
 ~bott=Button(~w,Rect(5,650,135,25));
 ~bott.states=[["Thirds",Color.white,Color.green(0.35)],
-        ["Halfs",Color.black,Color.green(0.35)]];
-~bott.action={|val|if(val.value==0,{~tiempos=0.25;"-> Halfs".postcln},
-        							{~tiempos=0.3333333333333333333;"-> Thirds".postcln})};
+        ["Fourths",Color.black,Color.green(0.35)]];
+~bott.action={|val|if(val.value==0,{~tiempos=0.25;"->Fourths<-".postcln},
+        							{~tiempos=0.3333333333333333333;"->Thirds<-".postcln})};
 //tiempos random
 ~botr=Button(~w,Rect(140,650,135,25));
 ~botr.states=[["Random Time",Color.black,Color.green(0.35)],
         ["Regular Time",Color.white,Color.green(0.35)]];
-~botr.action={|val|if(val.value==0,{Tdef(\randtime).stop;~clock.value;"->Regular tempo<".postcln},
-        {Tdef(\randtime).play;"->Random Clock values<-".postcln})}; 							
+~botr.action={|val|if(val.value==0,{Tdef(\randtime).stop;~clock.value;"->Master BPM seted<-".postcln},
+        {Tdef(\randtime).play;"->Random Clock Values<-".postcln})}; 							
 //automatizacion
 //autoreverb
 StaticText(~w,Rect(280,585,105,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
@@ -387,20 +387,20 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
         ["[_]",Color.white,Color.red]];
 ~bot.action={|val|if(val.value==0,{Tdef(\secuencias).stop;Tdef(\pasos).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;
 										Tdef(\autog).stop;~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;
-											"->You just Stopped<-".postcln},
+											"->You just Stopped caosBox<-".postcln},
         							{Tdef(\secuencias).play;Tdef(\pasos).play;"->Playing, please start LiveCoding<-".postcln})};
 //record
 StaticText(~w,Rect(790,635,130,15)).string_("REC/STOP REC:").align_(\center).background_(Color(0.65,0.65,0.65));
 ~recbot=Button(~w,Rect(790,650,130,25));
 ~recbot.states=[["record",Color.black,Color.green(0.35)],
         ["Stop recording",Color.white,Color.red]];
-~recbot.action={|val|if(val.value==0,{s.stopRecording;"-> Recording just stopped".postln},
+~recbot.action={|val|if(val.value==0,{s.stopRecording;"->Stoped Recording<-".postln},
         							{s.record;"->Recording<-".postcln})};
 //borrar secuencias de percusiones
 StaticText(~w,Rect(920,635,99,20)).string_("Clear Percs:").align_(\center).background_(Color(0.75,0.75,0.75));
 ~delsec=Button(~w,Rect(920,650,99,25));
 ~delsec.states=[[" X ",Color.green,Color.black]];
-~delsec.action={|val|if(val.value==0,{"Las Percusiones se han eliminado con exito!".postln;
+~delsec.action={|val|if(val.value==0,{"Percussions have been cleared!".postln;
 									~bombo.put((0..31),nil);
 									~tarola.put((0..31),nil);
 									~contras.put((0..31),nil);
@@ -455,7 +455,7 @@ Task({|i|
 				0.125.wait;
 			 }; 
 		1.do{crece.add(izq);crece.postln;"CaosBox v0.08".postln;0.125.wait};
-		1.do{"Bienvenido a CaosBox v0.08.".postln;
+		1.do{"Bienvenido/Welcome a/to CaosBox v0.08.".postln;
 				play{
 				var noise=[LFNoise0,LFNoise1,LFNoise2].choose;
 				var linea=[XLine,Line].choose;
@@ -463,15 +463,15 @@ Task({|i|
 				FreeVerb.ar(
 					RHPF.ar(
 						LFPulse.ar([{XLine.ar(120.10760.rand,10760.320.rand,rrand(1,5))}.dup(4),
-							Phasor.kr(Impulse.kr(4),1,119.10760.rand,120.10760.rand)],
+							Phasor.kr(Impulse.kr(rrand(1,8)),1,119.10760.rand,120.10760.rand)],
 								rrand(0.01,0.2),rrand(0.1,0.5),0.5)*
 						noise.ar(8.32.rand),XLine.ar(rrand(60,10760),rrand(10760,60),0.5),rrand(0.15,0.5)),
 					linea.kr(0.01,0.5,2),1,0.025)!2};
 					2.wait;};
-		1.do{"CaosBox es una maquina para liveCodear 'algorave' con la libreria CaosPercLib. \n"
-				"CaosBox is a liveCoding Machine for improvising 'algorave' music with CaosPercLib.".postln;1.wait};
+		1.do{"CaosBox es una Maquina para hacer liveCoding con la libreria CaosPercLib. \n"
+				"CaosBox is an algorave liveCoding Machine for CaosPercLib.".postln;1.wait};
 		1.do{"escrito/written: @joseCao5 web: http://www.mixfuckedup.net".postln;1.wait};
-		1.do{"Se ha abierto el GUI y el doc: CaosBox liveCodePad v008.scd - Escribe ahi el Codigo para CaosBox GUI:".postln;0.25.wait}
+		1.do{"abierto/opened: CaosBox liveCodePad v008.scd";0.25.wait}
 		}).play;
 );
 );
