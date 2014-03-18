@@ -454,24 +454,24 @@ Task({|i|
 				i=i+1;
 				0.125.wait;
 			 }; 
-		1.do{crece.add(izq);crece.postln;"CaosBox v0.08".postln;0.125.wait};
-		1.do{"Bienvenido/Welcome a/to CaosBox v0.08.".postln;
+		1.do{crece.add(izq);crece.postln;"CaosBox v0.08".postln;2.wait};
+		1.do{"Bienvenido/Welcome.".postln;
 				play{
 				var noise=[LFNoise0,LFNoise1,LFNoise2].choose;
 				var linea=[XLine,Line].choose;
 				EnvGen.ar(Env.perc(0.02,5),doneAction:2)*
 				FreeVerb.ar(
 					RHPF.ar(
-						LFPulse.ar([{XLine.ar(120.10760.rand,10760.320.rand,rrand(1,5))}.dup(4),
-							Phasor.kr(Impulse.kr(rrand(1,8)),1,119.10760.rand,120.10760.rand)],
-								rrand(0.01,0.2),rrand(0.1,0.5),0.5)*
-						noise.ar(8.32.rand),XLine.ar(rrand(60,10760),rrand(10760,60),0.5),rrand(0.15,0.5)),
+						LFPulse.ar([{XLine.ar(120.10760.rand,10760.140.rand,rrand(1,8))}.dup(4),
+							Phasor.kr(Impulse.kr(rrand(1,16)),1,119.10760.rand,120.10760.rand)],
+								rrand(0.01,0.5),rrand(0.1,0.5),0.5)*
+						noise.ar(2.32.rand),linea.ar(rrand(60,10760),rrand(10760,60),0.5),rrand(0.15,0.5)),
 					linea.kr(0.01,0.5,2),1,0.025)!2};
 					2.wait;};
-		1.do{"CaosBox es una Maquina para hacer liveCoding con la libreria CaosPercLib. \n"
+		1.do{"CaosBox es una Maquina para hacer liveCoding con la CaosPercLib. \n"
 				"CaosBox is an algorave liveCoding Machine for CaosPercLib.".postln;1.wait};
 		1.do{"escrito/written: @joseCao5 web: http://www.mixfuckedup.net".postln;1.wait};
-		1.do{"abierto/opened: CaosBox liveCodePad v008.scd";0.25.wait}
+		1.do{"abierto/opened: CaosBox liveCodePad v008.scd".postln;0.25.wait}
 		}).play;
 );
 );

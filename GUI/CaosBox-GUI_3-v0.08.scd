@@ -37,8 +37,8 @@
 //resetea secuencias In
 ~delin=Button(~w,Rect(765,252,15,15));
 ~delin.states=[[" X ",Color.black,Color.red]];
-~delin.action={|val|if(val.value==0,{"LineIn have been cleared!".postln;
 										~in.put((0..31),nil);
+~delin.action={|val|if(val.value==0,{"LineIn have been cleared!".postln;
 										~insteps1.value=0;~insteps2.value=0;
 										~insteps3.value=0;~insteps4.value=0;
 										~insteps5.value=0;~insteps6.value=0;
@@ -129,7 +129,7 @@
 //master sliders
 //master tag
 ~mastertag=StaticText(~w,Rect(5,290,270,12));
-~mastertag.string_("Drumms Master Compressor/Limiter:").align_(\center).background_(Color(0.85,0.85,0.85));
+~mastertag.string_("Master Compressor/Limiter: 50").align_(\center).background_(Color(0.85,0.85,0.85));
 //master Vol
 ~mastervol=StaticText(~w,Rect(5,305,50,15));//
 ~mastervol.string_("Amp:").align_(\left).background_(Color(0.5,0.5,0.5));

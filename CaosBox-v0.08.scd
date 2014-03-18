@@ -6,7 +6,7 @@
 (// * evalua todo en esta linea
 s.waitForBoot{//
 (//variables
-~url="/home/josecaos/.ssh/caosbox008/";//ajusta esta URL por la de tu sistema
+~url="/home/josecaos/caosbox008/";//ajusta esta URL local por la de tu sistema
 ~bombo=Array.fill(32,nil);
 ~tarola=Array.fill(32,nil);
 ~contras=Array.fill(32,nil);
@@ -34,7 +34,7 @@ s.waitForBoot{//
 ~divdel=1;//no usar '0'
 ~divpitch=1;//no usar '0'
 ~divgrain=1;//no usar '0'
-~randtimes=[43,65,86,132,176,197];
+~randtimes=[47,62,94,141,188];//igualar estos valores a la variable del reloj
 );
 //Master
 (//entrada desde canal 50
@@ -73,8 +73,6 @@ SynthDef(\aux3,{|vol=1,pitch=1,pitchDispersion=0,timeDispersion=0|
 				env=EnvGen.ar(Env.asr(0.01,0.98,0.01),1);
 			Out.ar(50,Pan2.ar(aux3*env,[1,-1])*vol)	
 }).add;
-//granulador
-SynthDef(\granulador,{|trigger,size,out=0| Out.ar(out,Pan2.ar(GrainIn.ar(2,Impulse.kr(trigger),size,In.ar(64),2,-1,512,mul:2),[1,-0.98]))}).add;
 //aux4 canal 58
 SynthDef(\lowfilt,{|cutfreq=20000,rq=1,out=50,vol=1|
 			var filtro,env;
@@ -87,7 +85,7 @@ SynthDef(\lowfilt,{|cutfreq=20000,rq=1,out=50,vol=1|
 SynthDef(\highfilt,{|cutfreq=60,rq=1,out=50,vol=1|
 			var filtro,env;
 				filtro=In.ar([60,61]);
-				filtro=RHPF.ar(filtro,cutfreq,rq);//Low Pass Filter
+				filtro=RHPF.ar(filtro,cutfreq,rq);//High Pass Filter
 				env=EnvGen.ar(Env.asr(0.01,0.98,0.01),1);
 			Out.ar(out,Pan2.ar(filtro*env,[1,-1])*vol)	
 }).add;
@@ -95,11 +93,13 @@ SynthDef(\highfilt,{|cutfreq=60,rq=1,out=50,vol=1|
 SynthDef(\bandfilt,{|cutfreq=1000,rq=1,out=50,vol=1|
 			var filtro,env;
 				filtro=In.ar([62,63]);
-				filtro=BPF.ar(filtro,cutfreq,rq);//Low Pass Filter
+				filtro=BPF.ar(filtro,cutfreq,rq);//Band Pass Filter
 				env=EnvGen.ar(Env.asr(0.01,0.98,0.01),1);
 			Out.ar(out,Pan2.ar(filtro*env,[1,-1])*vol)	
 }).add;
 );
+//granulador
+SynthDef(\granulador,{|trigger,size,out=50| Out.ar(out,Pan2.ar(GrainIn.ar(2,Impulse.kr(trigger),size,In.ar(64),2,-1,512,mul:2),[1,-0.98]))}).add;
 //master var
 ~mast=Synth(\master);
 //Secuencias
@@ -121,15 +121,15 @@ Tdef(\secuencias,{
 		~bombo2[~indice].play;
 		~tarola2[~indice].play;
 		~contras2[~indice].play;
-		~bajo[~indice].set(\trig,1,~bassmel.next);
+		~bajo[~indice].play;
 		~bajo2[~indice].set(\t_trig,1);
 		~ambiente[~indice].set(\t_trig,1);
 		~ambiente2[~indice].set(\t_trig,1);
 		~sinte[~indice].set(\t_trig,1);
 		~sinte2[~indice].set(\t_trig,1);
 		~in[~indice].set(\t_trig,1);
-    ~indice=~indice+1;
-   	 if(~indice==32,{~indice=0},{nil});
+    	~indice=~indice+1;
+   	 	if(~indice==32,{~indice=0},{nil});
 		~tiempos.wait;
 	}.loop;
 });
@@ -176,59 +176,66 @@ Tdef(\pasos,{
 );
 (
 Tdef(\autor,{
-		 var revmix;
+		 var revmix,univar;
 		 	revmix=Prand(~autoreverbmix,inf).asStream;//
 		 {
-		 ~mastrev.set(\mix,revmix.resume);//reverb mix
-		{~numr.value=revmix.next;~auxrfader.value=revmix.next}.defer(0.1);//reverb mix GUI update
+		 univar=revmix.resume;
+		 ~mastrev.set(\mix,univar);//reverb mix
+		{~numr.value=univar;~auxrfader.value=univar}.defer(0.1);//reverb mix GUI update
 		 ~tiempos/~divrev.wait;
 		 }.loop;
 }).quant_(4)
 );
 (
 Tdef(\autod,{
-		 var deltm;
-		 	deltm=Prand(~autodelaytime,inf).asStream;//delay time
+		 var deltm,univar;
+		 deltm=Prand(~autodelaytime,inf).asStream;//delay time
 	 	{
-		 ~mastdel.set(\deltime,deltm.resume);//delay time
-		{~numt.value=deltm.next;~auxtfader.value=deltm.next}.defer(0.1);//delay time GUI update
+	 	univar=deltm.resume;
+		 ~mastdel.set(\deltime,univar);//delay time
+		{~numt.value=univar;~auxtfader.value=univar}.defer(0.1);//delay time GUI update
 		 ~tiempos/~divdel.wait;
 		 }.loop;
 }).quant_(4)
 );
 (
 Tdef(\autop,{
-		 var pitrat,pitdisp;
-		 	pitrat=Prand(~autopitchrate,inf).asStream;//pitch rate
-		 	pitdisp=Prand(~autopitchdispersion,inf).asStream;//pitch dispersion
+		 var pitrat,pitdisp,univar,univar1;
+		 pitrat=Prand(~autopitchrate,inf).asStream;//pitch rate
+		 pitdisp=Prand(~autopitchdispersion,inf).asStream;//pitch dispersion
 		{
- 	     ~mastpit.set(\rate,pitrat.resume);//pitch rate
-     	 ~mastpit.set(\pitchDispersion,pitdisp.resume);//pitch rate
-		{~nump.value=pitrat.next/4;~auxpfader.value=pitrat.next/4;
-		 ~numpd.value=pitrat.next/5;~auxpdfader.value=pitrat.next/5}.defer(0.1);//pitch rate GUI update
+		univar=pitrat.resume;
+		univar1=pitdisp.resume;
+ 	     ~mastpit.set(\rate,univar);//pitch rate
+     	 ~mastpit.set(\pitchDispersion,univar1);//pitch rate
+		{~nump.value=univar;~auxpfader.value=univar.next/4;
+		 ~numpd.value=univar1.next;~auxpdfader.value=univar1}.defer(0.1);//pitch rate GUI update
 		 ~tiempos/~divpitch.wait;
 		 }.loop;
 }).quant_(4)
 );
 (
 Tdef(\autog,{
-var trig=Pseq(~autograintrig,inf).asStream;
-var siz=Pseq(~autograinsize,inf).asStream;
-	inf.do{
+	var univar, univar1;
+	var trig=Pseq(~autograintrig.scramble,inf).asStream;
+	var siz=Pseq(~autograinsize.scramble,inf).asStream;
+	{
+	univar=trig.resume;
+	univar1=siz.resume;
 		//~grains.set(\trigger,trig.next.postcln);
 		//~grains.set(\size,siz.next);
-		{~grains.set(\trigger,~gfaders.x_(trig.next.postln));~grains.set(\size,~gfaders.y_(siz.next))}.defer(0.1);
+		{~grains.set(\trigger,~gfaders.x_(univar));~grains.set(\size,~gfaders.y_(univar1))}.defer(0.1);
 		~tiempos/~divgrain.wait;
-	};
+	}.loop;
 })
 );
 ( 
 Tdef(\randtime,{
-    inf.do({
+    {
         var timer=Prand(~randtimes,inf).asStream;
         TempoClock.tempo=timer.next/60;
         ~tiempos.wait;
-})
+	}.loop;
 });
 );
 //archivos complementarios

@@ -2,7 +2,7 @@
 //11Dic13/19ene14 @ Puerto Morelos Q. Roo Mx.
 ///////////////////////////////////////////
 //CaosBox liveCodePad v 0.08
-//this file is mostly to liveCode CaosBox.
+//this file is mostly to liveCode CaosPercLib.
 //It contains the percussion classes library,
 //so as the synthetizers for bass, amb, 
 //chords and Line in (still in progress). 
@@ -10,7 +10,7 @@
 ////////////////////////////////////////////
 //s.scope;
 //s.meter;
-//s.makeWindow;
+s.makeWindow;
 //
 (//CaosPercLib 0.1
 //kick
@@ -18,36 +18,41 @@
 //snare
 ~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.1,highcutfreq:820,rq:0.75,amp1:0.35,amp2:0.15))};//
 //hat
-~h={var out=64;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:3930,rq:0.25,amp1:0.85,amp2:0.45))};//
+~h={var out=56;Out.ar(out,CaosHats.ar(att:0.05,rel:0.1,highcutfreq:730,rq:0.5,amp1:0.65,amp2:0.25))};//
 //kick2
 ~b2={var out=60;Out.ar(out,CaosKick2.ar(modFreq:0.25,modbw:0.05,bw:0.15,freq1:60,freq2:320,lowcutfreq:120,att:0.01,rel:0.35,amp:0.1))};//
 //snare2
 ~t2={var out=60;Out.ar(out,CaosSnare2.ar(att:0.01,rel:0.5,iphase:0.5,bw:0.05,highcutfreq:1920,rq:0.75,amp1:0.05,amp2:0.03))};//
 //hat2
-~h2={var out=60;Out.ar(out,CaosHats2.ar(att:0.15,rel:0.15,highcutfreq:1950,rq:0.5,amp1:0.1,amp2:0.1))};//
+~h2={var out=64;Out.ar(out,CaosHats2.ar(att:0.05,rel:0.2,highcutfreq:4950,rq:0.75,amp1:0.15,amp2:0.9))};//
 );
 //
 //
 ////////////////////work in progress
-//estoy cambiando los sintetizadores Ndef por SynthDef por que el clock del servidor no sincroniza
+//estoy cambiando los sintetizadores Ndef por funciones por que el clock del servidor no sincroniza
 //con las secuencias de los Demand UGens e Impulse
 //aun estoy pensando la mejor y mas flexible manera de controlar el pitch y la amplitud de los sintetizadores
-//estoy metiendo nuebas clases a la libreria para los bajos y sintes
-///////////////////bass 1
-//melodia del bajo
-~bassmel=Pseq([36,39,43,48+7,50,55+12,60].pyramid.mirror2,inf).asStream;//
-(//bass func
-~bass=play{|out=0,att=0.25,rel=5,nota=36,filtminf=60,filtmaxf=4920,filtime=2,rq=0.25,iphase=0.25,trig=0,amp1=0.7,amp2=0.2|
-
-		Out.ar(out,CaosBass.ar(att,rel,nota,filtminf,filtmaxf,filtime,rq,iphase,trig,amp1,amp2));
-};
-);
-//pruebas
-//~bajo.put(Array.series(31,1,1),~bass)
-//~bajo
-//~bajo[1].set(\trig,1,~bassmel.next);//enciende la secuencia del bajo
-//
+//estoy metiendo nuevas clases a la libreria para los bajos y sintes
+///////////////////
+//bass
 /*
+~bass={var out=50;Out.ar(out,CaosBass.ar(att:0.05,rel:0.5,nota:38+24,filtminf:45,filtmaxf:950,filtime:0.25,rq:0.5,iphase:0.1,gate:1,amp1:0.5,amp2:0.5))};
+//melodia del bajo
+(
+Tdef(\basspit,{|i|
+	~bassmel=Pseq([36,39,43,48+7,50,55+12,60].pyramid.mirror2,inf).asStream;
+	i=0;
+	loop{
+	"sino".rotate(i+(0..3).choose).postln;
+	~bass.set(\nota,~bassmel.next);
+	~bassmel.value.postln;
+	~tiempos.wait;
+	}
+});
+);
+Tdef(\basspit).play;
+Help.gui;
+
 ~bassmel=Pseq([36,39,43,48+7,50,55+12,60].pyramid.mirror2,inf).asStream;//
 (
 SynthDef(\caosbass,{
