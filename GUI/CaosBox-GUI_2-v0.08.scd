@@ -37,7 +37,7 @@
 //resetea secuencias Bajo
 ~delbass=Button(~w,Rect(765,132,15,15));
 ~delbass.states=[[" X ",Color.black,Color.red]];
-~delbass.action={|val|if(val.value==0,{"El Bajo se ha eliminado con exito!".postln;
+~delbass.action={|val|if(val.value==0,{"Bass have been cleared!".postln;
 										~bajo.put((0..31),nil);
 										~bassteps1.value=0;~bassteps2.value=0;
 										~bassteps3.value=0;~bassteps4.value=0;
@@ -97,7 +97,7 @@
 //resetea secuencias bajo2
 ~delbass=Button(~w,Rect(765,152,15,15));
 ~delbass.states=[[" X ",Color.black,Color.red]];
-~delbass.action={|val|if(val.value==0,{"El Bajo2 se ha eliminado con exito!".postln;
+~delbass.action={|val|if(val.value==0,{"Bass have been cleared!".postln;
 										~bajo2.put((0..31),nil);
 										~bass2teps1.value=0;~bass2teps2.value=0;
 										~bass2teps3.value=0;~bass2teps4.value=0;
@@ -157,7 +157,7 @@
 //resetea secuencias ambiente
 ~delbass=Button(~w,Rect(765,172,15,15));
 ~delbass.states=[[" X ",Color.black,Color.red]];
-~delbass.action={|val|if(val.value==0,{"El Sintetizador se ha eliminado con exito!".postln;
+~delbass.action={|val|if(val.value==0,{"Synth have been cleared!".postln;
 										~ambiente.put((0..31),nil);
 										~ambsteps1.value=0;~ambsteps2.value=0;
 										~ambsteps3.value=0;~ambsteps4.value=0;
@@ -218,7 +218,7 @@
 //resetea secuencias ambiente2
 ~delamb2=Button(~w,Rect(765,192,15,15));
 ~delamb2.states=[[" X ",Color.black,Color.red]];
-~delamb2.action={|val|if(val.value==0,{"El Sintetizador se ha eliminado con exito!".postln;
+~delamb2.action={|val|if(val.value==0,{"Synth have been cleared!".postln;
 										~ambiente2.put((0..31),nil);
 										~amb2steps1.value=0;~amb2steps2.value=0;
 										~amb2steps3.value=0;~amb2steps4.value=0;
@@ -278,7 +278,7 @@
 //resetea secuencias sinte
 ~delsinte=Button(~w,Rect(765,212,15,15));
 ~delsinte.states=[[" X ",Color.black,Color.red]];
-~delsinte.action={|val|if(val.value==0,{"El Sintetizador se ha eliminado con exito!".postln;
+~delsinte.action={|val|if(val.value==0,{"Synth have been cleared!".postln;
 										~sinte.put((0..31),nil);
 										~sintesteps1.value=0;~sintesteps2.value=0;
 										~sintesteps3.value=0;~sintesteps4.value=0;
@@ -338,7 +338,7 @@
 //resetea secuencias sinte2
 ~delsinte2=Button(~w,Rect(765,232,15,15));
 ~delsinte2.states=[[" X ",Color.black,Color.red]];
-~delsinte2.action={|val|if(val.value==0,{"El Sintetizador se ha eliminado con exito!".postln;
+~delsinte2.action={|val|if(val.value==0,{"Synth have been cleared!".postln;
 										~sinte2.put((0..31),nil);
 										~sinte2steps1.value=0;~sinte2steps2.value=0;
 										~sinte2steps3.value=0;~sinte2steps4.value=0;
