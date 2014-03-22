@@ -14,61 +14,57 @@ s.makeWindow;
 //
 (//CaosPercLib 0.1
 //kick
-~b={var out=50;Out.ar(out,CaosKick.ar(modFreq:1,modbw:0.5,freq1:60,freq2:72,lowcutfreq:80,att:0.05,rel:0.25,gate:1,amp1:0.1,amp2:0.35))};
+~b={var out=50;Out.ar(out,CaosKick.ar(modFreq:1,modbw:0.5,freq1:60,freq2:72,lowcutfreq:80,att:0.02,rel:0.2,gate:1,amp1:0.5,amp2:0.15))};
 //snare
-~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.1,highcutfreq:820,rq:0.75,amp1:0.35,amp2:0.15))};//
+~t={var out=56;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.75,highcutfreq:620,rq:0.5,amp1:0.25,amp2:0.25))};//
 //hat
-~h={var out=56;Out.ar(out,CaosHats.ar(att:0.05,rel:0.1,highcutfreq:730,rq:0.5,amp1:0.65,amp2:0.25))};//
+~h={var out=64;Out.ar(out,CaosHats.ar(att:0.05,rel:0.15,highcutfreq:1730,rq:0.5,amp1:0.65,amp2:0.95))};//
 //kick2
-~b2={var out=60;Out.ar(out,CaosKick2.ar(modFreq:0.25,modbw:0.05,bw:0.15,freq1:60,freq2:320,lowcutfreq:120,att:0.01,rel:0.35,amp:0.1))};//
+~b2={var out=60;Out.ar(out,CaosKick2.ar(modFreq:2,modbw:0.05,bw:0.5,freq1:60,freq2:60,lowcutfreq:1200,att:0.01,rel:0.35,amp:0.1))};//
 //snare2
 ~t2={var out=60;Out.ar(out,CaosSnare2.ar(att:0.01,rel:0.5,iphase:0.5,bw:0.05,highcutfreq:1920,rq:0.75,amp1:0.05,amp2:0.03))};//
 //hat2
-~h2={var out=64;Out.ar(out,CaosHats2.ar(att:0.05,rel:0.2,highcutfreq:4950,rq:0.75,amp1:0.15,amp2:0.9))};//
+~h2={var out=62	;Out.ar(out,CaosHats2.ar(att:0.05,rel:0.3,highcutfreq:2950,rq:0.75,amp1:0.5,amp2:0.9))};//
 );
 //
-//
+//los isntestizadores aun no estan terminados
 ////////////////////work in progress
-//estoy cambiando los sintetizadores Ndef por funciones por que el clock del servidor no sincroniza
-//con las secuencias de los Demand UGens e Impulse
-//aun estoy pensando la mejor y mas flexible manera de controlar el pitch y la amplitud de los sintetizadores
-//estoy metiendo nuevas clases a la libreria para los bajos y sintes
-///////////////////
+//
+~mainmelody=[36,39,43,48+7,50,55+12,60];
+~mainmelody.value;
+//
+//////////////////////
 //bass
-/*
-~bass={var out=50;Out.ar(out,CaosBass.ar(att:0.05,rel:0.5,nota:38+24,filtminf:45,filtmaxf:950,filtime:0.25,rq:0.5,iphase:0.1,gate:1,amp1:0.5,amp2:0.5))};
-//melodia del bajo
 (
-Tdef(\basspit,{|i|
-	~bassmel=Pseq([36,39,43,48+7,50,55+12,60].pyramid.mirror2,inf).asStream;
-	i=0;
+SynthDef(\bajouno,{|out=64,att=0.01,rel=1.5,nota=38,filtminf=45,filtmaxf=750,filtime=0.25,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25| 
+//
+					Out.ar(out,CaosBass.ar(att,rel,nota,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2))}).add;
+);
+~bass.set(\out,52);
+(//nodo y 
+Tdef(\bass,{
+	~bassmel=Pseq(~mainmelody.pyramid.mirror2,inf).asStream;
+	//~bass=Synth(\bajouno);	
 	loop{
-	"sino".rotate(i+(0..3).choose).postln;
-	~bass.set(\nota,~bassmel.next);
-	~bassmel.value.postln;
+	~bass.set(\nota,~bassmel.next);	
+	~bass.set(\filtime,rrand(0.1,1));
 	~tiempos.wait;
 	}
-});
+}).quant_(0);
 );
-Tdef(\basspit).play;
-Help.gui;
+/*
+s.boot;
+~bass=Synth(\bajouno);
+~bass.set(\gate,1);//este hace jalar los nodos del array
 
-~bassmel=Pseq([36,39,43,48+7,50,55+12,60].pyramid.mirror2,inf).asStream;//
-(
-SynthDef(\caosbass,{
-	|att=0.25,rel=5,nota=36,filtminf=60,filtmaxf=4920,filtime=2,rq=0.25,iphase=0.25,gate=0,amp1=0.7,amp2=0.2| //CaosBass aguments
-	var a,out;
-		out=0;
-		a=CaosBass.ar(att,rel,nota,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2);
-	Out.ar(out,Pan2.ar(a,[1,-1]))
-						};
-).add;
-);
-*/
-/////////////////
+~bajo=Array.newClear(4);
+~bajo[4].set(\gate,1);
+~bajo.value;
+~bajo.add(~bass)
+
+Help.gui;
 ////////////////
 ////asi estaban antes con Ndef y funciona pero el Demand UGEN no sincroniza con el TempoClock
-/*
 (//bajo2
 ~arpegiobass2=0.0125;
 ~bassmel2=[48,55+12,58,60,67+7,74+7].scramble.pyramid;//

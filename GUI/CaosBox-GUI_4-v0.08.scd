@@ -103,9 +103,10 @@ StaticText(~w,Rect(785,12,155,15)).string_("Frequency Analyzer:").align_(\center
 ~fbot.action={|val| if(val.value==0,{~f.active_(false);"->Frequency Analyzer has Stopped<-".postcln},
         							{~f.active_(true);"->Frequency Analyzer has Started<-".postcln})};        							
 ~f=FreqScopeView(~w,Rect(785,27,235,100)).freqMode_(1);
+~f.background_(Color(0.1,0.1,0.1));
 ~f.active_(false);
 //granulator
-~grandcolor=Color(0,rrand(0.01,0.5),rrand(0.01,0.5));
+~grandcolor=Color(0,rrand(0.01,rrand(0.25,0.75)),rrand(0.01,rrand(0.25,0.75)));//color aleatorio para el pad del granulador
 StaticText(~w,Rect(785,290,235,12)).string_("Granulator-> code out to" ).align_(\center).background_(Color(0.85,0.85,0.85));
 StaticText(~w,Rect(785,305,235,12)).string_(" channel: 64").align_(\center).background_(Color(0.85,0.85,0.85));
 //granulator out
@@ -145,6 +146,6 @@ StaticText(~w,Rect(785,272,185,15)).string_("BeatsPerMinute:").align_(\center).b
 ~numclock.value=94;
 ~numclock.action={~clock={TempoClock.tempo=~numclock.value/60};~clock.value};
 //
-~w.onClose={Tdef(\secuencias).stop;Tdef(\pasos).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;Tdef(\autog).stop;
+~w.onClose={Tdef(\secuencias).stop;Tdef(\pasos).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;Tdef(\autog).stop;Tdef(\basspit).stop;
 				~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~f.kill;~grains.free};
 )

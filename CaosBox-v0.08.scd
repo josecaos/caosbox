@@ -109,11 +109,12 @@ Tdef(\secuencias,{
 ~mastrev=Synth(\aux1);
 ~mastdel=Synth(\aux2);
 ~mastpit=Synth(\aux3);
-~grains=Synth(\granulador);
 //Filtros
 ~mastlowf=Synth(\lowfilt);
 ~masthighf=Synth(\highfilt);
 ~mastbandf=Synth(\bandfilt);
+//granuladores
+~grains=Synth(\granulador);
 		{
 		~bombo[~indice].play;
 		~tarola[~indice].play;
@@ -121,7 +122,7 @@ Tdef(\secuencias,{
 		~bombo2[~indice].play;
 		~tarola2[~indice].play;
 		~contras2[~indice].play;
-		~bajo[~indice].play;
+        if(~bajo[~indice] == nil,{nil},{~bajo[~indice].set(\gate,1);~bajo.put(~indice,~bass=Synth(\bajouno))});
 		~bajo2[~indice].set(\t_trig,1);
 		~ambiente[~indice].set(\t_trig,1);
 		~ambiente2[~indice].set(\t_trig,1);
