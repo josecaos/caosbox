@@ -1,24 +1,23 @@
 //written by @joseCao5
 //11Dic13/19ene14 @ Puerto Morelos Q. Roo Mx.
+////////////////////////////////////////////
 ///////////////////////////////////////////
 //CaosBox liveCodePad v 0.08
 //this file is mostly to liveCode CaosPercLib.
-//It contains the percussion classes library,
-//so as the synthetizers for bass, amb, 
-//chords and Line in (still in progress). 
+//It contains the percussion pseudoclasses library,
 //Change its arguments,sequence and route in the GUI
 ////////////////////////////////////////////
 //s.scope;
 //s.meter;
-s.makeWindow;
+//s.makeWindow;
 //
 (//CaosPercLib 0.1
 //kick
-~b={var out=50;Out.ar(out,CaosKick.ar(modFreq:1,modbw:0.5,freq1:60,freq2:72,lowcutfreq:80,att:0.02,rel:0.2,gate:1,amp1:0.5,amp2:0.15))};
+~b={var out=58;Out.ar(out,CaosKick.ar(modFreq:2,modbw:0.5,freq1:60,freq2:64,lowcutfreq:60,att:0.1,rel:0.25,gate:1,amp1:0.6,amp2:0.01))};
 //snare
-~t={var out=56;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.75,highcutfreq:620,rq:0.5,amp1:0.25,amp2:0.25))};//
+~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.3,highcutfreq:620,rq:0.5,amp1:0.5,amp2:0.05))};//
 //hat
-~h={var out=64;Out.ar(out,CaosHats.ar(att:0.05,rel:0.15,highcutfreq:1730,rq:0.5,amp1:0.65,amp2:0.95))};//
+~h={var out=54;Out.ar(out,CaosHats.ar(att:0.1,rel:0.25,highcutfreq:1730,rq:0.5,amp1:0.75,amp2:0.5))};//
 //kick2
 ~b2={var out=60;Out.ar(out,CaosKick2.ar(modFreq:2,modbw:0.05,bw:0.5,freq1:60,freq2:60,lowcutfreq:1200,att:0.01,rel:0.35,amp:0.1))};//
 //snare2
@@ -27,41 +26,31 @@ s.makeWindow;
 ~h2={var out=62	;Out.ar(out,CaosHats2.ar(att:0.05,rel:0.3,highcutfreq:2950,rq:0.75,amp1:0.5,amp2:0.9))};//
 );
 //
-//los isntestizadores aun no estan terminados
+//
 ////////////////////work in progress
 //
 ~mainmelody=[36,39,43,48+7,50,55+12,60];
-~mainmelody.value;
 //
 //////////////////////
-//bass
-(
-SynthDef(\bajouno,{|out=64,att=0.01,rel=1.5,nota=38,filtminf=45,filtmaxf=750,filtime=0.25,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25| 
+//Evaluate each one of these Tdef to change Synth arameters
 //
-					Out.ar(out,CaosBass.ar(att,rel,nota,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2))}).add;
-);
-~bass.set(\out,52);
-(//nodo y 
+(
 Tdef(\bass,{
-	~bassmel=Pseq(~mainmelody.pyramid.mirror2,inf).asStream;
-	//~bass=Synth(\bajouno);	
+//CaosBass argumets:
+//CaosBass.ar(att,rel,nota,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2)
+	~bassmel=Pxrand(~mainmelody.pyramid.mirror2,inf).asStream;	
 	loop{
 	~bass.set(\nota,~bassmel.next);	
-	~bass.set(\filtime,rrand(0.1,1));
+	~bass.set(\filtime,1);
+	~bass.set(\rq,0.15);
+	~bass.set(\filtminf,56);
+	~bass.set(\filtmaxf,700);		
+	~bass.set(\out,Mix.new(52,56);
 	~tiempos.wait;
 	}
-}).quant_(0);
+}).quant_(4);
 );
 /*
-s.boot;
-~bass=Synth(\bajouno);
-~bass.set(\gate,1);//este hace jalar los nodos del array
-
-~bajo=Array.newClear(4);
-~bajo[4].set(\gate,1);
-~bajo.value;
-~bajo.add(~bass)
-
 Help.gui;
 ////////////////
 ////asi estaban antes con Ndef y funciona pero el Demand UGEN no sincroniza con el TempoClock
