@@ -9,7 +9,7 @@
 ////////////////////////////////////////////
 //s.scope;
 //s.meter;
-//s.makeWindow;
+// s.makeWindow;
 //
 (//CaosPercLib 0.1
 //kick
@@ -38,14 +38,14 @@
 Tdef(\bass,{
 //CaosBass argumets:
 //CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2)
-	~bassmel=Pxrand(~mainmelody.pyramid.mirror2,inf).asStream;	
+	~bassmel=Prand(~mainmelody.pyramid.mirror2,inf).asStream;	
 	loop{
 	~bass.set(\note,~bassmel.next);	
-	~bass.set(\filtime,1);
+	~bass.set(\filtime,0.25);
 	~bass.set(\rq,0.15);
 	~bass.set(\filtminf,56);
 	~bass.set(\filtmaxf,700);		
-	~bass.set(\out,Mix.new(52,56);
+	~bass.set(\out,56);
 	~tiempos.wait;
 	}
 }).quant_(4);
