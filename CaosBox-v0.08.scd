@@ -102,9 +102,9 @@ SynthDef(\bandfilt,{|cutfreq=1000,rq=1,out=50,vol=1|
 SynthDef(\granulador,{|trigger,size,out=50| Out.ar(out,Pan2.ar(GrainIn.ar(2,Impulse.kr(trigger),size,In.ar(64),2,-1,512,mul:2),[1,-0.98]))}).add;
 //bass
 (
-SynthDef(\bajouno,{|out=64,att=0.01,rel=1.5,nota=38,filtminf=45,filtmaxf=750,filtime=0.25,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25| 
+SynthDef(\bajouno,{|out=64,att=0.01,rel=1.5,note=38,filtminf=45,filtmaxf=750,filtime=0.25,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25| 
 //
-					Out.ar(out,CaosBass.ar(att,rel,nota,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2))}).add;
+					Out.ar(out,CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2))}).add;
 );
 //master var
 ~mast=Synth(\master);

@@ -37,10 +37,10 @@
 (
 Tdef(\bass,{
 //CaosBass argumets:
-//CaosBass.ar(att,rel,nota,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2)
+//CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2)
 	~bassmel=Pxrand(~mainmelody.pyramid.mirror2,inf).asStream;	
 	loop{
-	~bass.set(\nota,~bassmel.next);	
+	~bass.set(\note,~bassmel.next);	
 	~bass.set(\filtime,1);
 	~bass.set(\rq,0.15);
 	~bass.set(\filtminf,56);
