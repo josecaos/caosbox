@@ -32,20 +32,24 @@
 ~mainmelody=[36,39,43,48+7,50,55+12,60];
 //
 //////////////////////
-//Evaluate each one of these Tdef to change Synth arameters
+//Evaluate each one of these Tdef to change Synth parameters
 //
 (
 Tdef(\bass,{
-//CaosBass argumets:
-//CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2)
+//CaosBass args: |att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2|
 	~bassmel=Prand(~mainmelody.pyramid.mirror2,inf).asStream;	
 	loop{
-	~bass.set(\note,~bassmel.next);	
-	~bass.set(\filtime,0.25);
-	~bass.set(\rq,0.15);
+	~bass.set(\att,0.075);
+	~bass.set(\rel,0.5);
+	~bass.set(\note,~bassmel.next);
 	~bass.set(\filtminf,56);
-	~bass.set(\filtmaxf,700);		
-	~bass.set(\out,56);
+	~bass.set(\filtmaxf,700);	
+	~bass.set(\filtime,0.25);
+	~bass.set(\rq,0.5);
+	~bass.set(\iphase,0.25);
+	~bass.set(\amp1,1);
+	~bass.set(\amp2,0.7);
+	~bass.set(\out,58);//route
 	~tiempos.wait;
 	}
 }).quant_(4);
