@@ -13,15 +13,15 @@
 //
 (//CaosPercLib 0.1
 //kick
-~b={var out=58;Out.ar(out,CaosKick.ar(modFreq:2,modbw:0.5,freq1:60,freq2:64,lowcutfreq:60,att:0.1,rel:0.25,gate:1,amp1:0.6,amp2:0.01))};
+~b={var out=64;Out.ar(out,CaosKick.ar(modFreq:2,modbw:0.15,freq1:60,freq2:64,lowcutfreq:60,att:0.1,rel:0.25,gate:1,amp1:0.6,amp2:0.05))};
 //snare
-~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.3,highcutfreq:620,rq:0.5,amp1:0.5,amp2:0.05))};//
+~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.3,highcutfreq:620,rq:0.5,amp1:0.5,amp2:0.05))};//
 //hat
-~h={var out=54;Out.ar(out,CaosHats.ar(att:0.1,rel:0.25,highcutfreq:1730,rq:0.5,amp1:0.75,amp2:0.5))};//
+~h={var out=62;Out.ar(out,CaosHats.ar(att:0.1,rel:0.15,highcutfreq:1730,rq:0.5,amp1:0.75,amp2:0.5))};//
 //kick2
-~b2={var out=60;Out.ar(out,CaosKick2.ar(modFreq:2,modbw:0.05,bw:0.5,freq1:60,freq2:60,lowcutfreq:1200,att:0.01,rel:0.35,amp:0.1))};//
+~b2={var out=64;Out.ar(out,CaosKick2.ar(modFreq:2,modbw:0.05,bw:0.5,freq1:60,freq2:60,lowcutfreq:1200,att:0.01,rel:0.35,amp:0.1))};//
 //snare2
-~t2={var out=60;Out.ar(out,CaosSnare2.ar(att:0.01,rel:0.5,iphase:0.5,bw:0.05,highcutfreq:1920,rq:0.75,amp1:0.05,amp2:0.03))};//
+~t2={var out=56;Out.ar(out,CaosSnare2.ar(att:0.01,rel:0.5,iphase:0.5,bw:0.05,highcutfreq:1920,rq:0.75,amp1:0.05,amp2:0.03))};//
 //hat2
 ~h2={var out=62	;Out.ar(out,CaosHats2.ar(att:0.05,rel:0.3,highcutfreq:2950,rq:0.75,amp1:0.5,amp2:0.9))};//
 );
@@ -37,15 +37,15 @@
 (
 Tdef(\bass,{
 //CaosBass args: |att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2|
-	~bassmel=Prand(~mainmelody.pyramid.mirror2,inf).asStream;	
+	var bassmel=Prand(~mainmelody.pyramid.mirror2,inf).asStream;	
 	loop{
 	~bass.set(\att,0.075);
 	~bass.set(\rel,0.5);
-	~bass.set(\note,~bassmel.next);
+	~bass.set(\note,bassmel.next);
 	~bass.set(\filtminf,56);
 	~bass.set(\filtmaxf,700);	
 	~bass.set(\filtime,0.25);
-	~bass.set(\rq,0.5);
+	~bass.set(\rq,0.15);
 	~bass.set(\iphase,0.25);
 	~bass.set(\amp1,1);
 	~bass.set(\amp2,0.7);
@@ -54,26 +54,31 @@ Tdef(\bass,{
 	}
 }).quant_(4);
 );
-/*
-Help.gui;
-////////////////
-////asi estaban antes con Ndef y funciona pero el Demand UGEN no sincroniza con el TempoClock
-(//bajo2
-~arpegiobass2=0.0125;
-~bassmel2=[48,55+12,58,60,67+7,74+7].scramble.pyramid;//
-(`
-~bass2=Ndef(\bajo2).quant_(4)[0]={|t_trig=0,out=#[0,1],att=0.025,rel=0.5|
-						var nota=Demand.kr(Impulse.kr(~arpegiobass2),0,Dseq(~bassmel2,inf));
-						Out.ar(out,
-							Pan2.ar(
-								RLPF.ar((LFTri.ar(nota.midicps,-1,1/4).lag(0.0012)+
-											LFPulse.ar([nota.midicps,nota.midicps+0.33],0.05,0.25,1/4))*
-												EnvGen.ar(Env.perc(att,rel),t_trig),
-								Phasor.kr(Impulse.kr(~arpegiobass),1,45,6440),0.5)
-							))};
-)
+//
+(
+Tdef(\bass2,{
+//CaosBass2 args: |att,rel,note,trig,filtminf,filtmaxf,filtime,rq,bandw,iphase,gate,amp1,amp2|
+	var bass2mel=Prand(~mainmelody.scramble.mirror2,inf).asStream;	
+	loop{
+	~bass2.set(\att,0.075);
+	~bass2.set(\rel,4);
+	~bass2.set(\note,bass2mel.next);
+	~bass2.set(\trig,4);	
+	~bass2.set(\filtminf,56);
+	~bass2.set(\filtmaxf,700);	
+	~bass2.set(\filtime,0.25);
+	~bass2.set(\rq,0.25);
+	~bass2.set(\bandw,0.25);
+	~bass2.set(\iphase,0.25);
+	~bass2.set(\amp1,1);
+	~bass2.set(\amp2,0.7);
+	~bass2.set(\out,60);//route
+	~tiempos.wait;
+	}
+}).quant_(4);
 );
-~bass2.free
+/*
+////asi estaban antes con Ndef y funciona pero el Demand UGEN no sincroniza con el TempoClock
 (//ambiente
 ~arpegioamb=4;
 ~ambmel=[36,39,43,46,48,50,55,58,60];//
