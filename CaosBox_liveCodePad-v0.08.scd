@@ -4,12 +4,12 @@
 ///////////////////////////////////////////
 //CaosBox liveCodePad v 0.08
 //this file is mostly to liveCode CaosPercLib.
-//It contains the percussion pseudoclasses library,
-//Change its arguments,sequence and route in the GUI
+//It contains the pseudoclasses library, and automation seqs.
+//Change the arguments, then sequence and route in the GUI.
 ////////////////////////////////////////////
 //s.scope;
 //s.meter;
-s.makeWindow;
+//s.makeWindow;
 //Percussion
 (
 //kick
@@ -25,7 +25,7 @@ s.makeWindow;
 //hat2
 ~h2={var out=62	;Out.ar(out,CaosHats2.ar(att:0.05,rel:0.3,highcutfreq:2950,rq:0.75,amp1:0.5,amp2:0.9))};//
 );
-////////////////////work in progress
+////////////////////Melodic, pads and chords
 //
 ~mainmelody=[36,39,43,48+7,50,55+12,60];
 //
@@ -47,7 +47,7 @@ Tdef(\bass,{
 	~bass.set(\iphase,0.25);
 	~bass.set(\amp1,1);
 	~bass.set(\amp2,0.7);
-	~bass.set(\out,58);//route
+	~bass.set(\out,50);//route
 	~tiempos.wait;
 	}
 }).quant_(4);
@@ -70,7 +70,7 @@ Tdef(\bass2,{
 	~bass2.set(\iphase,0.25);
 	~bass2.set(\amp1,1);
 	~bass2.set(\amp2,0.7);
-	~bass2.set(\out,60);//route
+	~bass2.set(\out,50);//route
 	~tiempos.wait;
 	}
 }).quant_(4);
@@ -88,10 +88,10 @@ Tdef(\pad,{
 	~amb.set(\trem,(1..8).choose);
 	~amb.set(\vrel,2);	
 	~amb.set(\iphase,0.25);
-	~amb.set(\cutf,920);
-	~amb.set(\rq,0.5);
+	~amb.set(\cutf,1920);
+	~amb.set(\rq,0.15);
 	~amb.set(\amp,0.25);
-	~amb.set(\out,58);//route
+	~amb.set(\out,50);//route
 	~tiempos.wait;
 	}
 }).quant_(4);
@@ -100,13 +100,13 @@ Tdef(\pad,{
 (
 Tdef(\pad2,{
 //CaosPad2 args: |att,rel,note,fmax,fm,harm,rmix,rroom,rfilt,amp1,amp2|
-	var padmel=Pseq(~mainmelody.scramble.mirror2,inf).asStream;	
+	var padmel=Pseq(~mainmelody.scramble,inf).asStream;	
 	loop{
 	~amb2.set(\att,0.25);
 	~amb2.set(\rel,2);
-	~amb2.set(\note,padmel.next*1.240);
-	~amb2.set(\fmax,4);	
-	~amb2.set(\fm,1);	
+	~amb2.set(\note,padmel.next*[0.25,0.5,1,1.25,1.5,1.75,2,3].choose);
+	~amb2.set(\fmax,8);	
+	~amb2.set(\fm,(1..16).choose);	
 	~amb2.set(\harm,4);
 	~amb2.set(\rmix,0.75);	
 	~amb2.set(\rroom,0.5);
@@ -119,7 +119,8 @@ Tdef(\pad2,{
 }).quant_(4);
 );
 /*
-////asi estaban antes con Ndef y funciona pero el Demand UGEN no sincroniza con el TempoClock
+////////////////////work in progress
+////Solo falta integrar dos sintetizadores que hagan acordes.
 (//syntheAtizador
 ~arpegiosynth=4;
 ~synthmel=[36,39+7,43,46+12,48,5+7,55+3,58,60+12].scramble;
@@ -155,3 +156,69 @@ Tdef(\pad2,{
 ~autograintrig=[0.04,0.08,0.16,0.32,0.64,1.28]*4;
 ~autograinsize=Array.series(100,0.01,0.05);
 */
+//automation seqs
+(
+Tdef(\autor,{
+		 var revmix,univar;
+		 	revmix=Prand(~autoreverbmix,inf).asStream;//
+		 {
+		 univar=revmix.resume;
+		 ~mastrev.set(\mix,univar);//reverb mix
+		{~numr.value=univar;~auxrfader.value=univar}.defer(0.1);//reverb mix GUI update
+		 ~tiempos/~divrev.wait;
+		 }.loop;
+}).quant_(4)
+);
+(
+Tdef(\autod,{
+		 var deltm,univar;
+		 deltm=Prand(~autodelaytime,inf).asStream;//delay time
+	 	{
+	 	univar=deltm.resume;
+		 ~mastdel.set(\deltime,univar);//delay time
+		{~numt.value=univar;~auxtfader.value=univar}.defer(0.1);//delay time GUI update
+		 ~tiempos/~divdel.wait;
+		 }.loop;
+}).quant_(4)
+);
+(
+Tdef(\autop,{
+		 var pitrat,pitdisp,univar,univar1;
+		 pitrat=Prand(~autopitchrate,inf).asStream;//pitch rate
+		 pitdisp=Prand(~autopitchdispersion,inf).asStream;//pitch dispersion
+		{
+		univar=pitrat.resume;
+		univar1=pitdisp.resume;
+ 	     ~mastpit.set(\rate,univar);//pitch rate
+     	 //~mastpit.set(\pitchDispersion,univar1);//pitch rate
+		{~nump.value=univar;~auxpfader.value=univar.next/4;
+		// ~numpd.value=univar1.next;~auxpdfader.value=univar1;
+		}.defer(0.1);//pitch rate GUI update
+		 ~tiempos/~divpitch.wait;
+		 }.loop;
+}).quant_(4)
+);
+(
+Tdef(\autog,{
+	var univar, univar1;
+	var trig=Pseq(~autograintrig.scramble,inf).asStream;
+	var siz=Pseq(~autograinsize.scramble,inf).asStream;
+	{
+	univar=trig.resume;
+	univar1=siz.resume;
+		//~grains.set(\trigger,trig.next.postcln);
+		//~grains.set(\size,siz.next);
+		{~grains.set(\trigger,~gfaders.x_(univar));~grains.set(\size,~gfaders.y_(univar1))}.defer(0.1);
+		~tiempos/~divgrain.wait;
+	}.loop;
+})
+);
+( 
+Tdef(\randtime,{
+    {
+        var timer=Prand(~randtimes,inf).asStream;
+        TempoClock.tempo=timer.next/60;
+        ~tiempos.wait;
+	}.loop;
+});
+);

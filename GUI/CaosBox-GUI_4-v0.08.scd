@@ -10,7 +10,7 @@
 ~lowfiltag.string_("LowPassFilter: 58").align_(\center).background_(Color(0.75,0.75,0.75));
 //Lowpass out
 ~lowoutpop=PopUpMenu(~w,Rect(575,320,205,15)).items=["LPF Out to Master","LPF Out to Reverb",
-							"LPF Out to Delay","LPF Out to Pitch"];
+																				"LPF Out to Delay","LPF Out to Pitch"];
 ~lowoutpop.background_(Color(0.05,0.05,0.25,1)).stringColor_(Color.gray(0.5));
 ~lowoutpop.action={|menu| if(menu.value==0,{~mastlowf.set(\out,50)});
 						  if(menu.value==1,{~mastlowf.set(\out,52)});
@@ -38,7 +38,7 @@ StaticText(~w,Rect(575,380,125,14)).string_("Bandwidth").align_(\center).backgro
 ~highfiltag.string_("HighPassFilter: 60").align_(\center).background_(Color(0.75,0.75,0.75));
 //Highpass out
 ~highoutpop=PopUpMenu(~w,Rect(575,435,205,15)).items=["HPF Out to Master","HPF Out to Reverb",
-							"HPF Out to Delay","HPF Out to Pitch"];
+																					"HPF Out to Delay","HPF Out to Pitch"];
 ~highoutpop.background_(Color(0.05,0.05,0.25,1)).stringColor_(Color.gray(0.5));
 ~highoutpop.action={|menu| if(menu.value==0,{~masthighf.set(\out,50)});
 						  if(menu.value==1,{~masthighf.set(\out,52)});
@@ -66,7 +66,7 @@ StaticText(~w,Rect(575,493,125,14)).string_("Bandwidth").align_(\center).backgro
 ~bandfiltag.string_("BandPassFilter: 62").align_(\center).background_(Color(0.75,0.75,0.75));
 //Bandpass out
 ~bandoutpop=PopUpMenu(~w,Rect(575,545,205,15)).items=["BPF Out to Master","BPF Out to Reverb",
-							"BPF Out to Delay","BPF Out to Pitch"];
+														"BPF Out to Delay","BPF Out to Pitch"];
 ~bandoutpop.background_(Color(0.05,0.05,0.25,1)).stringColor_(Color.gray(0.5));
 ~bandoutpop.action={|menu| if(menu.value==0,{~mastbandf.set(\out,50)});
 						  if(menu.value==1,{~mastbandf.set(\out,52)});
@@ -105,9 +105,9 @@ StaticText(~w,Rect(785,290,235,12)).string_("Granulator-> code out to" ).align_(
 StaticText(~w,Rect(785,305,235,12)).string_(" channel: 64").align_(\center).background_(Color(0.85,0.85,0.85));
 //granulator out
 ~grainpop=PopUpMenu(~w,Rect(785,320,235,15)).items=["Granulator Out to Master","Granulator Out to Reverb",
-							"Granulator Out to Delay","Granulator Out to Pitch",
-								"Granulator Out to RLPF","Granulator Out to RHPF",
-									"Granulator Out to BPF"];
+														"Granulator Out to Delay","Granulator Out to Pitch",
+															"Granulator Out to RLPF","Granulator Out to RHPF",
+																"Granulator Out to BPF"];
 ~grainpop.background_(~grandcolor).stringColor_(Color.gray(0.5));
 ~grainpop.action={|menu|  if(menu.value==0,{~grains.set(\out,50)});
 						  if(menu.value==1,{~grains.set(\out,52)});
@@ -140,6 +140,7 @@ StaticText(~w,Rect(785,272,185,15)).string_("BeatsPerMinute:").align_(\center).b
 ~numclock.value=94;
 ~numclock.action={~clock={TempoClock.tempo=~numclock.value/60};~clock.value};
 //
-~w.onClose={Tdef(\secuencias).stop;Tdef(\pasos).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;Tdef(\autog).stop;Tdef(\bass).stop;
-				Tdef(\bass2).stop;~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~f.kill;~grains.free};
+~w.onClose={Tdef(\secuencias).stop;Tdef(\pasos).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;Tdef(\autog).stop;
+				Tdef(\bass).stop;Tdef(\bass2).stop;Tdef(\pad).stop;Tdef(\pad2).stop;
+				~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~f.kill;~grains.free};
 )
