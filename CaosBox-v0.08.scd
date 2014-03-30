@@ -104,14 +104,22 @@ SynthDef(\granulador,{|trigger,size,out=50| Out.ar(out,Pan2.ar(GrainIn.ar(2,Impu
 //bass
 (
 SynthDef(\bajouno,{|out=50,att=0.01,rel=1.5,note=38,filtminf=45,filtmaxf=750,filtime=0.25,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25| 
-						Out.ar(out,CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2))}).add;
+						Out.ar(out,CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2))}).add;//bajo
 SynthDef(\bajodos,{|out=50,att=0.2,rel=8,note=36,trig=4,filtminf=45,filtmaxf=1266,filtime=0.5,rq=0.25,bandw=0.25,iphase=0.05,gate=0,
 							amp1=0.5,amp2=0.5| 
-						Out.ar(out,CaosBass2.ar(att,rel,note,trig,filtminf,filtmaxf,filtime,rq,bandw,iphase,gate,amp1,amp2))}).add;
+						Out.ar(out,CaosBass2.ar(att,rel,note,trig,filtminf,filtmaxf,filtime,rq,bandw,iphase,gate,amp1,amp2))}).add;//bajo dos
+
+SynthDef(\ambuno,{|out=50,waveform,att=0.5,rel=1,note=57,trem=0,vrel=1,iphase=0,cutf=920,rq=0.7,gate=0,amp=0.5| 
+								var onda='sin';
+						Out.ar(out,CaosPad.ar(onda,att,rel,note,trem,vrel,iphase,cutf,rq,gate,amp))}).add;//ambiente
+SynthDef(\ambdos,{|out=50,att=0.5,rel=1,note=220,fmax=1,fm=0.001,harm=1,rmix=0.5,rroom=0.5,rfilt=0.1,gate=0,amp1=0.5,amp2=0.5| 
+						Out.ar(out,CaosPad2.ar(att,rel,note,fmax,fm,harm,rmix,rroom,rfilt,gate,amp1,amp2))}).add;//ambiente
 );
 (//estas variables se declaran cuando un checkbox es activado, mientras nil
 ~bass=nil;
 ~bass2=nil;
+~amb=nil;
+~amb2=nil
 );
 //master var
 ~mast=Synth(\master);
@@ -137,8 +145,8 @@ Tdef(\secuencias,{
 		~contras2[~indice].play;
         if(~bajo[~indice] == nil,{nil},{~bajo[~indice].set(\gate,1);~bajo.put(~indice,~bass=Synth(\bajouno))});
 		if(~bajo2[~indice] == nil,{nil},{~bajo2[~indice].set(\gate,1);~bajo2.put(~indice,~bass2=Synth(\bajodos))});
-		~ambiente[~indice].set(\t_trig,1);
-		~ambiente2[~indice].set(\t_trig,1);
+		if(~ambiente[~indice] == nil,{nil},{~ambiente[~indice].set(\gate,1);~ambiente.put(~indice,~amb=Synth(\ambuno))});
+		if(~ambiente2[~indice] == nil,{nil},{~ambiente2[~indice].set(\gate,1);~ambiente2.put(~indice,~amb2=Synth(\ambdos))});
 		~sinte[~indice].set(\t_trig,1);
 		~sinte2[~indice].set(\t_trig,1);
 		~in[~indice].set(\t_trig,1);
@@ -221,9 +229,10 @@ Tdef(\autop,{
 		univar=pitrat.resume;
 		univar1=pitdisp.resume;
  	     ~mastpit.set(\rate,univar);//pitch rate
-     	 ~mastpit.set(\pitchDispersion,univar1);//pitch rate
+     	 //~mastpit.set(\pitchDispersion,univar1);//pitch rate
 		{~nump.value=univar;~auxpfader.value=univar.next/4;
-		 ~numpd.value=univar1.next;~auxpdfader.value=univar1}.defer(0.1);//pitch rate GUI update
+		// ~numpd.value=univar1.next;~auxpdfader.value=univar1;
+		}.defer(0.1);//pitch rate GUI update
 		 ~tiempos/~divpitch.wait;
 		 }.loop;
 }).quant_(4)
