@@ -5,6 +5,18 @@
 ///////////////////////////////////////////
 //Secuencias
 (
+/*
+// fx
+~mastrev=Synth(\aux1);
+~mastdel=Synth(\aux2);
+~mastpit=Synth(\aux3);
+//Filtros
+~mastlowf=Synth(\lowfilt);
+~masthighf=Synth(\highfilt);
+~mastbandf=Synth(\bandfilt);
+//granuladores
+~grains=Synth(\granulador);
+*/
 Tdef(\secuencias,{
 // fx
 ~mastrev=Synth(\aux1);
@@ -27,8 +39,8 @@ Tdef(\secuencias,{
 		if(~bajo2[~indice] == nil,{nil},{~bajo2[~indice].set(\gate,1);~bajo2.put(~indice,~bass2=Synth(\bajodos))});
 		if(~ambiente[~indice] == nil,{nil},{~ambiente[~indice].set(\gate,1);~ambiente.put(~indice,~amb=Synth(\ambuno))});
 		if(~ambiente2[~indice] == nil,{nil},{~ambiente2[~indice].set(\gate,1);~ambiente2.put(~indice,~amb2=Synth(\ambdos))});
-		~sinte[~indice].set(\t_trig,1);
-		~sinte2[~indice].set(\t_trig,1);
+		//~sinte[~indice].set(\t_trig,1);
+		//~sinte2[~indice].set(\t_trig,1);
 		~in[~indice].set(\t_trig,1);
     	~indice=~indice+1;
    	 	if(~indice==32,{~indice=0},{nil});

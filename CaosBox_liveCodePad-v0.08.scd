@@ -1,21 +1,22 @@
 //written by @joseCao5
-//11Dic13/19ene14 @ Puerto Morelos Q. Roo Mx.
+//Dic13/ene14 @ Puerto Morelos Q. Roo Mx.
 ////////////////////////////////////////////
+//s.scope;
+//s.meter;
+s.makeWindow;
 ///////////////////////////////////////////
 //CaosBox liveCodePad v 0.08
 //this file is mostly to liveCode CaosPercLib.
 //It contains the pseudoclasses library, and automation seqs.
 //Change the arguments, then sequence and route in the GUI.
+//Master channel is #50 
 ////////////////////////////////////////////
-//s.scope;
-//s.meter;
-//s.makeWindow;
 //Percussion
 (
 //kick
 ~b={var out=64;Out.ar(out,CaosKick.ar(modFreq:2,modbw:0.15,freq1:60,freq2:64,lowcutfreq:60,att:0.1,rel:0.25,gate:1,amp1:0.6,amp2:0.05))};
 //snare
-~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.3,highcutfreq:620,rq:0.5,amp1:0.5,amp2:0.05))};//
+~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.3,highcutfreq:620,rq:0.5,amp1:0.15,amp2:0.05))};//
 //hat
 ~h={var out=64;Out.ar(out,CaosHats.ar(att:0.05,rel:0.25,highcutfreq:730,rq:0.75,amp1:0.5,amp2:0.25))};//
 //kick2
@@ -105,8 +106,8 @@ Tdef(\pad2,{
 	~amb2.set(\att,0.25);
 	~amb2.set(\rel,2);
 	~amb2.set(\note,padmel.next*[0.25,0.5,1,1.25,1.5,1.75,2,3].choose);
-	~amb2.set(\fmax,8);	
-	~amb2.set(\fm,(1..16).choose);	
+	~amb2.set(\fmax,100);	
+	~amb2.set(\fm,0.125);	
 	~amb2.set(\harm,4);
 	~amb2.set(\rmix,0.75);	
 	~amb2.set(\rroom,0.5);
@@ -146,7 +147,7 @@ Tdef(\pad2,{
 						Out.ar(out,Pan2.ar(SoundIn.ar([0,1])*EnvGen.ar(Env.perc(att,rel),t_trig)))};
 );
 );
-
+////fader AUTOMATION
 //valores automatizacion //se tiene que evaluar de nuevo el Tdef que contiene estas variables para que cambie
 /*
 ~autoreverbmix=[0.1,0.5];
