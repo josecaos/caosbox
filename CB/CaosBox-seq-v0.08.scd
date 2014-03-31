@@ -5,19 +5,10 @@
 ///////////////////////////////////////////
 //Secuencias
 (
-/*
-// fx
-~mastrev=Synth(\aux1);
-~mastdel=Synth(\aux2);
-~mastpit=Synth(\aux3);
-//Filtros
-~mastlowf=Synth(\lowfilt);
-~masthighf=Synth(\highfilt);
-~mastbandf=Synth(\bandfilt);
-//granuladores
-~grains=Synth(\granulador);
-*/
 Tdef(\secuencias,{
+//nodos
+//master var
+~mast=Synth(\master);
 // fx
 ~mastrev=Synth(\aux1);
 ~mastdel=Synth(\aux2);
@@ -26,7 +17,7 @@ Tdef(\secuencias,{
 ~mastlowf=Synth(\lowfilt);
 ~masthighf=Synth(\highfilt);
 ~mastbandf=Synth(\bandfilt);
-//granuladores
+//granulador
 ~grains=Synth(\granulador);
 		{
 		~bombo[~indice].play;
@@ -88,3 +79,35 @@ Tdef(\pasos,{
 	}.loop;
 });
 );
+(//tiempo random
+Tdef(\randtime,{
+    {
+        var timer=Prand(~randtimes,inf).asStream;
+        TempoClock.tempo=timer.next/60;
+        ~tiempos.wait;
+	}.loop;
+});
+);
+//
+/*
+//s.queryAllNodes
+/*
+~gmast=Group.head;
+~gaux=Group.before(~gmast);
+~gfilt=Group.before(~gaux);
+~ginst=Group.before(~gfilt);
+*/
+//nodos
+//master var
+~mast=Synth.head(~gmast,\master);
+// fx
+~mastrev=Synth.head(~gaux,\aux1);
+~mastdel=Synth.before(~mastrev,\aux2);
+~mastpit=Synth.before(~mastdel,\aux3);
+//Filtros
+~mastlowf=Synth.head(~gfilt,\lowfilt);
+~masthighf=Synth.before(~mastlowf,\highfilt);
+~mastbandf=Synth.before(~masthighf,\bandfilt);
+//granulador
+~grains=Synth.before(~mastbandf,\granulador);
+*/
