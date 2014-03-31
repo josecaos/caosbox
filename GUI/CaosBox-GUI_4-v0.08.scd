@@ -10,7 +10,7 @@
 ~lowfiltag.string_("LowPassFilter: 58").align_(\center).background_(Color(0.75,0.75,0.75));
 //Lowpass out
 ~lowoutpop=PopUpMenu(~w,Rect(575,320,205,15)).items=["LPF Out to Master","LPF Out to Reverb",
-																				"LPF Out to Delay","LPF Out to Pitch"];
+														"LPF Out to Delay","LPF Out to Pitch"];
 ~lowoutpop.background_(Color(0.05,0.05,0.25,1)).stringColor_(Color.gray(0.5));
 ~lowoutpop.action={|menu| if(menu.value==0,{~mastlowf.set(\out,50)});
 						  if(menu.value==1,{~mastlowf.set(\out,52)});
@@ -38,7 +38,7 @@ StaticText(~w,Rect(575,380,125,14)).string_("Bandwidth").align_(\center).backgro
 ~highfiltag.string_("HighPassFilter: 60").align_(\center).background_(Color(0.75,0.75,0.75));
 //Highpass out
 ~highoutpop=PopUpMenu(~w,Rect(575,435,205,15)).items=["HPF Out to Master","HPF Out to Reverb",
-																					"HPF Out to Delay","HPF Out to Pitch"];
+														"HPF Out to Delay","HPF Out to Pitch"];
 ~highoutpop.background_(Color(0.05,0.05,0.25,1)).stringColor_(Color.gray(0.5));
 ~highoutpop.action={|menu| if(menu.value==0,{~masthighf.set(\out,50)});
 						  if(menu.value==1,{~masthighf.set(\out,52)});
