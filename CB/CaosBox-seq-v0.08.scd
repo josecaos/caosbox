@@ -6,7 +6,7 @@
 //Secuencias
 (
 Tdef(\secuencias,{
-//nodos
+//orden de ejecucion; nodos:
 //master var
 ~mast=Synth(\master);
 // fx
