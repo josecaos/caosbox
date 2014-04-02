@@ -4,6 +4,6 @@
 //////////////////////////////////////////////////////////////////////
 //CaosBox v 0.08
 //////////////////////////////////////////////////////////////////////
-// * evalua todo en esta linea:
+// * evalua todo la siguiente linea: / evaluate all in the next line:
 (s.waitForBoot{/* Change for your local URL->-> */ ~url="/home/josecaos/.ssh/caosbox008/";/*not this one ->->*/(~url +/+ "CB/CaosBox-load-v0.08.scd").load});
 //end of file

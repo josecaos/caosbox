@@ -55,10 +55,10 @@
 										~bassteps27.value=0;~bassteps28.value=0;
 										~bassteps29.value=0;~bassteps30.value=0;
 										~bassteps31.value=0;~bassteps32.value=0;										
-										})};	
+										})};
 //bajo attack and release knobs
-~bass1attknob=EZKnob(~w,Rect(785,131,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| a.value;~bass.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~bass1relknob=EZKnob(~w,Rect(870,131,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.1,\rel),{|a| a.value;~bass.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~bass1attknob=EZKnob(~w,Rect(785,131,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~bass1relknob=EZKnob(~w,Rect(870,131,81,17),nil,ControlSpec(0.1,2,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 //bajo2
 ~t8=StaticText(~w,Rect(5,152,53,15));//track8
 ~t8.string_("Bajo2:").align_(\left).background_(Color(0.85,0.85,0.85));
@@ -117,8 +117,8 @@
 										~bass2teps31.value=0;~bass2teps32.value=0;										
 										})};	
 //bass attack and release knobs
-~bass2attknob=EZKnob(~w,Rect(785,151,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| a.value;~bass2.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~bass2relknob=EZKnob(~w,Rect(870,151,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.1,\rel),{|a| a.value;~bass2.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~bass2attknob=EZKnob(~w,Rect(785,151,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~bass2relknob=EZKnob(~w,Rect(870,151,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 //ambiente
 ~t9=StaticText(~w,Rect(5,172,53,15));//track9
 ~t9.string_("amb:").align_(\left).background_(Color(0.85,0.85,0.85));
@@ -177,8 +177,8 @@
 										~ambsteps31.value=0;~ambsteps32.value=0;										
 										})};	
 //ambiente attack and release knobs
-~amb1attknob=EZKnob(~w,Rect(785,171,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.5,\att),{|a| a.value;~amb.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~amb1relknob=EZKnob(~w,Rect(870,171,81,17),nil,ControlSpec(0.05,12,\lin,0.001,4,\rel),{|a| a.value;~amb.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~amb1attknob=EZKnob(~w,Rect(785,171,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.5,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~amb1relknob=EZKnob(~w,Rect(870,171,81,17),nil,ControlSpec(0.25,12,\lin,0.001,2,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
 //ambiente2
 ~t10=StaticText(~w,Rect(5,192,53,15));//track10
@@ -238,8 +238,8 @@
 										~amb2steps31.value=0;~amb2steps32.value=0;										
 										})};	
 //ambiente2 attack and release knobs
-~amb2attknob=EZKnob(~w,Rect(785,191,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.5,\att),{|a| a.value;~amb2.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~amb2relknob=EZKnob(~w,Rect(870,191,81,17),nil,ControlSpec(0.05,12,\lin,0.001,4,\rel),{|a| a.value;~amb2.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~amb2attknob=EZKnob(~w,Rect(785,191,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.25,\att),{|a| a.value;},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~amb2relknob=EZKnob(~w,Rect(870,191,81,17),nil,ControlSpec(0.25,12,\lin,0.001,4,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 //sinte
 ~t11=StaticText(~w,Rect(5,212,53,15));//track11
 ~t11.string_("Synth:").align_(\left).background_(Color(0.45,0.45,0.45));

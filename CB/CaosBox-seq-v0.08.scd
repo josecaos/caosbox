@@ -6,7 +6,7 @@
 //Secuencias
 (
 Tdef(\secuencias,{
-//orden de ejecucion; nodos:
+//orden de ejecucion
 //master var
 ~mast=Synth(\master);
 // fx
@@ -26,19 +26,22 @@ Tdef(\secuencias,{
 		~bombo2[~indice].play;
 		~tarola2[~indice].play;
 		~contras2[~indice].play;
-        if(~bajo[~indice] == nil,{nil},{~bajo[~indice].set(\gate,1);~bajo.put(~indice,~bass=Synth(\bajouno))});
-		if(~bajo2[~indice] == nil,{nil},{~bajo2[~indice].set(\gate,1);~bajo2.put(~indice,~bass2=Synth(\bajodos))});
-		if(~ambiente[~indice] == nil,{nil},{~ambiente[~indice].set(\gate,1);~ambiente.put(~indice,~amb=Synth(\ambuno))});
-		if(~ambiente2[~indice] == nil,{nil},{~ambiente2[~indice].set(\gate,1);~ambiente2.put(~indice,~amb2=Synth(\ambdos))});
+        if(~bajo[~indice] == nil,{nil},{~bajo[~indice].set(\gate,1,\att,~bass1attknob.value,\rel,~bass1relknob.value);~bajo.put(~indice,~bass=Synth(\bajouno))});
+		if(~bajo2[~indice] == nil,{nil},{~bajo2[~indice].set(\gate,1,\att,~bass2attknob.value,\rel,~bass2relknob.value);~bajo2.put(~indice,~bass2=Synth(\bajodos))});
+		if(~ambiente[~indice] == nil,{nil},{~ambiente[~indice].set(\gate,1,\att,~amb1attknob.value,\rel,~amb1relknob.value);~ambiente.put(~indice,~amb=Synth(\ambuno))});
+		if(~ambiente2[~indice] == nil,{nil},{~ambiente2[~indice].set(\gate,1,\att,~amb2attknob.value,\rel,~amb2relknob.value);~ambiente2.put(~indice,~amb2=Synth(\ambdos))});
 		//~sinte[~indice].set(\t_trig,1);
 		//~sinte2[~indice].set(\t_trig,1);
-		~in[~indice].set(\t_trig,1);
+		if(~in[~indice] == nil,{nil},{~in[~indice].set(\gate,1,\att,~inattknob.value,\rel,~inrelknob.value);~in.put(~indice,~entrada=Synth(\ent))});
     	~indice=~indice+1;
    	 	if(~indice==32,{~indice=0},{nil});
 		~tiempos.wait;
 	}.loop;
 });
 );
+a = (0..10) ++ (0..10);
+a.replace([4, 5, 6], 100);
+a.replace([4, 5, 6], [1734, 1985, 1860]);
 (
 Tdef(\pasos,{
 //pasos 
@@ -74,7 +77,7 @@ Tdef(\pasos,{
         if(~indice==28,{~step29.value=1;~step28.value=0;});
         if(~indice==29,{~step30.value=1;~step29.value=0;});
         if(~indice==30,{~step31.value=1;~step30.value=0;});
-        if(~indice==31,{~step32.value=1;~step31.value=0;})}.defer(0.2);
+        if(~indice==31,{~step32.value=1;~step31.value=0;})}.defer(0.1);
 		~tiempos.wait;
 	}.loop;
 });
