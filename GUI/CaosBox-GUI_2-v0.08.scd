@@ -1,7 +1,7 @@
 (//CaosBox GUI 2 v0.07 - secuencias bajos, ambientes, sintetizadores
 //bajo
 ~t7=StaticText(~w,Rect(5,132,53,15));//track7
-~t7.string_("Bajo:").align_(\left).background_(Color(0.85,0.85,0.85));
+~t7.string_("Bass:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~bassteps1=CheckBox.new(~w,Rect(60,130,20,20)).action={|val|if(val.value,{~bajo.put(0,~bass=Synth(\bajouno);)},{~bajo.put(0,nil)})};
 ~bassteps2=CheckBox.new(~w,Rect(80,130,20,20)).action={|val|if(val.value,{~bajo.put(1,~bass=Synth(\bajouno);)},{~bajo.put(1,nil)})};
 ~bassteps3=CheckBox.new(~w,Rect(100,130,20,20)).action={|val|if(val.value,{~bajo.put(2,~bass=Synth(\bajouno);)},{~bajo.put(2,nil)})};
@@ -61,7 +61,7 @@
 ~bass1relknob=EZKnob(~w,Rect(870,131,81,17),nil,ControlSpec(0.1,2,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 //bajo2
 ~t8=StaticText(~w,Rect(5,152,53,15));//track8
-~t8.string_("Bajo2:").align_(\left).background_(Color(0.85,0.85,0.85));
+~t8.string_("Bass2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~bass2teps1=CheckBox.new(~w,Rect(60,150,20,20)).action={|val|if(val.value,{~bajo2.put(0,~bass2=Synth(\bajodos);)},{~bajo2.put(0,nil)})};
 ~bass2teps2=CheckBox.new(~w,Rect(80,150,20,20)).action={|val|if(val.value,{~bajo2.put(1,~bass2=Synth(\bajodos);)},{~bajo2.put(1,nil)})};
 ~bass2teps3=CheckBox.new(~w,Rect(100,150,20,20)).action={|val|if(val.value,{~bajo2.put(2,~bass2=Synth(\bajodos);)},{~bajo2.put(2,nil)})};
@@ -121,7 +121,7 @@
 ~bass2relknob=EZKnob(~w,Rect(870,151,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 //ambiente
 ~t9=StaticText(~w,Rect(5,172,53,15));//track9
-~t9.string_("amb:").align_(\left).background_(Color(0.85,0.85,0.85));
+~t9.string_("Pad:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~ambsteps1=CheckBox.new(~w,Rect(60,170,20,20)).action={|val|if(val.value,{~ambiente.put(0,~amb=Synth(\ambuno);)},{~ambiente.put(0,nil)})};
 ~ambsteps2=CheckBox.new(~w,Rect(80,170,20,20)).action={|val|if(val.value,{~ambiente.put(1,~amb=Synth(\ambuno);)},{~ambiente.put(1,nil)})};
 ~ambsteps3=CheckBox.new(~w,Rect(100,170,20,20)).action={|val|if(val.value,{~ambiente.put(2,~amb=Synth(\ambuno);)},{~ambiente.put(2,nil)})};
@@ -182,7 +182,7 @@
 
 //ambiente2
 ~t10=StaticText(~w,Rect(5,192,53,15));//track10
-~t10.string_("amb2:").align_(\left).background_(Color(0.85,0.85,0.85));
+~t10.string_("pad2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~amb2steps1=CheckBox.new(~w,Rect(60,190,20,20)).action={|val|if(val.value,{~ambiente2.put(0,~amb2=Synth(\ambdos);)},{~ambiente2.put(0,nil)})};
 ~amb2steps2=CheckBox.new(~w,Rect(80,190,20,20)).action={|val|if(val.value,{~ambiente2.put(1,~amb2=Synth(\ambdos);)},{~ambiente2.put(1,nil)})};
 ~amb2steps3=CheckBox.new(~w,Rect(100,190,20,20)).action={|val|if(val.value,{~ambiente2.put(2,~amb2=Synth(\ambdos);)},{~ambiente2.put(2,nil)})};
@@ -302,7 +302,7 @@
 ~sinte1relknob=EZKnob(~w,Rect(870,211,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.1,\rel),{|a| a.value;~synth.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 //sinte2
 ~t12=StaticText(~w,Rect(5,232,53,15));//track12
-~t12.string_("Synth2:").align_(\left).background_(Color(0.45,0.45,0.45));
+~t12.string_("chords:").align_(\left).background_(Color(0.45,0.45,0.45));
 ~sinte2steps1=CheckBox.new(~w,Rect(60,230,20,20)).action={|val|if(val.value,{~sinte2.put(0,~synth2)},{~sinte2.put(0,nil)})};
 ~sinte2steps2=CheckBox.new(~w,Rect(80,230,20,20)).action={|val|if(val.value,{~sinte2.put(1,~synth2)},{~sinte2.put(1,nil)})};
 ~sinte2steps3=CheckBox.new(~w,Rect(100,230,20,20)).action={|val|if(val.value,{~sinte2.put(2,~synth2)},{~sinte2.put(2,nil)})};

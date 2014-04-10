@@ -17,7 +17,7 @@ SynthDef(\ambuno,{|waveform,att=0.5,rel=1,note=57,trem=0,vrel=1,iphase=0,cutf=92
 SynthDef(\ambdos,{|att=0.5,rel=1,note=220,fmax=1,fm=0.001,harm=1,rmix=0.5,rroom=0.5,rfilt=0.1,gate=0,amp1=0.5,amp2=0.5,out=50| 
 						Out.ar(out,CaosPad2.ar(att,rel,note,fmax,fm,harm,rmix,rroom,rfilt,gate,amp1,amp2))}).add;//ambiente
 //////////////
-// faltan sintes armonicos
+// sintes armonicos
 ///////
 //LineIn
 SynthDef(\ent,{|gate=0,att=0.1,rel=0.25,	out=50|

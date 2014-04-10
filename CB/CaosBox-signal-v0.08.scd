@@ -5,11 +5,10 @@
 ///////////////////////////////////////////
 //Master
 (//entrada desde canal 50
-SynthDef(\master,{|limit=0.9,compThres=1,clampTime=0.5,relaxTime=1,cutfreq=20000,bw=1,out=0,vol=1|
-			var in,filt,env;
-				in=HPF.ar(In.ar([50,51]),45,0.5);
+SynthDef(\master,{|limit=0.9,compThres=1,clampTime=0.5,relaxTime=1,out=0,vol=1|
+			var in,env;
+				in=HPF.ar(In.ar([50,51]),50,0.5);
 				in=CompanderD.ar(in,compThres,clampTime,relaxTime:relaxTime);//compresor
-				filt=RLPF.ar(in,cutfreq,bw);//low pass filter
 				in=Limiter.ar(in,limit);//limitador
 				env=EnvGen.ar(Env.asr(0.01,0.98,0.01));
 			Out.ar(out,Pan2.ar(in*env,[1,-1])*vol)	

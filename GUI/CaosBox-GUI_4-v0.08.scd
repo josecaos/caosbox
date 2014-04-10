@@ -106,7 +106,7 @@ StaticText(~w,Rect(785,305,235,12)).string_(" channel: 64").align_(\center).back
 //granulator out
 ~grainpop=PopUpMenu(~w,Rect(785,320,235,15)).items=["Granulator Out to Master","Granulator Out to Reverb",
 														"Granulator Out to Delay","Granulator Out to Pitch",
-															"Granulator Out to RLPF","Granulator Out to RHPF",
+															"Granulator Out to LPF","Granulator Out to HPF",
 																"Granulator Out to BPF"];
 ~grainpop.background_(~grandcolor).stringColor_(Color.gray(0.5));
 ~grainpop.action={|menu|  if(menu.value==0,{~grains.set(\out,50)});

@@ -1,7 +1,7 @@
 //written by @joseCao5
 //CaosBox Main Instrument sequencer and steps
 ////////////////////////////////////////////
-//this are the Instruments of the melodic part of CaosBox
+//this sequence the Instruments of the melodic part of CaosBox
 ///////////////////////////////////////////
 //Secuencias
 (
@@ -39,9 +39,7 @@ Tdef(\secuencias,{
 	}.loop;
 });
 );
-a = (0..10) ++ (0..10);
-a.replace([4, 5, 6], 100);
-a.replace([4, 5, 6], [1734, 1985, 1860]);
+//guide light steps
 (
 Tdef(\pasos,{
 //pasos 
