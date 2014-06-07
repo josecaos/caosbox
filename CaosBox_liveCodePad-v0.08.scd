@@ -5,14 +5,15 @@
 ////////////////////////////////////////////
 //s.scope;
 //s.meter;
-s.makeWindow;
+//s.makeWindow;
 /////////////////README//////////////////////////
 //This file is mostly to liveCode CaosPercLib.
-//It contains the pseudoclasses library, within functions or Tdefs..
+//It contains the pseudoClass library, within functions or Tdefs..
 //First: change the argument values, and evaluate .
-//Then: sequence and route in the GUI.
-//If not, the sequencer might fail.
-//Master channel is #50 
+//Then: sequence and route in the CaosBox GUI.
+//note: If functions are not evaluated before
+//sequencing, the sequencer might fail.
+//Master channel is #50
 ////////////////////////////////////////////
 //Percussion Functions:
 (
@@ -39,9 +40,16 @@ s.makeWindow;
 (//bajo 1
 Tdef(\bass,{
 //CaosBass args: |att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,amp1,amp2|
-	var bassmel=Prand(~mainmelody.pyramid.mirror2,inf).asStream;	
+	var bassmel=Prand(~mainmelody.pyramid.mirror2,inf).asStream;
 	loop{
-	~bass.set(\note,bassmel.next,\filtminf,56,\filtmaxf,700,\filtime,0.25,\rq,0.15,\iphase,0.5,\amp1,1,\amp2,0.5);
+	~bass.set(\note,bassmel.next,
+			   \filtminf,56,
+			   \filtmaxf,700,
+			   \filtime,0.25,
+			   \rq,0.15,
+			   \iphase,0.5,
+			   \amp1,1,
+			   \amp2,0.5);
 	~bass.set(\out,52);//route
 	~tiempos.wait;
 	}
@@ -51,9 +59,17 @@ Tdef(\bass,{
 (
 Tdef(\bass2,{
 //CaosBass2 args: |att,rel,note,trig,filtminf,filtmaxf,filtime,rq,bandw,iphase,amp1,amp2|
-	var bass2mel=Prand(~mainmelody.scramble.mirror2,inf).asStream;	
+	var bass2mel=Prand(~mainmelody.scramble.mirror2,inf).asStream;
 	loop{
-	~bass2.set(\note,bass2mel.next,\trig,4,\filtminf,56,\filtmaxf,700,\filtime,0.25,\rq,0.25,\bandw,0.25,\iphase,0.25,\amp1,1,\amp2,0.5);
+	~bass2.set(\note,bass2mel.next,
+			   \trig,4,
+			   \filtminf,56,
+			   \filtmaxf,700,
+			   \filtime,0.25,\rq,0.25,
+			   \bandw,0.25,
+			   \iphase,0.25,
+			   \amp1,1,
+			   \amp2,0.5);
 	~bass2.set(\out,54);//route
 	~tiempos.wait;
 	}
@@ -68,7 +84,7 @@ Tdef(\pad,{
 	loop{
 	~amb.set(\note,padmel.next);
 	~amb.set(\trem,2);
-	~amb.set(\vrel,8);	
+	~amb.set(\vrel,8);
 	~amb.set(\iphase,0.5);
 	~amb.set(\cutf,1420);
 	~amb.set(\rq,0.5);
@@ -82,13 +98,13 @@ Tdef(\pad,{
 (
 Tdef(\pad2,{
 //CaosPad2 args: |att,rel,note,fmax,fm,harm,rmix,rroom,rfilt,amp1,amp2|
-	var padmel=Pseq(~mainmelody.scramble,inf).asStream;	
+	var padmel=Pseq(~mainmelody.scramble,inf).asStream;
 	loop{
 	~amb2.set(\note,padmel.next);
-	~amb2.set(\fmax,[1,2,4,8,16].choose);	
+	~amb2.set(\fmax,[1,2,4,8,16].choose);
 	~amb2.set(\fm,[1,2,4,8,16].choose);//
 	~amb2.set(\harm,4);
-	~amb2.set(\rmix,0.9);	
+	~amb2.set(\rmix,0.9);
 	~amb2.set(\rroom,0.5);
 	~amb2.set(\rfilt,0.1);
 	~amb2.set(\amp1,0.15);
@@ -107,7 +123,7 @@ Tdef(\pad2,{
 ~synth2
 */
 ////////////////////////////////////////
-//To make changes to automation ,
+//To make changes to automation settings,
 //please open Automation file:
 /*
 (~url +/+ "CB/CaosBox-auto-v0.08.scd").openOS;
