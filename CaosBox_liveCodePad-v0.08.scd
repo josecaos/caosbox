@@ -18,7 +18,7 @@
 //Percussion Functions:
 (
 //kick
-~b={var out=52;Out.ar(out,CaosKick.ar(modFreq:4,modbw:0.5,freq1:60,freq2:84,lowcutfreq:2100,att:0.01,rel:0.125,gate:1,amp1:0.06,amp2:0.5))};
+~b={var out=50;Out.ar(out,CaosKick.ar(modFreq:4,modbw:0.5,freq1:60,freq2:84,lowcutfreq:2100,att:0.01,rel:0.125,gate:1,amp1:0.75,amp2:0.5))};
 //snare
 ~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:620,rq:0.5,amp1:0.15,amp2:0.05))};//
 //hat
@@ -26,13 +26,13 @@
 //kick2
 ~b2={var out=50;Out.ar(out,CaosKick2.ar(modFreq:8,modbw:0.15,bw:0.5,freq1:60,freq2:72,lowcutfreq:2200,att:0.5,rel:6,amp:0.1))};//
 //snare2
-~t2={var out=52;Out.ar(out,CaosSnare2.ar(att:0.05,rel:0.2,iphase:0.05,bw:0.5,highcutfreq:420,rq:0.5,amp1:0.1,amp2:0.01))};//
+~t2={var out=54;Out.ar(out,CaosSnare2.ar(att:0.05,rel:0.2,iphase:0.05,bw:0.5,highcutfreq:420,rq:0.5,amp1:0.08,amp2:0.01))};//
 //hat2
 ~h2={var out=50;Out.ar(out,CaosHats2.ar(att:0.05,rel:0.2,highcutfreq:4950,rq:0.5,amp1:0.5,amp2:0.09))};//
 );
 ////////////////////Bass and pad functions:
 //you can create more variables as melodies for instrument Tdefs
-~mainmelody=[36,39+4,43,48+7,50,55+12,60];
+~mainmelody=[36,39+3,44,48+7,51,55+12,60]+14;
 //
 //////////////////////
 //Evaluate each one of these Tdef to change Synth parameters
@@ -40,7 +40,7 @@
 (//bajo 1
 Tdef(\bass,{
 //CaosBass args: |att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,amp1,amp2|
-	var bassmel=Prand(~mainmelody.pyramid.mirror2,inf).asStream;
+	var bassmel=Prand(~mainmelody.pyramid.mirror2-2,inf).asStream;
 	loop{
 	~bass.set(\note,bassmel.next,
 			   \filtminf,56,
@@ -50,7 +50,7 @@ Tdef(\bass,{
 			   \iphase,0.5,
 			   \amp1,1,
 			   \amp2,0.5);
-	~bass.set(\out,52);//route
+	~bass.set(\out,64);//route
 	~tiempos.wait;
 	}
 }).quant_(4);
@@ -70,7 +70,7 @@ Tdef(\bass2,{
 			   \iphase,0.25,
 			   \amp1,1,
 			   \amp2,0.5);
-	~bass2.set(\out,54);//route
+	~bass2.set(\out,60);//route
 	~tiempos.wait;
 	}
 }).quant_(4);

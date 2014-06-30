@@ -4,18 +4,18 @@
 //These files are nedded in order to  make CaosBox Work.
 ///////////////////////////////////////////
 (//Bienvenida
-Task({|i|	
+Task({|i|
 	var izq="x", der="+",crece=Array.new(32);
 	var creseq=Pseq([0,1],31).asStream;
 	i=0;
 		1.do{nil;4.wait};
-		31.do{ 
+		31.do{
 					if(i>=0,{crece.add(if(creseq.next==1,{izq},{der}));
 							 crece.postln;
 							 "CaosBox v0.08".rotate(i-5).postln});
 				i=i+1;
 				0.125.wait;
-			 }; 
+			 };
 		1.do{crece.add(izq);crece.postln;"CaosBox v0.08".postln;0.01.wait};
 		1.do{"Bienvenido/Welcome.".postln;
 				play{
@@ -37,6 +37,7 @@ Task({|i|
 		}).play;
 );
 //archivos complementarios
+(~url +/+ "CB/CaosBox-midi-v0.08.scd").load;
 (~url +/+ "CB/CaosBox-vars-v0.08.scd").load;
 (~url +/+ "CB/CaosBox-signal-v0.08.scd").load;
 (~url +/+ "CB/CaosBox-synths-v0.08.scd").load;

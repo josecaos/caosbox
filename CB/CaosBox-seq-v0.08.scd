@@ -1,13 +1,14 @@
 //written by @joseCao5
 //CaosBox Main Instrument sequencer and steps
 ////////////////////////////////////////////
-//this sequence the Instruments of the melodic part of CaosBox
+//
 ///////////////////////////////////////////
 //Secuencias
 (
 Tdef(\secuencias,{
 //orden de ejecucion
 //master var
+~mast=Synth(\master);
 // fx
 ~mastrev=Synth(\aux1);
 ~mastdel=Synth(\aux2);
@@ -32,8 +33,7 @@ Tdef(\secuencias,{
 		if(~ambiente[~indice] == nil,{nil},
 			{~ambiente[~indice].set(\gate,1,\att,~amb1attknob.value,\rel,~amb1relknob.value);~ambiente.put(~indice,~amb=Synth(\ambuno))});
 		if(~ambiente2[~indice] == nil,{nil},
-			{~ambiente2[~indice].set(\gate,1,\att,~amb2attknob.value,\rel,~amb2relknob.value);
-				~ambiente2.put(~indice,~amb2=Synth(\ambdos))});
+			{~ambiente2[~indice].set(\gate,1,\att,~amb2attknob.value,\rel,~amb2relknob.value);~ambiente2.put(~indice,~amb2=Synth(\ambdos))});
 		//~sinte[~indice].set(\t_trig,1);
 		//~sinte2[~indice].set(\t_trig,1);
 		if(~in[~indice] == nil,{nil},
