@@ -5,11 +5,9 @@
 //CaosBox v 0.08
 //////////////////////////////////////////////////////////////////////
 // * evalua todo la siguiente linea: / evaluate all in the next line:
-
 (
 s.waitForBoot{
-	 ~url="/home/koala/Documentos/caosbox008/";/* <--- Change for your local URL*/
+	 ~url="/home/josecao5/Documents/caosbox/";/* <--- Change for your local URL*/
 	(~url +/+ "CB/CaosBox-load-v0.08.scd").load};/* <-- don't change this one */
 );
-
 //end of file
