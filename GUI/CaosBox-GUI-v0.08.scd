@@ -34,7 +34,7 @@
 ~bsteps29=CheckBox.new(~w,Rect(690,10,20,20)).action={|val|if(val.value,{~bombo.put(28,~b)},{~bombo.put(28,nil)})};
 ~bsteps30=CheckBox.new(~w,Rect(710,10,20,20)).action={|val|if(val.value,{~bombo.put(29,~b)},{~bombo.put(29,nil)})};
 ~bsteps31=CheckBox.new(~w,Rect(730,10,20,20)).action={|val|if(val.value,{~bombo.put(30,~b)},{~bombo.put(30,nil)})};
-~bsteps32=CheckBox.new(~w,Rect(750,10,20,20)).action={|val|if(val.value,{~bombo.put(31,~b)},{~bombo.put(31,nil)})};			
+~bsteps32=CheckBox.new(~w,Rect(750,10,20,20)).action={|val|if(val.value,{~bombo.put(31,~b)},{~bombo.put(31,nil)})};
 //resetea secuencias bombo
 ~delbombo=Button(~w,Rect(765,12,15,15));
 ~delbombo.states=[[" X ",Color.black,Color.red]];
@@ -169,7 +169,7 @@
 										~hsteps25.value=0;~hsteps26.value=0;
 										~hsteps27.value=0;~hsteps28.value=0;
 										~hsteps29.value=0;~hsteps30.value=0;
-										~hsteps31.value=0;~hsteps32.value=0;										
+										~hsteps31.value=0;~hsteps32.value=0;
 										})};
 //bombo2
 ~t4=StaticText(~w,Rect(5,72,53,15));//track4
@@ -226,7 +226,7 @@
 										~b2steps25.value=0;~b2steps26.value=0;
 										~b2steps27.value=0;~b2steps28.value=0;
 										~b2steps29.value=0;~b2steps30.value=0;
-										~b2steps31.value=0;~b2steps32.value=0;										
+										~b2steps31.value=0;~b2steps32.value=0;
 										})};
 //tarola2
 ~t5=StaticText(~w,Rect(5,92,53,15));//track5
@@ -283,7 +283,7 @@
 										~t2steps25.value=0;~t2steps26.value=0;
 										~t2steps27.value=0;~t2steps28.value=0;
 										~t2steps29.value=0;~t2steps30.value=0;
-										~t2steps31.value=0;~t2steps32.value=0;										
+										~t2steps31.value=0;~t2steps32.value=0;
 										})};
 //contratiempos2
 ~t6=StaticText(~w,Rect(5,112,53,15));//track6
@@ -340,7 +340,7 @@
 										~h2steps25.value=0;~h2steps26.value=0;
 										~h2steps27.value=0;~h2steps28.value=0;
 										~h2steps29.value=0;~h2steps30.value=0;
-										~h2steps31.value=0;~h2steps32.value=0;										
+										~h2steps31.value=0;~h2steps32.value=0;
 										})};
 //tiempos
 StaticText(~w,Rect(5,635,270,15)).string_("Beat:").align_(\center).background_(Color(0.65,0.65,0.65));
@@ -354,7 +354,7 @@ StaticText(~w,Rect(5,635,270,15)).string_("Beat:").align_(\center).background_(C
 ~botr.states=[["Random Time",Color.black,Color.green(0.35)],
         ["Regular Time",Color.white,Color.green(0.35)]];
 ~botr.action={|val|if(val.value==0,{Tdef(\randtime).stop;~clock.value;"->Master BPM seted<-".postcln},
-        {Tdef(\randtime).play;"->Random Clock Values<-".postcln})}; 							
+        {Tdef(\randtime).play;"->Random Clock Values<-".postcln})};
 //automatizacion
 //autoreverb
 StaticText(~w,Rect(280,585,105,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
@@ -392,12 +392,17 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
         							{Tdef(\secuencias).play;Tdef(\pasos).play;Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
         								Tdef(\pad2).play;"->Playing, please start algoravin'<-".postcln})};
 //record
+//Help.gui;
+~filename=["CBL-"];
+~filename.value;
 StaticText(~w,Rect(790,635,130,15)).string_("REC/STOP REC:").align_(\center).background_(Color(0.65,0.65,0.65));
 ~recbot=Button(~w,Rect(790,650,130,25));
 ~recbot.states=[["record",Color.black,Color.green(0.35)],
         ["Stop recording",Color.white,Color.red]];
 ~recbot.action={|val|if(val.value==0,{s.stopRecording;"->Stoped Recording<-".postln},
-        							{s.record;"->Recording<-".postcln})};
+	{var r=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"," "];
+		~filename.add(r.choose,(1..9).choose);s.record(~url +/+ "Recorded/" +/+ ~filename.value ++ ".aiff");
+		    "->Recording<-".postcln})};
 //borrar secuencias de percusiones
 StaticText(~w,Rect(920,635,99,20)).string_("Clear Percs:").align_(\center).background_(Color(0.75,0.75,0.75));
 ~delsec=Button(~w,Rect(920,650,99,25));
@@ -408,7 +413,7 @@ StaticText(~w,Rect(920,635,99,20)).string_("Clear Percs:").align_(\center).backg
 									~contras.put((0..31),nil);
 									~bombo2.put((0..31),nil);
 									~tarola2.put((0..31),nil);
-									~contras2.put((0..31),nil);										
+									~contras2.put((0..31),nil);
 									~bsteps1.value=0;~tsteps1.value=0;~hsteps1.value=0;~b2steps1.value=0;~t2steps1.value=0;~h2steps1.value=0;
 ~bsteps2.value=0;~tsteps2.value=0;~hsteps2.value=0;~b2steps2.value=0;~t2steps2.value=0;~h2steps2.value=0;
 ~bsteps3.value=0;~tsteps3.value=0;~hsteps3.value=0;~b2steps3.value=0;~t2steps3.value=0;~h2steps3.value=0;
@@ -424,7 +429,7 @@ StaticText(~w,Rect(920,635,99,20)).string_("Clear Percs:").align_(\center).backg
 ~bsteps13.value=0;~tsteps13.value=0;~hsteps13.value=0;~b2steps13.value=0;~t2steps13.value=0;~h2steps13.value=0;
 ~bsteps14.value=0;~tsteps14.value=0;~hsteps14.value=0;~b2steps14.value=0;~t2steps14.value=0;~h2steps14.value=0;
 ~bsteps15.value=0;~tsteps15.value=0;~hsteps15.value=0;~b2steps15.value=0;~t2steps15.value=0;~h2steps15.value=0;
-~bsteps16.value=0;~tsteps16.value=0;~hsteps16.value=0;~b2steps16.value=0;~t2steps16.value=0;~h2steps16.value=0;									
+~bsteps16.value=0;~tsteps16.value=0;~hsteps16.value=0;~b2steps16.value=0;~t2steps16.value=0;~h2steps16.value=0;
 ~bsteps17.value=0;~tsteps17.value=0;~hsteps17.value=0;~b2steps17.value=0;~t2steps17.value=0;~h2steps17.value=0;
 ~bsteps18.value=0;~tsteps18.value=0;~hsteps18.value=0;~b2steps18.value=0;~t2steps18.value=0;~h2steps18.value=0;
 ~bsteps19.value=0;~tsteps19.value=0;~hsteps19.value=0;~b2steps19.value=0;~t2steps19.value=0;~h2steps19.value=0;
@@ -433,7 +438,7 @@ StaticText(~w,Rect(920,635,99,20)).string_("Clear Percs:").align_(\center).backg
 ~bsteps22.value=0;~tsteps22.value=0;~hsteps22.value=0;~b2steps22.value=0;~t2steps22.value=0;~h2steps22.value=0;
 ~bsteps23.value=0;~tsteps23.value=0;~hsteps23.value=0;~b2steps23.value=0;~t2steps23.value=0;~h2steps23.value=0;
 ~bsteps24.value=0;~tsteps24.value=0;~hsteps24.value=0;~b2steps24.value=0;~t2steps24.value=0;~h2steps24.value=0;
-~bsteps25.value=0;~tsteps25.value=0;~hsteps25.value=0;~b2steps25.value=0;~t2steps25.value=0;~h2steps25.value=0;	
+~bsteps25.value=0;~tsteps25.value=0;~hsteps25.value=0;~b2steps25.value=0;~t2steps25.value=0;~h2steps25.value=0;
 ~bsteps26.value=0;~tsteps26.value=0;~hsteps26.value=0;~b2steps26.value=0;~t2steps26.value=0;~h2steps26.value=0;
 ~bsteps27.value=0;~tsteps27.value=0;~hsteps27.value=0;~b2steps27.value=0;~t2steps27.value=0;~h2steps27.value=0;
 ~bsteps28.value=0;~tsteps28.value=0;~hsteps28.value=0;~b2steps28.value=0;~t2steps28.value=0;~h2steps28.value=0;

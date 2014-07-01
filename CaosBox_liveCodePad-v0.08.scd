@@ -22,13 +22,13 @@
 //snare
 ~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:620,rq:0.5,amp1:0.15,amp2:0.05))};//
 //hat
-~h={var out=50;Out.ar(out,CaosHats.ar(att:0.05,rel:0.35,highcutfreq:730,rq:0.75,amp1:0.5,amp2:0.25))};//
+~h={var out=50;Out.ar(out,CaosHats.ar(att:0.05,rel:0.15,highcutfreq:530,rq:0.5,amp1:0.15,amp2:0.05))};//
 //kick2
-~b2={var out=50;Out.ar(out,CaosKick2.ar(modFreq:8,modbw:0.15,bw:0.5,freq1:60,freq2:72,lowcutfreq:2200,att:0.5,rel:6,amp:0.1))};//
+~b2={var out=64;Out.ar(out,CaosKick2.ar(modFreq:2,modbw:0.15,bw:0.5,freq1:60,freq2:72,lowcutfreq:2200,att:0.05,rel:1,amp:0.3))};//
 //snare2
 ~t2={var out=54;Out.ar(out,CaosSnare2.ar(att:0.05,rel:0.2,iphase:0.05,bw:0.5,highcutfreq:420,rq:0.5,amp1:0.08,amp2:0.01))};//
 //hat2
-~h2={var out=50;Out.ar(out,CaosHats2.ar(att:0.05,rel:0.2,highcutfreq:4950,rq:0.5,amp1:0.5,amp2:0.09))};//
+~h2={var out=62;Out.ar(out,CaosHats2.ar(att:0.21,rel:0.32,highcutfreq:2950,rq:0.75,amp1:0.15,amp2:0.05))};//
 );
 ////////////////////Bass and pad functions:
 //you can create more variables as melodies for instrument Tdefs
