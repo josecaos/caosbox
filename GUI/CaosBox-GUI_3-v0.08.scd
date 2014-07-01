@@ -136,7 +136,7 @@
 ~num=NumberBox(~w,Rect(5,322,50,20)).background_(Color(0,1,0));
 ~mastfader=Slider(~w,Rect(5,342,50,290)).background_(Color(0.05,0.25,0.05,0.1));
 ~mastfader.action={~mast.set(\vol,~mastfader.value);~num.value_(~mastfader.value)};
-~num.action={~mast.set(\vol,~num.value);~mastfader.value_(~num.value)};
+~num.action={~mast.set(\vol,1);~mastfader.value_(~num.value)};
 ~mastfader.value=1;
 ~num.value=1;
 //compresor threshold
@@ -148,7 +148,7 @@
 ~num1.action={~mast.set(\compThres,~num1.value);~mastfader1.value_(~num1.value)};
 ~mastfader1.value=1;
 ~num1.value=1;
-//compresor clamptime
+//compresor slopeBelow
 ~mastercomp1=StaticText(~w,Rect(115,305,50,15));//
 ~mastercomp1.string_("Below:").align_(\left).background_(Color(0.5,0.5,0.5));
 ~num2=NumberBox(~w,Rect(115,322,50,20)).background_(Color(0,1,0));

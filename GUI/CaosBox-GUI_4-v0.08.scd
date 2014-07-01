@@ -85,7 +85,7 @@ StaticText(~w,Rect(575,563,125,14)).string_("Cut Frequency").align_(\center).bac
 StaticText(~w,Rect(575,603,125,14)).string_("Bandwidth").align_(\center).background_(Color(0,0.5,0));
 ~numf6=NumberBox(~w,Rect(700,602,80,16)).background_(Color(0,1,0));
 ~bandrqfader=Slider(~w,Rect(575,620,205,10)).background_(Color(0.05,0.05,0.25,0.1));
-~bandrqfader.action={~mastbandf.set(\rq,~rqmaxmin.map(~bandrqfader.value));~numf6.value_(~rqmaxmin.map(~bandrqfader.value))};
+~bandrqfader.action={~mastbandf.set(\rq,~rqmaxmiauxdn.map(~bandrqfader.value));~numf6.value_(~rqmaxmin.map(~bandrqfader.value))};
 ~numf6.action={~mastbandf.set(\rq,~rqmaxmin.map(~numf6.value));~bandrqfader.value_(~rqmaxmin.map(~numf6.value))};
 ~bandrqfader.value=0.5;
 ~numf6.value=0.5;
@@ -95,7 +95,7 @@ StaticText(~w,Rect(785,12,155,15)).string_("Frequency Analyzer:").align_(\center
 ~fbot.states=[["On",Color.black,Color.green],
         ["Off",Color.white,Color.red]];
 ~fbot.action={|val| if(val.value==0,{~f.active_(false);"->Frequency Analyzer has Stopped<-".postcln},
-        							{~f.active_(true);"->Frequency Analyzer has Started<-".postcln})};        							
+        							{~f.active_(true);"->Frequency Analyzer has Started<-".postcln})};
 ~f=FreqScopeView(~w,Rect(785,27,235,100)).freqMode_(1);
 ~f.background_(Color(0.1,0.1,0.1));
 ~f.active_(false);
@@ -115,7 +115,7 @@ StaticText(~w,Rect(785,305,235,12)).string_(" channel: 64").align_(\center).back
 						  if(menu.value==3,{~grains.set(\out,56)});
 						  if(menu.value==4,{~grains.set(\out,58)});
 						  if(menu.value==5,{~grains.set(\out,60)});
-						  if(menu.value==6,{~grains.set(\out,62)});						  
+						  if(menu.value==6,{~grains.set(\out,62)});
 						  };
 //granulator values
 ~gtparam=ControlSpec.new(4,32,\lin,1,4);
