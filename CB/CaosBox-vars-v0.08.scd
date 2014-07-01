@@ -4,6 +4,7 @@
 //this are the global variables of CaosBox
 ///////////////////////////////////////////
 (//variables
+~fecha=Date.getDate;
 ~bombo=Array.fill(32,nil);
 ~tarola=Array.fill(32,nil);
 ~contras=Array.fill(32,nil);
@@ -18,7 +19,7 @@
 ~sinte2=Array.fill(32,nil);
 ~in=Array.fill(32,nil);
 ~clock=TempoClock.tempo=94/60;
-~indice=0; 
+~indice=0;
 ~tiempos=0.25;
 ~autoreverbmix=[0,0.4,0.75];
 ~autodelaytime=[0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1];

@@ -392,17 +392,21 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
         							{Tdef(\secuencias).play;Tdef(\pasos).play;Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
         								Tdef(\pad2).play;"->Playing, please start algoravin'<-".postcln})};
 //record
-//Help.gui;
-~filename=["CBL-"];
-~filename.value;
+~filename=["c","a","o","s","b","o","x","l","o","o","p","-"];
 StaticText(~w,Rect(790,635,130,15)).string_("REC/STOP REC:").align_(\center).background_(Color(0.65,0.65,0.65));
 ~recbot=Button(~w,Rect(790,650,130,25));
 ~recbot.states=[["record",Color.black,Color.green(0.35)],
         ["Stop recording",Color.white,Color.red]];
-~recbot.action={|val|if(val.value==0,{s.stopRecording;"->Stoped Recording<-".postln},
-	{var r=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"," "];
-		~filename.add(r.choose,(1..9).choose);s.record(~url +/+ "Recorded/" +/+ ~filename.value ++ ".aiff");
-		    "->Recording<-".postcln})};
+~recbot.action={|val|if(val.value==0,{s.stopRecording;
+	                                   "->Stoped Recording<-".postln;~filename=["c","a","o","s","b","o","x","l","o","o","p","-"]
+	                                  },
+	{l=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"];
+		n=["1","2","3","4","5","6","7","8","9","0"];
+		z=(1..2).choose;
+		~filename.add([n.choose,l.choose,n.choose,l.choose].stutter(z).scramble.join);
+		s.record(~url +/+ "Recorded" +/+ ~filename.value.join ++ "_" ++ ~fecha.dayStamp ++ ".aiff");
+		"->Recording<-".postcln})
+     };
 //borrar secuencias de percusiones
 StaticText(~w,Rect(920,635,99,20)).string_("Clear Percs:").align_(\center).background_(Color(0.75,0.75,0.75));
 ~delsec=Button(~w,Rect(920,650,99,25));
