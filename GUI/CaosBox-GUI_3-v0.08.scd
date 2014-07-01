@@ -54,8 +54,8 @@
 										~insteps25.value=0;~insteps26.value=0;
 										~insteps27.value=0;~insteps28.value=0;
 										~insteps29.value=0;~insteps30.value=0;
-										~insteps31.value=0;~insteps32.value=0;										
-										})};	
+										~insteps31.value=0;~insteps32.value=0;
+										})};
 //line In attack and release knobs
 ~inattknob=EZKnob(~w,Rect(785,251,81,17),nil,ControlSpec(0.01,0.25,\lin,0.001,0.1,\att),{|a| a.value;~entrada.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
 ~inrelknob=EZKnob(~w,Rect(870,251,81,17),nil,ControlSpec(0.05,0.5,\lin,0.001,0.1,\rel),{|a| a.value;~entrada.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
@@ -150,11 +150,11 @@
 ~num1.value=1;
 //compresor clamptime
 ~mastercomp1=StaticText(~w,Rect(115,305,50,15));//
-~mastercomp1.string_("Clamp:").align_(\left).background_(Color(0.5,0.5,0.5));
+~mastercomp1.string_("Below:").align_(\left).background_(Color(0.5,0.5,0.5));
 ~num2=NumberBox(~w,Rect(115,322,50,20)).background_(Color(0,1,0));
 ~mastfader2=Slider(~w,Rect(115,342,50,290)).background_(Color(0.05,0.25,0.05,0.1));
-~mastfader2.action={~mast.set(\clampTime,~mastfader2.value);~num2.value_(~mastfader2.value)};
-~num2.action={~mast.set(\clampTime,~num2.value);~mastfader2.value_(~num2.value)};
+~mastfader2.action={~mast.set(\below,~mastfader2.value);~num2.value_(~mastfader2.value)};
+~num2.action={~mast.set(\below,~num2.value);~mastfader2.value_(~num2.value)};
 ~mastfader2.value=0.5;
 ~num2.value=0.5;
 //compresor relaxtime

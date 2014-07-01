@@ -6,10 +6,10 @@
 ///////////////////////////////////////////
 //Master
 (
-SynthDef(\master,{|limit=0.9,compThres=1,clampTime=0.5,relaxTime=1,out=0,vol=1|
+SynthDef(\master,{|limit=0.9,compThres=1,below=0.5,relaxTime=1,out=0,vol=1|
 			var in,env;
 				in=HPF.ar(In.ar([50,51]),50,0.5);
-				in=CompanderD.ar(in,compThres,clampTime:clampTime,relaxTime:relaxTime);//compresor
+				in=CompanderD.ar(in,compThres,below,relaxTime:relaxTime);//compresor
 				in=Limiter.ar(in,limit);//limitador
 				env=EnvGen.ar(Env.asr(0.01,0.98,0.01));
 			Out.ar(out,Pan2.ar(in*env,[1,-1])*vol)
