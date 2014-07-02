@@ -8,7 +8,7 @@
 (
 History.start;
 s.waitForBoot{
-	 ~url="/home/josecaos/.ssh/caosbox/";/* <--- Change for your local URL*/
+	 ~url="/home/josecaos/.ssh/caosbox/";/* <--- Change for your local URL to caosbox folder*/
 	(~url +/+ "CB/CaosBox-load-v0.08.scd").load};/* <-- don't change this one */
 );
 //
@@ -18,10 +18,11 @@ s.waitForBoot{
 //History
 //This is a try to recover
 //livecode sessions thru caosbox
-//not yet finished, is not responding
-//toGUI's movement values. 
-//On the mean time
+//not yet finished, is not recording
+//GUI movement values,On the 
+//mean time is only saving from written data
 //keep improvising to infinity
 ////////////////////////////
+//use this to load your recorded history files, recompile library first
 History.loadStory(~url +/+ "Histories/hist-caosbox_h0hhh505140701.scd").play(verbose:true);
 //end of file
