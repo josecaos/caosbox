@@ -85,7 +85,7 @@ StaticText(~w,Rect(575,563,125,14)).string_("Cut Frequency").align_(\center).bac
 StaticText(~w,Rect(575,603,125,14)).string_("Bandwidth").align_(\center).background_(Color(0,0.5,0));
 ~numf6=NumberBox(~w,Rect(700,602,80,16)).background_(Color(0,1,0));
 ~bandrqfader=Slider(~w,Rect(575,620,205,10)).background_(Color(0.05,0.05,0.25,0.1));
-~bandrqfader.action={~mastbandf.set(\rq,~rqmaxmiauxdn.map(~bandrqfader.value));~numf6.value_(~rqmaxmin.map(~bandrqfader.value))};
+~bandrqfader.action={~mastbandf.set(\rq,~rqmaxmin.map(~bandrqfader.value));~numf6.value_(~rqmaxmin.map(~bandrqfader.value))};
 ~numf6.action={~mastbandf.set(\rq,~rqmaxmin.map(~numf6.value));~bandrqfader.value_(~rqmaxmin.map(~numf6.value))};
 ~bandrqfader.value=0.5;
 ~numf6.value=0.5;
@@ -142,5 +142,6 @@ StaticText(~w,Rect(785,272,185,15)).string_("BeatsPerMinute:").align_(\center).b
 //
 ~w.onClose={Tdef(\secuencias).stop;Tdef(\pasos).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;Tdef(\autog).stop;
 				Tdef(\bass).stop;Tdef(\bass2).stop;Tdef(\pad).stop;Tdef(\pad2).stop;
-				~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~f.kill;~grains.free};
+				~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~f.kill;~grains.free}
+                     History.stop;
 )

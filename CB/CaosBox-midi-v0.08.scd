@@ -22,9 +22,9 @@ MIDIIn.control={|src,chan,num,val| /*[src,chan,num,val].postln;//[num].postln;*/
                36,{~mastpit.set(\pitch,val.linlin(0,127,0.1,4));{~auxpfader.value_(val/127);~nump.value_(val/127)}.defer},
                35,{~mastpit.set(\pitchDispersion,val.linlin(0,127,0.01,1));{~auxpdfader.value_(val/127);~numpd.value_(val/127)}.defer},
                34,{~mastpit.set(\timeDispersion,val.linlin(0,127,0.01,1));{~auxtdfader.value_(val/127);~numtd.value_(val/127)}.defer},
-		       33,{~mastlowf.set(\cutfreq,val.explin(0,127,20,20000));{~lowcfader.value_(val/127);~numf1.value_(val/127)}.defer},
-			   32,{~mastbandf.set(\cutfreq,val.explin(0,127,0.01,1));{~bandcfader.value_(val/127);~numf5.value_(val/127)}.defer},
-		       31,{~masthighf.set(\cutfreq,val.explin(0,127,0.01,1));{~highcfader.value_(val/127);~numf3.value_(val/127)}.defer},
+		       33,{~mastlowf.set(\cutfreq,val.linexp(0,127,20,20000));{~lowcfader.value_(val/127);~numf1.value_(val*157.4811)}.defer},
+			   32,{~mastbandf.set(\cutfreq,val.linexp(0,127,20,20000));{~bandcfader.value_(val/127);~numf5.value_(val*157.4811)}.defer},
+		       31,{~masthighf.set(\cutfreq,val.linexp(0,127,20,20000));{~highcfader.value_(val/127);~numf3.value_(val*157.4811)}.defer},
 		       20,{~grains.set(\trigger,val.linlin(0,127,0.1,8));{~gfaders.x_(val/127)}.defer},
 		       17,{~grains.set(\size,val.linlin(0,127,1,0.01));{~gfaders.y_(val/127)}.defer},
 		       15,{~grains.set(\size,val.linlin(0,127,-1,-0.01));~grains.set(\trigger,val.linlin(0,127,-1,-0.01));
@@ -33,3 +33,4 @@ MIDIIn.control={|src,chan,num,val| /*[src,chan,num,val].postln;//[num].postln;*/
                )
             };
 );
+20000/127

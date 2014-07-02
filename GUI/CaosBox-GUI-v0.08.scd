@@ -388,67 +388,29 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
 ~bot.action={|val|if(val.value==0,{Tdef(\secuencias).stop;Tdef(\pasos).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;
 										Tdef(\autog).stop;Tdef(\bass).stop;Tdef(\bass2).stop;~autobotr.value=0;~autobotd.value=0;
 											Tdef(\pad).stop;Tdef(\pad2).stop;~autobotp.value=0;~autobotg.value=0;~bott.value=0;
-												"->You just Stopped caosBox<-".postcln},
+												"->You just Stopped caosBox<-".postcln;History.stop},
         							{Tdef(\secuencias).play;Tdef(\pasos).play;Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
         								Tdef(\pad2).play;"->Playing, please start algoravin'<-".postcln})};
 //record
-~filename=["c","a","o","s","b","o","x","l","o","o","p","-"];
-StaticText(~w,Rect(790,635,130,15)).string_("REC/STOP REC:").align_(\center).background_(Color(0.65,0.65,0.65));
+~filea=[~n.choose,~l.choose,~n.choose,~l.choose];
+~filename=~filename.add(~filea.stutter((1..2).choose).scramble.join);
+//
+StaticText(~w,Rect(790,635,130,15)).string_("Recording").align_(\center).background_(Color(0.65,0.65,0.65));
 ~recbot=Button(~w,Rect(790,650,130,25));
-~recbot.states=[["record",Color.black,Color.green(0.35)],
-        ["Stop recording",Color.white,Color.red]];
+~recbot.states=[["Record",Color.black,Color.green(0.35)],
+        ["Stop Recording",Color.white,Color.red]];
 ~recbot.action={|val|if(val.value==0,{s.stopRecording;
-	                                   "->Stoped Recording<-".postln;~filename=["c","a","o","s","b","o","x","l","o","o","p","-"]
+	                                   "->Stoped Recording<-".postln;
+	                                   ~filename=["c","a","o","s","b","o","x","_",~filea.join,~l.choose,~n.choose];
 	                                  },
-	{l=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"];
-		n=["1","2","3","4","5","6","7","8","9","0"];
-		z=(1..2).choose;
-		~filename.add([n.choose,l.choose,n.choose,l.choose].stutter(z).scramble.join);
-		s.record(~url +/+ "Recorded" +/+ ~filename.value.join ++ "_" ++ ~fecha.dayStamp ++ ".aiff");
+	{s.record(~url +/+ "Recorded" +/+  ~ftype[0] ++ ~filename.value.join ++ ~fecha.dayStamp ++ ".aiff");
 		"->Recording<-".postcln})
      };
-//borrar secuencias de percusiones
-StaticText(~w,Rect(920,635,99,20)).string_("Clear Percs:").align_(\center).background_(Color(0.75,0.75,0.75));
-~delsec=Button(~w,Rect(920,650,99,25));
-~delsec.states=[[" X ",Color.green,Color.black]];
-~delsec.action={|val|if(val.value==0,{"Percussions have been cleared!".postln;
-									~bombo.put((0..31),nil);
-									~tarola.put((0..31),nil);
-									~contras.put((0..31),nil);
-									~bombo2.put((0..31),nil);
-									~tarola2.put((0..31),nil);
-									~contras2.put((0..31),nil);
-									~bsteps1.value=0;~tsteps1.value=0;~hsteps1.value=0;~b2steps1.value=0;~t2steps1.value=0;~h2steps1.value=0;
-~bsteps2.value=0;~tsteps2.value=0;~hsteps2.value=0;~b2steps2.value=0;~t2steps2.value=0;~h2steps2.value=0;
-~bsteps3.value=0;~tsteps3.value=0;~hsteps3.value=0;~b2steps3.value=0;~t2steps3.value=0;~h2steps3.value=0;
-~bsteps4.value=0;~tsteps4.value=0;~hsteps4.value=0;~b2steps4.value=0;~t2steps4.value=0;~h2steps4.value=0;
-~bsteps5.value=0;~tsteps5.value=0;~hsteps5.value=0;~b2steps5.value=0;~t2steps5.value=0;~h2steps5.value=0;
-~bsteps6.value=0;~tsteps6.value=0;~hsteps6.value=0;~b2steps6.value=0;~t2steps6.value=0;~h2steps6.value=0;
-~bsteps7.value=0;~tsteps7.value=0;~hsteps7.value=0;~b2steps7.value=0;~t2steps7.value=0;~h2steps7.value=0;
-~bsteps8.value=0;~tsteps8.value=0;~hsteps8.value=0;~b2steps8.value=0;~t2steps8.value=0;~h2steps8.value=0;
-~bsteps9.value=0;~tsteps9.value=0;~hsteps9.value=0;~b2steps9.value=0;~t2steps9.value=0;~h2steps9.value=0;
-~bsteps10.value=0;~tsteps10.value=0;~hsteps10.value=0;~b2steps10.value=0;~t2steps10.value=0;~h2steps10.value=0;
-~bsteps11.value=0;~tsteps11.value=0;~hsteps11.value=0;~b2steps11.value=0;~t2steps11.value=0;~h2steps11.value=0;
-~bsteps12.value=0;~tsteps12.value=0;~hsteps12.value=0;~b2steps12.value=0;~t2steps12.value=0;~h2steps12.value=0;
-~bsteps13.value=0;~tsteps13.value=0;~hsteps13.value=0;~b2steps13.value=0;~t2steps13.value=0;~h2steps13.value=0;
-~bsteps14.value=0;~tsteps14.value=0;~hsteps14.value=0;~b2steps14.value=0;~t2steps14.value=0;~h2steps14.value=0;
-~bsteps15.value=0;~tsteps15.value=0;~hsteps15.value=0;~b2steps15.value=0;~t2steps15.value=0;~h2steps15.value=0;
-~bsteps16.value=0;~tsteps16.value=0;~hsteps16.value=0;~b2steps16.value=0;~t2steps16.value=0;~h2steps16.value=0;
-~bsteps17.value=0;~tsteps17.value=0;~hsteps17.value=0;~b2steps17.value=0;~t2steps17.value=0;~h2steps17.value=0;
-~bsteps18.value=0;~tsteps18.value=0;~hsteps18.value=0;~b2steps18.value=0;~t2steps18.value=0;~h2steps18.value=0;
-~bsteps19.value=0;~tsteps19.value=0;~hsteps19.value=0;~b2steps19.value=0;~t2steps19.value=0;~h2steps19.value=0;
-~bsteps20.value=0;~tsteps20.value=0;~hsteps20.value=0;~b2steps20.value=0;~t2steps20.value=0;~h2steps20.value=0;
-~bsteps21.value=0;~tsteps21.value=0;~hsteps21.value=0;~b2steps21.value=0;~t2steps21.value=0;~h2steps21.value=0;
-~bsteps22.value=0;~tsteps22.value=0;~hsteps22.value=0;~b2steps22.value=0;~t2steps22.value=0;~h2steps22.value=0;
-~bsteps23.value=0;~tsteps23.value=0;~hsteps23.value=0;~b2steps23.value=0;~t2steps23.value=0;~h2steps23.value=0;
-~bsteps24.value=0;~tsteps24.value=0;~hsteps24.value=0;~b2steps24.value=0;~t2steps24.value=0;~h2steps24.value=0;
-~bsteps25.value=0;~tsteps25.value=0;~hsteps25.value=0;~b2steps25.value=0;~t2steps25.value=0;~h2steps25.value=0;
-~bsteps26.value=0;~tsteps26.value=0;~hsteps26.value=0;~b2steps26.value=0;~t2steps26.value=0;~h2steps26.value=0;
-~bsteps27.value=0;~tsteps27.value=0;~hsteps27.value=0;~b2steps27.value=0;~t2steps27.value=0;~h2steps27.value=0;
-~bsteps28.value=0;~tsteps28.value=0;~hsteps28.value=0;~b2steps28.value=0;~t2steps28.value=0;~h2steps28.value=0;
-~bsteps29.value=0;~tsteps29.value=0;~hsteps29.value=0;~b2steps29.value=0;~t2steps29.value=0;~h2steps29.value=0;
-~bsteps30.value=0;~tsteps30.value=0;~hsteps30.value=0;~b2steps30.value=0;~t2steps30.value=0;~h2steps30.value=0;
-~bsteps31.value=0;~tsteps31.value=0;~hsteps31.value=0;~b2steps31.value=0;~t2steps31.value=0;~h2steps31.value=0;
-~bsteps32.value=0;~tsteps32.value=0;~hsteps32.value=0;~b2steps32.value=0;~t2steps32.value=0;~h2steps32.value=0;									})};
-//
-);
+//Historial
+StaticText(~w,Rect(920,635,99,20)).string_("History:").align_(\center).background_(Color(0.75,0.75,0.75));
+~hbutt=Button(~w,Rect(920,650,99,25));
+~hbutt.states=[[" Save File ",Color.green,Color.black]];
+~hbutt.action={|val| var h=History; if(val.value==0,{"->History saved @ caosbox/Histories folder<-".postln;
+	                      h.saveStory(~url +/+ "Histories" +/+ ~ftype[1] ++ ~filename.value.join ++ ~fecha.dayStamp ++ ".scd");
+	                                h.stop; h.clear})};
+)

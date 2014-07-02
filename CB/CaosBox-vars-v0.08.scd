@@ -5,6 +5,10 @@
 ///////////////////////////////////////////
 (//variables
 ~fecha=Date.getDate;
+~filename=["c","a","o","s","b","o","x","_"];
+~ftype=["loop-","hist-"];
+~l=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"];
+~n=["1","2","3","4","5","6","7","8","9","0"];
 ~bombo=Array.fill(32,nil);
 ~tarola=Array.fill(32,nil);
 ~contras=Array.fill(32,nil);

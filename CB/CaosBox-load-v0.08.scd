@@ -16,7 +16,7 @@ Task({|i|
 				i=i+1;
 				0.125.wait;
 			 };
-		1.do{crece.add(izq);crece.postln;"CaosBox v0.08".postln;0.01.wait};
+		1.do{crece.postln;"CaosBox v0.08".postln;0.01.wait};
 		1.do{"Bienvenido/Welcome.".postln;
 				play{
 				var noise=[LFNoise0,LFNoise1,LFNoise2].choose;
@@ -33,7 +33,7 @@ Task({|i|
 		1.do{"+CaosBox es una Maquina para hacer algorave con la CaosPercLib. \n"
 				"+CaosBox is an algorave liveCoding Machine for CaosPercLib.".postln;2.wait};
 		1.do{"+Escrito/Written by: @joseCao5  [at]: http://www.mixfuckedup.net".postln;2.wait};
-		1.do{"+Abierto/Opened: CaosBox liveCodePad v008.scd".postln;0.25.wait}
+		1.do{"+Abierto/Opened: CaosBox liveCodePad v008.scd".postln;0.25.wait};
 		}).play;
 );
 //archivos complementarios
@@ -43,10 +43,10 @@ Task({|i|
 (~url +/+ "CB/CaosBox-synths-v0.08.scd").load;
 (~url +/+ "CB/CaosBox-seq-v0.08.scd").load;
 (~url +/+ "CB/CaosBox-auto-v0.08.scd").load;
-(~url +/+ "CaosBox_liveCodePad-v0.08.scd").load;
+(~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").load;
 (~url +/+ "GUI/CaosBox-GUI-v0.08.scd").load;
 (~url +/+ "GUI/CaosBox-GUI_2-v0.08.scd").load;
 (~url +/+ "GUI/CaosBox-GUI_3-v0.08.scd").load;
 (~url +/+ "GUI/CaosBox-GUI_4-v0.08.scd").load;
-(~url +/+ "CaosBox_liveCodePad-v0.08.scd").openOS;
+(~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").openOS;
 //
