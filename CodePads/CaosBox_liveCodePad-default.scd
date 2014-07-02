@@ -2,17 +2,13 @@
 //CaosBox liveCodePad v 0.08
 //written by @joseCao5
 //Dic2013/ene2014 @ Puerto Morelos Q. Roo Mx.
-////////////////////////////////////////////
-//s.scope;
-//s.meter;
-//s.makeWindow;
 /////////////////README//////////////////////////
 //This file is mostly to liveCode CaosPercLib.
 //It contains the pseudoClass library, within functions or Tdefs..
-//First: change the argument values, and evaluate .
-//Then: sequence and route in the CaosBox GUI.
+//First: change the Class argument values, and evaluate .
+//Then: sequence and fx in the CaosBox GUI.
 //note: If functions are not evaluated before
-//sequencing, the sequencer might fail.
+//sequencing, this might fail.
 //Master channel is #50
 ////////////////////////////////////////////
 //Percussion Functions:
@@ -32,7 +28,7 @@
 );
 ////////////////////Bass and pad functions:
 //you can create more variables as melodies for instrument Tdefs
-~mainmelody=[36,39+3,44,48+7,51,55+12,60]+14;
+~mainmelody=[36,39+3,44,48+7,51,55+12,60]-4;
 //
 //////////////////////
 //Evaluate each one of these Tdef to change Synth parameters
@@ -70,7 +66,7 @@ Tdef(\bass2,{
 			   \iphase,0.25,
 			   \amp1,1,
 			   \amp2,0.5);
-	~bass2.set(\out,60);//route
+	~bass2.set(\out,58);//route
 	~tiempos.wait;
 	}
 }).quant_(4);

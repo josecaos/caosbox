@@ -11,12 +11,12 @@ Task({|i|
 		1.do{nil;4.wait};
 		31.do{
 					if(i>=0,{crece.add(if(creseq.next==1,{izq},{der}));
-							 crece.postln;
+							 crece.join.postln;
 							 "CaosBox v0.08".rotate(i-5).postln});
 				i=i+1;
 				0.125.wait;
 			 };
-		1.do{crece.postln;"CaosBox v0.08".postln;0.01.wait};
+		1.do{crece.join.postln;"CaosBox v0.08".postln;0.01.wait};
 		1.do{"Bienvenido/Welcome.".postln;
 				play{
 				var noise=[LFNoise0,LFNoise1,LFNoise2].choose;
@@ -30,10 +30,10 @@ Task({|i|
 						noise.ar(2.32.rand),linea.choose.ar(rrand(60,10760),rrand(10760,60),0.5),rrand(0.15,0.5)),
 					linea.choose.kr(0.01,0.5,2),1,0.025)!2};
 					5.wait;};
-		1.do{"+CaosBox es una Maquina para hacer algorave con la CaosPercLib. \n"
-				"+CaosBox is an algorave liveCoding Machine for CaosPercLib.".postln;2.wait};
+		1.do{"+CaosBox es una Maquina para hacer Algorave con la CaosPercLib. \n"
+				"+CaosBox is an Algoraving Machine for CaosPercLib.".postln;2.wait};
 		1.do{"+Escrito/Written by: @joseCao5  [at]: http://www.mixfuckedup.net".postln;2.wait};
-		1.do{"+Abierto/Opened: CaosBox liveCodePad v008.scd".postln;0.25.wait};
+		1.do{"+Abierto/Opened: CaosBox liveCodePad default.scd".postln;0.25.wait};
 		}).play;
 );
 //archivos complementarios
