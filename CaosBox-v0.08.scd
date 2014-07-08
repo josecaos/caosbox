@@ -8,7 +8,7 @@
 (
 History.start;
 s.waitForBoot{
-	 ~url="/home/josecao5/Documents/caosbox/";/* <--- Change for your local URL to caosbox folder*/
+	 ~url="/home/josecaos/.ssh/caosbox/";/* <--- Change for your local URL to caosbox folder*/
 	(~url +/+ "CB/CaosBox-load-v0.08.scd").load};/* <-- don't change this one */
 );
 //
@@ -21,8 +21,9 @@ s.waitForBoot{
 //not yet finished, is not recording
 //GUI movement values,On the
 //mean time is only saving from written data
+//still some interesting information.
 //keep improvising to infinity
 ////////////////////////////
 //use this to load your recorded history files, recompile library first
-History.loadStory(~url +/+ "Histories/hist-caosbox_h0hhh505140701.scd").play(verbose:true);
+History.loadStory(~url +/+ "Histories/hist-caosbox_5i3zb6140703.scd").play(verbose:true);
 //end of file

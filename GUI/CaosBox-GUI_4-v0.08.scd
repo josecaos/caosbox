@@ -141,7 +141,7 @@ StaticText(~w,Rect(785,272,185,15)).string_("BeatsPerMinute:").align_(\center).b
 ~numclock.action={~clock={TempoClock.tempo=~numclock.value/60};~clock.value};
 //
 ~w.onClose={Tdef(\secuencias).stop;Tdef(\pasos).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;Tdef(\autog).stop;
-				Tdef(\bass).stop;Tdef(\bass2).stop;Tdef(\pad).stop;Tdef(\pad2).stop;
+				Tdef(\bass).stop;Tdef(\bass2).stop;Tdef(\pad).stop;Tdef(\pad2).stop;Tdef(\acordes).stop;Tdef(\acordes2).stop;
 				~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~f.kill;~grains.free;History.stop;
 				s.quit}                   
 )

@@ -34,8 +34,10 @@ Tdef(\secuencias,{
 			{~ambiente[~indice].set(\gate,1,\att,~amb1attknob.value,\rel,~amb1relknob.value);~ambiente.put(~indice,~amb=Synth(\ambuno))});
 		if(~ambiente2[~indice] == nil,{nil},
 			{~ambiente2[~indice].set(\gate,1,\att,~amb2attknob.value,\rel,~amb2relknob.value);~ambiente2.put(~indice,~amb2=Synth(\ambdos))});
-		//~sinte[~indice].set(\t_trig,1);
-		//~sinte2[~indice].set(\t_trig,1);
+		if(~sinte[~indice] == nil,{nil},
+			{~sinte[~indice].set(\gate,1,\att,~sinte1attknob.value,\rel,~sinte1relknob.value);~sinte.put(~indice,~chord=Synth(\acordesuno))});
+		if(~sinte2[~indice] == nil,{nil},
+			{~sinte2[~indice].set(\gate,1,\att,~sinte2attknob.value,\rel,~sinte2relknob.value);~sinte2.put(~indice,~chord2=Synth(\acordesdos))});
 		if(~in[~indice] == nil,{nil},
 			{~in[~indice].set(\gate,1,\att,~inattknob.value,\rel,~inrelknob.value);~in.put(~indice,~entrada=Synth(\ent))});
     	~indice=~indice+1;
@@ -80,7 +82,7 @@ Tdef(\pasos,{
         if(~indice==28,{~step29.value=1;~step28.value=0;});
         if(~indice==29,{~step30.value=1;~step29.value=0;});
         if(~indice==30,{~step31.value=1;~step30.value=0;});
-        if(~indice==31,{~step32.value=1;~step31.value=0;})}.defer(0.1);
+        if(~indice==31,{~step32.value=1;~step31.value=0;})}.defer(0.25);
 		~tiempos.wait;
 	}.loop;
 });

@@ -386,11 +386,11 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
 ~bot.states=[["=>",Color.black,Color.green],
         ["[_]",Color.white,Color.red]];
 ~bot.action={|val|if(val.value==0,{Tdef(\secuencias).stop;Tdef(\pasos).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;
-										Tdef(\autog).stop;Tdef(\bass).stop;Tdef(\bass2).stop;~autobotr.value=0;~autobotd.value=0;
-											Tdef(\pad).stop;Tdef(\pad2).stop;~autobotp.value=0;~autobotg.value=0;~bott.value=0;
+										Tdef(\autog).stop;Tdef(\bass).stop;Tdef(\bass2).stop;Tdef(\acordes).stop;Tdef(\acordes2).stop;~autobotr.value=0;
+											Tdef(\pad).stop;Tdef(\pad2).stop;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~autobotd.value=0;
 												"->You just Stopped caosBox<-".postcln;History.stop},
         							{Tdef(\secuencias).play;Tdef(\pasos).play;Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
-        								Tdef(\pad2).play;"->Playing, please start algoravin'<-".postcln})};
+        								Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"->Playing, please start algoravin'<-".postcln})};
 //record
 ~filea=[~n.choose,~l.choose,~n.choose,~l.choose];
 ~filename=~filename.add(~filea.stutter((1..2).choose).scramble.join);

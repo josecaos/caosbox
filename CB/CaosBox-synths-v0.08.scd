@@ -18,10 +18,13 @@ SynthDef(\ambuno,{|waveform,att=0.5,rel=1,note=57,trem=0,vrel=1,iphase=0,cutf=92
 						Out.ar(out,CaosPad.ar(onda,att,rel,note,trem,vrel,iphase,cutf,rq,gate,amp))}).add;//ambiente
 SynthDef(\ambdos,{|att=0.5,rel=1,note=220,fmax=1,fm=0.001,harm=1,rmix=0.5,rroom=0.5,rfilt=0.1,gate=0,amp1=0.5,amp2=0.5,out=50|
 						Out.ar(out,CaosPad2.ar(att,rel,note,fmax,fm,harm,rmix,rroom,rfilt,gate,amp1,amp2))}).add;//ambiente
-//////////////
-// faltan sintes armonicos
-///////
-
+//Chords
+SynthDef(\acordesuno,{|chord,att=0.1,rel=1,note=57,iphase=0.025,width=0.1,cutf=620,rq=0.5,pan=0,gate=0,amp=0.5,out=50|
+								var tipo= 'M';
+						Out.ar(out,CaosChords.ar(tipo,att,rel,note,iphase,width,cutf,rq,pan,gate,amp))}).add;//acordes 
+SynthDef(\acordesdos,{|chord,att=0.1,rel=1,note=57,cutf=420,rq=0.5,pan=0,gate=0,amp=0.5,out=50|
+								var type= 'M';
+						Out.ar(out,CaosGuitChords.ar(type,att,rel,note,cutf,rq,pan,gate,amp))}).add;//acordes 
 //LineIn
 SynthDef(\ent,{|gate=0,att=0.1,rel=0.25,	out=50|
 				Out.ar(out,Pan2.ar(SoundIn.ar([0,1])*EnvGen.ar(Env.perc(att,rel),gate,doneAction:2)))}).add;
@@ -31,5 +34,7 @@ SynthDef(\ent,{|gate=0,att=0.1,rel=0.25,	out=50|
 ~bass2=nil;
 ~amb=nil;
 ~amb2=nil;
+~chord=nil;
+~chord2=nil;
 ~entrada=nil;
 );
