@@ -1,7 +1,6 @@
 //written by @joseCao5
-//CaosBox Main Instrument sequencer and steps
 ////////////////////////////////////////////
-//
+//CaosBox Main Instrument sequencer and steps
 ///////////////////////////////////////////
 //Secuencias
 (

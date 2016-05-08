@@ -2,7 +2,7 @@
 //CaosBox route signal synthesizers
 ////////////////////////////////////////////
 //these are the Master and auxFx part of CaosBox
-//the In is routed to chan 50
+//the master 'In' is routed to chan 50
 ///////////////////////////////////////////
 //Master
 (

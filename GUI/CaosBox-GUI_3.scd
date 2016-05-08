@@ -1,4 +1,4 @@
-(//CaosBox GUI 3 v0.08 - In, steps, aux
+(//CaosBox GUI 3 - In, steps, aux
 //In
 StaticText(~w,Rect(5,252,53,15)).string_("LineIn:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~insteps1=CheckBox.new(~w,Rect(60,250,20,20)).action={|val|if(val.value,{~in.put(0,~entrada=Synth(\ent))},{~in.put(0,nil)})};

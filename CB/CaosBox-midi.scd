@@ -1,11 +1,10 @@
 ///written by @joseCao5
-//29 Jun 14
 ////////////////////////////////////
 //MIDI connection for a controller
 //based on the fx map of the CaosBox GUI
 //mapped to a XsessionPro m-audio
 ////////////////////////////////////
-//Conecta a todos los dispositivos de entrada MIDI
+//All MIDI inputs
 MIDIIn.connectAll;
 //
 (
@@ -33,4 +32,3 @@ MIDIIn.control={|src,chan,num,val| /*[src,chan,num,val].postln;//[num].postln;*/
                )
             };
 );
-20000/127

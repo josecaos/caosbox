@@ -1,6 +1,4 @@
 //written by @joseCao5
-//Dic13/ene14 @ Puerto Morelos Q. Roo Mx.
-////////////////////////////////////////////
 ///////////////////////////////////////////
 ////fader AUTOMATION
 //valores automatizacion //se tiene que evaluar de nuevo el Tdef que contiene estas variables para que cambie

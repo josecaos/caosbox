@@ -1,26 +1,23 @@
 ///////////////////////////////////////////
-//CaosBox liveCodePad v 0.08
-//written by @joseCao5
-//Dic2013/ene2014 @ Puerto Morelos Q. Roo Mx.
+//CaosBox default liveCodePad
+//written by @joseCao5 in Puerto Morelos Q. Roo Mx.
 /////////////////README//////////////////////////
 //This file is mostly to liveCode CaosPercLib.
 //It contains the pseudoClass library, within functions or Tdefs..
 //First: change the Class argument values, and evaluate .
 //Then: sequence and fx in the CaosBox GUI.
-//note: If functions are not evaluated before
-//sequencing, this might fail.
 //Master channel is #50
 ////////////////////////////////////////////
 //Percussion Functions:
 (
 //kick
-~b={var out=50 ;Out.ar(out,CaosKick.ar(0.01,0.15,2,0.5,60,62,50,1,0.65,0.5,2))};
+~b={var out=50 ;Out.ar(out,CaosKick.ar(0.01,0.15,2,0.5,60,62,50,1,0.9,0.35,2))};
 //snare
 ~t={var out=52;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:320,rq:0.25,amp1:0.5,amp2:0.15))};//
 //hat
-~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.25,highcutfreq:3930,rq:0.5,amp1:0.65,amp2:0.15))};//
+~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.5,highcutfreq:3930,rq:0.5,amp1:0.75,amp2:0.25))};//
 //kick2
-~b2={var out=50;Out.ar(out,CaosKick2.ar(modFreq:1,modbw:0.15,bw:0.5,freq1:60,freq2:60,lowcutfreq:80,att:0.05,rel:1,amp:0.3))};//
+~b2={var out=50;Out.ar(out,CaosKick2.ar(att:0.05,rel:1,modFreq:1,modbw:0.15,bw:0.5,freq1:60,freq2:60,lowcutfreq:80,amp:0.3))};//
 //snare2
 ~t2={var out=52;Out.ar(out,CaosSnare2.ar(att:0.05,rel:0.2,iphase:0.05,bw:0.5,highcutfreq:470,rq:0.5,amp1:0.21,amp2:0.1))};//
 //hat2
@@ -46,7 +43,7 @@ Tdef(\bass,{
 			   \iphase,0.5,
 			   \amp1,0.75,
 			   \amp2,0.45);
-	~bass.set(\out,58);//route
+	~bass.set(\out,64);//route
 	~tiempos.wait;
 	}
 }).quant_(4);
@@ -154,6 +151,6 @@ Tdef(\acordes2,{
 //To make changes to automation settings,
 //please open Automation file:
 /*
-(~url +/+ "CB/CaosBox-auto-v0.08.scd").openOS;
+(~url +/+ "CB/CaosBox-auto.scd").openOS;
 */
 //////////////////////////////////////

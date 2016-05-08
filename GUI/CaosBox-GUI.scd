@@ -1,5 +1,5 @@
-(//CaosBox GUI v0.08 - percusiones, botones de contrl, bienvenida
-~w=Window.new("CaosBox v0.08 #liveCodingMachine for Algorave music by @joseCao5",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
+(//CaosBox GUI - percusiones, botones de contrl, bienvenida
+~w=Window.new("CaosBox v1.0 #liveCodingMachine for Algorave music by @joseCao5",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
 StaticText(~w,Rect(5,12,53,15)).string_("Kick:").align_(\left).background_(Color(0.85,0.85,0.85));
 //bombo steps
 ~bsteps1=CheckBox.new(~w,Rect(60,10,20,20)).action={|val|if(val.value,{~bombo.put(0,~b)},{~bombo.put(0,nil)})};
