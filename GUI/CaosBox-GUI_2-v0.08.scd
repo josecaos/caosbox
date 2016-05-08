@@ -1,7 +1,6 @@
 (//CaosBox GUI 2 v0.07 - secuencias bajos, ambientes, sintetizadores
 //bajo
-~t7=StaticText(~w,Rect(5,132,53,15));//track7
-~t7.string_("Bass:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,132,53,15)).string_("Bass:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~bassteps1=CheckBox.new(~w,Rect(60,130,20,20)).action={|val|if(val.value,{~bajo.put(0,~bass=Synth(\bajouno);)},{~bajo.put(0,nil)})};
 ~bassteps2=CheckBox.new(~w,Rect(80,130,20,20)).action={|val|if(val.value,{~bajo.put(1,~bass=Synth(\bajouno);)},{~bajo.put(1,nil)})};
 ~bassteps3=CheckBox.new(~w,Rect(100,130,20,20)).action={|val|if(val.value,{~bajo.put(2,~bass=Synth(\bajouno);)},{~bajo.put(2,nil)})};
@@ -54,14 +53,13 @@
 										~bassteps25.value=0;~bassteps26.value=0;
 										~bassteps27.value=0;~bassteps28.value=0;
 										~bassteps29.value=0;~bassteps30.value=0;
-										~bassteps31.value=0;~bassteps32.value=0;										
+										~bassteps31.value=0;~bassteps32.value=0;
 										})};
 //bajo attack and release knobs
 ~bass1attknob=EZKnob(~w,Rect(785,131,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~bass1relknob=EZKnob(~w,Rect(870,131,81,17),nil,ControlSpec(0.1,2,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 //bajo2
-~t8=StaticText(~w,Rect(5,152,53,15));//track8
-~t8.string_("Bass2:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,152,53,15)).string_("Bass2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~bass2teps1=CheckBox.new(~w,Rect(60,150,20,20)).action={|val|if(val.value,{~bajo2.put(0,~bass2=Synth(\bajodos);)},{~bajo2.put(0,nil)})};
 ~bass2teps2=CheckBox.new(~w,Rect(80,150,20,20)).action={|val|if(val.value,{~bajo2.put(1,~bass2=Synth(\bajodos);)},{~bajo2.put(1,nil)})};
 ~bass2teps3=CheckBox.new(~w,Rect(100,150,20,20)).action={|val|if(val.value,{~bajo2.put(2,~bass2=Synth(\bajodos);)},{~bajo2.put(2,nil)})};
@@ -114,14 +112,13 @@
 										~bass2teps25.value=0;~bass2teps26.value=0;
 										~bass2teps27.value=0;~bass2teps28.value=0;
 										~bass2teps29.value=0;~bass2teps30.value=0;
-										~bass2teps31.value=0;~bass2teps32.value=0;										
-										})};	
+										~bass2teps31.value=0;~bass2teps32.value=0;
+										})};
 //bass attack and release knobs
 ~bass2attknob=EZKnob(~w,Rect(785,151,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~bass2relknob=EZKnob(~w,Rect(870,151,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 //ambiente
-~t9=StaticText(~w,Rect(5,172,53,15));//track9
-~t9.string_("Pad:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,172,53,15)).string_("Pad:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~ambsteps1=CheckBox.new(~w,Rect(60,170,20,20)).action={|val|if(val.value,{~ambiente.put(0,~amb=Synth(\ambuno);)},{~ambiente.put(0,nil)})};
 ~ambsteps2=CheckBox.new(~w,Rect(80,170,20,20)).action={|val|if(val.value,{~ambiente.put(1,~amb=Synth(\ambuno);)},{~ambiente.put(1,nil)})};
 ~ambsteps3=CheckBox.new(~w,Rect(100,170,20,20)).action={|val|if(val.value,{~ambiente.put(2,~amb=Synth(\ambuno);)},{~ambiente.put(2,nil)})};
@@ -174,15 +171,14 @@
 										~ambsteps25.value=0;~ambsteps26.value=0;
 										~ambsteps27.value=0;~ambsteps28.value=0;
 										~ambsteps29.value=0;~ambsteps30.value=0;
-										~ambsteps31.value=0;~ambsteps32.value=0;										
-										})};	
+										~ambsteps31.value=0;~ambsteps32.value=0;
+										})};
 //ambiente attack and release knobs
 ~amb1attknob=EZKnob(~w,Rect(785,171,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.5,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~amb1relknob=EZKnob(~w,Rect(870,171,81,17),nil,ControlSpec(0.25,12,\lin,0.001,2,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
 //ambiente2
-~t10=StaticText(~w,Rect(5,192,53,15));//track10
-~t10.string_("pad2:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,192,53,15)).string_("pad2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~amb2steps1=CheckBox.new(~w,Rect(60,190,20,20)).action={|val|if(val.value,{~ambiente2.put(0,~amb2=Synth(\ambdos);)},{~ambiente2.put(0,nil)})};
 ~amb2steps2=CheckBox.new(~w,Rect(80,190,20,20)).action={|val|if(val.value,{~ambiente2.put(1,~amb2=Synth(\ambdos);)},{~ambiente2.put(1,nil)})};
 ~amb2steps3=CheckBox.new(~w,Rect(100,190,20,20)).action={|val|if(val.value,{~ambiente2.put(2,~amb2=Synth(\ambdos);)},{~ambiente2.put(2,nil)})};
@@ -235,14 +231,13 @@
 										~amb2steps25.value=0;~amb2steps26.value=0;
 										~amb2steps27.value=0;~amb2steps28.value=0;
 										~amb2steps29.value=0;~amb2steps30.value=0;
-										~amb2steps31.value=0;~amb2steps32.value=0;										
-										})};	
+										~amb2steps31.value=0;~amb2steps32.value=0;
+										})};
 //ambiente2 attack and release knobs
 ~amb2attknob=EZKnob(~w,Rect(785,191,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.25,\att),{|a| a.value;},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~amb2relknob=EZKnob(~w,Rect(870,191,81,17),nil,ControlSpec(0.25,12,\lin,0.001,4,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 //acordes
-~t11=StaticText(~w,Rect(5,212,53,15));//track11
-~t11.string_("Chords:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,212,53,15)).string_("Chords:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~sintesteps1=CheckBox.new(~w,Rect(60,210,20,20)).action={|val|if(val.value,{~sinte.put(0,~chord=Synth(\acordesuno))},{~sinte.put(0,nil)})};
 ~sintesteps2=CheckBox.new(~w,Rect(80,210,20,20)).action={|val|if(val.value,{~sinte.put(1,~chord=Synth(\acordesuno))},{~sinte.put(1,nil)})};
 ~sintesteps3=CheckBox.new(~w,Rect(100,210,20,20)).action={|val|if(val.value,{~sinte.put(2,~chord=Synth(\acordesuno))},{~sinte.put(2,nil)})};
@@ -295,14 +290,13 @@
 										~sintesteps25.value=0;~sintesteps26.value=0;
 										~sintesteps27.value=0;~sintesteps28.value=0;
 										~sintesteps29.value=0;~sintesteps30.value=0;
-										~sintesteps31.value=0;~sintesteps32.value=0;										
-										})};	
+										~sintesteps31.value=0;~sintesteps32.value=0;
+										})};
 //sinte attack and release knobs
 ~sinte1attknob=EZKnob(~w,Rect(785,211,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.01,\att),{|a| a.value;~synth.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~sinte1relknob=EZKnob(~w,Rect(870,211,81,17),nil,ControlSpec(0.05,8,\lin,0.001,1,\rel),{|a| a.value;~synth.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 //Acordes2
-~t12=StaticText(~w,Rect(5,232,53,15));//track12
-~t12.string_("Chords2:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,232,53,15)).string_("Chords2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~sinte2steps1=CheckBox.new(~w,Rect(60,230,20,20)).action={|val|if(val.value,{~sinte2.put(0,~chord2=Synth(\acordesdos))},{~sinte2.put(0,nil)})};
 ~sinte2steps2=CheckBox.new(~w,Rect(80,230,20,20)).action={|val|if(val.value,{~sinte2.put(1,~chord2=Synth(\acordesdos))},{~sinte2.put(1,nil)})};
 ~sinte2steps3=CheckBox.new(~w,Rect(100,230,20,20)).action={|val|if(val.value,{~sinte2.put(2,~chord2=Synth(\acordesdos))},{~sinte2.put(2,nil)})};
@@ -355,8 +349,8 @@
 										~sinte2steps25.value=0;~sinte2steps26.value=0;
 										~sinte2steps27.value=0;~sinte2steps28.value=0;
 										~sinte2steps29.value=0;~sinte2steps30.value=0;
-										~sinte2steps31.value=0;~sinte2steps32.value=0;										
-										})};	
+										~sinte2steps31.value=0;~sinte2steps32.value=0;
+										})};
 //sinte2 attack and release knobs
 ~sinte2attknob=EZKnob(~w,Rect(785,231,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.1,\att),{|a| a.value;~synth2.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~sinte2relknob=EZKnob(~w,Rect(870,231,81,17),nil,ControlSpec(0.05,8,\lin,0.001,0.5,\rel),{|a| a.value;~synth2.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);

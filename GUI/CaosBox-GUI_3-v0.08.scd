@@ -1,7 +1,6 @@
 (//CaosBox GUI 3 v0.08 - In, steps, aux
 //In
-~t13=StaticText(~w,Rect(5,252,53,15));//track13
-~t13.string_("LineIn:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,252,53,15)).string_("LineIn:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~insteps1=CheckBox.new(~w,Rect(60,250,20,20)).action={|val|if(val.value,{~in.put(0,~entrada=Synth(\ent))},{~in.put(0,nil)})};
 ~insteps2=CheckBox.new(~w,Rect(80,250,20,20)).action={|val|if(val.value,{~in.put(1,~entrada=Synth(\ent))},{~in.put(1,nil)})};
 ~insteps3=CheckBox.new(~w,Rect(100,250,20,20)).action={|val|if(val.value,{~in.put(2,~entrada=Synth(\ent))},{~in.put(2,nil)})};
@@ -60,8 +59,7 @@
 ~inattknob=EZKnob(~w,Rect(785,251,81,17),nil,ControlSpec(0.01,0.25,\lin,0.001,0.1,\att),{|a| a.value;~entrada.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
 ~inrelknob=EZKnob(~w,Rect(870,251,81,17),nil,ControlSpec(0.05,0.75,\lin,0.001,0.1,\rel),{|a| a.value;~entrada.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
 //steps
-~t14=StaticText(~w,Rect(5,272,53,15));//track14
-~t14.string_("Steps:").align_(\left).background_(Color(0,0.9,0));
+StaticText(~w,Rect(5,272,53,15)).string_("Steps:").align_(\left).background_(Color(0,0.9,0));
 ~step1=Button(~w,Rect(61,275,10,10));
 ~step1.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
 ~step2=Button(~w,Rect(81,275,10,10));
@@ -226,8 +224,8 @@ StaticText(~w,Rect(390,497,70,15)).string_("Cub/Lin").align_(\center).background
 ~bott=Button(~w,Rect(390,515,70,22));
 ~bott.states=[["CombC",Color.white,Color.gray(0.25)],
       			  ["CombL",Color.black,Color.gray(0.35)]];
-~bott.action={|val|if(val.value==0,{~mastdel.set(\delind,0);"->Delay Cubico<-".postcln},
-        							{~mastdel.set(\delind,1);"->Delay Lineal<-".postcln})};
+~bott.action={|val|if(val.value==0,{~mastdel.set(\delind,0);"->Cubic Delay<-".postcln},
+        							{~mastdel.set(\delind,1);"->Lineal Delay<-".postcln})};
 //delay time
 ~auxt=StaticText(~w,Rect(390,320,35,15));//
 ~auxt.string_("time").align_(\center).background_(Color(0.5,0.5,0.5));

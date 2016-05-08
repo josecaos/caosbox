@@ -32,8 +32,11 @@ Task({|i|
 					5.wait;};
 		1.do{"+CaosBox es una Maquina para hacer Algorave con la CaosPercLib. \n"
 				"+CaosBox is an Algoraving Machine for CaosPercLib.".postln;2.wait};
-		1.do{"+Escrito/Written by: @joseCao5  [at]: http://www.mixfuckedup.net".postln;2.wait};
+	//
+		1.do{"+Escrito/Written by: @joseCao5  [at]: http://www.josecaos.xyz".postln;2.wait};
+	//
 		1.do{"+Abierto/Opened: CaosBox liveCodePad default.scd".postln;0.25.wait};
+	//
 		}).play;
 );
 //archivos complementarios

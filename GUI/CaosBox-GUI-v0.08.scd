@@ -1,7 +1,6 @@
 (//CaosBox GUI v0.08 - percusiones, botones de contrl, bienvenida
 ~w=Window.new("CaosBox v0.08 #liveCodingMachine for Algorave music by @joseCao5",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
-~t1=StaticText(~w,Rect(5,12,53,15));//track1
-~t1.string_("Bombo:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,12,53,15)).string_("Kick:").align_(\left).background_(Color(0.85,0.85,0.85));
 //bombo steps
 ~bsteps1=CheckBox.new(~w,Rect(60,10,20,20)).action={|val|if(val.value,{~bombo.put(0,~b)},{~bombo.put(0,nil)})};
 ~bsteps2=CheckBox.new(~w,Rect(80,10,20,20)).action={|val|if(val.value,{~bombo.put(1,~b)},{~bombo.put(1,nil)})};
@@ -58,8 +57,7 @@
 										~bsteps31.value=0;~bsteps32.value=0;
 										})};
 //tarola steps
-~t2=StaticText(~w,Rect(5,32,53,15));//track2
-~t2.string_("Tarola:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,32,53,15)).string_("Snare:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~tsteps1=CheckBox.new(~w,Rect(60,30,20,20)).action={|val|if(val.value,{~tarola.put(0,~t)},{~tarola.put(0,nil)})};
 ~tsteps2=CheckBox.new(~w,Rect(80,30,20,20)).action={|val|if(val.value,{~tarola.put(1,~t)},{~tarola.put(1,nil)})};
 ~tsteps3=CheckBox.new(~w,Rect(100,30,20,20)).action={|val|if(val.value,{~tarola.put(2,~t)},{~tarola.put(2,nil)})};
@@ -115,8 +113,7 @@
 										~tsteps31.value=0;~tsteps32.value=0;
 										})};
 //contratiempos
-~t3=StaticText(~w,Rect(5,52,53,15));//track3
-~t3.string_("HiHats:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,52,53,15)).string_("HiHats:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~hsteps1=CheckBox.new(~w,Rect(60,50,20,20)).action={|val|if(val.value,{~contras.put(0,~h)},{~contras.put(0,nil)})};
 ~hsteps2=CheckBox.new(~w,Rect(80,50,20,20)).action={|val|if(val.value,{~contras.put(1,~h)},{~contras.put(1,nil)})};
 ~hsteps3=CheckBox.new(~w,Rect(100,50,20,20)).action={|val|if(val.value,{~contras.put(2,~h)},{~contras.put(2,nil)})};
@@ -172,8 +169,7 @@
 										~hsteps31.value=0;~hsteps32.value=0;
 										})};
 //bombo2
-~t4=StaticText(~w,Rect(5,72,53,15));//track4
-~t4.string_("bombo2:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,72,53,15)).string_("Kick2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~b2steps1=CheckBox.new(~w,Rect(60,70,20,20)).action={|val|if(val.value,{~bombo2.put(0,~b2)},{~bombo2.put(0,nil)})};
 ~b2steps2=CheckBox.new(~w,Rect(80,70,20,20)).action={|val|if(val.value,{~bombo2.put(1,~b2)},{~bombo2.put(1,nil)})};
 ~b2steps3=CheckBox.new(~w,Rect(100,70,20,20)).action={|val|if(val.value,{~bombo2.put(2,~b2)},{~bombo2.put(2,nil)})};
@@ -229,8 +225,7 @@
 										~b2steps31.value=0;~b2steps32.value=0;
 										})};
 //tarola2
-~t5=StaticText(~w,Rect(5,92,53,15));//track5
-~t5.string_("tarola2:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,92,53,15)).string_("Snare2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~t2steps1=CheckBox.new(~w,Rect(60,90,20,20)).action={|val|if(val.value,{~tarola2.put(0,~t2)},{~tarola2.put(0,nil)})};
 ~t2steps2=CheckBox.new(~w,Rect(80,90,20,20)).action={|val|if(val.value,{~tarola2.put(1,~t2)},{~tarola2.put(1,nil)})};
 ~t2steps3=CheckBox.new(~w,Rect(100,90,20,20)).action={|val|if(val.value,{~tarola2.put(2,~t2)},{~tarola2.put(2,nil)})};
@@ -286,8 +281,7 @@
 										~t2steps31.value=0;~t2steps32.value=0;
 										})};
 //contratiempos2
-~t6=StaticText(~w,Rect(5,112,53,15));//track6
-~t6.string_("HiHats2:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,112,53,15)).string_("HiHats2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~h2steps1=CheckBox.new(~w,Rect(60,110,20,20)).action={|val|if(val.value,{~contras2.put(0,~h2)},{~contras2.put(0,nil)})};
 ~h2steps2=CheckBox.new(~w,Rect(80,110,20,20)).action={|val|if(val.value,{~contras2.put(1,~h2)},{~contras2.put(1,nil)})};
 ~h2steps3=CheckBox.new(~w,Rect(100,110,20,20)).action={|val|if(val.value,{~contras2.put(2,~h2)},{~contras2.put(2,nil)})};
@@ -385,10 +379,10 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
 ~bot=Button(~w,Rect(275,650,515,25));
 ~bot.states=[["=>",Color.black,Color.green],
         ["[_]",Color.white,Color.red]];
-~bot.action={|val|if(val.value==0,{Tdef(\secuencias).stop;Tdef(\pasos).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;
-										Tdef(\autog).stop;Tdef(\bass).stop;Tdef(\bass2).stop;Tdef(\acordes).stop;Tdef(\acordes2).stop;~autobotr.value=0;
-											Tdef(\pad).stop;Tdef(\pad2).stop;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~autobotd.value=0;
-												"->You just Stopped caosBox<-".postcln;History.stop},
+~bot.action={|val|if(val.value==0,{Tdef(\secuencias).stop;Tdef(\pasos).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;Tdef(\autog).stop;
+				Tdef(\bass).stop;Tdef(\bass2).stop;Tdef(\pad).stop;Tdef(\pad2).stop;Tdef(\acordes).stop;Tdef(\acordes2).stop;
+				~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~f.kill;~grains.free;History.stop;
+												"->You just Stopped CaosBox<-".postcln;},
         							{Tdef(\secuencias).play;Tdef(\pasos).play;Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
         								Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"->Playing, please start algoravin'<-".postcln})};
 //record

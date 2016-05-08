@@ -3,15 +3,17 @@
 //Dic2013/ene2014 @ Puerto Morelos Q. Roo Mx.
 //////////////////////////////////////////////////////////////////////
 //CaosBox v 0.08
-// Para arrancar, evalua el siguiente texto: / To start, evaluate the next text:
+// Para arrancar, evalua la siguiente función: / To start, evaluate the next function:
 //////////////////////////////////////////////////////////////////////
 (
-History.start;
+// History.start;
 s.waitForBoot{
-	 ~url="/home/josecaos/.ssh/caosbox/";/* <--- Change for your local URL to caosbox folder*/
-	(~url +/+ "CB/CaosBox-load-v0.08.scd").load};/* <-- don't change this one */
+	~url = thisProcess.nowExecutingPath.dirname;
+	(~url +/+ "CB/CaosBox-load-v0.08.scd").load
+};
 );
 //
+// CaosBox works with 'caosperclib' (https://github.com/josecaos/caosperclib) Install here: Platform.userExtensionDir;
 ///
 ////
 ///////////////////////////
