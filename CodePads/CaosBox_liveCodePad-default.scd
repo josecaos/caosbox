@@ -15,7 +15,7 @@
 //snare
 ~t={var out=60;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:320,rq:0.25,amp1:0.5,amp2:0.1))};//
 //hat
-~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.25,highcutfreq:3930,rq:0.5,amp1:0.25,amp2:0.35))};//
+~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.35,highcutfreq:2930,rq:0.5,amp1:0.25,amp2:0.35))};//
 //kick2
 ~b2={var out=64;Out.ar(out,CaosKick2.ar(att:0.1,rel:2,modFreq:0.25,modbw:0.15,bw:0.05,freq1:60,freq2:64,lowcutfreq:80,amp:0.1))};//
 //snare2
@@ -33,7 +33,7 @@
 (//bajo 1
 Tdef(\bass,{
 //CaosBass args: |att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,amp1,amp2|
-	var bassmel=Prand(~mainmelody.pyramid.mirror2+24,inf).asStream;
+	var bassmel=Prand(~mainmelody.pyramid.mirror2-12,inf).asStream;
 	loop{
 	~bass.set(\note,bassmel.next,
 			   \filtminf,56,
@@ -41,8 +41,8 @@ Tdef(\bass,{
 			   \filtime,0.25,
 			   \rq,0.15,
 			   \iphase,0.5,
-			   \amp1,0.75,
-			   \amp2,0.45);
+			   \amp1,0.55,
+			   \amp2,0.35);
 	~bass.set(\out,64);//route
 	~tiempos.wait;
 	}
@@ -52,7 +52,7 @@ Tdef(\bass,{
 (
 Tdef(\bass2,{
 //CaosBass2 args: |att,rel,note,trig,filtminf,filtmaxf,filtime,rq,bandw,iphase,amp1,amp2|
-	var bass2mel=Prand(~mainmelody.scramble.mirror2,inf).asStream;
+	var bass2mel=Prand(~mainmelody.scramble.mirror2+50,inf).asStream;
 	loop{
 	~bass2.set(\note,bass2mel.next,
 			   \trig,4,
@@ -61,9 +61,9 @@ Tdef(\bass2,{
 			   \filtime,0.25,\rq,0.25,
 			   \bandw,0.25,
 			   \iphase,0.25,
-			   \amp1,0.4,
-			   \amp2,0.2);
-	~bass2.set(\out,64);//route
+			   \amp1,0.055,
+			   \amp2,0.01);
+	~bass2.set(\out,54);//route
 	~tiempos.wait;
 	}
 }).quant_(4);
