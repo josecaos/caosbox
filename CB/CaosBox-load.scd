@@ -30,13 +30,9 @@ Task({|i|
 						noise.ar(2.32.rand),linea.choose.ar(rrand(60,10760),rrand(10760,60),0.5),rrand(0.15,0.5)),
 					linea.choose.kr(0.01,0.5,2),1,0.025)!2};
 					5.wait;};
-		1.do{"+CaosBox es una Maquina no tan comun, para hacer Algorave/Livecoding con CaosPercLib. \n"
-				"+CaosBox is a not so common Algoraving/Livecoding Machine for CaosPercLib.".postln;3.wait};
+		1.do{" +CaosBox es una Máquina no tan común, para hacer Algorave/Livecoding con CaosPercLib. \n +CaosBox is a not so common Algoraving/Livecoding Machine for CaosPercLib. \n +Escrito/Written by: @joseCao5  [at]: http://www.josecaos.xyz".postln;3.wait};
 	//
-		1.do{"+Escrito/Written by: @joseCao5  [at]: http://www.josecaos.xyz".postln;3.wait};
-	//
-		1.do{"+Abierto/Opened: CaosBox_liveCodePad-default.scd".postln;0.25.wait};
-	//
+		3.do{"+Abierto/Opened: CaosBox_liveCodePad-default.scd".postln;0.25.wait};
 		}).play;
 );
 //archivos complementarios
