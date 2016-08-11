@@ -26,7 +26,7 @@ SynthDef(\acordesdos,{|chord,att=0.1,rel=1,note=57,cutf=420,rq=0.5,pan=0,gate=0,
 	var type= 'M';
 	Out.ar(out,CaosGuitChords.ar(type,att,rel,note,cutf,rq,pan,gate,amp))}).add;//acordes
 //LineIn
-SynthDef(\ent,{|out,gate=0,att=0.1,rel=0.25|
+SynthDef(\ent,{|out=50,gate=0,att=0.1,rel=0.25|
 	Out.ar(out,Pan2.ar(SoundIn.ar([0,1])*EnvGen.ar(Env.perc(att,rel),gate,doneAction:2)))}).add;
 );
 (//estas variables se declaran cuando un checkbox es activado, mientras nil

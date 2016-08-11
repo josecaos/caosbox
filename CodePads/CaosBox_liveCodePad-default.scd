@@ -19,9 +19,9 @@
 //kick2
 ~b2={var out=64;Out.ar(out,CaosKick2.ar(att:0.1,rel:2,modFreq:0.25,modbw:0.15,bw:0.05,freq1:60,freq2:64,lowcutfreq:80,amp:0.1))};//
 //snare2
-~t2={var out=56;Out.ar(out,CaosSnare2.ar(att:0.05,rel:0.2,iphase:0.05,bw:0.5,highcutfreq:470,rq:0.5,amp1:0.2,amp2:0.1))};//
+~t2={var out=54;Out.ar(out,CaosSnare2.ar(att:0.05,rel:0.2,iphase:0.05,bw:0.5,highcutfreq:470,rq:0.5,amp1:0.2,amp2:0.1))};//
 //hat2
-~h2={var out=62;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:2950,rq:0.45,amp1:0.5,amp2:0.3))};//
+~h2={var out=64;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:2950,rq:0.45,amp1:0.5,amp2:0.3))};//
 );
 ////////////////////Bass, Pad, Chord functions:
 //you can create more variables as melodies for instrument Tdefs
@@ -145,7 +145,11 @@ Tdef(\acordes2,{
 }).quant_(4);
 );
 //LineIn
-~entrada.set(\out,62);//route
+(
+SynthDef(\ent,{|out=64,gate,att,rel|
+	Out.ar(out,Pan2.ar(SoundIn.ar([0,1])*EnvGen.ar(Env.perc(att,rel),gate,doneAction:2)))}).add;
+)
+
 );
 ////////////////////////////////////////
 //To make changes to automation settings,
