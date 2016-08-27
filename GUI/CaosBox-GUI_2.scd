@@ -2,37 +2,28 @@
 //bajo
 StaticText(~w,Rect(5,132,53,15)).string_("Bass:").align_(\left).background_(Color(0.85,0.85,0.85));
 
+//
+ ~checksteps = [20,20,20,30];
 
-// Help.gui
-(
-var	a = [20,20,20,30];
+ ~checkbox = 60;
 
-var	b = a[2%a];
+ for (0, 31, { |i|
 
-var	d = 60;
+ 	var checkvar = 0;
 
-var	e = d + b;
+	var a = ~checksteps[i%~checksteps.size];
 
-for (1, 32, { |i|
+	var variable = checkvar + 1;
+ 	 variable = CheckBox.new(~w,Rect(~checkbox, 130, 20, 20)).action={|val| if(val.value,{~bajo.put(i,~bass=Synth(\bajouno);)},{~bajo.put(i,nil)})};
 
-	i.postln;
+ 	~checkbox = ~checkbox + a;
 
-	c = "~bassteps" + i;
-
-	c = CheckBox.new(~w,Rect(d + b,130,20,20)).action={|val|if(val.value,{~bajo.put(i - 1,~bass=Synth(\bajouno);)},{~bajo.put(i - 1,nil)})};
-	// a[1%a.size].postcln;
-});
-
-);
-
-{var dos = [1,2,3,4]; 4.do(dos[20%dos.size].postcln)}.value
+ 	variable.postln;
 
 
-{var x = [1,2,3,4]; 4.do(x[20%x.size].postcln)}.value
+ });
 
-{var x = [20,20,20,30]; x[4%x.size].postcln}.value
-
-{z = [20,20,20,30]; z[20%z]}.value
+// Help.gui;
 
 
 /*~bassteps1=CheckBox.new(~w,Rect(60,130,20,20)).action={|val|if(val.value,{~bajo.put(0,~bass=Synth(\bajouno);)},{~bajo.put(0,nil)})};
