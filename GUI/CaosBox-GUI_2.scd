@@ -1,7 +1,41 @@
-(//CaosBox GUI 2 v0.07 - secuencias bajos, ambientes, sintetizadores
+(//CaosBox GUI 2 v0.1 - steps bajos, ambientes, sintetizadores
 //bajo
 StaticText(~w,Rect(5,132,53,15)).string_("Bass:").align_(\left).background_(Color(0.85,0.85,0.85));
-~bassteps1=CheckBox.new(~w,Rect(60,130,20,20)).action={|val|if(val.value,{~bajo.put(0,~bass=Synth(\bajouno);)},{~bajo.put(0,nil)})};
+
+
+// Help.gui
+(
+var	a = [20,20,20,30];
+
+var	b = a[2%a];
+
+var	d = 60;
+
+var	e = d + b;
+
+for (1, 32, { |i|
+
+	i.postln;
+
+	c = "~bassteps" + i;
+
+	c = CheckBox.new(~w,Rect(d + b,130,20,20)).action={|val|if(val.value,{~bajo.put(i - 1,~bass=Synth(\bajouno);)},{~bajo.put(i - 1,nil)})};
+	// a[1%a.size].postcln;
+});
+
+);
+
+{var dos = [1,2,3,4]; 4.do(dos[20%dos.size].postcln)}.value
+
+
+{var x = [1,2,3,4]; 4.do(x[20%x.size].postcln)}.value
+
+{var x = [20,20,20,30]; x[4%x.size].postcln}.value
+
+{z = [20,20,20,30]; z[20%z]}.value
+
+
+/*~bassteps1=CheckBox.new(~w,Rect(60,130,20,20)).action={|val|if(val.value,{~bajo.put(0,~bass=Synth(\bajouno);)},{~bajo.put(0,nil)})};
 ~bassteps2=CheckBox.new(~w,Rect(80,130,20,20)).action={|val|if(val.value,{~bajo.put(1,~bass=Synth(\bajouno);)},{~bajo.put(1,nil)})};
 ~bassteps3=CheckBox.new(~w,Rect(100,130,20,20)).action={|val|if(val.value,{~bajo.put(2,~bass=Synth(\bajouno);)},{~bajo.put(2,nil)})};
 ~bassteps4=CheckBox.new(~w,Rect(120,130,20,20)).action={|val|if(val.value,{~bajo.put(3,~bass=Synth(\bajouno);)},{~bajo.put(3,nil)})};
@@ -32,7 +66,7 @@ StaticText(~w,Rect(5,132,53,15)).string_("Bass:").align_(\left).background_(Colo
 ~bassteps29=CheckBox.new(~w,Rect(690,130,20,20)).action={|val|if(val.value,{~bajo.put(28,~bass=Synth(\bajouno);)},{~bajo.put(28,nil)})};
 ~bassteps30=CheckBox.new(~w,Rect(710,130,20,20)).action={|val|if(val.value,{~bajo.put(29,~bass=Synth(\bajouno);)},{~bajo.put(29,nil)})};
 ~bassteps31=CheckBox.new(~w,Rect(730,130,20,20)).action={|val|if(val.value,{~bajo.put(30,~bass=Synth(\bajouno);)},{~bajo.put(30,nil)})};
-~bassteps32=CheckBox.new(~w,Rect(750,130,20,20)).action={|val|if(val.value,{~bajo.put(31,~bass=Synth(\bajouno);)},{~bajo.put(31,nil)})};
+~bassteps32=CheckBox.new(~w,Rect(750,130,20,20)).action={|val|if(val.value,{~bajo.put(31,~bass=Synth(\bajouno);)},{~bajo.put(31,nil)})};*/
 //resetea secuencias Bajo
 ~delbass=Button(~w,Rect(765,132,15,15));
 ~delbass.states=[[" X ",Color.black,Color.red]];
