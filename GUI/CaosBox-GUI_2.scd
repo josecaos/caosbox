@@ -1,6 +1,7 @@
 (//CaosBox GUI 2 v0.1 - steps bajos, ambientes, sintetizadores
 //bajo
 StaticText(~w,Rect(5,132,53,15)).string_("Bass:").align_(\left).background_(Color(0.85,0.85,0.85));
+~checkbox = 60;
 //crea los steps
 for (0, 31, { |i|
 
@@ -41,63 +42,46 @@ for (0, 31, { |i|
 
 //bajo2
 StaticText(~w,Rect(5,152,53,15)).string_("Bass2:").align_(\left).background_(Color(0.85,0.85,0.85));
-~bass2teps1=CheckBox.new(~w,Rect(60,150,20,20)).action={|val|if(val.value,{~bajo2.put(0,~bass2=Synth(\bajodos);)},{~bajo2.put(0,nil)})};
-~bass2teps2=CheckBox.new(~w,Rect(80,150,20,20)).action={|val|if(val.value,{~bajo2.put(1,~bass2=Synth(\bajodos);)},{~bajo2.put(1,nil)})};
-~bass2teps3=CheckBox.new(~w,Rect(100,150,20,20)).action={|val|if(val.value,{~bajo2.put(2,~bass2=Synth(\bajodos);)},{~bajo2.put(2,nil)})};
-~bass2teps4=CheckBox.new(~w,Rect(120,150,20,20)).action={|val|if(val.value,{~bajo2.put(3,~bass2=Synth(\bajodos);)},{~bajo2.put(3,nil)})};
-~bass2teps5=CheckBox.new(~w,Rect(150,150,20,20)).action={|val|if(val.value,{~bajo2.put(4,~bass2=Synth(\bajodos);)},{~bajo2.put(4,nil)})};
-~bass2teps6=CheckBox.new(~w,Rect(170,150,20,20)).action={|val|if(val.value,{~bajo2.put(5,~bass2=Synth(\bajodos);)},{~bajo2.put(5,nil)})};
-~bass2teps7=CheckBox.new(~w,Rect(190,150,20,20)).action={|val|if(val.value,{~bajo2.put(6,~bass2=Synth(\bajodos);)},{~bajo2.put(6,nil)})};
-~bass2teps8=CheckBox.new(~w,Rect(210,150,20,20)).action={|val|if(val.value,{~bajo2.put(7,~bass2=Synth(\bajodos);)},{~bajo2.put(7,nil)})};
-~bass2teps9=CheckBox.new(~w,Rect(240,150,20,20)).action={|val|if(val.value,{~bajo2.put(8,~bass2=Synth(\bajodos);)},{~bajo2.put(8,nil)})};
-~bass2teps10=CheckBox.new(~w,Rect(260,150,20,20)).action={|val|if(val.value,{~bajo2.put(9,~bass2=Synth(\bajodos);)},{~bajo2.put(9,nil)})};
-~bass2teps11=CheckBox.new(~w,Rect(280,150,20,20)).action={|val|if(val.value,{~bajo2.put(10,~bass2=Synth(\bajodos);)},{~bajo2.put(10,nil)})};
-~bass2teps12=CheckBox.new(~w,Rect(300,150,20,20)).action={|val|if(val.value,{~bajo2.put(11,~bass2=Synth(\bajodos);)},{~bajo2.put(11,nil)})};
-~bass2teps13=CheckBox.new(~w,Rect(330,150,20,20)).action={|val|if(val.value,{~bajo2.put(12,~bass2=Synth(\bajodos);)},{~bajo2.put(12,nil)})};
-~bass2teps14=CheckBox.new(~w,Rect(350,150,20,20)).action={|val|if(val.value,{~bajo2.put(13,~bass2=Synth(\bajodos);)},{~bajo2.put(13,nil)})};
-~bass2teps15=CheckBox.new(~w,Rect(370,150,20,20)).action={|val|if(val.value,{~bajo2.put(14,~bass2=Synth(\bajodos);)},{~bajo2.put(14,nil)})};
-~bass2teps16=CheckBox.new(~w,Rect(390,150,20,20)).action={|val|if(val.value,{~bajo2.put(15,~bass2=Synth(\bajodos);)},{~bajo2.put(15,nil)})};
-~bass2teps17=CheckBox.new(~w,Rect(420,150,20,20)).action={|val|if(val.value,{~bajo2.put(16,~bass2=Synth(\bajodos);)},{~bajo2.put(16,nil)})};
-~bass2teps18=CheckBox.new(~w,Rect(440,150,20,20)).action={|val|if(val.value,{~bajo2.put(17,~bass2=Synth(\bajodos);)},{~bajo2.put(17,nil)})};
-~bass2teps19=CheckBox.new(~w,Rect(460,150,20,20)).action={|val|if(val.value,{~bajo2.put(18,~bass2=Synth(\bajodos);)},{~bajo2.put(18,nil)})};
-~bass2teps20=CheckBox.new(~w,Rect(480,150,20,20)).action={|val|if(val.value,{~bajo2.put(19,~bass2=Synth(\bajodos);)},{~bajo2.put(19,nil)})};
-~bass2teps21=CheckBox.new(~w,Rect(510,150,20,20)).action={|val|if(val.value,{~bajo2.put(20,~bass2=Synth(\bajodos);)},{~bajo2.put(20,nil)})};
-~bass2teps22=CheckBox.new(~w,Rect(530,150,20,20)).action={|val|if(val.value,{~bajo2.put(21,~bass2=Synth(\bajodos);)},{~bajo2.put(21,nil)})};
-~bass2teps23=CheckBox.new(~w,Rect(550,150,20,20)).action={|val|if(val.value,{~bajo2.put(22,~bass2=Synth(\bajodos);)},{~bajo2.put(22,nil)})};
-~bass2teps24=CheckBox.new(~w,Rect(570,150,20,20)).action={|val|if(val.value,{~bajo2.put(23,~bass2=Synth(\bajodos);)},{~bajo2.put(23,nil)})};
-~bass2teps25=CheckBox.new(~w,Rect(600,150,20,20)).action={|val|if(val.value,{~bajo2.put(24,~bass2=Synth(\bajodos);)},{~bajo2.put(24,nil)})};
-~bass2teps26=CheckBox.new(~w,Rect(620,150,20,20)).action={|val|if(val.value,{~bajo2.put(25,~bass2=Synth(\bajodos);)},{~bajo2.put(25,nil)})};
-~bass2teps27=CheckBox.new(~w,Rect(640,150,20,20)).action={|val|if(val.value,{~bajo2.put(26,~bass2=Synth(\bajodos);)},{~bajo2.put(26,nil)})};
-~bass2teps28=CheckBox.new(~w,Rect(660,150,20,20)).action={|val|if(val.value,{~bajo2.put(27,~bass2=Synth(\bajodos);)},{~bajo2.put(27,nil)})};
-~bass2teps29=CheckBox.new(~w,Rect(690,150,20,20)).action={|val|if(val.value,{~bajo2.put(28,~bass2=Synth(\bajodos);)},{~bajo2.put(28,nil)})};
-~bass2teps30=CheckBox.new(~w,Rect(710,150,20,20)).action={|val|if(val.value,{~bajo2.put(29,~bass2=Synth(\bajodos);)},{~bajo2.put(29,nil)})};
-~bass2teps31=CheckBox.new(~w,Rect(730,150,20,20)).action={|val|if(val.value,{~bajo2.put(30,~bass2=Synth(\bajodos);)},{~bajo2.put(30,nil)})};
-~bass2teps32=CheckBox.new(~w,Rect(750,150,20,20)).action={|val|if(val.value,{~bajo2.put(31,~bass2=Synth(\bajodos);)},{~bajo2.put(31,nil)})};
-//resetea secuencias bajo2
-~delbass=Button(~w,Rect(765,152,15,15));
-~delbass.states=[[" X ",Color.black,Color.red]];
-~delbass.action={|val|if(val.value==0,{"Bass have been cleared!".postln;
+//crea los steps
+~checkbox = 60;
+for (0, 31, { |i|
+
+	var checkvar = "~bass2teps";
+
+	var a = ~checksteps[i%~checksteps.size];
+
+	var variable = checkvar ++ i;
+
+	~checkbajo2.put(i,variable);
+
+	~checkbajo2[i] = CheckBox.new(~w,Rect(~checkbox, 150, 20, 20)).action={|val| if(val.value,{~bajo2.put(i,~bass2=Synth(\bajodos);)},{~bajo2.put(i,nil)})};
+
+	~checkbox = ~checkbox + a;
+
+
+});
+// borra steps
+~delbass2=Button(~w,Rect(765,152,15,15));
+~delbass2.states=[[" X ",Color.black,Color.red]];
+~delbass2.action={|val|if(val.value==0,{
+
+	"Bass have been cleared!".postln;
+
 	~bajo2.put((0..31),nil);
-	~bass2teps1.value=0;~bass2teps2.value=0;
-	~bass2teps3.value=0;~bass2teps4.value=0;
-	~bass2teps5.value=0;~bass2teps6.value=0;
-	~bass2teps7.value=0;~bass2teps8.value=0;
-	~bass2teps9.value=0;~bass2teps10.value=0;
-	~bass2teps11.value=0;~bass2teps12.value=0;
-	~bass2teps13.value=0;~bass2teps14.value=0;
-	~bass2teps15.value=0;~bass2teps16.value=0;
-	~bass2teps17.value=0;~bass2teps18.value=0;
-	~bass2teps19.value=0;~bass2teps20.value=0;
-	~bass2teps21.value=0;~bass2teps22.value=0;
-	~bass2teps23.value=0;~bass2teps24.value=0;
-	~bass2teps25.value=0;~bass2teps26.value=0;
-	~bass2teps27.value=0;~bass2teps28.value=0;
-	~bass2teps29.value=0;~bass2teps30.value=0;
-	~bass2teps31.value=0;~bass2teps32.value=0;
+
+	for(0, 31, {|i|
+		~checkbajo2[i].value = 0;
+
+	});
+
 })};
 //bass attack and release knobs
 ~bass2attknob=EZKnob(~w,Rect(785,151,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~bass2relknob=EZKnob(~w,Rect(870,151,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+
+
+
+
 //ambiente
 StaticText(~w,Rect(5,172,53,15)).string_("Pad:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~ambsteps1=CheckBox.new(~w,Rect(60,170,20,20)).action={|val|if(val.value,{~ambiente.put(0,~amb=Synth(\ambuno);)},{~ambiente.put(0,nil)})};
