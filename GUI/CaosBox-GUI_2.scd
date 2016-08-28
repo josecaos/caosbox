@@ -1,88 +1,44 @@
 (//CaosBox GUI 2 v0.1 - steps bajos, ambientes, sintetizadores
 //bajo
 StaticText(~w,Rect(5,132,53,15)).string_("Bass:").align_(\left).background_(Color(0.85,0.85,0.85));
+//crea los steps
+for (0, 31, { |i|
 
-//
- ~checksteps = [20,20,20,30];
-
- ~checkbox = 60;
-
- for (0, 31, { |i|
-
- 	var checkvar = 0;
+	var checkvar = "~bassteps";
 
 	var a = ~checksteps[i%~checksteps.size];
 
-	var variable = checkvar + 1;
- 	 variable = CheckBox.new(~w,Rect(~checkbox, 130, 20, 20)).action={|val| if(val.value,{~bajo.put(i,~bass=Synth(\bajouno);)},{~bajo.put(i,nil)})};
+	var variable = checkvar ++ i;
 
- 	~checkbox = ~checkbox + a;
+	~checkbajo.put(i,variable);
 
- 	variable.postln;
+	~checkbajo[i] = CheckBox.new(~w,Rect(~checkbox, 130, 20, 20)).action={|val| if(val.value,{~bajo.put(i,~bass=Synth(\bajouno);)},{~bajo.put(i,nil)})};
 
-
- });
-
-// Help.gui;
+	~checkbox = ~checkbox + a;
 
 
-/*~bassteps1=CheckBox.new(~w,Rect(60,130,20,20)).action={|val|if(val.value,{~bajo.put(0,~bass=Synth(\bajouno);)},{~bajo.put(0,nil)})};
-~bassteps2=CheckBox.new(~w,Rect(80,130,20,20)).action={|val|if(val.value,{~bajo.put(1,~bass=Synth(\bajouno);)},{~bajo.put(1,nil)})};
-~bassteps3=CheckBox.new(~w,Rect(100,130,20,20)).action={|val|if(val.value,{~bajo.put(2,~bass=Synth(\bajouno);)},{~bajo.put(2,nil)})};
-~bassteps4=CheckBox.new(~w,Rect(120,130,20,20)).action={|val|if(val.value,{~bajo.put(3,~bass=Synth(\bajouno);)},{~bajo.put(3,nil)})};
-~bassteps5=CheckBox.new(~w,Rect(150,130,20,20)).action={|val|if(val.value,{~bajo.put(4,~bass=Synth(\bajouno);)},{~bajo.put(4,nil)})};
-~bassteps6=CheckBox.new(~w,Rect(170,130,20,20)).action={|val|if(val.value,{~bajo.put(5,~bass=Synth(\bajouno);)},{~bajo.put(5,nil)})};
-~bassteps7=CheckBox.new(~w,Rect(190,130,20,20)).action={|val|if(val.value,{~bajo.put(6,~bass=Synth(\bajouno);)},{~bajo.put(6,nil)})};
-~bassteps8=CheckBox.new(~w,Rect(210,130,20,20)).action={|val|if(val.value,{~bajo.put(7,~bass=Synth(\bajouno);)},{~bajo.put(7,nil)})};
-~bassteps9=CheckBox.new(~w,Rect(240,130,20,20)).action={|val|if(val.value,{~bajo.put(8,~bass=Synth(\bajouno);)},{~bajo.put(8,nil)})};
-~bassteps10=CheckBox.new(~w,Rect(260,130,20,20)).action={|val|if(val.value,{~bajo.put(9,~bass=Synth(\bajouno);)},{~bajo.put(9,nil)})};
-~bassteps11=CheckBox.new(~w,Rect(280,130,20,20)).action={|val|if(val.value,{~bajo.put(10,~bass=Synth(\bajouno);)},{~bajo.put(10,nil)})};
-~bassteps12=CheckBox.new(~w,Rect(300,130,20,20)).action={|val|if(val.value,{~bajo.put(11,~bass=Synth(\bajouno);)},{~bajo.put(11,nil)})};
-~bassteps13=CheckBox.new(~w,Rect(330,130,20,20)).action={|val|if(val.value,{~bajo.put(12,~bass=Synth(\bajouno);)},{~bajo.put(12,nil)})};
-~bassteps14=CheckBox.new(~w,Rect(350,130,20,20)).action={|val|if(val.value,{~bajo.put(13,~bass=Synth(\bajouno);)},{~bajo.put(13,nil)})};
-~bassteps15=CheckBox.new(~w,Rect(370,130,20,20)).action={|val|if(val.value,{~bajo.put(14,~bass=Synth(\bajouno);)},{~bajo.put(14,nil)})};
-~bassteps16=CheckBox.new(~w,Rect(390,130,20,20)).action={|val|if(val.value,{~bajo.put(15,~bass=Synth(\bajouno);)},{~bajo.put(15,nil)})};
-~bassteps17=CheckBox.new(~w,Rect(420,130,20,20)).action={|val|if(val.value,{~bajo.put(16,~bass=Synth(\bajouno);)},{~bajo.put(16,nil)})};
-~bassteps18=CheckBox.new(~w,Rect(440,130,20,20)).action={|val|if(val.value,{~bajo.put(17,~bass=Synth(\bajouno);)},{~bajo.put(17,nil)})};
-~bassteps19=CheckBox.new(~w,Rect(460,130,20,20)).action={|val|if(val.value,{~bajo.put(18,~bass=Synth(\bajouno);)},{~bajo.put(18,nil)})};
-~bassteps20=CheckBox.new(~w,Rect(480,130,20,20)).action={|val|if(val.value,{~bajo.put(19,~bass=Synth(\bajouno);)},{~bajo.put(19,nil)})};
-~bassteps21=CheckBox.new(~w,Rect(510,130,20,20)).action={|val|if(val.value,{~bajo.put(20,~bass=Synth(\bajouno);)},{~bajo.put(20,nil)})};
-~bassteps22=CheckBox.new(~w,Rect(530,130,20,20)).action={|val|if(val.value,{~bajo.put(21,~bass=Synth(\bajouno);)},{~bajo.put(21,nil)})};
-~bassteps23=CheckBox.new(~w,Rect(550,130,20,20)).action={|val|if(val.value,{~bajo.put(22,~bass=Synth(\bajouno);)},{~bajo.put(22,nil)})};
-~bassteps24=CheckBox.new(~w,Rect(570,130,20,20)).action={|val|if(val.value,{~bajo.put(23,~bass=Synth(\bajouno);)},{~bajo.put(23,nil)})};
-~bassteps25=CheckBox.new(~w,Rect(600,130,20,20)).action={|val|if(val.value,{~bajo.put(24,~bass=Synth(\bajouno);)},{~bajo.put(24,nil)})};
-~bassteps26=CheckBox.new(~w,Rect(620,130,20,20)).action={|val|if(val.value,{~bajo.put(25,~bass=Synth(\bajouno);)},{~bajo.put(25,nil)})};
-~bassteps27=CheckBox.new(~w,Rect(640,130,20,20)).action={|val|if(val.value,{~bajo.put(26,~bass=Synth(\bajouno);)},{~bajo.put(26,nil)})};
-~bassteps28=CheckBox.new(~w,Rect(660,130,20,20)).action={|val|if(val.value,{~bajo.put(27,~bass=Synth(\bajouno);)},{~bajo.put(27,nil)})};
-~bassteps29=CheckBox.new(~w,Rect(690,130,20,20)).action={|val|if(val.value,{~bajo.put(28,~bass=Synth(\bajouno);)},{~bajo.put(28,nil)})};
-~bassteps30=CheckBox.new(~w,Rect(710,130,20,20)).action={|val|if(val.value,{~bajo.put(29,~bass=Synth(\bajouno);)},{~bajo.put(29,nil)})};
-~bassteps31=CheckBox.new(~w,Rect(730,130,20,20)).action={|val|if(val.value,{~bajo.put(30,~bass=Synth(\bajouno);)},{~bajo.put(30,nil)})};
-~bassteps32=CheckBox.new(~w,Rect(750,130,20,20)).action={|val|if(val.value,{~bajo.put(31,~bass=Synth(\bajouno);)},{~bajo.put(31,nil)})};*/
-//resetea secuencias Bajo
+});
+// borra steps
 ~delbass=Button(~w,Rect(765,132,15,15));
 ~delbass.states=[[" X ",Color.black,Color.red]];
-~delbass.action={|val|if(val.value==0,{"Bass have been cleared!".postln;
-										~bajo.put((0..31),nil);
-										~bassteps1.value=0;~bassteps2.value=0;
-										~bassteps3.value=0;~bassteps4.value=0;
-										~bassteps5.value=0;~bassteps6.value=0;
-										~bassteps7.value=0;~bassteps8.value=0;
-										~bassteps9.value=0;~bassteps10.value=0;
-										~bassteps11.value=0;~bassteps12.value=0;
-										~bassteps13.value=0;~bassteps14.value=0;
-										~bassteps15.value=0;~bassteps16.value=0;
-										~bassteps17.value=0;~bassteps18.value=0;
-										~bassteps19.value=0;~bassteps20.value=0;
-										~bassteps21.value=0;~bassteps22.value=0;
-										~bassteps23.value=0;~bassteps24.value=0;
-										~bassteps25.value=0;~bassteps26.value=0;
-										~bassteps27.value=0;~bassteps28.value=0;
-										~bassteps29.value=0;~bassteps30.value=0;
-										~bassteps31.value=0;~bassteps32.value=0;
-										})};
+~delbass.action={|val|if(val.value==0,{
+
+	"Bass have been cleared!".postln;
+
+	~bajo.put((0..31),nil);
+
+	for(0, 31, {|i|
+		~checkbajo[i].value = 0;
+
+	});
+
+})};
 //bajo attack and release knobs
 ~bass1attknob=EZKnob(~w,Rect(785,131,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~bass1relknob=EZKnob(~w,Rect(870,131,81,17),nil,ControlSpec(0.1,2,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+
+
+
 //bajo2
 StaticText(~w,Rect(5,152,53,15)).string_("Bass2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~bass2teps1=CheckBox.new(~w,Rect(60,150,20,20)).action={|val|if(val.value,{~bajo2.put(0,~bass2=Synth(\bajodos);)},{~bajo2.put(0,nil)})};
@@ -121,24 +77,24 @@ StaticText(~w,Rect(5,152,53,15)).string_("Bass2:").align_(\left).background_(Col
 ~delbass=Button(~w,Rect(765,152,15,15));
 ~delbass.states=[[" X ",Color.black,Color.red]];
 ~delbass.action={|val|if(val.value==0,{"Bass have been cleared!".postln;
-										~bajo2.put((0..31),nil);
-										~bass2teps1.value=0;~bass2teps2.value=0;
-										~bass2teps3.value=0;~bass2teps4.value=0;
-										~bass2teps5.value=0;~bass2teps6.value=0;
-										~bass2teps7.value=0;~bass2teps8.value=0;
-										~bass2teps9.value=0;~bass2teps10.value=0;
-										~bass2teps11.value=0;~bass2teps12.value=0;
-										~bass2teps13.value=0;~bass2teps14.value=0;
-										~bass2teps15.value=0;~bass2teps16.value=0;
-										~bass2teps17.value=0;~bass2teps18.value=0;
-										~bass2teps19.value=0;~bass2teps20.value=0;
-										~bass2teps21.value=0;~bass2teps22.value=0;
-										~bass2teps23.value=0;~bass2teps24.value=0;
-										~bass2teps25.value=0;~bass2teps26.value=0;
-										~bass2teps27.value=0;~bass2teps28.value=0;
-										~bass2teps29.value=0;~bass2teps30.value=0;
-										~bass2teps31.value=0;~bass2teps32.value=0;
-										})};
+	~bajo2.put((0..31),nil);
+	~bass2teps1.value=0;~bass2teps2.value=0;
+	~bass2teps3.value=0;~bass2teps4.value=0;
+	~bass2teps5.value=0;~bass2teps6.value=0;
+	~bass2teps7.value=0;~bass2teps8.value=0;
+	~bass2teps9.value=0;~bass2teps10.value=0;
+	~bass2teps11.value=0;~bass2teps12.value=0;
+	~bass2teps13.value=0;~bass2teps14.value=0;
+	~bass2teps15.value=0;~bass2teps16.value=0;
+	~bass2teps17.value=0;~bass2teps18.value=0;
+	~bass2teps19.value=0;~bass2teps20.value=0;
+	~bass2teps21.value=0;~bass2teps22.value=0;
+	~bass2teps23.value=0;~bass2teps24.value=0;
+	~bass2teps25.value=0;~bass2teps26.value=0;
+	~bass2teps27.value=0;~bass2teps28.value=0;
+	~bass2teps29.value=0;~bass2teps30.value=0;
+	~bass2teps31.value=0;~bass2teps32.value=0;
+})};
 //bass attack and release knobs
 ~bass2attknob=EZKnob(~w,Rect(785,151,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~bass2relknob=EZKnob(~w,Rect(870,151,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
@@ -180,24 +136,24 @@ StaticText(~w,Rect(5,172,53,15)).string_("Pad:").align_(\left).background_(Color
 ~delbass=Button(~w,Rect(765,172,15,15));
 ~delbass.states=[[" X ",Color.black,Color.red]];
 ~delbass.action={|val|if(val.value==0,{"Synth have been cleared!".postln;
-										~ambiente.put((0..31),nil);
-										~ambsteps1.value=0;~ambsteps2.value=0;
-										~ambsteps3.value=0;~ambsteps4.value=0;
-										~ambsteps5.value=0;~ambsteps6.value=0;
-										~ambsteps7.value=0;~ambsteps8.value=0;
-										~ambsteps9.value=0;~ambsteps10.value=0;
-										~ambsteps11.value=0;~ambsteps12.value=0;
-										~ambsteps13.value=0;~ambsteps14.value=0;
-										~ambsteps15.value=0;~ambsteps16.value=0;
-										~ambsteps17.value=0;~ambsteps18.value=0;
-										~ambsteps19.value=0;~ambsteps20.value=0;
-										~ambsteps21.value=0;~ambsteps22.value=0;
-										~ambsteps23.value=0;~ambsteps24.value=0;
-										~ambsteps25.value=0;~ambsteps26.value=0;
-										~ambsteps27.value=0;~ambsteps28.value=0;
-										~ambsteps29.value=0;~ambsteps30.value=0;
-										~ambsteps31.value=0;~ambsteps32.value=0;
-										})};
+	~ambiente.put((0..31),nil);
+	~ambsteps1.value=0;~ambsteps2.value=0;
+	~ambsteps3.value=0;~ambsteps4.value=0;
+	~ambsteps5.value=0;~ambsteps6.value=0;
+	~ambsteps7.value=0;~ambsteps8.value=0;
+	~ambsteps9.value=0;~ambsteps10.value=0;
+	~ambsteps11.value=0;~ambsteps12.value=0;
+	~ambsteps13.value=0;~ambsteps14.value=0;
+	~ambsteps15.value=0;~ambsteps16.value=0;
+	~ambsteps17.value=0;~ambsteps18.value=0;
+	~ambsteps19.value=0;~ambsteps20.value=0;
+	~ambsteps21.value=0;~ambsteps22.value=0;
+	~ambsteps23.value=0;~ambsteps24.value=0;
+	~ambsteps25.value=0;~ambsteps26.value=0;
+	~ambsteps27.value=0;~ambsteps28.value=0;
+	~ambsteps29.value=0;~ambsteps30.value=0;
+	~ambsteps31.value=0;~ambsteps32.value=0;
+})};
 //ambiente attack and release knobs
 ~amb1attknob=EZKnob(~w,Rect(785,171,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.5,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~amb1relknob=EZKnob(~w,Rect(870,171,81,17),nil,ControlSpec(0.25,12,\lin,0.001,2,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
@@ -240,24 +196,24 @@ StaticText(~w,Rect(5,192,53,15)).string_("pad2:").align_(\left).background_(Colo
 ~delamb2=Button(~w,Rect(765,192,15,15));
 ~delamb2.states=[[" X ",Color.black,Color.red]];
 ~delamb2.action={|val|if(val.value==0,{"Synth have been cleared!".postln;
-										~ambiente2.put((0..31),nil);
-										~amb2steps1.value=0;~amb2steps2.value=0;
-										~amb2steps3.value=0;~amb2steps4.value=0;
-										~amb2steps5.value=0;~amb2steps6.value=0;
-										~amb2steps7.value=0;~amb2steps8.value=0;
-										~amb2steps9.value=0;~amb2steps10.value=0;
-										~amb2steps11.value=0;~amb2steps12.value=0;
-										~amb2steps13.value=0;~amb2steps14.value=0;
-										~amb2steps15.value=0;~amb2steps16.value=0;
-										~amb2steps17.value=0;~amb2steps18.value=0;
-										~amb2steps19.value=0;~amb2steps20.value=0;
-										~amb2steps21.value=0;~amb2steps22.value=0;
-										~amb2steps23.value=0;~amb2steps24.value=0;
-										~amb2steps25.value=0;~amb2steps26.value=0;
-										~amb2steps27.value=0;~amb2steps28.value=0;
-										~amb2steps29.value=0;~amb2steps30.value=0;
-										~amb2steps31.value=0;~amb2steps32.value=0;
-										})};
+	~ambiente2.put((0..31),nil);
+	~amb2steps1.value=0;~amb2steps2.value=0;
+	~amb2steps3.value=0;~amb2steps4.value=0;
+	~amb2steps5.value=0;~amb2steps6.value=0;
+	~amb2steps7.value=0;~amb2steps8.value=0;
+	~amb2steps9.value=0;~amb2steps10.value=0;
+	~amb2steps11.value=0;~amb2steps12.value=0;
+	~amb2steps13.value=0;~amb2steps14.value=0;
+	~amb2steps15.value=0;~amb2steps16.value=0;
+	~amb2steps17.value=0;~amb2steps18.value=0;
+	~amb2steps19.value=0;~amb2steps20.value=0;
+	~amb2steps21.value=0;~amb2steps22.value=0;
+	~amb2steps23.value=0;~amb2steps24.value=0;
+	~amb2steps25.value=0;~amb2steps26.value=0;
+	~amb2steps27.value=0;~amb2steps28.value=0;
+	~amb2steps29.value=0;~amb2steps30.value=0;
+	~amb2steps31.value=0;~amb2steps32.value=0;
+})};
 //ambiente2 attack and release knobs
 ~amb2attknob=EZKnob(~w,Rect(785,191,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.25,\att),{|a| a.value;},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~amb2relknob=EZKnob(~w,Rect(870,191,81,17),nil,ControlSpec(0.25,12,\lin,0.001,4,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
@@ -299,24 +255,24 @@ StaticText(~w,Rect(5,212,53,15)).string_("Chords:").align_(\left).background_(Co
 ~delsinte=Button(~w,Rect(765,212,15,15));
 ~delsinte.states=[[" X ",Color.black,Color.red]];
 ~delsinte.action={|val|if(val.value==0,{"Chords have been cleared!".postln;
-										~sinte.put((0..31),nil);
-										~sintesteps1.value=0;~sintesteps2.value=0;
-										~sintesteps3.value=0;~sintesteps4.value=0;
-										~sintesteps5.value=0;~sintesteps6.value=0;
-										~sintesteps7.value=0;~sintesteps8.value=0;
-										~sintesteps9.value=0;~sintesteps10.value=0;
-										~sintesteps11.value=0;~sintesteps12.value=0;
-										~sintesteps13.value=0;~sintesteps14.value=0;
-										~sintesteps15.value=0;~sintesteps16.value=0;
-										~sintesteps17.value=0;~sintesteps18.value=0;
-										~sintesteps19.value=0;~sintesteps20.value=0;
-										~sintesteps21.value=0;~sintesteps22.value=0;
-										~sintesteps23.value=0;~sintesteps24.value=0;
-										~sintesteps25.value=0;~sintesteps26.value=0;
-										~sintesteps27.value=0;~sintesteps28.value=0;
-										~sintesteps29.value=0;~sintesteps30.value=0;
-										~sintesteps31.value=0;~sintesteps32.value=0;
-										})};
+	~sinte.put((0..31),nil);
+	~sintesteps1.value=0;~sintesteps2.value=0;
+	~sintesteps3.value=0;~sintesteps4.value=0;
+	~sintesteps5.value=0;~sintesteps6.value=0;
+	~sintesteps7.value=0;~sintesteps8.value=0;
+	~sintesteps9.value=0;~sintesteps10.value=0;
+	~sintesteps11.value=0;~sintesteps12.value=0;
+	~sintesteps13.value=0;~sintesteps14.value=0;
+	~sintesteps15.value=0;~sintesteps16.value=0;
+	~sintesteps17.value=0;~sintesteps18.value=0;
+	~sintesteps19.value=0;~sintesteps20.value=0;
+	~sintesteps21.value=0;~sintesteps22.value=0;
+	~sintesteps23.value=0;~sintesteps24.value=0;
+	~sintesteps25.value=0;~sintesteps26.value=0;
+	~sintesteps27.value=0;~sintesteps28.value=0;
+	~sintesteps29.value=0;~sintesteps30.value=0;
+	~sintesteps31.value=0;~sintesteps32.value=0;
+})};
 //sinte attack and release knobs
 ~sinte1attknob=EZKnob(~w,Rect(785,211,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.01,\att),{|a| a.value;~synth.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~sinte1relknob=EZKnob(~w,Rect(870,211,81,17),nil,ControlSpec(0.05,8,\lin,0.001,1,\rel),{|a| a.value;~synth.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
@@ -358,24 +314,24 @@ StaticText(~w,Rect(5,232,53,15)).string_("Chords2:").align_(\left).background_(C
 ~delsinte2=Button(~w,Rect(765,232,15,15));
 ~delsinte2.states=[[" X ",Color.black,Color.red]];
 ~delsinte2.action={|val|if(val.value==0,{"Chords have been cleared!".postln;
-										~sinte2.put((0..31),nil);
-										~sinte2steps1.value=0;~sinte2steps2.value=0;
-										~sinte2steps3.value=0;~sinte2steps4.value=0;
-										~sinte2steps5.value=0;~sinte2steps6.value=0;
-										~sinte2steps7.value=0;~sinte2steps8.value=0;
-										~sinte2steps9.value=0;~sinte2steps10.value=0;
-										~sinte2steps11.value=0;~sinte2steps12.value=0;
-										~sinte2steps13.value=0;~sinte2steps14.value=0;
-										~sinte2steps15.value=0;~sinte2steps16.value=0;
-										~sinte2steps17.value=0;~sinte2steps18.value=0;
-										~sinte2steps19.value=0;~sinte2steps20.value=0;
-										~sinte2steps21.value=0;~sinte2steps22.value=0;
-										~sinte2steps23.value=0;~sinte2steps24.value=0;
-										~sinte2steps25.value=0;~sinte2steps26.value=0;
-										~sinte2steps27.value=0;~sinte2steps28.value=0;
-										~sinte2steps29.value=0;~sinte2steps30.value=0;
-										~sinte2steps31.value=0;~sinte2steps32.value=0;
-										})};
+	~sinte2.put((0..31),nil);
+	~sinte2steps1.value=0;~sinte2steps2.value=0;
+	~sinte2steps3.value=0;~sinte2steps4.value=0;
+	~sinte2steps5.value=0;~sinte2steps6.value=0;
+	~sinte2steps7.value=0;~sinte2steps8.value=0;
+	~sinte2steps9.value=0;~sinte2steps10.value=0;
+	~sinte2steps11.value=0;~sinte2steps12.value=0;
+	~sinte2steps13.value=0;~sinte2steps14.value=0;
+	~sinte2steps15.value=0;~sinte2steps16.value=0;
+	~sinte2steps17.value=0;~sinte2steps18.value=0;
+	~sinte2steps19.value=0;~sinte2steps20.value=0;
+	~sinte2steps21.value=0;~sinte2steps22.value=0;
+	~sinte2steps23.value=0;~sinte2steps24.value=0;
+	~sinte2steps25.value=0;~sinte2steps26.value=0;
+	~sinte2steps27.value=0;~sinte2steps28.value=0;
+	~sinte2steps29.value=0;~sinte2steps30.value=0;
+	~sinte2steps31.value=0;~sinte2steps32.value=0;
+})};
 //sinte2 attack and release knobs
 ~sinte2attknob=EZKnob(~w,Rect(785,231,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.1,\att),{|a| a.value;~synth2.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~sinte2relknob=EZKnob(~w,Rect(870,231,81,17),nil,ControlSpec(0.05,8,\lin,0.001,0.5,\rel),{|a| a.value;~synth2.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);

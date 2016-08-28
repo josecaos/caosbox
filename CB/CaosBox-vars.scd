@@ -30,6 +30,22 @@
 ~autopitchdispersion=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
 ~autograintrig=[0.04,0.08,0.16,0.32,0.64,1.28]*4;
 ~autograinsize=Array.series(100,0.01,0.005);
+//GUI steps
+~checksteps = [20,20,20,30];
+~checkbox = 60;
+~checkbombo=Array.fill(32,nil);
+~checktarola=Array.fill(32,nil);
+~checkcontras=Array.fill(32,nil);
+~checkbombo2=Array.fill(32,nil);
+~checktarola2=Array.fill(32,nil);
+~checkcontras2=Array.fill(32,nil);
+~checkbajo=Array.fill(32,nil);
+~checkbajo2=Array.fill(32,nil);
+~checkambiente=Array.fill(32,nil);
+~checkambiente2=Array.fill(32,nil);
+~checksinte=Array.fill(32,nil);
+~checksinte2=Array.fill(32,nil);
+~checkin=Array.fill(32,nil);
 //divisores automatizacion
 ~divrev=1;//no usar '0'
 ~divdel=1;//no usar '0'

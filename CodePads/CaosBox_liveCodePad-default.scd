@@ -13,9 +13,9 @@
 //kick
 ~b={var out=58;Out.ar(out,CaosKick.ar(0.01,0.15,2,0.5,60,62,50,1,0.9,0.35,2))};
 //snare
-~t={var out=60;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:320,rq:0.25,amp1:0.5,amp2:0.1))};//
+~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.5,highcutfreq:420,rq:0.25,amp1:0.4,amp2:0.1))};//
 //hat
-~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.35,highcutfreq:2930,rq:0.5,amp1:0.25,amp2:0.35))};//
+~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:7330,rq:0.5,amp1:0.25,amp2:0.15))};//
 //kick2
 ~b2={var out=64;Out.ar(out,CaosKick2.ar(att:0.1,rel:2,modFreq:0.25,modbw:0.15,bw:0.05,freq1:60,freq2:64,lowcutfreq:80,amp:0.1))};//
 //snare2
@@ -25,7 +25,7 @@
 );
 ////////////////////Bass, Pad, Chord functions:
 //you can create more variables as melodies for instrument Tdefs
-~mainmelody=[0,2,3,6,7,11,12]+38;
+~mainmelody=[0,3,7,8,11,12]+38;
 //
 //////////////////////
 //Evaluate each one of these Tdef to change Synth parameters
@@ -63,7 +63,7 @@ Tdef(\bass2,{
 			   \iphase,0.25,
 			   \amp1,0.055,
 			   \amp2,0.01);
-	~bass2.set(\out,54);//route
+	~bass2.set(\out,64);//route
 	~tiempos.wait;
 	}
 }).quant_(4);
