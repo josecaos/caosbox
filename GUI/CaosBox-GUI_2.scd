@@ -42,7 +42,7 @@ for (0, 31, { |i|
 
 //bajo2
 StaticText(~w,Rect(5,152,53,15)).string_("Bass2:").align_(\left).background_(Color(0.85,0.85,0.85));
-//crea los steps
+//resetea posicion
 ~checkbox = 60;
 for (0, 31, { |i|
 
@@ -65,7 +65,7 @@ for (0, 31, { |i|
 ~delbass2.states=[[" X ",Color.black,Color.red]];
 ~delbass2.action={|val|if(val.value==0,{
 
-	"Bass have been cleared!".postln;
+	"Bass have been cleared!".warn;
 
 	~bajo2.put((0..31),nil);
 
@@ -84,179 +84,129 @@ for (0, 31, { |i|
 
 //ambiente
 StaticText(~w,Rect(5,172,53,15)).string_("Pad:").align_(\left).background_(Color(0.85,0.85,0.85));
-~ambsteps1=CheckBox.new(~w,Rect(60,170,20,20)).action={|val|if(val.value,{~ambiente.put(0,~amb=Synth(\ambuno);)},{~ambiente.put(0,nil)})};
-~ambsteps2=CheckBox.new(~w,Rect(80,170,20,20)).action={|val|if(val.value,{~ambiente.put(1,~amb=Synth(\ambuno);)},{~ambiente.put(1,nil)})};
-~ambsteps3=CheckBox.new(~w,Rect(100,170,20,20)).action={|val|if(val.value,{~ambiente.put(2,~amb=Synth(\ambuno);)},{~ambiente.put(2,nil)})};
-~ambsteps4=CheckBox.new(~w,Rect(120,170,20,20)).action={|val|if(val.value,{~ambiente.put(3,~amb=Synth(\ambuno);)},{~ambiente.put(3,nil)})};
-~ambsteps5=CheckBox.new(~w,Rect(150,170,20,20)).action={|val|if(val.value,{~ambiente.put(4,~amb=Synth(\ambuno);)},{~ambiente.put(4,nil)})};
-~ambsteps6=CheckBox.new(~w,Rect(170,170,20,20)).action={|val|if(val.value,{~ambiente.put(5,~amb=Synth(\ambuno);)},{~ambiente.put(5,nil)})};
-~ambsteps7=CheckBox.new(~w,Rect(190,170,20,20)).action={|val|if(val.value,{~ambiente.put(6,~amb=Synth(\ambuno);)},{~ambiente.put(6,nil)})};
-~ambsteps8=CheckBox.new(~w,Rect(210,170,20,20)).action={|val|if(val.value,{~ambiente.put(7,~amb=Synth(\ambuno);)},{~ambiente.put(7,nil)})};
-~ambsteps9=CheckBox.new(~w,Rect(240,170,20,20)).action={|val|if(val.value,{~ambiente.put(8,~amb=Synth(\ambuno);)},{~ambiente.put(8,nil)})};
-~ambsteps10=CheckBox.new(~w,Rect(260,170,20,20)).action={|val|if(val.value,{~ambiente.put(9,~amb=Synth(\ambuno);)},{~ambiente.put(9,nil)})};
-~ambsteps11=CheckBox.new(~w,Rect(280,170,20,20)).action={|val|if(val.value,{~ambiente.put(10,~amb=Synth(\ambuno);)},{~ambiente.put(10,nil)})};
-~ambsteps12=CheckBox.new(~w,Rect(300,170,20,20)).action={|val|if(val.value,{~ambiente.put(11,~amb=Synth(\ambuno);)},{~ambiente.put(11,nil)})};
-~ambsteps13=CheckBox.new(~w,Rect(330,170,20,20)).action={|val|if(val.value,{~ambiente.put(12,~amb=Synth(\ambuno);)},{~ambiente.put(12,nil)})};
-~ambsteps14=CheckBox.new(~w,Rect(350,170,20,20)).action={|val|if(val.value,{~ambiente.put(13,~amb=Synth(\ambuno);)},{~ambiente.put(13,nil)})};
-~ambsteps15=CheckBox.new(~w,Rect(370,170,20,20)).action={|val|if(val.value,{~ambiente.put(14,~amb=Synth(\ambuno);)},{~ambiente.put(14,nil)})};
-~ambsteps16=CheckBox.new(~w,Rect(390,170,20,20)).action={|val|if(val.value,{~ambiente.put(15,~amb=Synth(\ambuno);)},{~ambiente.put(15,nil)})};
-~ambsteps17=CheckBox.new(~w,Rect(420,170,20,20)).action={|val|if(val.value,{~ambiente.put(16,~amb=Synth(\ambuno);)},{~ambiente.put(16,nil)})};
-~ambsteps18=CheckBox.new(~w,Rect(440,170,20,20)).action={|val|if(val.value,{~ambiente.put(17,~amb=Synth(\ambuno);)},{~ambiente.put(17,nil)})};
-~ambsteps19=CheckBox.new(~w,Rect(460,170,20,20)).action={|val|if(val.value,{~ambiente.put(18,~amb=Synth(\ambuno);)},{~ambiente.put(18,nil)})};
-~ambsteps20=CheckBox.new(~w,Rect(480,170,20,20)).action={|val|if(val.value,{~ambiente.put(19,~amb=Synth(\ambuno);)},{~ambiente.put(19,nil)})};
-~ambsteps21=CheckBox.new(~w,Rect(510,170,20,20)).action={|val|if(val.value,{~ambiente.put(20,~amb=Synth(\ambuno);)},{~ambiente.put(20,nil)})};
-~ambsteps22=CheckBox.new(~w,Rect(530,170,20,20)).action={|val|if(val.value,{~ambiente.put(21,~amb=Synth(\ambuno);)},{~ambiente.put(21,nil)})};
-~ambsteps23=CheckBox.new(~w,Rect(550,170,20,20)).action={|val|if(val.value,{~ambiente.put(22,~amb=Synth(\ambuno);)},{~ambiente.put(22,nil)})};
-~ambsteps24=CheckBox.new(~w,Rect(570,170,20,20)).action={|val|if(val.value,{~ambiente.put(23,~amb=Synth(\ambuno);)},{~ambiente.put(23,nil)})};
-~ambsteps25=CheckBox.new(~w,Rect(600,170,20,20)).action={|val|if(val.value,{~ambiente.put(24,~amb=Synth(\ambuno);)},{~ambiente.put(24,nil)})};
-~ambsteps26=CheckBox.new(~w,Rect(620,170,20,20)).action={|val|if(val.value,{~ambiente.put(25,~amb=Synth(\ambuno);)},{~ambiente.put(25,nil)})};
-~ambsteps27=CheckBox.new(~w,Rect(640,170,20,20)).action={|val|if(val.value,{~ambiente.put(26,~amb=Synth(\ambuno);)},{~ambiente.put(26,nil)})};
-~ambsteps28=CheckBox.new(~w,Rect(660,170,20,20)).action={|val|if(val.value,{~ambiente.put(27,~amb=Synth(\ambuno);)},{~ambiente.put(27,nil)})};
-~ambsteps29=CheckBox.new(~w,Rect(690,170,20,20)).action={|val|if(val.value,{~ambiente.put(28,~amb=Synth(\ambuno);)},{~ambiente.put(28,nil)})};
-~ambsteps30=CheckBox.new(~w,Rect(710,170,20,20)).action={|val|if(val.value,{~ambiente.put(29,~amb=Synth(\ambuno);)},{~ambiente.put(29,nil)})};
-~ambsteps31=CheckBox.new(~w,Rect(730,170,20,20)).action={|val|if(val.value,{~ambiente.put(30,~amb=Synth(\ambuno);)},{~ambiente.put(30,nil)})};
-~ambsteps32=CheckBox.new(~w,Rect(750,170,20,20)).action={|val|if(val.value,{~ambiente.put(31,~amb=Synth(\ambuno);)},{~ambiente.put(31,nil)})};
-//resetea secuencias ambiente
-~delbass=Button(~w,Rect(765,172,15,15));
-~delbass.states=[[" X ",Color.black,Color.red]];
-~delbass.action={|val|if(val.value==0,{"Synth have been cleared!".postln;
+
+//reset
+~checkbox = 60;
+for (0, 31, { |i|
+
+	var checkvar = "~ambsteps";
+
+	var a = ~checksteps[i%~checksteps.size];
+
+	var variable = checkvar ++ i;
+
+	~checkambiente.put(i,variable);
+
+	~checkambiente[i] = CheckBox.new(~w,Rect(~checkbox, 170, 20, 20)).action={|val| if(val.value,{~ambiente.put(i,~amb=Synth(\ambuno);)},{~ambiente.put(i,nil)})};
+
+	~checkbox = ~checkbox + a;
+
+
+});
+// borra steps
+~delamb=Button(~w,Rect(765,173,15,15));
+~delamb.states=[[" X ",Color.black,Color.red]];
+~delamb.action={|val|if(val.value==0,{
+
+	"Ambient pad steps cleared!".warn;
+
 	~ambiente.put((0..31),nil);
-	~ambsteps1.value=0;~ambsteps2.value=0;
-	~ambsteps3.value=0;~ambsteps4.value=0;
-	~ambsteps5.value=0;~ambsteps6.value=0;
-	~ambsteps7.value=0;~ambsteps8.value=0;
-	~ambsteps9.value=0;~ambsteps10.value=0;
-	~ambsteps11.value=0;~ambsteps12.value=0;
-	~ambsteps13.value=0;~ambsteps14.value=0;
-	~ambsteps15.value=0;~ambsteps16.value=0;
-	~ambsteps17.value=0;~ambsteps18.value=0;
-	~ambsteps19.value=0;~ambsteps20.value=0;
-	~ambsteps21.value=0;~ambsteps22.value=0;
-	~ambsteps23.value=0;~ambsteps24.value=0;
-	~ambsteps25.value=0;~ambsteps26.value=0;
-	~ambsteps27.value=0;~ambsteps28.value=0;
-	~ambsteps29.value=0;~ambsteps30.value=0;
-	~ambsteps31.value=0;~ambsteps32.value=0;
+
+	for(0, 31, {|i|
+		~checkambiente[i].value = 0;
+
+	});
+
 })};
 //ambiente attack and release knobs
 ~amb1attknob=EZKnob(~w,Rect(785,171,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.5,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~amb1relknob=EZKnob(~w,Rect(870,171,81,17),nil,ControlSpec(0.25,12,\lin,0.001,2,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
+
+
+
 //ambiente2
 StaticText(~w,Rect(5,192,53,15)).string_("pad2:").align_(\left).background_(Color(0.85,0.85,0.85));
-~amb2steps1=CheckBox.new(~w,Rect(60,190,20,20)).action={|val|if(val.value,{~ambiente2.put(0,~amb2=Synth(\ambdos);)},{~ambiente2.put(0,nil)})};
-~amb2steps2=CheckBox.new(~w,Rect(80,190,20,20)).action={|val|if(val.value,{~ambiente2.put(1,~amb2=Synth(\ambdos);)},{~ambiente2.put(1,nil)})};
-~amb2steps3=CheckBox.new(~w,Rect(100,190,20,20)).action={|val|if(val.value,{~ambiente2.put(2,~amb2=Synth(\ambdos);)},{~ambiente2.put(2,nil)})};
-~amb2steps4=CheckBox.new(~w,Rect(120,190,20,20)).action={|val|if(val.value,{~ambiente2.put(3,~amb2=Synth(\ambdos);)},{~ambiente2.put(3,nil)})};
-~amb2steps5=CheckBox.new(~w,Rect(150,190,20,20)).action={|val|if(val.value,{~ambiente2.put(4,~amb2=Synth(\ambdos);)},{~ambiente2.put(4,nil)})};
-~amb2steps6=CheckBox.new(~w,Rect(170,190,20,20)).action={|val|if(val.value,{~ambiente2.put(5,~amb2=Synth(\ambdos);)},{~ambiente2.put(5,nil)})};
-~amb2steps7=CheckBox.new(~w,Rect(190,190,20,20)).action={|val|if(val.value,{~ambiente2.put(6,~amb2=Synth(\ambdos);)},{~ambiente2.put(6,nil)})};
-~amb2steps8=CheckBox.new(~w,Rect(210,190,20,20)).action={|val|if(val.value,{~ambiente2.put(7,~amb2=Synth(\ambdos);)},{~ambiente2.put(7,nil)})};
-~amb2steps9=CheckBox.new(~w,Rect(240,190,20,20)).action={|val|if(val.value,{~ambiente2.put(8,~amb2=Synth(\ambdos);)},{~ambiente2.put(8,nil)})};
-~amb2steps10=CheckBox.new(~w,Rect(260,190,20,20)).action={|val|if(val.value,{~ambiente2.put(9,~amb2=Synth(\ambdos);)},{~ambiente2.put(9,nil)})};
-~amb2steps11=CheckBox.new(~w,Rect(280,190,20,20)).action={|val|if(val.value,{~ambiente2.put(10,~amb2=Synth(\ambdos);)},{~ambiente2.put(10,nil)})};
-~amb2steps12=CheckBox.new(~w,Rect(300,190,20,20)).action={|val|if(val.value,{~ambiente2.put(11,~amb2=Synth(\ambdos);)},{~ambiente2.put(11,nil)})};
-~amb2steps13=CheckBox.new(~w,Rect(330,190,20,20)).action={|val|if(val.value,{~ambiente2.put(12,~amb2=Synth(\ambdos);)},{~ambiente2.put(12,nil)})};
-~amb2steps14=CheckBox.new(~w,Rect(350,190,20,20)).action={|val|if(val.value,{~ambiente2.put(13,~amb2=Synth(\ambdos);)},{~ambiente2.put(13,nil)})};
-~amb2steps15=CheckBox.new(~w,Rect(370,190,20,20)).action={|val|if(val.value,{~ambiente2.put(14,~amb2=Synth(\ambdos);)},{~ambiente2.put(14,nil)})};
-~amb2steps16=CheckBox.new(~w,Rect(390,190,20,20)).action={|val|if(val.value,{~ambiente2.put(15,~amb2=Synth(\ambdos);)},{~ambiente2.put(15,nil)})};
-~amb2steps17=CheckBox.new(~w,Rect(420,190,20,20)).action={|val|if(val.value,{~ambiente2.put(16,~amb2=Synth(\ambdos);)},{~ambiente2.put(16,nil)})};
-~amb2steps18=CheckBox.new(~w,Rect(440,190,20,20)).action={|val|if(val.value,{~ambiente2.put(17,~amb2=Synth(\ambdos);)},{~ambiente2.put(17,nil)})};
-~amb2steps19=CheckBox.new(~w,Rect(460,190,20,20)).action={|val|if(val.value,{~ambiente2.put(18,~amb2=Synth(\ambdos);)},{~ambiente2.put(18,nil)})};
-~amb2steps20=CheckBox.new(~w,Rect(480,190,20,20)).action={|val|if(val.value,{~ambiente2.put(19,~amb2=Synth(\ambdos);)},{~ambiente2.put(19,nil)})};
-~amb2steps21=CheckBox.new(~w,Rect(510,190,20,20)).action={|val|if(val.value,{~ambiente2.put(20,~amb2=Synth(\ambdos);)},{~ambiente2.put(20,nil)})};
-~amb2steps22=CheckBox.new(~w,Rect(530,190,20,20)).action={|val|if(val.value,{~ambiente2.put(21,~amb2=Synth(\ambdos);)},{~ambiente2.put(21,nil)})};
-~amb2steps23=CheckBox.new(~w,Rect(550,190,20,20)).action={|val|if(val.value,{~ambiente2.put(22,~amb2=Synth(\ambdos);)},{~ambiente2.put(22,nil)})};
-~amb2steps24=CheckBox.new(~w,Rect(570,190,20,20)).action={|val|if(val.value,{~ambiente2.put(23,~amb2=Synth(\ambdos);)},{~ambiente2.put(23,nil)})};
-~amb2steps25=CheckBox.new(~w,Rect(600,190,20,20)).action={|val|if(val.value,{~ambiente2.put(24,~amb2=Synth(\ambdos);)},{~ambiente2.put(24,nil)})};
-~amb2steps26=CheckBox.new(~w,Rect(620,190,20,20)).action={|val|if(val.value,{~ambiente2.put(25,~amb2=Synth(\ambdos);)},{~ambiente2.put(25,nil)})};
-~amb2steps27=CheckBox.new(~w,Rect(640,190,20,20)).action={|val|if(val.value,{~ambiente2.put(26,~amb2=Synth(\ambdos);)},{~ambiente2.put(26,nil)})};
-~amb2steps28=CheckBox.new(~w,Rect(660,190,20,20)).action={|val|if(val.value,{~ambiente2.put(27,~amb2=Synth(\ambdos);)},{~ambiente2.put(27,nil)})};
-~amb2steps29=CheckBox.new(~w,Rect(690,190,20,20)).action={|val|if(val.value,{~ambiente2.put(28,~amb2=Synth(\ambdos);)},{~ambiente2.put(28,nil)})};
-~amb2steps30=CheckBox.new(~w,Rect(710,190,20,20)).action={|val|if(val.value,{~ambiente2.put(29,~amb2=Synth(\ambdos);)},{~ambiente2.put(29,nil)})};
-~amb2steps31=CheckBox.new(~w,Rect(730,190,20,20)).action={|val|if(val.value,{~ambiente2.put(30,~amb2=Synth(\ambdos);)},{~ambiente2.put(30,nil)})};
-~amb2steps32=CheckBox.new(~w,Rect(750,190,20,20)).action={|val|if(val.value,{~ambiente2.put(31,~amb2=Synth(\ambdos);)},{~ambiente2.put(31,nil)})};
-//resetea secuencias ambiente2
+//reset pos
+~checkbox = 60;
+for (0, 31, { |i|
+
+	var checkvar = "~ambsteps2";
+
+	var a = ~checksteps[i%~checksteps.size];
+
+	var variable = checkvar ++ i;
+
+	~checkambiente2.put(i,variable);
+
+	~checkambiente2[i] = CheckBox.new(~w,Rect(~checkbox, 190, 20, 20)).action={|val| if(val.value,{~ambiente2.put(i,~amb2=Synth(\ambdos);)},{~ambiente2.put(i,nil)})};
+
+	~checkbox = ~checkbox + a;
+
+
+});
+// borra steps
 ~delamb2=Button(~w,Rect(765,192,15,15));
 ~delamb2.states=[[" X ",Color.black,Color.red]];
-~delamb2.action={|val|if(val.value==0,{"Synth have been cleared!".postln;
+~delamb2.action={|val|if(val.value==0,{
+
+	"Ambient pad steps cleared!".warn;
+
 	~ambiente2.put((0..31),nil);
-	~amb2steps1.value=0;~amb2steps2.value=0;
-	~amb2steps3.value=0;~amb2steps4.value=0;
-	~amb2steps5.value=0;~amb2steps6.value=0;
-	~amb2steps7.value=0;~amb2steps8.value=0;
-	~amb2steps9.value=0;~amb2steps10.value=0;
-	~amb2steps11.value=0;~amb2steps12.value=0;
-	~amb2steps13.value=0;~amb2steps14.value=0;
-	~amb2steps15.value=0;~amb2steps16.value=0;
-	~amb2steps17.value=0;~amb2steps18.value=0;
-	~amb2steps19.value=0;~amb2steps20.value=0;
-	~amb2steps21.value=0;~amb2steps22.value=0;
-	~amb2steps23.value=0;~amb2steps24.value=0;
-	~amb2steps25.value=0;~amb2steps26.value=0;
-	~amb2steps27.value=0;~amb2steps28.value=0;
-	~amb2steps29.value=0;~amb2steps30.value=0;
-	~amb2steps31.value=0;~amb2steps32.value=0;
+
+	for(0, 31, {|i|
+		~checkambiente2[i].value = 0;
+
+	});
+
 })};
+
 //ambiente2 attack and release knobs
 ~amb2attknob=EZKnob(~w,Rect(785,191,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.25,\att),{|a| a.value;},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~amb2relknob=EZKnob(~w,Rect(870,191,81,17),nil,ControlSpec(0.25,12,\lin,0.001,4,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+
+
+
+
 //acordes
 StaticText(~w,Rect(5,212,53,15)).string_("Chords:").align_(\left).background_(Color(0.85,0.85,0.85));
-~sintesteps1=CheckBox.new(~w,Rect(60,210,20,20)).action={|val|if(val.value,{~sinte.put(0,~chord=Synth(\acordesuno))},{~sinte.put(0,nil)})};
-~sintesteps2=CheckBox.new(~w,Rect(80,210,20,20)).action={|val|if(val.value,{~sinte.put(1,~chord=Synth(\acordesuno))},{~sinte.put(1,nil)})};
-~sintesteps3=CheckBox.new(~w,Rect(100,210,20,20)).action={|val|if(val.value,{~sinte.put(2,~chord=Synth(\acordesuno))},{~sinte.put(2,nil)})};
-~sintesteps4=CheckBox.new(~w,Rect(120,210,20,20)).action={|val|if(val.value,{~sinte.put(3,~chord=Synth(\acordesuno))},{~sinte.put(3,nil)})};
-~sintesteps5=CheckBox.new(~w,Rect(150,210,20,20)).action={|val|if(val.value,{~sinte.put(4,~chord=Synth(\acordesuno))},{~sinte.put(4,nil)})};
-~sintesteps6=CheckBox.new(~w,Rect(170,210,20,20)).action={|val|if(val.value,{~sinte.put(5,~chord=Synth(\acordesuno))},{~sinte.put(5,nil)})};
-~sintesteps7=CheckBox.new(~w,Rect(190,210,20,20)).action={|val|if(val.value,{~sinte.put(6,~chord=Synth(\acordesuno))},{~sinte.put(6,nil)})};
-~sintesteps8=CheckBox.new(~w,Rect(210,210,20,20)).action={|val|if(val.value,{~sinte.put(7,~chord=Synth(\acordesuno))},{~sinte.put(7,nil)})};
-~sintesteps9=CheckBox.new(~w,Rect(240,210,20,20)).action={|val|if(val.value,{~sinte.put(8,~chord=Synth(\acordesuno))},{~sinte.put(8,nil)})};
-~sintesteps10=CheckBox.new(~w,Rect(260,210,20,20)).action={|val|if(val.value,{~sinte.put(9,~chord=Synth(\acordesuno))},{~sinte.put(9,nil)})};
-~sintesteps11=CheckBox.new(~w,Rect(280,210,20,20)).action={|val|if(val.value,{~sinte.put(10,~chord=Synth(\acordesuno))},{~sinte.put(10,nil)})};
-~sintesteps12=CheckBox.new(~w,Rect(300,210,20,20)).action={|val|if(val.value,{~sinte.put(11,~chord=Synth(\acordesuno))},{~sinte.put(11,nil)})};
-~sintesteps13=CheckBox.new(~w,Rect(330,210,20,20)).action={|val|if(val.value,{~sinte.put(12,~chord=Synth(\acordesuno))},{~sinte.put(12,nil)})};
-~sintesteps14=CheckBox.new(~w,Rect(350,210,20,20)).action={|val|if(val.value,{~sinte.put(13,~chord=Synth(\acordesuno))},{~sinte.put(13,nil)})};
-~sintesteps15=CheckBox.new(~w,Rect(370,210,20,20)).action={|val|if(val.value,{~sinte.put(14,~chord=Synth(\acordesuno))},{~sinte.put(14,nil)})};
-~sintesteps16=CheckBox.new(~w,Rect(390,210,20,20)).action={|val|if(val.value,{~sinte.put(15,~chord=Synth(\acordesuno))},{~sinte.put(15,nil)})};
-~sintesteps17=CheckBox.new(~w,Rect(420,210,20,20)).action={|val|if(val.value,{~sinte.put(16,~chord=Synth(\acordesuno))},{~sinte.put(16,nil)})};
-~sintesteps18=CheckBox.new(~w,Rect(440,210,20,20)).action={|val|if(val.value,{~sinte.put(17,~chord=Synth(\acordesuno))},{~sinte.put(17,nil)})};
-~sintesteps19=CheckBox.new(~w,Rect(460,210,20,20)).action={|val|if(val.value,{~sinte.put(18,~chord=Synth(\acordesuno))},{~sinte.put(18,nil)})};
-~sintesteps20=CheckBox.new(~w,Rect(480,210,20,20)).action={|val|if(val.value,{~sinte.put(19,~chord=Synth(\acordesuno))},{~sinte.put(19,nil)})};
-~sintesteps21=CheckBox.new(~w,Rect(510,210,20,20)).action={|val|if(val.value,{~sinte.put(20,~chord=Synth(\acordesuno))},{~sinte.put(20,nil)})};
-~sintesteps22=CheckBox.new(~w,Rect(530,210,20,20)).action={|val|if(val.value,{~sinte.put(21,~chord=Synth(\acordesuno))},{~sinte.put(21,nil)})};
-~sintesteps23=CheckBox.new(~w,Rect(550,210,20,20)).action={|val|if(val.value,{~sinte.put(22,~chord=Synth(\acordesuno))},{~sinte.put(22,nil)})};
-~sintesteps24=CheckBox.new(~w,Rect(570,210,20,20)).action={|val|if(val.value,{~sinte.put(23,~chord=Synth(\acordesuno))},{~sinte.put(23,nil)})};
-~sintesteps25=CheckBox.new(~w,Rect(600,210,20,20)).action={|val|if(val.value,{~sinte.put(24,~chord=Synth(\acordesuno))},{~sinte.put(24,nil)})};
-~sintesteps26=CheckBox.new(~w,Rect(620,210,20,20)).action={|val|if(val.value,{~sinte.put(25,~chord=Synth(\acordesuno))},{~sinte.put(25,nil)})};
-~sintesteps27=CheckBox.new(~w,Rect(640,210,20,20)).action={|val|if(val.value,{~sinte.put(26,~chord=Synth(\acordesuno))},{~sinte.put(26,nil)})};
-~sintesteps28=CheckBox.new(~w,Rect(660,210,20,20)).action={|val|if(val.value,{~sinte.put(27,~chord=Synth(\acordesuno))},{~sinte.put(27,nil)})};
-~sintesteps29=CheckBox.new(~w,Rect(690,210,20,20)).action={|val|if(val.value,{~sinte.put(28,~chord=Synth(\acordesuno))},{~sinte.put(28,nil)})};
-~sintesteps30=CheckBox.new(~w,Rect(710,210,20,20)).action={|val|if(val.value,{~sinte.put(29,~chord=Synth(\acordesuno))},{~sinte.put(29,nil)})};
-~sintesteps31=CheckBox.new(~w,Rect(730,210,20,20)).action={|val|if(val.value,{~sinte.put(30,~chord=Synth(\acordesuno))},{~sinte.put(30,nil)})};
-~sintesteps32=CheckBox.new(~w,Rect(750,210,20,20)).action={|val|if(val.value,{~sinte.put(31,~chord=Synth(\acordesuno))},{~sinte.put(31,nil)})};
+//reset posicion
+~checkbox = 60;
+for (0, 31, { |i|
+
+	var checkvar = "~sintesteps";
+
+	var a = ~checksteps[i%~checksteps.size];
+
+	var variable = checkvar ++ i;
+
+	~checksinte.put(i,variable);
+
+	~checksinte[i] = CheckBox.new(~w,Rect(~checkbox, 210, 20, 20)).action={|val| if(val.value,{~sinte.put(i,~chord=Synth(\acordesuno);)},{~sinte.put(i,nil)})};
+
+	~checkbox = ~checkbox + a;
+
+
+});
 //resetea secuencias sinte
 ~delsinte=Button(~w,Rect(765,212,15,15));
 ~delsinte.states=[[" X ",Color.black,Color.red]];
-~delsinte.action={|val|if(val.value==0,{"Chords have been cleared!".postln;
+~delsinte.action={|val|if(val.value==0,{
+
+	"Chords have been cleared!".warn;
+
 	~sinte.put((0..31),nil);
-	~sintesteps1.value=0;~sintesteps2.value=0;
-	~sintesteps3.value=0;~sintesteps4.value=0;
-	~sintesteps5.value=0;~sintesteps6.value=0;
-	~sintesteps7.value=0;~sintesteps8.value=0;
-	~sintesteps9.value=0;~sintesteps10.value=0;
-	~sintesteps11.value=0;~sintesteps12.value=0;
-	~sintesteps13.value=0;~sintesteps14.value=0;
-	~sintesteps15.value=0;~sintesteps16.value=0;
-	~sintesteps17.value=0;~sintesteps18.value=0;
-	~sintesteps19.value=0;~sintesteps20.value=0;
-	~sintesteps21.value=0;~sintesteps22.value=0;
-	~sintesteps23.value=0;~sintesteps24.value=0;
-	~sintesteps25.value=0;~sintesteps26.value=0;
-	~sintesteps27.value=0;~sintesteps28.value=0;
-	~sintesteps29.value=0;~sintesteps30.value=0;
-	~sintesteps31.value=0;~sintesteps32.value=0;
+
+	for(0, 31, {|i|
+		~checksinte[i].value = 0;
+
+	});
+
 })};
+
+
+
+
 //sinte attack and release knobs
 ~sinte1attknob=EZKnob(~w,Rect(785,211,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.01,\att),{|a| a.value;~synth.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~sinte1relknob=EZKnob(~w,Rect(870,211,81,17),nil,ControlSpec(0.05,8,\lin,0.001,1,\rel),{|a| a.value;~synth.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
