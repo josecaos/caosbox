@@ -139,7 +139,7 @@ Tdef(\acordes2,{
 	~chord2.set(\rq,0.35);
 	~chord2.set(\pan,0);// -1 to 1 where 0 is middle
 	~chord2.set(\amp,0.35);
-	~chord2.set(\out,58);//route
+	~chord2.set(\out,64);//route
 	~tiempos.wait;
 	}
 }).quant_(4);

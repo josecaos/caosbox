@@ -1,63 +1,46 @@
 (//CaosBox GUI 3 - In, steps, aux
 //In
 StaticText(~w,Rect(5,252,53,15)).string_("LineIn:").align_(\left).background_(Color(0.85,0.85,0.85));
-~insteps1=CheckBox.new(~w,Rect(60,250,20,20)).action={|val|if(val.value,{~in.put(0,~entrada=Synth(\ent))},{~in.put(0,nil)})};
-~insteps2=CheckBox.new(~w,Rect(80,250,20,20)).action={|val|if(val.value,{~in.put(1,~entrada=Synth(\ent))},{~in.put(1,nil)})};
-~insteps3=CheckBox.new(~w,Rect(100,250,20,20)).action={|val|if(val.value,{~in.put(2,~entrada=Synth(\ent))},{~in.put(2,nil)})};
-~insteps4=CheckBox.new(~w,Rect(120,250,20,20)).action={|val|if(val.value,{~in.put(3,~entrada=Synth(\ent))},{~in.put(3,nil)})};
-~insteps5=CheckBox.new(~w,Rect(150,250,20,20)).action={|val|if(val.value,{~in.put(4,~entrada=Synth(\ent))},{~in.put(4,nil)})};
-~insteps6=CheckBox.new(~w,Rect(170,250,20,20)).action={|val|if(val.value,{~in.put(5,~entrada=Synth(\ent))},{~in.put(5,nil)})};
-~insteps7=CheckBox.new(~w,Rect(190,250,20,20)).action={|val|if(val.value,{~in.put(6,~entrada=Synth(\ent))},{~in.put(6,nil)})};
-~insteps8=CheckBox.new(~w,Rect(210,250,20,20)).action={|val|if(val.value,{~in.put(7,~entrada=Synth(\ent))},{~in.put(7,nil)})};
-~insteps9=CheckBox.new(~w,Rect(240,250,20,20)).action={|val|if(val.value,{~in.put(8,~entrada=Synth(\ent))},{~in.put(8,nil)})};
-~insteps10=CheckBox.new(~w,Rect(260,250,20,20)).action={|val|if(val.value,{~in.put(9,~entrada=Synth(\ent))},{~in.put(9,nil)})};
-~insteps11=CheckBox.new(~w,Rect(280,250,20,20)).action={|val|if(val.value,{~in.put(10,~entrada=Synth(\ent))},{~in.put(10,nil)})};
-~insteps12=CheckBox.new(~w,Rect(300,250,20,20)).action={|val|if(val.value,{~in.put(11,~entrada=Synth(\ent))},{~in.put(11,nil)})};
-~insteps13=CheckBox.new(~w,Rect(330,250,20,20)).action={|val|if(val.value,{~in.put(12,~entrada=Synth(\ent))},{~in.put(12,nil)})};
-~insteps14=CheckBox.new(~w,Rect(350,250,20,20)).action={|val|if(val.value,{~in.put(13,~entrada=Synth(\ent))},{~in.put(13,nil)})};
-~insteps15=CheckBox.new(~w,Rect(370,250,20,20)).action={|val|if(val.value,{~in.put(14,~entrada=Synth(\ent))},{~in.put(14,nil)})};
-~insteps16=CheckBox.new(~w,Rect(390,250,20,20)).action={|val|if(val.value,{~in.put(15,~entrada=Synth(\ent))},{~in.put(15,nil)})};
-~insteps17=CheckBox.new(~w,Rect(420,250,20,20)).action={|val|if(val.value,{~in.put(16,~entrada=Synth(\ent))},{~in.put(16,nil)})};
-~insteps18=CheckBox.new(~w,Rect(440,250,20,20)).action={|val|if(val.value,{~in.put(17,~entrada=Synth(\ent))},{~in.put(17,nil)})};
-~insteps19=CheckBox.new(~w,Rect(460,250,20,20)).action={|val|if(val.value,{~in.put(18,~entrada=Synth(\ent))},{~in.put(18,nil)})};
-~insteps20=CheckBox.new(~w,Rect(480,250,20,20)).action={|val|if(val.value,{~in.put(19,~entrada=Synth(\ent))},{~in.put(19,nil)})};
-~insteps21=CheckBox.new(~w,Rect(510,250,20,20)).action={|val|if(val.value,{~in.put(20,~entrada=Synth(\ent))},{~in.put(20,nil)})};
-~insteps22=CheckBox.new(~w,Rect(530,250,20,20)).action={|val|if(val.value,{~in.put(21,~entrada=Synth(\ent))},{~in.put(21,nil)})};
-~insteps23=CheckBox.new(~w,Rect(550,250,20,20)).action={|val|if(val.value,{~in.put(22,~entrada=Synth(\ent))},{~in.put(22,nil)})};
-~insteps24=CheckBox.new(~w,Rect(570,250,20,20)).action={|val|if(val.value,{~in.put(23,~entrada=Synth(\ent))},{~in.put(23,nil)})};
-~insteps25=CheckBox.new(~w,Rect(600,250,20,20)).action={|val|if(val.value,{~in.put(24,~entrada=Synth(\ent))},{~in.put(24,nil)})};
-~insteps26=CheckBox.new(~w,Rect(620,250,20,20)).action={|val|if(val.value,{~in.put(25,~entrada=Synth(\ent))},{~in.put(25,nil)})};
-~insteps27=CheckBox.new(~w,Rect(640,250,20,20)).action={|val|if(val.value,{~in.put(26,~entrada=Synth(\ent))},{~in.put(26,nil)})};
-~insteps28=CheckBox.new(~w,Rect(660,250,20,20)).action={|val|if(val.value,{~in.put(27,~entrada=Synth(\ent))},{~in.put(27,nil)})};
-~insteps29=CheckBox.new(~w,Rect(690,250,20,20)).action={|val|if(val.value,{~in.put(28,~entrada=Synth(\ent))},{~in.put(28,nil)})};
-~insteps30=CheckBox.new(~w,Rect(710,250,20,20)).action={|val|if(val.value,{~in.put(29,~entrada=Synth(\ent))},{~in.put(29,nil)})};
-~insteps31=CheckBox.new(~w,Rect(730,250,20,20)).action={|val|if(val.value,{~in.put(30,~entrada=Synth(\ent))},{~in.put(30,nil)})};
-~insteps32=CheckBox.new(~w,Rect(750,250,20,20)).action={|val|if(val.value,{~in.put(31,~entrada=Synth(\ent))},{~in.put(31,nil)})};
+
+~checkbox = 60;
+//crea los steps
+for (0, 31, { |i|
+
+	var checkvar = "~insteps";
+
+	var a = ~checksteps[i%~checksteps.size];
+
+	var variable = checkvar ++ i;
+
+	~checkin.put(i,variable);
+
+	~checkin[i] = CheckBox.new(~w,Rect(~checkbox, 250, 20, 20)).action={|val|
+		if(val.value,{~in.put(i,~entrada=Synth(\ent);)},{~in.put(i,nil)})};
+
+	~checkbox = ~checkbox + a;
+
+
+});
 //resetea secuencias In
 ~delin=Button(~w,Rect(765,252,15,15));
 ~delin.states=[[" X ",Color.black,Color.red]];
-										~in.put((0..31),nil);
-~delin.action={|val|if(val.value==0,{"LineIn have been cleared!".postln;
-										~insteps1.value=0;~insteps2.value=0;
-										~insteps3.value=0;~insteps4.value=0;
-										~insteps5.value=0;~insteps6.value=0;
-										~insteps7.value=0;~insteps8.value=0;
-										~insteps9.value=0;~insteps10.value=0;
-										~insteps11.value=0;~insteps12.value=0;
-										~insteps13.value=0;~insteps14.value=0;
-										~insteps15.value=0;~insteps16.value=0;
-										~insteps17.value=0;~insteps18.value=0;
-										~insteps19.value=0;~insteps20.value=0;
-										~insteps21.value=0;~insteps22.value=0;
-										~insteps23.value=0;~insteps24.value=0;
-										~insteps25.value=0;~insteps26.value=0;
-										~insteps27.value=0;~insteps28.value=0;
-										~insteps29.value=0;~insteps30.value=0;
-										~insteps31.value=0;~insteps32.value=0;
-										})};
+~delin.action={|val|if(val.value==0,{
+
+	"Line In have been cleared!".inform;
+
+	~in.put((0..31),nil);
+
+	for(0, 31, {|i|
+		~checkin[i].value = 0;
+
+	});
+
+})};
 //line In attack and release knobs
 ~inattknob=EZKnob(~w,Rect(785,251,81,17),nil,ControlSpec(0.01,0.25,\lin,0.001,0.1,\att),{|a| a.value;~entrada.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
 ~inrelknob=EZKnob(~w,Rect(870,251,81,17),nil,ControlSpec(0.05,0.75,\lin,0.001,0.1,\rel),{|a| a.value;~entrada.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
+
+
 //steps
 StaticText(~w,Rect(5,272,53,15)).string_("Steps:").align_(\left).background_(Color(0,0.9,0));
 ~step1=Button(~w,Rect(61,275,10,10));

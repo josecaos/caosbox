@@ -25,7 +25,7 @@ for (0, 31, { |i|
 ~delbass.states=[[" X ",Color.black,Color.red]];
 ~delbass.action={|val|if(val.value==0,{
 
-	"Bass have been cleared!".warn;
+	"Bass have been cleared!".inform;
 
 	~bajo.put((0..31),nil);
 
@@ -66,7 +66,7 @@ for (0, 31, { |i|
 ~delbass2.states=[[" X ",Color.black,Color.red]];
 ~delbass2.action={|val|if(val.value==0,{
 
-	"Bass have been cleared!".warn;
+	"Bass have been cleared!".inform;
 
 	~bajo2.put((0..31),nil);
 
@@ -109,7 +109,7 @@ for (0, 31, { |i|
 ~delamb.states=[[" X ",Color.black,Color.red]];
 ~delamb.action={|val|if(val.value==0,{
 
-	"Ambient pad steps cleared!".warn;
+	"Ambient pad steps cleared!".inform;
 
 	~ambiente.put((0..31),nil);
 
@@ -151,7 +151,7 @@ for (0, 31, { |i|
 ~delamb2.states=[[" X ",Color.black,Color.red]];
 ~delamb2.action={|val|if(val.value==0,{
 
-	"Ambient pad steps cleared!".warn;
+	"Ambient pad steps cleared!".inform;
 
 	~ambiente2.put((0..31),nil);
 
@@ -194,7 +194,7 @@ for (0, 31, { |i|
 ~delsinte.states=[[" X ",Color.black,Color.red]];
 ~delsinte.action={|val|if(val.value==0,{
 
-	"Chords have been cleared!".warn;
+	"Chords have been cleared!".inform;
 
 	~sinte.put((0..31),nil);
 
@@ -235,7 +235,7 @@ for (0, 31, { |i|
 ~delsinte2.states=[[" X ",Color.black,Color.red]];
 ~delsinte2.action={|val|if(val.value==0,{
 
-	"Chords have been cleared!".warn;
+	"Chords have been cleared!".inform;
 
 	~sinte2.put((0..31),nil);
 
