@@ -11,13 +11,13 @@
 //Percussion Functions:
 (
 //kick
-~b={var out=58;Out.ar(out,CaosKick.ar(0.01,0.15,2,0.5,60,62,50,1,0.9,0.35,2))};
+~b={var out=60;Out.ar(out,CaosKick.ar(0.01,0.15,2,0.5,60,62,50,1,0.9,0.35,2))};
 //snare
 ~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.5,highcutfreq:420,rq:0.25,amp1:0.4,amp2:0.1))};//
 //hat
-~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:7330,rq:0.5,amp1:0.25,amp2:0.15))};//
+~h={var out=62;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:7330,rq:0.5,amp1:0.35,amp2:0.15))};//
 //kick2
-~b2={var out=64;Out.ar(out,CaosKick2.ar(att:0.1,rel:2,modFreq:0.25,modbw:0.15,bw:0.05,freq1:60,freq2:64,lowcutfreq:80,amp:0.1))};//
+~b2={var out=64;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.32,modFreq:2,modbw:0.35,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
 //snare2
 ~t2={var out=54;Out.ar(out,CaosSnare2.ar(att:0.05,rel:0.2,iphase:0.05,bw:0.5,highcutfreq:470,rq:0.5,amp1:0.2,amp2:0.1))};//
 //hat2

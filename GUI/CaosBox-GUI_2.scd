@@ -13,7 +13,8 @@ for (0, 31, { |i|
 
 	~checkbajo.put(i,variable);
 
-	~checkbajo[i] = CheckBox.new(~w,Rect(~checkbox, 130, 20, 20)).action={|val| if(val.value,{~bajo.put(i,~bass=Synth(\bajouno);)},{~bajo.put(i,nil)})};
+	~checkbajo[i] = CheckBox.new(~w,Rect(~checkbox, 130, 20, 20)).action={|val|
+		if(val.value,{~bajo.put(i,~bass=Synth(\bajouno);)},{~bajo.put(i,nil)})};
 
 	~checkbox = ~checkbox + a;
 

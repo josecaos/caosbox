@@ -144,10 +144,6 @@ StaticText(~w,Rect(785,540,235,12)).string_("Auto/Speed").align_(\center).backgr
 ~autopopg=PopUpMenu(~w,Rect(785,555,235,25)).items=["normal","fast","slow","slowest"];
 ~autopopg.background_(~grandcolor).stringColor_(Color.gray(0.5));
 ~autopopg.action={|menu|
-	// if(menu.value==0,{~divgrain=1});
-	// if(menu.value==1,{~divgrain=0.5});
-	// if(menu.value==2,{~divgrain=2});
-	// if(menu.value==3,{~divgrain=4})
 	switch(menu.value,
 		0,{~divgrain=1;"+Grains Automation Normal".postln;},
 		1,{~divgrain=0.5;"+Grains Automation Fast".postln;},

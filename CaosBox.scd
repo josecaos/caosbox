@@ -1,8 +1,6 @@
-//written by @joseCao5 on SuperCollider 3.6.3 | Linux
-//mixfuckedup.net
-//Dic2013/ene2014 @ Puerto Morelos Q. Roo Mx.
+//written by @joseCao5
 //////////////////////////////////////////////////////////////////////
-//CaosBox v 0.08
+//CaosBox
 // Para arrancar, evalua la siguiente función: / To start, evaluate the next function:
 //////////////////////////////////////////////////////////////////////
 (
