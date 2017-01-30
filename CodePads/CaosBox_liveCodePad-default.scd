@@ -11,11 +11,11 @@
 //Percussion Functions:
 (
 //kick
-~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.15,1,0.05,64*1.12,68*1.6,50,1,0.59,0.35,2))};
+~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.1,1,0.5,60,68*1.6,50,1,0.59,0.35,2))};
 //snare
 ~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:420,rq:0.65,amp1:0.05,amp2:0.1))};//
 //hat
-~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:9330,rq:0.5,amp1:0.05,amp2:0.15))};//
+~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:9330,rq:0.5,amp1:0.15,amp2:0.15))};//
 //kick2
 ~b2={var out=64;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.32,modFreq:2,modbw:0.35,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
 //snare2
