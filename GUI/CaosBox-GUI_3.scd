@@ -58,26 +58,17 @@ for (0, 31, { |i|
 	// colores boton step
 	if((i == 0) || (i == space[0]) || (i == space[1]) || (i == space[2]) || (i == space[3]) || (i == space[4]) || (i == space[5]) || (i == space[6]), {
 
-		"true".postcln;
-
 		if(i != 0, {
-			~lightpos = ~lightpos + 5;//brinco de grupo
+			~lightpos = ~lightpos + 20;//brinco de grupo
 		});
 
-		~lightsteps[i] = Button(~w,Rect(~lightpos,275,10,10));
-		~lightsteps[i].state = [[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
+		~lightsteps[i] = Button(~w,Rect(~lightpos,275,10,10)).states = [[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
 
 		},{
 
-			"false".postcln;
-
-			~lightsteps[i] = Button(~w,Rect(~lightpos,275,10,10));
-			~lightsteps[i].states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-
+			~lightsteps[i] = Button(~w,Rect(~lightpos,275,10,10)).states = [[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
 
 	});
-
-
 
 	~lightpos = ~lightpos + 20;
 	//
