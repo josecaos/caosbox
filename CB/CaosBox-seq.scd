@@ -55,9 +55,10 @@ Tdef(\secuencias,{
 });
 );
 //guide light steps
-(
+//debug esto se integro al secuenciador principal
+/*(
 Tdef(\pasos,{
-	/*	var reset;
+		var reset;
 	{
 	if(~indice == 0,{reset = 31},{reset = ~indice-1});
 	{switch(~indice,
@@ -65,9 +66,9 @@ Tdef(\pasos,{
 	)
 	}.defer(0.01);
 	~tiempos.wait;
-	}.loop;*/
+	}.loop;
 });
-);
+);*/
 (//tiempo random
 Tdef(\randtime,{
 	{
