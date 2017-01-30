@@ -130,7 +130,7 @@ StaticText(~w,Rect(785,305,235,12)).string_(" channel: 64").align_(\center).back
 		6,{~grains.set(\out,62);"+Granulator Out to BPF".postln;}
 	);
 };
-// Help.gui;
+//
 //granulator values
 ~gtparam=ControlSpec.new(4,32,\lin,1,4);
 ~gsparam=ControlSpec.new(0.01,0.05,\lin,0.001,0.05);

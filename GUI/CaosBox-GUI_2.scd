@@ -18,8 +18,8 @@ for (0, 31, { |i|
 
 	~checkbox = ~checkbox + a;
 
-
 });
+
 // borra steps
 ~delbass=Button(~w,Rect(765,132,15,15));
 ~delbass.states=[[" X ",Color.black,Color.red]];

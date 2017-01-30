@@ -46,6 +46,8 @@
 ~checksinte=Array.fill(32,nil);
 ~checksinte2=Array.fill(32,nil);
 ~checkin=Array.fill(32,nil);
+~lightsteps=Array.fill(32,nil);
+~lightpos = 61;
 //divisores automatizacion
 ~divrev=1;//no usar '0'
 ~divdel=1;//no usar '0'

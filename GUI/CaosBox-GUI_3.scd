@@ -26,8 +26,6 @@ for (0, 31, { |i|
 ~delin.states=[[" X ",Color.black,Color.red]];
 ~delin.action={|val|if(val.value==0,{
 
-	"Line In have been cleared!".inform;
-
 	~in.put((0..31),nil);
 
 	for(0, 31, {|i|
@@ -35,78 +33,126 @@ for (0, 31, { |i|
 
 	});
 
+	"Line In have been cleared!".inform;
 })};
+
 //line In attack and release knobs
 ~inattknob=EZKnob(~w,Rect(785,251,81,17),nil,ControlSpec(0.01,0.25,\lin,0.001,0.1,\att),{|a| a.value;~entrada.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
+
 ~inrelknob=EZKnob(~w,Rect(870,251,81,17),nil,ControlSpec(0.05,0.75,\lin,0.001,0.1,\rel),{|a| a.value;~entrada.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
 
-
-//steps
+//
+//
 StaticText(~w,Rect(5,272,53,15)).string_("Steps:").align_(\left).background_(Color(0,0.9,0));
-~step1=Button(~w,Rect(61,275,10,10));
-~step1.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
-~step2=Button(~w,Rect(81,275,10,10));
-~step2.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step3=Button(~w,Rect(101,275,10,10));
-~step3.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step4=Button(~w,Rect(121,275,10,10));
-~step4.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step5=Button(~w,Rect(151,275,10,10));
-~step5.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
-~step6=Button(~w,Rect(171,275,10,10));
-~step6.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step7=Button(~w,Rect(191,275,10,10));
-~step7.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step8=Button(~w,Rect(211,275,10,10));
-~step8.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step9=Button(~w,Rect(241,275,10,10));
-~step9.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
-~step10=Button(~w,Rect(261,275,10,10));
-~step10.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step11=Button(~w,Rect(281,275,10,10));
-~step11.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step12=Button(~w,Rect(301,275,10,10));
-~step12.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step13=Button(~w,Rect(331,275,10,10));
-~step13.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
-~step14=Button(~w,Rect(351,275,10,10));
-~step14.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step15=Button(~w,Rect(371,275,10,10));
-~step15.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step16=Button(~w,Rect(391,275,10,10));
-~step16.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step17=Button(~w,Rect(421,275,10,10));
-~step17.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
-~step18=Button(~w,Rect(441,275,10,10));
-~step18.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step19=Button(~w,Rect(461,275,10,10));
-~step19.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step20=Button(~w,Rect(481,275,10,10));
-~step20.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step21=Button(~w,Rect(511,275,10,10));
-~step21.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
-~step22=Button(~w,Rect(531,275,10,10));
-~step22.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step23=Button(~w,Rect(551,275,10,10));
-~step23.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step24=Button(~w,Rect(571,275,10,10));
-~step24.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step25=Button(~w,Rect(601,275,10,10));
-~step25.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
-~step26=Button(~w,Rect(621,275,10,10));
-~step26.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step27=Button(~w,Rect(641,275,10,10));
-~step27.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step28=Button(~w,Rect(661,275,10,10));
-~step28.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step29=Button(~w,Rect(691,275,10,10));
-~step29.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
-~step30=Button(~w,Rect(711,275,10,10));
-~step30.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step31=Button(~w,Rect(731,275,10,10));
-~step31.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
-~step32=Button(~w,Rect(751,275,10,10));
-~step32.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+
+// leds
+for (0, 31, { |i|
+
+	var gvar = "~step";
+	var space = [4,8,12,16,20,24,28];
+	var variable = gvar ++ i;
+
+	~lightsteps.put(i,variable);
+
+	//crea los espacios entre steps
+	// colores boton step
+	if((i == 0) || (i == space[0]) || (i == space[1]) || (i == space[2]) || (i == space[3]) || (i == space[4]) || (i == space[5]) || (i == space[6]), {
+
+		"true".postcln;
+
+		if(i != 0, {
+			~lightpos = ~lightpos + 5;//brinco de grupo
+		});
+
+		~lightsteps[i] = Button(~w,Rect(~lightpos,275,10,10));
+		~lightsteps[i].state = [[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
+
+		},{
+
+			"false".postcln;
+
+			~lightsteps[i] = Button(~w,Rect(~lightpos,275,10,10));
+			~lightsteps[i].states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+
+
+	});
+
+
+
+	~lightpos = ~lightpos + 20;
+	//
+});
+//
+
+//
+// //light steps
+// StaticText(~w,Rect(5,272,53,15)).string_("Steps:").align_(\left).background_(Color(0,0.9,0));
+// ~step1=Button(~w,Rect(61,275,10,10));
+// ~step1.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
+// ~step2=Button(~w,Rect(81,275,10,10));
+// ~step2.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step3=Button(~w,Rect(101,275,10,10));
+// ~step3.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step4=Button(~w,Rect(121,275,10,10));
+// ~step4.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step5=Button(~w,Rect(151,275,10,10));
+// ~step5.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
+// ~step6=Button(~w,Rect(171,275,10,10));
+// ~step6.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step7=Button(~w,Rect(191,275,10,10));
+// ~step7.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step8=Button(~w,Rect(211,275,10,10));
+// ~step8.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step9=Button(~w,Rect(241,275,10,10));
+// ~step9.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
+// ~step10=Button(~w,Rect(261,275,10,10));
+// ~step10.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step11=Button(~w,Rect(281,275,10,10));
+// ~step11.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step12=Button(~w,Rect(301,275,10,10));
+// ~step12.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step13=Button(~w,Rect(331,275,10,10));
+// ~step13.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
+// ~step14=Button(~w,Rect(351,275,10,10));
+// ~step14.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step15=Button(~w,Rect(371,275,10,10));
+// ~step15.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step16=Button(~w,Rect(391,275,10,10));
+// ~step16.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step17=Button(~w,Rect(421,275,10,10));
+// ~step17.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
+// ~step18=Button(~w,Rect(441,275,10,10));
+// ~step18.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step19=Button(~w,Rect(461,275,10,10));
+// ~step19.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step20=Button(~w,Rect(481,275,10,10));
+// ~step20.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step21=Button(~w,Rect(511,275,10,10));
+// ~step21.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
+// ~step22=Button(~w,Rect(531,275,10,10));
+// ~step22.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step23=Button(~w,Rect(551,275,10,10));
+// ~step23.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step24=Button(~w,Rect(571,275,10,10));
+// ~step24.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step25=Button(~w,Rect(601,275,10,10));
+// ~step25.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
+// ~step26=Button(~w,Rect(621,275,10,10));
+// ~step26.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step27=Button(~w,Rect(641,275,10,10));
+// ~step27.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step28=Button(~w,Rect(661,275,10,10));
+// ~step28.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step29=Button(~w,Rect(691,275,10,10));
+// ~step29.states=[[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
+// ~step30=Button(~w,Rect(711,275,10,10));
+// ~step30.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step31=Button(~w,Rect(731,275,10,10));
+// ~step31.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+// ~step32=Button(~w,Rect(751,275,10,10));
+// ~step32.states=[[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+//
+
 //master sliders
 //master tag
 ~mastertag=StaticText(~w,Rect(5,290,270,12));
@@ -195,10 +241,10 @@ StaticText(~w,Rect(280,540,105,12)).string_("Auto/Speed").align_(\center).backgr
 ~autopopr=PopUpMenu(~w,Rect(280,555,105,25)).items=["normal","fast","slow","slowest"];
 ~autopopr.background_(Color(0.05,0.05,0.25)).stringColor_(Color.gray(0.5));
 ~autopopr.action={|menu| if(menu.value==0,{~divrev=1});
-						 if(menu.value==1,{~divrev=0.5});
-						 if(menu.value==2,{~divrev=2});
-						 if(menu.value==3,{~divrev=4})
-				 };
+	if(menu.value==1,{~divrev=0.5});
+	if(menu.value==2,{~divrev=2});
+	if(menu.value==3,{~divrev=4})
+};
 //aux2 tag
 ~auxdtag=StaticText(~w,Rect(390,305,70,12));
 ~auxdtag.string_("Delay:54").align_(\center).background_(Color(0.5,0.5,0.5));
@@ -206,9 +252,9 @@ StaticText(~w,Rect(280,540,105,12)).string_("Auto/Speed").align_(\center).backgr
 StaticText(~w,Rect(390,497,70,15)).string_("Cub/Lin").align_(\center).background_(Color(0.5,0.5,0.5));
 ~bott=Button(~w,Rect(390,515,70,22));
 ~bott.states=[["CombC",Color.white,Color.gray(0.25)],
-      			  ["CombL",Color.black,Color.gray(0.35)]];
+	["CombL",Color.black,Color.gray(0.35)]];
 ~bott.action={|val|if(val.value==0,{~mastdel.set(\delind,0);"->Cubic Delay<-".postcln},
-        							{~mastdel.set(\delind,1);"->Lineal Delay<-".postcln})};
+	{~mastdel.set(\delind,1);"->Lineal Delay<-".postcln})};
 //delay time
 ~auxt=StaticText(~w,Rect(390,320,35,15));//
 ~auxt.string_("time").align_(\center).background_(Color(0.5,0.5,0.5));
@@ -232,10 +278,10 @@ StaticText(~w,Rect(390,540,70,12)).string_("Auto/Speed").align_(\center).backgro
 ~autopopd=PopUpMenu(~w,Rect(390,555,70,25)).items=["normal","fast","slow","slowest"];
 ~autopopd.background_(Color(0.05,0.15,0.25)).stringColor_(Color.gray(0.5));
 ~autopopd.action={|menu| if(menu.value==0,{~divdel=1});
-						 if(menu.value==1,{~divdel=0.5});
-						 if(menu.value==2,{~divdel=2});
-						 if(menu.value==3,{~divdel=4})
-				 };
+	if(menu.value==1,{~divdel=0.5});
+	if(menu.value==2,{~divdel=2});
+	if(menu.value==3,{~divdel=4})
+};
 //aux3 tag
 ~auxdtag=StaticText(~w,Rect(465,305,105,12));
 ~auxdtag.string_("Pitch:56").align_(\center).background_(Color(0.5,0.5,0.5));
@@ -271,8 +317,8 @@ StaticText(~w,Rect(465,540,105,12)).string_("Auto/Speed").align_(\center).backgr
 ~autopopp=PopUpMenu(~w,Rect(465,555,105,25)).items=["normal","fast","slow","slowest"];
 ~autopopp.background_(Color(0.05,0.25,0.25)).stringColor_(Color.gray(0.5));
 ~autopopp.action={|menu| if(menu.value==0,{~divpitch=1});
-						 if(menu.value==1,{~divpitch=0.5});
-						 if(menu.value==2,{~divpitch=2});
-						 if(menu.value==3,{~divpitch=4})
-				 };
+	if(menu.value==1,{~divpitch=0.5});
+	if(menu.value==2,{~divpitch=2});
+	if(menu.value==3,{~divpitch=4})
+};
 );

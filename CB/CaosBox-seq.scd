@@ -48,7 +48,6 @@ Tdef(\secuencias,{
 //guide light steps
 (
 Tdef(\pasos,{
-	//pasos
 	{
 		{switch(~indice,
 			0,{~step1.value=1;~step32.value=0;},
@@ -84,7 +83,7 @@ Tdef(\pasos,{
 			30,{~step31.value=1;~step30.value=0;},
 			31,{~step32.value=1;~step31.value=0;}
 			)
-		}.defer(0.025);
+		}.defer(0.01);
 		~tiempos.wait;
 	}.loop;
 });

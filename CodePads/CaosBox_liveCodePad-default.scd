@@ -11,21 +11,26 @@
 //Percussion Functions:
 (
 //kick
-~b={var out=60;Out.ar(out,CaosKick.ar(0.01,0.15,2,0.5,60,62,50,1,0.9,0.35,2))};
+~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.15,1,0.05,64*1.12,68*1.6,50,1,0.59,0.35,2))};
 //snare
-~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.5,highcutfreq:420,rq:0.25,amp1:0.4,amp2:0.1))};//
+~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:420,rq:0.65,amp1:0.05,amp2:0.1))};//
 //hat
-~h={var out=62;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:7330,rq:0.5,amp1:0.35,amp2:0.15))};//
+~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:9330,rq:0.5,amp1:0.05,amp2:0.15))};//
 //kick2
 ~b2={var out=64;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.32,modFreq:2,modbw:0.35,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
 //snare2
 ~t2={var out=54;Out.ar(out,CaosSnare2.ar(att:0.05,rel:0.2,iphase:0.05,bw:0.5,highcutfreq:470,rq:0.5,amp1:0.2,amp2:0.1))};//
-//hat2
+//hat2?
 ~h2={var out=64;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:2950,rq:0.45,amp1:0.5,amp2:0.3))};//
 );
+//
+// Help.gui;
+s.queryAllNodes;
 ////////////////////Bass, Pad, Chord functions:
 //you can create more variables as melodies for instrument Tdefs
-~mainmelody=[0,3,7,8,11,12]+38;
+~mainmelody=[ 0, 1, 3, 5, 6, 8, 10 ];
+// Scale.minor.degrees;
+// Scale.locrian.degrees;
 //
 //////////////////////
 //Evaluate each one of these Tdef to change Synth parameters
@@ -33,7 +38,7 @@
 (//bajo 1
 Tdef(\bass,{
 //CaosBass args: |att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,amp1,amp2|
-	var bassmel=Prand(~mainmelody.pyramid.mirror2-12,inf).asStream;
+	var bassmel=Prand(~mainmelody+24,inf).asStream;
 	loop{
 	~bass.set(\note,bassmel.next,
 			   \filtminf,56,
@@ -41,8 +46,8 @@ Tdef(\bass,{
 			   \filtime,0.25,
 			   \rq,0.15,
 			   \iphase,0.5,
-			   \amp1,0.55,
-			   \amp2,0.35);
+			   \amp1,0.5,
+			   \amp2,0.75);
 	~bass.set(\out,64);//route
 	~tiempos.wait;
 	}
@@ -52,7 +57,7 @@ Tdef(\bass,{
 (
 Tdef(\bass2,{
 //CaosBass2 args: |att,rel,note,trig,filtminf,filtmaxf,filtime,rq,bandw,iphase,amp1,amp2|
-	var bass2mel=Prand(~mainmelody.scramble.mirror2+50,inf).asStream;
+	var bass2mel=Prand(~mainmelody.scramble.mirror2,inf).asStream;
 	loop{
 	~bass2.set(\note,bass2mel.next,
 			   \trig,4,
@@ -61,10 +66,10 @@ Tdef(\bass2,{
 			   \filtime,0.25,\rq,0.25,
 			   \bandw,0.25,
 			   \iphase,0.25,
-			   \amp1,0.055,
+			   \amp1,0.035,
 			   \amp2,0.01);
 	~bass2.set(\out,64);//route
-	~tiempos.wait;
+	~tiempos*4.wait;
 	}
 }).quant_(4);
 );
@@ -121,7 +126,7 @@ Tdef(\acordes,{
 	~chord.set(\cutf,1220);
 	~chord.set(\rq,0.5);
 	~chord.set(\pan,0);// -1 to 1 where 0 is middle
-	~chord.set(\amp,0.35);
+	~chord.set(\amp,0.25);
 	~chord.set(\out,64);//route
 	~tiempos.wait;
 	}
