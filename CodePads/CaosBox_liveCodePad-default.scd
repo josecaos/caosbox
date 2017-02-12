@@ -11,7 +11,7 @@
 //Percussion Functions:
 (
 //kick
-~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.5,60,64,50,1,0.59,0.15,2))};
+~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.5,1,0.5,60,64,50,1,0.79,0.2,2))};
 //snare
 ~t={var out=52;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:420,rq:0.65,amp1:0.05,amp2:0.1))};//
 //hat
