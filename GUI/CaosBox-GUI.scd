@@ -1,41 +1,80 @@
 (//CaosBox GUI - percusiones, botones de contrl, bienvenida
 ~w=Window.new("CaosBox v1.0 #liveCodingMachine for Algorave music by @joseCao5",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
 StaticText(~w,Rect(5,12,53,15)).string_("Kick:").align_(\left).background_(Color(0.85,0.85,0.85));
-//bombo steps
-~bsteps1=CheckBox.new(~w,Rect(60,10,20,20)).action={|val|if(val.value,{~bombo.put(0,~b)},{~bombo.put(0,nil)})};
-~bsteps2=CheckBox.new(~w,Rect(80,10,20,20)).action={|val|if(val.value,{~bombo.put(1,~b)},{~bombo.put(1,nil)})};
-~bsteps3=CheckBox.new(~w,Rect(100,10,20,20)).action={|val|if(val.value,{~bombo.put(2,~b)},{~bombo.put(2,nil)})};
-~bsteps4=CheckBox.new(~w,Rect(120,10,20,20)).action={|val|if(val.value,{~bombo.put(3,~b)},{~bombo.put(3,nil)})};
-~bsteps5=CheckBox.new(~w,Rect(150,10,20,20)).action={|val|if(val.value,{~bombo.put(4,~b)},{~bombo.put(4,nil)})};
-~bsteps6=CheckBox.new(~w,Rect(170,10,20,20)).action={|val|if(val.value,{~bombo.put(5,~b)},{~bombo.put(5,nil)})};
-~bsteps7=CheckBox.new(~w,Rect(190,10,20,20)).action={|val|if(val.value,{~bombo.put(6,~b)},{~bombo.put(6,nil)})};
-~bsteps8=CheckBox.new(~w,Rect(210,10,20,20)).action={|val|if(val.value,{~bombo.put(7,~b)},{~bombo.put(7,nil)})};
-~bsteps9=CheckBox.new(~w,Rect(240,10,20,20)).action={|val|if(val.value,{~bombo.put(8,~b)},{~bombo.put(8,nil)})};
-~bsteps10=CheckBox.new(~w,Rect(260,10,20,20)).action={|val|if(val.value,{~bombo.put(9,~b)},{~bombo.put(9,nil)})};
-~bsteps11=CheckBox.new(~w,Rect(280,10,20,20)).action={|val|if(val.value,{~bombo.put(10,~b)},{~bombo.put(10,nil)})};
-~bsteps12=CheckBox.new(~w,Rect(300,10,20,20)).action={|val|if(val.value,{~bombo.put(11,~b)},{~bombo.put(11,nil)})};
-~bsteps13=CheckBox.new(~w,Rect(330,10,20,20)).action={|val|if(val.value,{~bombo.put(12,~b)},{~bombo.put(12,nil)})};
-~bsteps14=CheckBox.new(~w,Rect(350,10,20,20)).action={|val|if(val.value,{~bombo.put(13,~b)},{~bombo.put(13,nil)})};
-~bsteps15=CheckBox.new(~w,Rect(370,10,20,20)).action={|val|if(val.value,{~bombo.put(14,~b)},{~bombo.put(14,nil)})};
-~bsteps16=CheckBox.new(~w,Rect(390,10,20,20)).action={|val|if(val.value,{~bombo.put(15,~b)},{~bombo.put(15,nil)})};
-~bsteps17=CheckBox.new(~w,Rect(420,10,20,20)).action={|val|if(val.value,{~bombo.put(16,~b)},{~bombo.put(16,nil)})};
-~bsteps18=CheckBox.new(~w,Rect(440,10,20,20)).action={|val|if(val.value,{~bombo.put(17,~b)},{~bombo.put(17,nil)})};
-~bsteps19=CheckBox.new(~w,Rect(460,10,20,20)).action={|val|if(val.value,{~bombo.put(18,~b)},{~bombo.put(18,nil)})};
-~bsteps20=CheckBox.new(~w,Rect(480,10,20,20)).action={|val|if(val.value,{~bombo.put(19,~b)},{~bombo.put(19,nil)})};
-~bsteps21=CheckBox.new(~w,Rect(510,10,20,20)).action={|val|if(val.value,{~bombo.put(20,~b)},{~bombo.put(20,nil)})};
-~bsteps22=CheckBox.new(~w,Rect(530,10,20,20)).action={|val|if(val.value,{~bombo.put(21,~b)},{~bombo.put(21,nil)})};
-~bsteps23=CheckBox.new(~w,Rect(550,10,20,20)).action={|val|if(val.value,{~bombo.put(22,~b)},{~bombo.put(22,nil)})};
-~bsteps24=CheckBox.new(~w,Rect(570,10,20,20)).action={|val|if(val.value,{~bombo.put(23,~b)},{~bombo.put(23,nil)})};
-~bsteps25=CheckBox.new(~w,Rect(600,10,20,20)).action={|val|if(val.value,{~bombo.put(24,~b)},{~bombo.put(24,nil)})};
-~bsteps26=CheckBox.new(~w,Rect(620,10,20,20)).action={|val|if(val.value,{~bombo.put(25,~b)},{~bombo.put(25,nil)})};
-~bsteps27=CheckBox.new(~w,Rect(640,10,20,20)).action={|val|if(val.value,{~bombo.put(26,~b)},{~bombo.put(26,nil)})};
-~bsteps28=CheckBox.new(~w,Rect(660,10,20,20)).action={|val|if(val.value,{~bombo.put(27,~b)},{~bombo.put(27,nil)})};
-~bsteps29=CheckBox.new(~w,Rect(690,10,20,20)).action={|val|if(val.value,{~bombo.put(28,~b)},{~bombo.put(28,nil)})};
-~bsteps30=CheckBox.new(~w,Rect(710,10,20,20)).action={|val|if(val.value,{~bombo.put(29,~b)},{~bombo.put(29,nil)})};
-~bsteps31=CheckBox.new(~w,Rect(730,10,20,20)).action={|val|if(val.value,{~bombo.put(30,~b)},{~bombo.put(30,nil)})};
-~bsteps32=CheckBox.new(~w,Rect(750,10,20,20)).action={|val|if(val.value,{~bombo.put(31,~b)},{~bombo.put(31,nil)})};
-//resetea secuencias bombo
+//
+~checkbox = 60;
+//crea los steps
+for (0, 31, { |i|
+
+	var checkvar = "~bsteps1";
+
+	var a = ~checksteps[i%~checksteps.size];
+
+	var variable = checkvar ++ i;
+
+	~checkbombo.put(i,variable);
+
+	~checkbombo[i] = CheckBox.new(~w,Rect(~checkbox, 10, 20, 20)).action={|val|
+		if(val.value,{~bombo.put(i,~b)},{~bombo.put(i,nil)})};
+
+	~checkbox = ~checkbox + a;
+
+});
+
+// borra steps
 ~delbombo=Button(~w,Rect(765,12,15,15));
+~delbombo.states=[[" X ",Color.black,Color.red]];
+~delbombo.action={|val|if(val.value==0,{
+
+	"Kick have been cleared!".inform;
+
+	~bombo.put((0..31),nil);
+
+	for(0, 31, {|i|
+
+		~checkbombo[i].value = 0;
+
+	});
+
+})};
+//
+
+
+//bombo steps
+// ~bsteps1=CheckBox.new(~w,Rect(60,10,20,20)).action={|val|if(val.value,{~bombo.put(0,~b)},{~bombo.put(0,nil)})};
+// ~bsteps2=CheckBox.new(~w,Rect(80,10,20,20)).action={|val|if(val.value,{~bombo.put(1,~b)},{~bombo.put(1,nil)})};
+// ~bsteps3=CheckBox.new(~w,Rect(100,10,20,20)).action={|val|if(val.value,{~bombo.put(2,~b)},{~bombo.put(2,nil)})};
+// ~bsteps4=CheckBox.new(~w,Rect(120,10,20,20)).action={|val|if(val.value,{~bombo.put(3,~b)},{~bombo.put(3,nil)})};
+// ~bsteps5=CheckBox.new(~w,Rect(150,10,20,20)).action={|val|if(val.value,{~bombo.put(4,~b)},{~bombo.put(4,nil)})};
+// ~bsteps6=CheckBox.new(~w,Rect(170,10,20,20)).action={|val|if(val.value,{~bombo.put(5,~b)},{~bombo.put(5,nil)})};
+// ~bsteps7=CheckBox.new(~w,Rect(190,10,20,20)).action={|val|if(val.value,{~bombo.put(6,~b)},{~bombo.put(6,nil)})};
+// ~bsteps8=CheckBox.new(~w,Rect(210,10,20,20)).action={|val|if(val.value,{~bombo.put(7,~b)},{~bombo.put(7,nil)})};
+// ~bsteps9=CheckBox.new(~w,Rect(240,10,20,20)).action={|val|if(val.value,{~bombo.put(8,~b)},{~bombo.put(8,nil)})};
+// ~bsteps10=CheckBox.new(~w,Rect(260,10,20,20)).action={|val|if(val.value,{~bombo.put(9,~b)},{~bombo.put(9,nil)})};
+// ~bsteps11=CheckBox.new(~w,Rect(280,10,20,20)).action={|val|if(val.value,{~bombo.put(10,~b)},{~bombo.put(10,nil)})};
+// ~bsteps12=CheckBox.new(~w,Rect(300,10,20,20)).action={|val|if(val.value,{~bombo.put(11,~b)},{~bombo.put(11,nil)})};
+// ~bsteps13=CheckBox.new(~w,Rect(330,10,20,20)).action={|val|if(val.value,{~bombo.put(12,~b)},{~bombo.put(12,nil)})};
+// ~bsteps14=CheckBox.new(~w,Rect(350,10,20,20)).action={|val|if(val.value,{~bombo.put(13,~b)},{~bombo.put(13,nil)})};
+// ~bsteps15=CheckBox.new(~w,Rect(370,10,20,20)).action={|val|if(val.value,{~bombo.put(14,~b)},{~bombo.put(14,nil)})};
+// ~bsteps16=CheckBox.new(~w,Rect(390,10,20,20)).action={|val|if(val.value,{~bombo.put(15,~b)},{~bombo.put(15,nil)})};
+// ~bsteps17=CheckBox.new(~w,Rect(420,10,20,20)).action={|val|if(val.value,{~bombo.put(16,~b)},{~bombo.put(16,nil)})};
+// ~bsteps18=CheckBox.new(~w,Rect(440,10,20,20)).action={|val|if(val.value,{~bombo.put(17,~b)},{~bombo.put(17,nil)})};
+// ~bsteps19=CheckBox.new(~w,Rect(460,10,20,20)).action={|val|if(val.value,{~bombo.put(18,~b)},{~bombo.put(18,nil)})};
+// ~bsteps20=CheckBox.new(~w,Rect(480,10,20,20)).action={|val|if(val.value,{~bombo.put(19,~b)},{~bombo.put(19,nil)})};
+// ~bsteps21=CheckBox.new(~w,Rect(510,10,20,20)).action={|val|if(val.value,{~bombo.put(20,~b)},{~bombo.put(20,nil)})};
+// ~bsteps22=CheckBox.new(~w,Rect(530,10,20,20)).action={|val|if(val.value,{~bombo.put(21,~b)},{~bombo.put(21,nil)})};
+// ~bsteps23=CheckBox.new(~w,Rect(550,10,20,20)).action={|val|if(val.value,{~bombo.put(22,~b)},{~bombo.put(22,nil)})};
+// ~bsteps24=CheckBox.new(~w,Rect(570,10,20,20)).action={|val|if(val.value,{~bombo.put(23,~b)},{~bombo.put(23,nil)})};
+// ~bsteps25=CheckBox.new(~w,Rect(600,10,20,20)).action={|val|if(val.value,{~bombo.put(24,~b)},{~bombo.put(24,nil)})};
+// ~bsteps26=CheckBox.new(~w,Rect(620,10,20,20)).action={|val|if(val.value,{~bombo.put(25,~b)},{~bombo.put(25,nil)})};
+// ~bsteps27=CheckBox.new(~w,Rect(640,10,20,20)).action={|val|if(val.value,{~bombo.put(26,~b)},{~bombo.put(26,nil)})};
+// ~bsteps28=CheckBox.new(~w,Rect(660,10,20,20)).action={|val|if(val.value,{~bombo.put(27,~b)},{~bombo.put(27,nil)})};
+// ~bsteps29=CheckBox.new(~w,Rect(690,10,20,20)).action={|val|if(val.value,{~bombo.put(28,~b)},{~bombo.put(28,nil)})};
+// ~bsteps30=CheckBox.new(~w,Rect(710,10,20,20)).action={|val|if(val.value,{~bombo.put(29,~b)},{~bombo.put(29,nil)})};
+// ~bsteps31=CheckBox.new(~w,Rect(730,10,20,20)).action={|val|if(val.value,{~bombo.put(30,~b)},{~bombo.put(30,nil)})};
+// ~bsteps32=CheckBox.new(~w,Rect(750,10,20,20)).action={|val|if(val.value,{~bombo.put(31,~b)},{~bombo.put(31,nil)})};
+//resetea secuencias bombo
+/*~delbombo=Button(~w,Rect(765,12,15,15));
 ~delbombo.states=[[" X ",Color.black,Color.red]];
 ~delbombo.action={|val|if(val.value==0,{"Kick have been cleared!".postln;
 										~bombo.put((0..31),nil);
@@ -55,7 +94,7 @@ StaticText(~w,Rect(5,12,53,15)).string_("Kick:").align_(\left).background_(Color
 										~bsteps27.value=0;~bsteps28.value=0;
 										~bsteps29.value=0;~bsteps30.value=0;
 										~bsteps31.value=0;~bsteps32.value=0;
-										})};
+										})};*/
 //tarola steps
 StaticText(~w,Rect(5,32,53,15)).string_("Snare:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~tsteps1=CheckBox.new(~w,Rect(60,30,20,20)).action={|val|if(val.value,{~tarola.put(0,~t)},{~tarola.put(0,nil)})};
