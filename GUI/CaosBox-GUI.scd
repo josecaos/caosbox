@@ -142,7 +142,7 @@ for (0, 31, { |i|
 ~delbombo2.states=[[" X ",Color.black,Color.red]];
 ~delbombo2.action={|val|if(val.value==0,{
 
-	"Kick have been cleared!".inform;
+	"Kick 2 have been cleared!".inform;
 
 	~bombo2.put((0..31),nil);
 
@@ -156,60 +156,41 @@ for (0, 31, { |i|
 
 //tarola2
 StaticText(~w,Rect(5,92,53,15)).string_("Snare2:").align_(\left).background_(Color(0.85,0.85,0.85));
-~t2steps1=CheckBox.new(~w,Rect(60,90,20,20)).action={|val|if(val.value,{~tarola2.put(0,~t2)},{~tarola2.put(0,nil)})};
-~t2steps2=CheckBox.new(~w,Rect(80,90,20,20)).action={|val|if(val.value,{~tarola2.put(1,~t2)},{~tarola2.put(1,nil)})};
-~t2steps3=CheckBox.new(~w,Rect(100,90,20,20)).action={|val|if(val.value,{~tarola2.put(2,~t2)},{~tarola2.put(2,nil)})};
-~t2steps4=CheckBox.new(~w,Rect(120,90,20,20)).action={|val|if(val.value,{~tarola2.put(3,~t2)},{~tarola2.put(3,nil)})};
-~t2steps5=CheckBox.new(~w,Rect(150,90,20,20)).action={|val|if(val.value,{~tarola2.put(4,~t2)},{~tarola2.put(4,nil)})};
-~t2steps6=CheckBox.new(~w,Rect(170,90,20,20)).action={|val|if(val.value,{~tarola2.put(5,~t2)},{~tarola2.put(5,nil)})};
-~t2steps7=CheckBox.new(~w,Rect(190,90,20,20)).action={|val|if(val.value,{~tarola2.put(6,~t2)},{~tarola2.put(6,nil)})};
-~t2steps8=CheckBox.new(~w,Rect(210,90,20,20)).action={|val|if(val.value,{~tarola2.put(7,~t2)},{~tarola2.put(7,nil)})};
-~t2steps9=CheckBox.new(~w,Rect(240,90,20,20)).action={|val|if(val.value,{~tarola2.put(8,~t2)},{~tarola2.put(8,nil)})};
-~t2steps10=CheckBox.new(~w,Rect(260,90,20,20)).action={|val|if(val.value,{~tarola2.put(9,~t2)},{~tarola2.put(9,nil)})};
-~t2steps11=CheckBox.new(~w,Rect(280,90,20,20)).action={|val|if(val.value,{~tarola2.put(10,~t2)},{~tarola2.put(10,nil)})};
-~t2steps12=CheckBox.new(~w,Rect(300,90,20,20)).action={|val|if(val.value,{~tarola2.put(11,~t2)},{~tarola2.put(11,nil)})};
-~t2steps13=CheckBox.new(~w,Rect(330,90,20,20)).action={|val|if(val.value,{~tarola2.put(12,~t2)},{~tarola2.put(12,nil)})};
-~t2steps14=CheckBox.new(~w,Rect(350,90,20,20)).action={|val|if(val.value,{~tarola2.put(13,~t2)},{~tarola2.put(13,nil)})};
-~t2steps15=CheckBox.new(~w,Rect(370,90,20,20)).action={|val|if(val.value,{~tarola2.put(14,~t2)},{~tarola2.put(14,nil)})};
-~t2steps16=CheckBox.new(~w,Rect(390,90,20,20)).action={|val|if(val.value,{~tarola2.put(15,~t2)},{~tarola2.put(15,nil)})};
-~t2steps17=CheckBox.new(~w,Rect(420,90,20,20)).action={|val|if(val.value,{~tarola2.put(16,~t2)},{~tarola2.put(16,nil)})};
-~t2steps18=CheckBox.new(~w,Rect(440,90,20,20)).action={|val|if(val.value,{~tarola2.put(17,~t2)},{~tarola2.put(17,nil)})};
-~t2steps19=CheckBox.new(~w,Rect(460,90,20,20)).action={|val|if(val.value,{~tarola2.put(18,~t2)},{~tarola2.put(18,nil)})};
-~t2steps20=CheckBox.new(~w,Rect(480,90,20,20)).action={|val|if(val.value,{~tarola2.put(19,~t2)},{~tarola2.put(19,nil)})};
-~t2steps21=CheckBox.new(~w,Rect(510,90,20,20)).action={|val|if(val.value,{~tarola2.put(20,~t2)},{~tarola2.put(20,nil)})};
-~t2steps22=CheckBox.new(~w,Rect(530,90,20,20)).action={|val|if(val.value,{~tarola2.put(21,~t2)},{~tarola2.put(21,nil)})};
-~t2steps23=CheckBox.new(~w,Rect(550,90,20,20)).action={|val|if(val.value,{~tarola2.put(22,~t2)},{~tarola2.put(22,nil)})};
-~t2steps24=CheckBox.new(~w,Rect(570,90,20,20)).action={|val|if(val.value,{~tarola2.put(23,~t2)},{~tarola2.put(23,nil)})};
-~t2steps25=CheckBox.new(~w,Rect(600,90,20,20)).action={|val|if(val.value,{~tarola2.put(24,~t2)},{~tarola2.put(24,nil)})};
-~t2steps26=CheckBox.new(~w,Rect(620,90,20,20)).action={|val|if(val.value,{~tarola2.put(25,~t2)},{~tarola2.put(25,nil)})};
-~t2steps27=CheckBox.new(~w,Rect(640,90,20,20)).action={|val|if(val.value,{~tarola2.put(26,~t2)},{~tarola2.put(26,nil)})};
-~t2steps28=CheckBox.new(~w,Rect(660,90,20,20)).action={|val|if(val.value,{~tarola2.put(27,~t2)},{~tarola2.put(27,nil)})};
-~t2steps29=CheckBox.new(~w,Rect(690,90,20,20)).action={|val|if(val.value,{~tarola2.put(28,~t2)},{~tarola2.put(28,nil)})};
-~t2steps30=CheckBox.new(~w,Rect(710,90,20,20)).action={|val|if(val.value,{~tarola2.put(29,~t2)},{~tarola2.put(29,nil)})};
-~t2steps31=CheckBox.new(~w,Rect(730,90,20,20)).action={|val|if(val.value,{~tarola2.put(30,~t2)},{~tarola2.put(30,nil)})};
-~t2steps32=CheckBox.new(~w,Rect(750,90,20,20)).action={|val|if(val.value,{~tarola2.put(31,~t2)},{~tarola2.put(31,nil)})};
-//resetea secuencias tarola2
+~checkbox = 60;
+for (0, 31, { |i|
+
+	var checkvar = "~t2steps";
+
+	var a = ~checksteps[i%~checksteps.size];
+
+	var variable = checkvar ++ i;
+
+	~checktarola2.put(i,variable);
+
+	~checktarola2[i] = CheckBox.new(~w,Rect(~checkbox, 90, 20, 20)).action={|val|
+		if(val.value,{~tarola2.put(i,~t)},{~tarola2.put(i,nil)})};
+
+	~checkbox = ~checkbox + a;
+
+});
+
+// borra steps
 ~deltarola2=Button(~w,Rect(765,92,15,15));
 ~deltarola2.states=[[" X ",Color.black,Color.red]];
-~deltarola2.action={|val|if(val.value==0,{"Snare have been cleared!".postln;
-										~tarola2.put((0..31),nil);
-										~t2steps1.value=0;~t2steps2.value=0;
-										~t2steps3.value=0;~t2steps4.value=0;
-										~t2steps5.value=0;~t2steps6.value=0;
-										~t2steps7.value=0;~t2steps8.value=0;
-										~t2steps9.value=0;~t2steps10.value=0;
-										~t2steps11.value=0;~t2steps12.value=0;
-										~t2steps13.value=0;~t2steps14.value=0;
-										~t2steps15.value=0;~t2steps16.value=0;
-										~t2steps17.value=0;~t2steps18.value=0;
-										~t2steps19.value=0;~t2steps20.value=0;
-										~t2steps21.value=0;~t2steps22.value=0;
-										~t2steps23.value=0;~t2steps24.value=0;
-										~t2steps25.value=0;~t2steps26.value=0;
-										~t2steps27.value=0;~t2steps28.value=0;
-										~t2steps29.value=0;~t2steps30.value=0;
-										~t2steps31.value=0;~t2steps32.value=0;
-										})};
+~deltarola2.action={|val|if(val.value==0,{
+
+	"Snare 2 have been cleared!".inform;
+
+	~tarola2.put((0..31),nil);
+
+	for(0, 31, {|i|
+
+		~checktarola2[i].value = 0;
+
+	});
+
+})};
+
 //contratiempos2
 StaticText(~w,Rect(5,112,53,15)).string_("HiHats2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~h2steps1=CheckBox.new(~w,Rect(60,110,20,20)).action={|val|if(val.value,{~contras2.put(0,~h2)},{~contras2.put(0,nil)})};
