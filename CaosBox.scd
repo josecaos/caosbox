@@ -1,6 +1,9 @@
-//written by @joseCao5
+// written by @joseCao5
+// CaosBox needs 'caosperclib':
+// (https://github.com/josecaos/caosperclib)
+// Install here: Platform.userExtensionDir;
 //////////////////////////////////////////////////////////////////////
-//CaosBox
+// CaosBox
 // Para arrancar, evalua la siguiente función: / To start, evaluate the next function:
 //////////////////////////////////////////////////////////////////////
 (
@@ -11,17 +14,14 @@ s.waitForBoot{
 };
 );
 //
-// CaosBox works with 'caosperclib' (https://github.com/josecaos/caosperclib) Install here: Platform.userExtensionDir;
-///
-////
 ///////////////////////////
 //History
 //This is a try to recover
 //livecode sessions thru caosbox
-//not yet finished, is not recording
-//GUI movement values,On the
-//mean time is only saving from written data
-//still some interesting information.
+//not yet finished as
+//GUI movement valuesare not recorded, On the
+//mean time is only saving written code,
+//still some interesting information kept.
 //keep improvising to infinity
 ////////////////////////////
 //use this to load your recorded history files, recompile library first

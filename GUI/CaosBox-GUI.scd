@@ -1,4 +1,4 @@
-(//CaosBox GUI - percusiones, botones de control, bienvenida
+(//CaosBox GUI file 1 - percusiones, botones de control, bienvenida
 ~w=Window.new("CaosBox v1.2 #liveCodingMachine for Algorave music",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
 //
 // leds
@@ -300,6 +300,7 @@ StaticText(~w,Rect(785,585,235,15)).string_("Automation:").align_(\center).backg
 ~autobotg.states=[[" Auto On ",Color.gray(0.85),Color.black(0.5)],
 	[" Auto Off ",Color.black,Color.green(0.5)]];
 ~autobotg.action={|val|if(val.value==1,{Tdef(\autog).play},{Tdef(\autog).stop})};
+//
 //play
 StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).background_(Color(0.5,0.5,0.5));
 ~bot=Button(~w,Rect(275,650,515,25));
@@ -310,7 +311,7 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
 	~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;/*~f.kill;~grains.free;Server.freeAll;History.stop;*/
 	"->You just Stopped CaosBox<-".inform;},
 	{Tdef(\secuencias).play;/*Tdef(\pasos).play;*/Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
-		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"->Playing, please start algoravin'<-".inform})};
+		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"-> Now playing, please start algoraving <-".inform})};
 //record
 ~filea=[~n.choose,~l.choose,~n.choose,~l.choose];
 ~filename=~filename.add(~filea.stutter((1..2).choose).scramble.join);

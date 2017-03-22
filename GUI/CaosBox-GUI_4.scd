@@ -1,4 +1,4 @@
-(//CaosBox GUI 4 - filtros, freqscope, bpm, granulador, onClose
+(//CaosBox GUI file 4 - filtros, freqscope, bpm, granulador, onClose
 //filter min max values
 ~fmaxmin=ControlSpec(20,20000,\exponential,1,1000);
 ~rqmaxmin=ControlSpec(0.01,1,\lin,0.01,0.5);
@@ -14,10 +14,10 @@
 ~lowoutpop.background_(Color(0.05,0.05,0.25,1)).stringColor_(Color.gray(0.5));
 ~lowoutpop.action={|menu|
 	switch(menu.value,
-		0,{~mastlowf.set(\out,50);"+LPF Out to Master".postln;},
-		1,{~mastlowf.set(\out,52);"+LPF Out to Reverb".postln;},
-		2,{~mastlowf.set(\out,54);"+LPF Out to Delay".postln;},
-		3,{~mastlowf.set(\out,56);"+LPF Out to Pitch".postln;}
+		0,{~mastlowf.set(\out,50);"+ LPF Out to Master".inform;},
+		1,{~mastlowf.set(\out,52);"+ LPF Out to Reverb".inform;},
+		2,{~mastlowf.set(\out,54);"+ LPF Out to Delay".inform;},
+		3,{~mastlowf.set(\out,56);"+ LPF Out to Pitch".inform;}
 	);
 };
 //Lowpass cutfreq
@@ -45,10 +45,10 @@ StaticText(~w,Rect(575,380,125,14)).string_("Bandwidth").align_(\center).backgro
 ~highoutpop.background_(Color(0.05,0.05,0.25,1)).stringColor_(Color.gray(0.5));
 ~highoutpop.action={|menu|
 	switch(menu.value,
-		0,{~masthighf.set(\out,50);"+HPF Out to Master".postln;},
-		1,{~masthighf.set(\out,52);"+HPF Out to Reverb".postln;},
-		2,{~masthighf.set(\out,54);"+HPF Out to Delay".postln;},
-		3,{~masthighf.set(\out,56);"+HPF Out to Pitch".postln;}
+		0,{~masthighf.set(\out,50);"+ HPF Out to Master".inform;},
+		1,{~masthighf.set(\out,52);"+ HPF Out to Reverb".inform;},
+		2,{~masthighf.set(\out,54);"+ HPF Out to Delay".inform;},
+		3,{~masthighf.set(\out,56);"+ HPF Out to Pitch".inform;}
 	);
 };
 //Highpass cutfreq
@@ -76,10 +76,10 @@ StaticText(~w,Rect(575,493,125,14)).string_("Bandwidth").align_(\center).backgro
 ~bandoutpop.background_(Color(0.05,0.05,0.25,1)).stringColor_(Color.gray(0.5));
 ~bandoutpop.action={|menu|
 	switch(menu.value,
-		0,{~mastbandf.set(\out,50);"+BPF Out to Master".postln;},
-		1,{~mastbandf.set(\out,52);"+BPF Out to Reverb".postln;},
-		2,{~mastbandf.set(\out,54);"+BPF Out to Delay".postln;},
-		3,{~mastbandf.set(\out,56);"+BPF Out to Pitch".postln;}
+		0,{~mastbandf.set(\out,50);"+ BPF Out to Master".inform;},
+		1,{~mastbandf.set(\out,52);"+ BPF Out to Reverb".inform;},
+		2,{~mastbandf.set(\out,54);"+ BPF Out to Delay".inform;},
+		3,{~mastbandf.set(\out,56);"+ BPF Out to Pitch".inform;}
 	);
 
 };
@@ -104,8 +104,8 @@ StaticText(~w,Rect(785,12,155,15)).string_("Frequency Analyzer:").align_(\center
 ~fbot=Button(~w,Rect(940,12,80,15));
 ~fbot.states=[["On",Color.black,Color.green],
 	["Off",Color.white,Color.red]];
-~fbot.action={|val| if(val.value==0,{~f.active_(false);"->Frequency Analyzer has Stopped<-".postcln},
-	{~f.active_(true);"->Frequency Analyzer has Started<-".postcln})};
+~fbot.action={|val| if(val.value==0,{~f.active_(false);"->Frequency Analyzer has Stopped<-".inform},
+	{~f.active_(true);"->Frequency Analyzer has Started<-".inform})};
 ~f=FreqScopeView(~w,Rect(785,27,235,100)).freqMode_(1);
 ~f.background_(Color(0.1,0.1,0.1));
 ~f.active_(false);
@@ -121,13 +121,13 @@ StaticText(~w,Rect(785,305,235,12)).string_(" channel: 64").align_(\center).back
 ~grainpop.background_(~grandcolor).stringColor_(Color.gray(0.5));
 ~grainpop.action={|menu|
 	switch(menu.value,
-		0,{~grains.set(\out,50);"+Granulator Out to Master".postln;},
-		1,{~grains.set(\out,52);"+Granulator Out to Reverb".postln;},
-		2,{~grains.set(\out,54);"+Granulator Out to Delay".postln;},
-		3,{~grains.set(\out,56);"+Granulator Out to Pitch".postln;},
-		4,{~grains.set(\out,58);"+Granulator Out to LPF".postln;},
-		5,{~grains.set(\out,60);"+Granulator Out to HPF".postln;},
-		6,{~grains.set(\out,62);"+Granulator Out to BPF".postln;}
+		0,{~grains.set(\out,50);"+ Granulator Out to Master".inform;},
+		1,{~grains.set(\out,52);"+ Granulator Out to Reverb".inform;},
+		2,{~grains.set(\out,54);"+ Granulator Out to Delay".inform;},
+		3,{~grains.set(\out,56);"+ Granulator Out to Pitch".inform;},
+		4,{~grains.set(\out,58);"+ Granulator Out to LPF".inform;},
+		5,{~grains.set(\out,60);"+ Granulator Out to HPF".inform;},
+		6,{~grains.set(\out,62);"+ Granulator Out to BPF".inform;}
 	);
 };
 //
@@ -145,14 +145,14 @@ StaticText(~w,Rect(785,540,235,12)).string_("Auto/Speed").align_(\center).backgr
 ~autopopg.background_(~grandcolor).stringColor_(Color.gray(0.5));
 ~autopopg.action={|menu|
 	switch(menu.value,
-		0,{~divgrain=1;"+Grains Automation Normal".postln;},
-		1,{~divgrain=0.5;"+Grains Automation Fast".postln;},
-		2,{~divgrain=2;"+Grains Automation Slow".postln;},
-		3,{~divgrain=4;"+Grains Automation Slowest".postln;}
+		0,{~divgrain=1;"+ Grains Automation Normal".inform;},
+		1,{~divgrain=0.5;"+ Grains Automation Fast".inform;},
+		2,{~divgrain=2;"+ Grains Automation Slow".inform;},
+		3,{~divgrain=4;"+ Grains Automation Slowest".inform;}
 	);
 };
 //clock
-StaticText(~w,Rect(785,272,185,15)).string_("BeatsPerMinute:").align_(\center).background_(Color(1,0,0));
+StaticText(~w,Rect(785,272,185,15)).string_("BPM:").align_(\center).background_(Color(1,0,0));
 ~numclock=NumberBox(~w,Rect(970,272,50,15)).background_(Color(0,1,0)).align_(\ceneter);
 ~numclock.value=94;
 ~numclock.action={~clock={TempoClock.tempo=~numclock.value/60};~clock.value};

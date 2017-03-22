@@ -1,9 +1,9 @@
-(//CaosBox GUI 3 - In, steps, aux
+(//CaosBox GUI file 3 - In, steps, aux
 //In
 StaticText(~w,Rect(5,252,53,15)).string_("LineIn:").align_(\left).background_(Color(0.85,0.85,0.85));
 
 ~checkbox = 60;
-//crea los steps
+
 for (0, 31, { |i|
 
 	var checkvar = "~insteps";
@@ -24,16 +24,18 @@ for (0, 31, { |i|
 //resetea secuencias In
 ~delin=Button(~w,Rect(765,252,15,15));
 ~delin.states=[[" X ",Color.black,Color.red]];
-~delin.action={|val|if(val.value==0,{
+~delin.action={|val|
 
-	~in.put((0..31),nil);
+	if(val.value==0,{
 
-	for(0, 31, {|i|
-		~checkin[i].value = 0;
+		~in.put((0..31),nil);
 
-	});
+		for(0, 31, {|i|
+			~checkin[i].value = 0;
 
-	"Line In have been cleared!".inform;
+		});
+
+		"Cleared line in steps!".inform;
 })};
 
 //line In attack and release knobs
@@ -128,10 +130,15 @@ for (0, 31, { |i|
 StaticText(~w,Rect(280,540,105,12)).string_("Auto/Speed").align_(\center).background_(Color(0.5,0.5,0.5));
 ~autopopr=PopUpMenu(~w,Rect(280,555,105,25)).items=["normal","fast","slow","slowest"];
 ~autopopr.background_(Color(0.05,0.05,0.25)).stringColor_(Color.gray(0.5));
-~autopopr.action={|menu| if(menu.value==0,{~divrev=1});
-	if(menu.value==1,{~divrev=0.5});
-	if(menu.value==2,{~divrev=2});
-	if(menu.value==3,{~divrev=4})
+~autopopr.action={|menu|
+
+	switch(menu.value,
+		0,{~divrev=1},
+		1,{~divrev=0.5},
+		2,{~divrev=2},
+		3,{~divrev=4}
+	);
+
 };
 //aux2 tag
 ~auxdtag=StaticText(~w,Rect(390,305,70,12));
@@ -141,8 +148,8 @@ StaticText(~w,Rect(390,497,70,15)).string_("Cub/Lin").align_(\center).background
 ~bott=Button(~w,Rect(390,515,70,22));
 ~bott.states=[["CombC",Color.white,Color.gray(0.25)],
 	["CombL",Color.black,Color.gray(0.35)]];
-~bott.action={|val|if(val.value==0,{~mastdel.set(\delind,0);"->Cubic Delay<-".postcln},
-	{~mastdel.set(\delind,1);"->Lineal Delay<-".postcln})};
+~bott.action={|val|if(val.value==0,{~mastdel.set(\delind,0);"->Cubic Delay<-".inform},
+	{~mastdel.set(\delind,1);"->Lineal Delay<-".inform})};
 //delay time
 ~auxt=StaticText(~w,Rect(390,320,35,15));//
 ~auxt.string_("time").align_(\center).background_(Color(0.5,0.5,0.5));
@@ -165,10 +172,15 @@ StaticText(~w,Rect(390,497,70,15)).string_("Cub/Lin").align_(\center).background
 StaticText(~w,Rect(390,540,70,12)).string_("Auto/Speed").align_(\center).background_(Color(0.5,0.5,0.5));
 ~autopopd=PopUpMenu(~w,Rect(390,555,70,25)).items=["normal","fast","slow","slowest"];
 ~autopopd.background_(Color(0.05,0.15,0.25)).stringColor_(Color.gray(0.5));
-~autopopd.action={|menu| if(menu.value==0,{~divdel=1});
-	if(menu.value==1,{~divdel=0.5});
-	if(menu.value==2,{~divdel=2});
-	if(menu.value==3,{~divdel=4})
+~autopopd.action={|menu|
+
+	switch(menu.value,
+		0,{~divdel=1},
+		1,{~divdel=0.5},
+		2,{~divdel=2},
+		3,{~divdel=4}
+	);
+
 };
 //aux3 tag
 ~auxdtag=StaticText(~w,Rect(465,305,105,12));
@@ -204,9 +216,14 @@ StaticText(~w,Rect(390,540,70,12)).string_("Auto/Speed").align_(\center).backgro
 StaticText(~w,Rect(465,540,105,12)).string_("Auto/Speed").align_(\center).background_(Color(0.5,0.5,0.5));
 ~autopopp=PopUpMenu(~w,Rect(465,555,105,25)).items=["normal","fast","slow","slowest"];
 ~autopopp.background_(Color(0.05,0.25,0.25)).stringColor_(Color.gray(0.5));
-~autopopp.action={|menu| if(menu.value==0,{~divpitch=1});
-	if(menu.value==1,{~divpitch=0.5});
-	if(menu.value==2,{~divpitch=2});
-	if(menu.value==3,{~divpitch=4})
+~autopopp.action={|menu|
+
+	switch(menu.value,
+		0,{~divpitch=1},
+		1,{~divpitch=0.5},
+		2,{~divpitch=2},
+		3,{~divpitch=4},
+	);
+
 };
 );
