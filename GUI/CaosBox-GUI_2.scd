@@ -2,7 +2,6 @@
 //bajo
 StaticText(~w,Rect(5,132,53,15)).string_("Bass:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~checkbox = 60;
-//crea los steps
 for (0, 31, { |i|
 
 	var checkvar = "~bassteps";
@@ -19,8 +18,6 @@ for (0, 31, { |i|
 	~checkbox = ~checkbox + a;
 
 });
-
-// borra steps
 ~delbass=Button(~w,Rect(765,132,15,15));
 ~delbass.states=[[" X ",Color.black,Color.red]];
 ~delbass.action={|val|if(val.value==0,{

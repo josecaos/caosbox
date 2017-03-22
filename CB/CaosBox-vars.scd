@@ -54,7 +54,7 @@
 ~divpitch=1;//no usar '0'
 ~divgrain=1;//no usar '0'
 ~randtimes=[47,62,94,141,188];//igualar estos valores a la variable del reloj
-//estos se declaran mas adelante
+//estos se declaran mas adelante:
 ~b=nil;//kick
 ~t=nil;//snare
 ~h=nil;//hat

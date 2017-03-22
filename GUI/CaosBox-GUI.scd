@@ -1,9 +1,42 @@
-(//CaosBox GUI - percusiones, botones de contrl, bienvenida
-~w=Window.new("CaosBox v1.0 #liveCodingMachine for Algorave music by @joseCao5",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
+(//CaosBox GUI - percusiones, botones de control, bienvenida
+~w=Window.new("CaosBox v1.2 #liveCodingMachine for Algorave music",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
+//
+// leds
+StaticText(~w,Rect(5,272,53,15)).string_("Steps:").align_(\left).background_(Color(0,0.9,0));
+for (0, 31, { |i|
+
+	var gvar = "~step";
+	var space = [4,8,12,16,20,24,28];
+	var variable = gvar ++ i;
+
+	~lightsteps.put(i,variable);
+
+	//crea los espacios entre steps
+	// colores boton step
+	if((i == 0) || (i == space[0]) || (i == space[1]) || (i == space[2]) || (i == space[3]) || (i == space[4]) || (i == space[5]) || (i == space[6]), {
+
+		if(i != 0, {
+			~lightpos = ~lightpos + 10;//brinco de grupo
+		});
+
+		~lightsteps[i] = Button(~w,Rect(~lightpos,275,10,10)).states = [[" - ",Color.white(0.5),Color.green(0.25)],["^",Color.yellow,Color.green(0.9)]];
+
+		},{
+
+			~lightsteps[i] = Button(~w,Rect(~lightpos,275,10,10)).states = [[" - ",Color.white(0.5),Color.red(0.25)],["+",Color.yellow,Color.red(1)]];
+
+	});
+
+	~lightpos = ~lightpos + 20;
+	//
+});
+//
+
+// bombo steps
 StaticText(~w,Rect(5,12,53,15)).string_("Kick:").align_(\left).background_(Color(0.85,0.85,0.85));
 
 ~checkbox = 60;
-//crea los steps
+
 for (0, 31, { |i|
 
 	var checkvar = "~bsteps";
@@ -26,7 +59,7 @@ for (0, 31, { |i|
 ~delbombo.states=[[" X ",Color.black,Color.red]];
 ~delbombo.action={|val|if(val.value==0,{
 
-	"Kick have been cleared!".inform;
+	"Cleared kick sequence!".inform;
 
 	~bombo.put((0..31),nil);
 
@@ -66,7 +99,7 @@ for (0, 31, { |i|
 ~deltarola.states=[[" X ",Color.black,Color.red]];
 ~deltarola.action={|val|if(val.value==0,{
 
-	"Snare have been cleared!".inform;
+	"Cleared snare sequence!".inform;
 
 	~tarola.put((0..31),nil);
 
@@ -78,7 +111,7 @@ for (0, 31, { |i|
 
 })};
 
-//contratiempos
+// hihat steps
 StaticText(~w,Rect(5,52,53,15)).string_("HiHats:").align_(\left).background_(Color(0.85,0.85,0.85));
 
 ~checkbox = 60;
@@ -104,7 +137,7 @@ for (0, 31, { |i|
 ~delcontras.states=[[" X ",Color.black,Color.red]];
 ~delcontras.action={|val|if(val.value==0,{
 
-	"Hihats have been cleared!".inform;
+	"Cleared hihat sequence!".inform;
 
 	~contras.put((0..31),nil);
 
@@ -116,7 +149,7 @@ for (0, 31, { |i|
 
 })};
 
-//bombo2
+// bombo 2 steps
 StaticText(~w,Rect(5,72,53,15)).string_("Kick2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~checkbox = 60;
 //crea los steps
@@ -142,7 +175,7 @@ for (0, 31, { |i|
 ~delbombo2.states=[[" X ",Color.black,Color.red]];
 ~delbombo2.action={|val|if(val.value==0,{
 
-	"Kick 2 have been cleared!".inform;
+	"Cleared kick 2 steps!".inform;
 
 	~bombo2.put((0..31),nil);
 
@@ -154,7 +187,7 @@ for (0, 31, { |i|
 
 })};
 
-//tarola2
+//tarola 2 steps
 StaticText(~w,Rect(5,92,53,15)).string_("Snare2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~checkbox = 60;
 for (0, 31, { |i|
@@ -179,7 +212,7 @@ for (0, 31, { |i|
 ~deltarola2.states=[[" X ",Color.black,Color.red]];
 ~deltarola2.action={|val|if(val.value==0,{
 
-	"Snare 2 have been cleared!".inform;
+	"Cleared snare 2 steps!".inform;
 
 	~tarola2.put((0..31),nil);
 
@@ -191,7 +224,7 @@ for (0, 31, { |i|
 
 })};
 
-//contratiempos2
+// hihat 2 steps
 StaticText(~w,Rect(5,112,53,15)).string_("HiHats2:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~checkbox = 60;
 for (0, 31, { |i|
@@ -216,7 +249,7 @@ for (0, 31, { |i|
 ~delcontras2.states=[[" X ",Color.black,Color.red]];
 ~delcontras2.action={|val|if(val.value==0,{
 
-	"Hihats 2 have been cleared!".inform;
+	"Cleared hihat 2 steps!".inform;
 
 	~contras2.put((0..31),nil);
 
@@ -228,55 +261,56 @@ for (0, 31, { |i|
 
 })};
 
-//tiempos
+// tempo
 StaticText(~w,Rect(5,635,270,15)).string_("Beat:").align_(\center).background_(Color(0.65,0.65,0.65));
 ~bott=Button(~w,Rect(5,650,135,25));
 ~bott.states=[["Thirds",Color.white,Color.green(0.35)],
-        ["Fourths",Color.black,Color.green(0.35)]];
-~bott.action={|val|if(val.value==0,{~tiempos=0.25;"->Fourths<-".postcln},
-        							{~tiempos=0.3333333333333333333;"->Thirds<-".postcln})};
-//tiempos random
+	["Fourths",Color.black,Color.green(0.35)]];
+~bott.action={|val|if(val.value==0,{~tiempos=0.25;"->Fourths<-".inform},
+	{~tiempos=0.3333333333333333333;"->Thirds<-".inform})};
+//tempo aleatorio
 ~botr=Button(~w,Rect(140,650,135,25));
 ~botr.states=[["Random Time",Color.black,Color.green(0.35)],
-        ["Regular Time",Color.white,Color.green(0.35)]];
-~botr.action={|val|if(val.value==0,{Tdef(\randtime).stop;~clock.value;"->Master BPM seted<-".postcln},
-        {Tdef(\randtime).play;"->Random Clock Values<-".postcln})};
+	["Regular Time",Color.white,Color.green(0.35)]];
+~botr.action={|val|if(val.value==0,{Tdef(\randtime).stop;~clock.value;"->Master BPM set<-".inform},
+	{Tdef(\randtime).play;"->Random Clock Values<-".inform})};
+//
 //automatizacion
 //autoreverb
 StaticText(~w,Rect(280,585,105,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
 ~autobotr=Button(~w,Rect(280,600,105,30));
 ~autobotr.states=[[" Auto On ",Color.white,Color(0.05,0.05,0.25)],
-					[" Auto Off ",Color.black,Color.green(0.9)]];
+	[" Auto Off ",Color.black,Color.green(0.9)]];
 ~autobotr.action={|val|if(val.value==1,{Tdef(\autor).play},{Tdef(\autor).stop})};
 //autodelay
 StaticText(~w,Rect(390,585,70,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
 ~autobotd=Button(~w,Rect(390,600,70,30));
 ~autobotd.states=[[" Auto On ",Color.white,Color(0.05,0.15,0.25)],
-					[" Auto Off ",Color.black,Color.green(0.9)]];
+	[" Auto Off ",Color.black,Color.green(0.9)]];
 ~autobotd.action={|val|if(val.value==1,{Tdef(\autod).play},{Tdef(\autod).stop})};
 //autopitch
 StaticText(~w,Rect(465,585,105,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
 ~autobotp=Button(~w,Rect(465,600,105,30));
 ~autobotp.states=[[" Auto On ",Color.white,Color(0.05,0.25,0.25)],
-					[" Auto Off ",Color.black,Color.green(0.9)]];
+	[" Auto Off ",Color.black,Color.green(0.9)]];
 ~autobotp.action={|val|if(val.value==1,{Tdef(\autop).play},{Tdef(\autop).stop})};
 //autograin
 StaticText(~w,Rect(785,585,235,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
 ~autobotg=Button(~w,Rect(785,600,235,30));
 ~autobotg.states=[[" Auto On ",Color.gray(0.85),Color.black(0.5)],
-					[" Auto Off ",Color.black,Color.green(0.5)]];
+	[" Auto Off ",Color.black,Color.green(0.5)]];
 ~autobotg.action={|val|if(val.value==1,{Tdef(\autog).play},{Tdef(\autog).stop})};
 //play
 StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).background_(Color(0.5,0.5,0.5));
 ~bot=Button(~w,Rect(275,650,515,25));
 ~bot.states=[["=>",Color.black,Color.green],
-        ["[_]",Color.white,Color.red]];
-~bot.action={|val|if(val.value==0,{Tdef(\secuencias).stop;/*Tdef(\pasos).stop;*/Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;Tdef(\autog).stop;
-				Tdef(\bass).stop;Tdef(\bass2).stop;Tdef(\pad).stop;Tdef(\pad2).stop;Tdef(\acordes).stop;Tdef(\acordes2).stop;
-				~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~f.kill;~grains.free;Server.freeAll;History.stop;
-												"->You just Stopped CaosBox<-".postcln;},
-        							{Tdef(\secuencias).play;/*Tdef(\pasos).play;*/Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
-        								Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"->Playing, please start algoravin'<-".postcln})};
+	["[_]",Color.white,Color.red]];
+~bot.action={|val|if(val.value==0,{Tdef(\secuencias).pause;/*Tdef(\pasos).stop;*/Tdef(\autor).pause;Tdef(\autod).pause;Tdef(\autop).pause;Tdef(\autog).pause;
+	Tdef(\bass).pause;Tdef(\bass2).pause;Tdef(\pad).pause;Tdef(\pad2).pause;Tdef(\acordes).pause;Tdef(\acordes2).pause;
+	~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;/*~f.kill;~grains.free;Server.freeAll;History.stop;*/
+	"->You just Stopped CaosBox<-".inform;},
+	{Tdef(\secuencias).play;/*Tdef(\pasos).play;*/Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
+		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"->Playing, please start algoravin'<-".inform})};
 //record
 ~filea=[~n.choose,~l.choose,~n.choose,~l.choose];
 ~filename=~filename.add(~filea.stutter((1..2).choose).scramble.join);
@@ -284,19 +318,19 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
 StaticText(~w,Rect(790,635,130,15)).string_("Recording").align_(\center).background_(Color(0.65,0.65,0.65));
 ~recbot=Button(~w,Rect(790,650,130,25));
 ~recbot.states=[["Record",Color.black,Color.green(0.35)],
-        ["Stop Recording",Color.white,Color.red]];
+	["Stop Recording",Color.white,Color.red]];
 ~recbot.action={|val|if(val.value==0,{s.stopRecording;
-	                                   "->Stoped Recording<-".postln;
-	                                   ~filename=["c","a","o","s","b","o","x","_",~filea.join,~l.choose,~n.choose];
-	                                  },
+	"->Stoped Recording<-".inform;
+	~filename=["c","a","o","s","b","o","x","_",~filea.join,~l.choose,~n.choose];
+	},
 	{s.record(~url +/+ "Recorded" +/+  ~ftype[0] ++ ~filename.value.join ++ ~fecha.dayStamp ++ ".aiff");
-		"->Recording<-".postcln})
-     };
+		"->Recording<-".inform})
+};
 //Historial
 StaticText(~w,Rect(920,635,99,20)).string_("History:").align_(\center).background_(Color(0.75,0.75,0.75));
 ~hbutt=Button(~w,Rect(920,650,99,25));
 ~hbutt.states=[[" Save File ",Color.green,Color.black]];
-~hbutt.action={|val| var h=History; if(val.value==0,{"->History saved @ caosbox/Histories folder<-".postln;
-	                      h.saveStory(~url +/+ "Histories" +/+ ~ftype[1] ++ ~filename.value.join ++ ~fecha.dayStamp ++ ".scd");
-	                                h.stop; h.clear})};
+~hbutt.action={|val| var h=History; if(val.value==0,{"->History saved @ caosbox/Histories folder<-".inform;
+	h.saveStory(~url +/+ "Histories" +/+ ~ftype[1] ++ ~filename.value.join ++ ~fecha.dayStamp ++ ".scd");
+	h.stop; h.clear})};
 )

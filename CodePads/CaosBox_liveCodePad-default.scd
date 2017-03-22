@@ -11,26 +11,27 @@
 //Percussion Functions:
 (
 //kick
-~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.5,1,0.5,60,64,50,1,0.79,0.2,2))};
+~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.5,1,0.5,60,64,50,1,0.79,0.2,2))};
 //snare
-~t={var out=52;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:420,rq:0.65,amp1:0.05,amp2:0.1))};//
+~t={var out=52;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:420,rq:0.65,amp1:0.25,amp2:0.1))};//
 //hat
-~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.35,highcutfreq:9330,rq:0.5,amp1:0.15,amp2:0.15))};//
+~h={var out=58;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:2330,rq:0.35,amp1:0.1,amp2:0.15))};//
 //kick2
 ~b2={var out=64;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.32,modFreq:2,modbw:0.35,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
 //snare2
 ~t2={var out=54;Out.ar(out,CaosSnare2.ar(att:0.05,rel:0.2,iphase:0.05,bw:0.5,highcutfreq:470,rq:0.5,amp1:0.2,amp2:0.1))};//
 //hat2?
-~h2={var out=64;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:2950,rq:0.45,amp1:0.5,amp2:0.3))};//
+~h2={var out=64;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
 );
 //
 // Help.gui;
 s.queryAllNodes;
 ////////////////////Bass, Pad, Chord functions:
 //you can create more variables as melodies for instrument Tdefs
-~mainmelody=[ 0, 1, 3, 5, 6, 8, 10 ];
+~mainmelody=[ 0, 1, 3, 5, 6, 8, 10 ]+3;
 // Scale.minor.degrees;
 // Scale.locrian.degrees;
+// ~randtimes=[47,62,94,141,188];
 //
 //////////////////////
 //Evaluate each one of these Tdef to change Synth parameters
@@ -42,7 +43,7 @@ Tdef(\bass,{
 	loop{
 	~bass.set(\note,bassmel.next,
 			   \filtminf,56,
-			   \filtmaxf,700,
+			\filtmaxf,700,
 			   \filtime,0.25,
 			   \rq,0.15,
 			   \iphase,0.5,
