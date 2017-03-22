@@ -58,15 +58,15 @@ Tdef(\secuencias,{
 //debug esto se integro al secuenciador principal
 /*(
 Tdef(\pasos,{
-		var reset;
-	{
-	if(~indice == 0,{reset = 31},{reset = ~indice-1});
-	{switch(~indice,
-	~indice,{~lightsteps[~indice].value=1;~lightsteps[reset].value=0},
-	)
-	}.defer(0.01);
-	~tiempos.wait;
-	}.loop;
+var reset;
+{
+if(~indice == 0,{reset = 31},{reset = ~indice-1});
+{switch(~indice,
+~indice,{~lightsteps[~indice].value=1;~lightsteps[reset].value=0},
+)
+}.defer(0.01);
+~tiempos.wait;
+}.loop;
 });
 );*/
 (//tiempo random
