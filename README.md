@@ -1,8 +1,8 @@
-CaosBox
+CaosBox v1.1
 =======
 Is a not-so-common LiveCoding/AlgoRave music GUI secuencer/processor for the CaosPercLib Pseudo-Class library, written in SuperCollider.
 ##
-You can download library here: https://github.com/josecaos/caosperclib/releases/tag/v1.0
+You can download library here: https://github.com/josecaos/caosperclib/releases
 Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
 
 ##
@@ -22,9 +22,7 @@ Instructions:
 ##
 		->4- Improvise, have fun and algorave a lot.
 ##
-Notes:
--No audio buffers, only synthesis. Without "caosperclib" won't work.
-##
--Since CaosBox workshop in CMM CNA Mexico city, it was tested on SuperCollider 3.5.3 and above over Linux, Windows and OSX.
-##
-//Written in Puerto Morelos, Q. Roo, Mexico 2014.
+### Notes:
+- ##### No audio buffers, only synthesis. Without "caosperclib" won't work.
+- ##### Since CaosBox workshop in CMM CNA Mexico city, it was tested on SuperCollider 3.5.3 and above over Linux, Windows and OSX.
+- ##### Written in Puerto Morelos, Q. Roo, Mexico 2014.
