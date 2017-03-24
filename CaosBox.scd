@@ -1,11 +1,12 @@
-// CaosBox needs 'caosperclib':
-// (https://github.com/josecaos/caosperclib)
+// CaosBox needs 'caosperclib': https://github.com/josecaos/caosperclib
 // Install here: Platform.userExtensionDir;
 // written by: @joseCao5 in Puerto Morelos Q. Roo Mx.
 //////////////////////////////////////////////////////////////////////
-// CaosBox
-// Para arrancar, evalua la siguiente función: / To start, evaluate the next function:
+// CaosBox v1.1
+// Para arrancar, evalua la siguiente función:
+// To start, evaluate the next function:
 //////////////////////////////////////////////////////////////////////
+
 (
 // History.start;
 s.waitForBoot{
@@ -13,10 +14,7 @@ s.waitForBoot{
 	(~url +/+ "CB/CaosBox-load.scd").load
 };
 );
-//
-//
-//
-//
+
 ///////////////////////////
 //History
 //This is a try to recover
