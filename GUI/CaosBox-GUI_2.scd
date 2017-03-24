@@ -1,4 +1,4 @@
-(//CaosBox GUI file 2 - v1.2 - bass, ambientes, acordes
+(//CaosBox GUI file 2 - v1.1 - bass, ambientes, acordes
 //bajo
 StaticText(~w,Rect(5,132,53,15)).string_("Bass:").align_(\left).background_(Color(0.85,0.85,0.85));
 ~checkbox = 60;

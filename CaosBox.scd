@@ -1,7 +1,7 @@
-// written by @joseCao5
 // CaosBox needs 'caosperclib':
 // (https://github.com/josecaos/caosperclib)
 // Install here: Platform.userExtensionDir;
+// written by: @joseCao5 in Puerto Morelos Q. Roo Mx.
 //////////////////////////////////////////////////////////////////////
 // CaosBox
 // Para arrancar, evalua la siguiente función: / To start, evaluate the next function:
@@ -14,16 +14,19 @@ s.waitForBoot{
 };
 );
 //
+//
+//
+//
 ///////////////////////////
 //History
 //This is a try to recover
 //livecode sessions thru caosbox
 //not yet finished as
-//GUI movement valuesare not recorded, On the
+//GUI movement values are not recorded, On the
 //mean time is only saving written code,
 //still some interesting information kept.
 //keep improvising to infinity
 ////////////////////////////
 //use this to load your recorded history files, recompile library first
 History.loadStory(~url +/+ "Histories/hist-caosbox_5i3zb6140703.scd").play(verbose:true);
-//end of file
+//

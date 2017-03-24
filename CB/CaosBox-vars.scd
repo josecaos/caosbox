@@ -1,13 +1,14 @@
-//written by @joseCao5
 ////////////////////////////////////////////
-//this are the global variables of CaosBox
+//These are the global variables for CaosBox v1.1
 ///////////////////////////////////////////
-(//variables
+(
+// Files
 ~fecha=Date.getDate;
 ~filename=["c","a","o","s","b","o","x","_"];
 ~ftype=["loop-","hist-"];
 ~l=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"];
 ~n=["1","2","3","4","5","6","7","8","9","0"];
+//General
 ~bombo=Array.fill(32,nil);
 ~tarola=Array.fill(32,nil);
 ~contras=Array.fill(32,nil);
@@ -48,13 +49,14 @@
 ~checkin=Array.fill(32,nil);
 ~lightsteps=Array.fill(32,nil);
 ~lightpos = 61;
-//divisores automatizacion
-~divrev=1;//no usar '0'
-~divdel=1;//no usar '0'
-~divpitch=1;//no usar '0'
-~divgrain=1;//no usar '0'
-~randtimes=[47,62,94,141,188];//igualar estos valores a la variable del reloj
-//estos se declaran mas adelante:
+//Automation divisors "Dont use 0 on these"
+~divrev=1;
+~divdel=1;
+~divpitch=1;
+~divgrain=1;
+//bpm
+~randtimes=[47,62,94,141,188];
+//Instument function defaults
 ~b=nil;//kick
 ~t=nil;//snare
 ~h=nil;//hat

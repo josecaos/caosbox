@@ -1,13 +1,11 @@
-//written by @joseCao5
-////////////////////////////////////////////
-//CaosBox Main Instrument sequencer and steps
-///////////////////////////////////////////
-//Secuencias
+//////////////////////////////////////////////////
+//CaosBox v1.1 Main Instrument sequencer and steps
+//////////////////////////////////////////////////
 (
 Tdef(\secuencias,{
 	var reset;
 	//orden de ejecucion
-	//master var
+	//master
 	~mast=Synth(\master);
 	// fx
 	~mastrev=Synth(\aux1);
@@ -43,7 +41,6 @@ Tdef(\secuencias,{
 		~indice=~indice+1;
 		if(~indice==32,{~indice=0},{nil});
 		//guide light steps
-		//debug dentro del seq
 		if(~indice == 0,{reset = 31},{reset = ~indice-1});
 		{switch(~indice,
 			~indice,{~lightsteps[~indice].value=1;~lightsteps[reset].value=0},
@@ -54,21 +51,6 @@ Tdef(\secuencias,{
 	}.loop;
 });
 );
-//guide light steps
-//debug esto se integro al secuenciador principal
-/*(
-Tdef(\pasos,{
-var reset;
-{
-if(~indice == 0,{reset = 31},{reset = ~indice-1});
-{switch(~indice,
-~indice,{~lightsteps[~indice].value=1;~lightsteps[reset].value=0},
-)
-}.defer(0.01);
-~tiempos.wait;
-}.loop;
-});
-);*/
 (//tiempo random
 Tdef(\randtime,{
 	{

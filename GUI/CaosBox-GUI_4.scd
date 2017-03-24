@@ -1,4 +1,4 @@
-(//CaosBox GUI file 4 - filtros, freqscope, bpm, granulador, onClose
+(//CaosBox GUI file 4 - v1.1 - filtros, freqscope, bpm, granulador, Close
 //filter min max values
 ~fmaxmin=ControlSpec(20,20000,\exponential,1,1000);
 ~rqmaxmin=ControlSpec(0.01,1,\lin,0.01,0.5);
@@ -158,4 +158,4 @@ StaticText(~w,Rect(785,272,185,15)).string_("BPM:").align_(\center).background_(
 ~numclock.action={~clock={TempoClock.tempo=~numclock.value/60};~clock.value};
 //
 ~w.onClose={s.quit.freeAll.reboot};
-)
+);
