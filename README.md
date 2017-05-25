@@ -6,7 +6,7 @@ Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
 
 #### The idea is:
  -Improvising;
-	 - By changing ##the library arguments in CaosBox_liveCodePad-default.scd file you can route and give shape to the signal. Sequence, mix and automate in the GUI, Each percussion sequence step act as one independent node in server memory, this box was made for LiveCoding.  }:]
+	 - By changing ##the library arguments in CaosBox_liveCodePad-default.scd file you can route and give shape to the signal. Sequence, mix and automate in the GUI, Each percussion function on the GUI sequencer acts as one independent node in server memory, this box was made for LiveCoding. }:]
 
 ### Instructions:
 ##
@@ -21,7 +21,8 @@ Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
 ##
 		->4- Improvise, have fun and algorave a lot.
 ##
-### Notes:
+
+##### Notes:
 - No audio buffers, only synthesis. Without "caosperclib" won't work.
 - Since CaosBox workshop in CMM CNA Mexico city, it was tested on SuperCollider 3.5.3 and above over Linux, Windows and OSX.
 - Written in Puerto Morelos, Q. Roo, Mexico 2014.
