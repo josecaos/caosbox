@@ -40,7 +40,8 @@
 
 // Melodies as intervals array
 // Scale.major.degrees;
-~mainmelody=[0, 3, 7, 11, 12].mirror2+36;
+~mainmelody = [0, 3, 7, 11, 12]+60;
+~outputs = [52,54,56];
 
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
@@ -48,6 +49,7 @@
 (//bass 1
 Tdef(\bass,{
 	var bassmel=Prand(~mainmelody,inf).asStream;
+	<var out=Prand(~outputs,inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
 			\filtminf,56,
@@ -57,8 +59,8 @@ Tdef(\bass,{
 			\iphase,0.5,
 			\amp1,0.15,
 			\amp2,0.25);
-		~bass.set(\out,58);
-		~tiempos*2.wait;
+		~bass.set(\out,out.next);
+		~tiempos.wait;
 	}
 }).quant_(4);
 );
