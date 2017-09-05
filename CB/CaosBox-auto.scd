@@ -4,7 +4,7 @@
 /*Re-evaluate the sequence containing the updated array*/
 
 ~autoreverbmix=[0.1,0.5];
-~autodelaytime=[0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09];
+~autodelaytime=[0.02,0.04,0.06,0.08,0.1];
 ~autopitchrate=[0.5,1,1.5,2];
 ~autopitchdispersion=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
 ~autograintrig=[0.04,0.08,0.16,0.32,0.64,1.28]*4;

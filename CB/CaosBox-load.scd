@@ -21,8 +21,8 @@ Task({|i|
 						RHPF.ar(
 							LFPulse.ar([{linea.choose.ar(120.10760.rand,10760.140.rand,rrand(1,8))}.dup(display),
 								Phasor.kr(Impulse.kr(rrand(1,16)),1,119.10760.rand,120.10760.rand)],
-								rrand(0.01,0.5),rrand(0.1,0.5),0.5)*
-							noise.ar(1.32.rand),linea.choose.ar(rrand(60,10760),rrand(10760,60),0.5),rrand(0.15,0.5)),
+								rrand(0.01,0.5),rrand(0.1,0.5),0.25)*
+							noise.ar(1.32.rand),linea.choose.ar(rrand(60,10760),rrand(10760,60),0.5),rrand(0.15,0.5),0.35),
 						linea.choose.kr(0.01,0.5,2),1,0.025)!2
 				};
 		});
