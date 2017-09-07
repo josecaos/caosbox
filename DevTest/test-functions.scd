@@ -1,8 +1,29 @@
 //random checkbox patterns
+(
+~pat_out = {|out,steps|
+	var arr = Array.fill(32,nil);
+	var a;
+	for(0,steps.size-1,{|i|
+		a=steps[i];
+		arr.put(a,a);
+	});
+	arr;
 
-~rythm_patter
+};
+);
+~pat_out.value(52,[0,1,2,3,5,9,13,17,21]);
+(
+Tdef(\test,{
+	inf.do({
+		~pat_out.value(52,[0,2,3,5,9,13,17,21,31]).postln;
+		0.5.wait;
+	});
+});
+);
+Tdef(\test).play;
+Tdef(\test).stop;
 
-// random outputs
+//
 (
 ~outputs = {|seq,array|
 	// var arr = Array.newClear(args.size);
