@@ -1,5 +1,5 @@
 //class-alike library of functions used between the code to
-// extend the possibilities of live creation with along the CaosBox GUI
+// extend the possibilities of live creation along the CaosBox GUI
 
 // Returns random sequence stream
 // arg1: sequence type key: '\rand1' and '\rand2'
@@ -19,7 +19,7 @@
 
 // Returns an 32 step pattern array
 // arg1: output channel
-// arg2: array of affected array indexes
+// arg2: array of affected steps
 ~pat_arr = {|aux,steps|
 	var arr = Array.fill(32,nil);
 	var a;

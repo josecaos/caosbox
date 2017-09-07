@@ -56,3 +56,4 @@ Tdef(\test1).stop;
 // ~outputs.def
 
 
+~checkbombo[2].value = 1;
