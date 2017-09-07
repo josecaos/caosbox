@@ -1,5 +1,5 @@
 (//CaosBox GUI file 1 - v1.1 - percusiones, botones de control, bienvenida
-~w=Window.new("CaosBox v1.1 #liveCodingMachine for Algorave music",Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
+~w=Window.new("CaosBox v1.1 #liveCodingMachine for Algorave music " + ~fecha,Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
 //
 // leds
 StaticText(~w,Rect(5,272,53,15)).string_("Steps:").align_(\left).background_(Color(0,0.9,0));

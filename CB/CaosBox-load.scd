@@ -42,6 +42,7 @@ Task({|i|
 //
 (~url +/+ "CB/CaosBox-midi.scd").load;
 (~url +/+ "CB/CaosBox-vars.scd").load;
+(~url +/+ "CB/CaosBox-funcs.scd").load;
 (~url +/+ "CB/CaosBox-signal.scd").load;
 (~url +/+ "CB/CaosBox-synths.scd").load;
 (~url +/+ "CB/CaosBox-seq.scd").load;
