@@ -41,7 +41,6 @@
 Scale.major.degrees;
 Scale.directory;
 ~mainmelody = [0, 3, 7, 11, 12]+60;
-~outputs = [52,54];
 
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
@@ -167,5 +166,5 @@ SynthDef(\ent,{|out=50,gate,att,rel|
 );
 ////////////////////////////////////////
 //You can configure the Automation file:
-(~url +/+ "CB/CaosBox-auto.scd").openOS;
+// (~url +/+ "CB/CaosBox-auto.scd").openOS;
 //////////////////////////////////////

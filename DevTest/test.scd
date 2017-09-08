@@ -18,14 +18,14 @@
 ~steps.values;
 ~steps.getPairs;
 (
-	~clear_steps = {|track,steps = (0..31)|
+	~clear_steps = {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]|
 		var a;
 		for(0,steps.size-1,{|i|
 			a=steps[i];
 			track[a].value = 0;
 		});
 	};
-	~set_steps = {|track,steps = (0..31)|
+	~set_steps = {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]|
 		var a,b;
 		a = ~clear_steps.value(track);
 		a.value;
@@ -36,7 +36,7 @@
 	};
 );
 a = [0,3,6,17,22,30,31];
-~set_steps.value(~steps[\kick],[0,2,6,17,23,29,30]);
+~set_steps.value(~steps[\kick],);
 ~clear_steps.value(~steps[\kick]);
 (
 Tdef(\testc,{
