@@ -13,16 +13,16 @@
 ////////////////////////////////////////////
 /* Percussion Functions: */
 ///////////////////////////
-(
 //kick
-~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.75,1,0.5,60,64,50,1,0.7,0.1,2))};
-~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.5,1,0.5,60,64,50,1,0.7,0.1,2))};
+~b={var out=50;Out.ar(out,CaosKick.ar(0.01,3.75,1,0.5,60,64,50,1,0.7,0.1,2))};
+~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.75,2,0.25,60,64,50,1,0.3,0.1,2))};
 ~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.5,60,64,50,1,0.7,0.2,2))};
 ~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.5,60,64,50,1,0.15,0.8,2))};
 ~b={var out=56;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.5,60,64,50,1,0.15,0.8,2))};
 ~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.5,60,64,50,1,0.25,0.79,2))};
 //snare
 ~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.75,highcutfreq:420,rq:0.65,amp1:0.9,amp2:0.1))};//
+~t={var out=58;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.75,highcutfreq:420,rq:0.65,amp1:0.6,amp2:0.1))};//
 ~t={var out=52;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:420,rq:0.65,amp1:0.25,amp2:0.1))};//
 ~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:420,rq:0.65,amp1:0.25,amp2:0.1))};//
 //hat
@@ -35,11 +35,11 @@
 //hat
 ~h2={var out=50;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
 ~h2={var out=58;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.75,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
-);
 // s.queryAllNodes;
 
 // Melodies as intervals array
-// Scale.major.degrees;
+Scale.major.degrees;
+Scale.directory;
 ~mainmelody = [0, 3, 7, 11, 12]+60;
 ~outputs = [52,54];
 
@@ -58,8 +58,8 @@ Tdef(\bass,{
 			\rq,0.15,
 			\iphase,0.5,
 			\amp1,0.15,
-			\amp2,0.25);
-		~bass.set(\out,out.next);
+			\amp2,0.25,
+		\out,out.next);
 		~tiempos.wait;
 	}
 }).quant_(4);
@@ -68,6 +68,7 @@ Tdef(\bass,{
 (
 Tdef(\bass2,{
 	var bass2mel=Prand(~mainmelody.scramble.mirror2,inf).asStream;
+	var out=Prand(~pat_arr.value(54,[0,4,8,12]),inf).asStream;
 	loop{
 		~bass2.set(\note,bass2mel.next,
 			\trig,4,
@@ -77,8 +78,8 @@ Tdef(\bass2,{
 			\bandw,0.25,
 			\iphase,0.25,
 			\amp1,0.15,
-			\amp2,0.01);
-		~bass2.set(\out,50);
+			\amp2,0.01,
+		\out,out.next);
 		~tiempos*4.wait;
 	}
 }).quant_(4);
@@ -123,7 +124,7 @@ Tdef(\pad2,{
 //Chord Synths
 (
 Tdef(\acordes,{
-	var acmel=Pseq(~mainmelody.scramble+12,inf).asStream;
+	var acmel=Pseq(~mainmelody-12,inf).asStream;
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
 	var cambia=Prand(['m','M7','mmaj7','5dim7'],inf).asStream;
 	loop{
@@ -135,7 +136,7 @@ Tdef(\acordes,{
 		~chord.set(\rq,0.5);
 		~chord.set(\pan,0);
 		~chord.set(\amp,0.5);
-		~chord.set(\out,56);
+		~chord.set(\out,~rand_stream.value('rand1',[58,60,62,64]));
 		~tiempos.wait;
 	}
 }).quant_(4);
@@ -148,11 +149,11 @@ Tdef(\acordes2,{
 	loop{
 		~chord2.set(\chord,cambia2.next);
 		~chord2.set(\note,ac2mel.next);
-		~chord2.set(\cutf,10220);
-		~chord2.set(\rq,0.35);
+		~chord2.set(\cutf,12220);
+		~chord2.set(\rq,0.5);
 		~chord2.set(\pan,0);
 		~chord2.set(\amp,0.135);
-		~chord2.set(\out,#[52,56]);
+		~chord2.set(\out,~rand_stream.value('rand2',[58,60,62,64]));
 		~tiempos.wait;
 	}
 }).quant_(4);
