@@ -42,7 +42,6 @@ Task({|i|
 //
 (~url +/+ "CB/CaosBox-midi.scd").load;
 (~url +/+ "CB/CaosBox-vars.scd").load;
-(~url +/+ "CB/CaosBox-funcs.scd").load;
 (~url +/+ "CB/CaosBox-signal.scd").load;
 (~url +/+ "CB/CaosBox-synths.scd").load;
 (~url +/+ "CB/CaosBox-seq.scd").load;
@@ -52,4 +51,5 @@ Task({|i|
 (~url +/+ "GUI/CaosBox-GUI_2.scd").load;
 (~url +/+ "GUI/CaosBox-GUI_3.scd").load;
 (~url +/+ "GUI/CaosBox-GUI_4.scd").load;
+(~url +/+ "CB/CaosBox-funcs.scd").load;
 (~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").openOS;

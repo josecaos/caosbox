@@ -38,17 +38,23 @@
 // s.queryAllNodes;
 
 // Melodies as intervals array
-Scale.major.degrees;
-Scale.directory;
-~mainmelody = [0, 3, 7, 11, 12]+60;
-
+// Scale.iraq.degrees;
+// Scale.directory;
+~mainmelody = [0, 3, 7, 10, 13, 17, 21]+60;
+//core functions
+~set_steps.value(\hihats,Array.series(32,0,1));
+~set_steps.value(\kick,Array.series(32,0,4));
+~set_steps.value(\snare,Array.series(32,0,4));
+~set_steps.value(\bass,Array.series(32,0,1));
+~clear_steps.value(\kick);
+~steps.keys;
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
 (//all Tdefs
 (//bass 1
 Tdef(\bass,{
-	var bassmel=Prand(~mainmelody,inf).asStream;
-	var out=Pseq(~outputs,inf).asStream;
+	var bassmel=Prand(~mainmelody+24,inf).asStream;
+	// var out=Pseq(~pat_arr.value(52,(0..31)),inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
 			\filtminf,56,
@@ -58,7 +64,7 @@ Tdef(\bass,{
 			\iphase,0.5,
 			\amp1,0.15,
 			\amp2,0.25,
-		\out,out.next);
+		\out,54);
 		~tiempos.wait;
 	}
 }).quant_(4);
