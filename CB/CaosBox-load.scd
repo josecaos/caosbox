@@ -51,4 +51,5 @@ Task({|i|
 (~url +/+ "GUI/CaosBox-GUI_2.scd").load;
 (~url +/+ "GUI/CaosBox-GUI_3.scd").load;
 (~url +/+ "GUI/CaosBox-GUI_4.scd").load;
+(~url +/+ "CB/CaosBox-funcs.scd").load;
 (~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").openOS;
