@@ -14,24 +14,24 @@
 /* Percussion Functions: */
 ///////////////////////////
 //kick
-~b={var out=50;Out.ar(out,CaosKick.ar(0.01,3.75,1,0.5,60,64,50,1,0.7,0.1,2))};
+~b={var out=50;Out.ar(out,CaosKick.ar(0.01,3.75,1,0.5,60,64,50,1,0.9,0.1,2))};
 ~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.75,2,0.25,60,64,50,1,0.3,0.1,2))};
 ~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.5,60,64,50,1,0.7,0.2,2))};
 ~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.5,60,64,50,1,0.15,0.8,2))};
 ~b={var out=56;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.5,60,64,50,1,0.15,0.8,2))};
-~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.5,60,64,50,1,0.25,0.79,2))};
+~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.25,2,0.15,80,62,50,1,0.8,0.9,2))};
 //snare
 ~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.75,highcutfreq:420,rq:0.65,amp1:0.9,amp2:0.1))};//
 ~t={var out=58;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.75,highcutfreq:420,rq:0.65,amp1:0.6,amp2:0.1))};//
 ~t={var out=52;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:420,rq:0.65,amp1:0.25,amp2:0.1))};//
-~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:420,rq:0.65,amp1:0.25,amp2:0.1))};//
+~t2={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:420,rq:0.65,amp1:0.25,amp2:0.1))};//
 //hat
-~h={var out=50;Out.ar(out,CaosHats.ar(att:0.01,rel:0.85,highcutfreq:4330,rq:0.5,amp1:0.4,amp2:0.4))};//
-~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:2330,rq:0.35,amp1:0.2,amp2:0.45))};//
+~h={var out=50;Out.ar(out,CaosHats.ar(att:0.01,rel:0.5,highcutfreq:6330,rq:0.5,amp1:0.3,amp2:0.2))};//
+~h={var out=64;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:2330,rq:0.35,amp1:0.2,amp2:0.45))};//
 //kick
 ~b2={var out=56;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.32,modFreq:2,modbw:0.35,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
 //snare
-~t2={var out=52;Out.ar(out,CaosSnare2.ar(att:0.05,rel:0.12,iphase:0.05,bw:0.5,highcutfreq:270,rq:0.5,amp1:0.2,amp2:0.1))};//
+~t2={var out=64;Out.ar(out,CaosSnare2.ar(att:0.05,rel:0.12,iphase:0.05,bw:0.5,highcutfreq:270,rq:0.5,amp1:0.1,amp2:0.05))};//
 //hat
 ~h2={var out=50;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
 ~h2={var out=58;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.75,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
@@ -42,29 +42,28 @@
 // Scale.directory;
 ~mainmelody = [0, 3, 7, 10, 13, 17, 21]+60;
 //core functions
-~set_steps.value(\hihats,Array.series(32,0,1));
-~set_steps.value(\kick,Array.series(32,0,4));
-~set_steps.value(\snare,Array.series(32,0,4));
-~set_steps.value(\bass,Array.series(32,0,1));
-~clear_steps.value(\kick);
-~steps.keys;
+/*~set_steps.value(\hihats,Array.series(32,0,2));
+~set_steps.value(\chords,Array.series(32,0,2));
+~set_steps.value(\hihats,Array.series(32,0,2));
+~clear_steps.value(\chords);
+~steps.keys;*/
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
 (//all Tdefs
 (//bass 1
 Tdef(\bass,{
-	var bassmel=Prand(~mainmelody+24,inf).asStream;
+	var bassmel=Prand(~mainmelody-36,inf).asStream;
 	// var out=Pseq(~pat_arr.value(52,(0..31)),inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
 			\filtminf,56,
-			\filtmaxf,700,
+			\filtmaxf,2700,
 			\filtime,0.25,
-			\rq,0.15,
+			\rq,0.25,
 			\iphase,0.5,
 			\amp1,0.15,
-			\amp2,0.25,
-		\out,54);
+			\amp2,0.15,
+		\out,~rand_stream.value('rand2',[52,58,56,60,62,64]));
 		~tiempos.wait;
 	}
 }).quant_(4);
@@ -73,13 +72,14 @@ Tdef(\bass,{
 (
 Tdef(\bass2,{
 	var bass2mel=Prand(~mainmelody.scramble.mirror2,inf).asStream;
-	var out=Prand(~pat_arr.value(54,[0,4,8,12]),inf).asStream;
+	var out=Prand(~pat_arr.value(56,[0,4,8,12]),inf).asStream;
 	loop{
 		~bass2.set(\note,bass2mel.next,
-			\trig,4,
+			\trig,1,
 			\filtminf,56,
 			\filtmaxf,700,
-			\filtime,0.25,\rq,0.25,
+			\filtime,0.25,
+			\rq,0.25,
 			\bandw,0.25,
 			\iphase,0.25,
 			\amp1,0.15,
@@ -148,7 +148,7 @@ Tdef(\acordes,{
 );
 (
 Tdef(\acordes2,{
-	var ac2mel=Pseq(~mainmelody.scramble+19,inf).asStream;
+	var ac2mel=Pseq(~mainmelody.scramble-5,inf).asStream;
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', 'M9',  'M9m', 'm9' or 'm9m' keys only
 	var cambia2=Prand(['m','M9','mmaj7','m9m'],inf).asStream;
 	loop{
@@ -157,7 +157,7 @@ Tdef(\acordes2,{
 		~chord2.set(\cutf,12220);
 		~chord2.set(\rq,0.5);
 		~chord2.set(\pan,0);
-		~chord2.set(\amp,0.135);
+		~chord2.set(\amp,0.125);
 		~chord2.set(\out,~rand_stream.value('rand2',[58,60,62,64]));
 		~tiempos.wait;
 	}

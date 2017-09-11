@@ -1,17 +1,27 @@
 //random checkbox patterns
 (
-~pat_out = {|out,steps|
+~pat_arr = {|default=50,in=50,steps|
 	var arr = Array.fill(32,nil);
-	var a;
-	for(0,steps.size-1,{|i|
+	var a,b=0;
+	// inserta valores especificos
+/*	for(0,steps.size-1,{|i|
 		a=steps[i];
-		arr.put(a,a);
+		arr=arr.put(a,in);
+	});*/
+	// inserta valor default en los espacios vacios
+	arr.collect({|item,i|
+		if(item == steps[i],{
+			// item = default;
+			"sisi".post;
+				b = b + 1;
+				b.post;
+		},{
+			"nono".post;
+		});
 	});
-	arr;
-
 };
 );
-~pat_out.value(52,[0,1,2,3,5,9,13,17,21]);
+~pat_arr.value("X","-",[0,2,3,5,9,13,17,21]);
 (
 Tdef(\test,{
 	inf.do({
