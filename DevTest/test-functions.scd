@@ -2,26 +2,28 @@
 (
 ~pat_arr = {|default=50,in=50,steps|
 	var arr = Array.fill(32,nil);
-	var a,b=0;
+	var a;
 	// inserta valores especificos
-/*	for(0,steps.size-1,{|i|
+	for(0,steps.size-1,{|i|
 		a=steps[i];
 		arr=arr.put(a,in);
-	});*/
-	// inserta valor default en los espacios vacios
-	arr.collect({|item,i|
-		if(item == steps[i],{
-			// item = default;
-			"sisi".post;
-				b = b + 1;
-				b.post;
-		},{
-			"nono".post;
-		});
 	});
+	// inserta valor default en los espacios vacios
+	 arr.collect({|item,i|
+	 	if(item == nil,{
+		arr.put(i,default);
+	 	});
+	 });
+	//
+	arr;
 };
 );
-~pat_arr.value("X","-",[0,2,3,5,9,13,17,21]);
+~pat_arr.value(50,52,[0,2,3,5,9,13,17,21]);
+//
+y = [4, 1, 4, 3, 4, 5, 6, 7, 8, 9];
+y.putEach([4, 7], [\smelly, \head]);
+y.putEach([2, 3, 5, 6], \wotsits);
+//
 (
 Tdef(\test,{
 	inf.do({

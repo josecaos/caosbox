@@ -18,16 +18,25 @@
 };
 
 // Returns an 32 step pattern array
-// arg1: output channel
-// arg2: array of affected steps
-~pat_arr = {|aux,steps|
+// arg1: Default value for unchanged steps
+// arg2: Pattern steps value
+// arg3: Array of affected steps
+~pat_arr = {|default=50,in=50,steps|
 	var arr = Array.fill(32,nil);
 	var a;
+	// inserta valores especificos
 	for(0,steps.size-1,{|i|
 		a=steps[i];
-		arr=arr.put(a,aux);
+		arr=arr.put(a,in);
 	});
-	arr
+	// inserta valor default en los espacios vacios
+	 arr.collect({|item,i|
+	 	if(item == nil,{
+		arr.put(i,default);
+	 	});
+	 });
+	//
+	arr;
 };
 
 // The checkbox steps functions
@@ -61,6 +70,7 @@
 	});
 	"Manually cleared step pattern".inform;
 };
+
 // Returns checked checkboxes from assigned track
 // arg1: assigns track with ~steps[n] global variable
 // arg2: Array of specific indexes affected in ~steps[n]. Defaults "all"
