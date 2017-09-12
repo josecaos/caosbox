@@ -1,5 +1,5 @@
-//class-alike library of functions used between the code to
-// extend the possibilities of live creation along the CaosBox GUI
+// class-alike library to extend the possibilities of live composition
+// functions used between the code along the CaosBox GUI
 
 // Returns random sequence stream
 // arg1: sequence type key: '\rand1' and '\rand2'
@@ -19,7 +19,7 @@
 
 // Returns an 32 step pattern array
 // arg1: Default value for unchanged steps
-// arg2: Pattern steps value
+// arg2: Pattern of changed steps value
 // arg3: Array of affected steps
 ~pat_arr = {|default=50,in=50,steps|
 	var arr = Array.fill(32,nil);
@@ -83,4 +83,17 @@
 		dir[track][1].put(b,dir[track][2]);
 	});
 	"Manualy added step pattern".inform;
+};
+
+// Returns checked checkboxes from assigned track
+// arg1: assigns track with ~steps[n] global variable
+// arg2: Array of specific indexes affected in ~steps[n]. Defaults "all"
+~rand_steps = {|track,steps_num = 1|
+	var a,b,step;
+	a = Array.new(32);
+	step = Pxrand((0..31),inf).asStream;
+	for(1,steps_num,{|i|
+		a = a.add(step.next);
+	});
+	b = ~set_steps.value(track,a);
 };

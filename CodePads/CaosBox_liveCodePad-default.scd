@@ -44,9 +44,7 @@
 //core functions
 /*~set_steps.value(\hihats,Array.series(16,0,2));
 ~set_steps.value(\kick,Array.series(8,0,4));
-~set_steps.value(\snare2,Array.series(4,4,8));
-~set_steps.value(\snare,Array.series(2,7,16));
-~set_steps.value(\hihats,Array.series(32,0,2));
+~random_steps.value(\kick,4);
 ~clear_steps.value(\snare);
 ~steps.keys;*/
 /* Bass, Pad, Chord functions: */
