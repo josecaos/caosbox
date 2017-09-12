@@ -19,17 +19,29 @@
 ~steps.getPairs;
 (
 ~rand_steps = {|track,steps_num = 1|
-	var arr = Pxrand(Array.newClear(32),inf).asStream;
-	var a,b,dir = ~steps;
-	a = ~clear_steps.value(track,(0..31));
-	b=steps_num;
-	for(0,32,{|i|
-		dir[track][0][b].value = 1;
-		dir[track][1].put(b,dir[track][2]);
+
+	var a,b,step;
+	a = Array.new(32);
+	step = Pxrand((0..31),inf).asStream;
+	for(0,steps_num,{|i|
+		a = a.put(i,step.next);
 	});
-	"Manualy added random step pattern".inform;
+	b = ~set_steps.value(track,a);
+	b;
+	"Random steps pattern".inform;
 };
 );
-~rand_steps.value(\in);
-~rand_steps.value(\bass,Array.series(32,0,1));
-~clear_steps.value(\bass);
+~rand_steps.value(\hihats,2);
+~clear_steps.value(\kick);
+(
+Tdef(\rand, {
+	inf.do({
+
+		~rand_steps.value(\kick,10);
+
+		1.wait;
+	});
+});
+);
+Tdef(\rand).play;
+Tdef(\rand).stop;
