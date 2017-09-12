@@ -42,10 +42,12 @@
 // Scale.directory;
 ~mainmelody = [0, 3, 7, 10, 13, 17, 21]+60;
 //core functions
-/*~set_steps.value(\hihats,Array.series(32,0,2));
-~set_steps.value(\chords,Array.series(32,0,2));
+/*~set_steps.value(\hihats,Array.series(16,0,2));
+~set_steps.value(\kick,Array.series(8,0,4));
+~set_steps.value(\snare2,Array.series(4,4,8));
+~set_steps.value(\snare,Array.series(2,7,16));
 ~set_steps.value(\hihats,Array.series(32,0,2));
-~clear_steps.value(\chords);
+~clear_steps.value(\snare);
 ~steps.keys;*/
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
@@ -72,7 +74,7 @@ Tdef(\bass,{
 (
 Tdef(\bass2,{
 	var bass2mel=Prand(~mainmelody.scramble.mirror2,inf).asStream;
-	var out=Prand(~pat_arr.value(56,[0,4,8,12]),inf).asStream;
+	var out=Prand(~pat_arr.value(50,60,[0,4,8,12,16,20,30]),inf).asStream;
 	loop{
 		~bass2.set(\note,bass2mel.next,
 			\trig,1,
