@@ -24,12 +24,10 @@
 ~pat_arr = {|default=50,in=50,steps|
 	var arr = Array.fill(32,nil);
 	var a;
-	// inserta valores especificos
 	for(0,steps.size-1,{|i|
 		a=steps[i];
 		arr=arr.put(a,in);
 	});
-	// inserta valor default en los espacios vacios
 	 arr.collect({|item,i|
 	 	if(item == nil,{
 		arr.put(i,default);
@@ -58,8 +56,8 @@
 	\chords2 -> [~checksinte2,~sinte2,~chord2],
 	\in -> [~checkin,~in,~entrada]
 ];
-// Returns cleared checkboxes from assigned track
-// arg1: assigns track with ~steps[n] global variable
+// Returns cleared checkboxes for assigned track
+// arg1: assigns track with ~steps[\n] global variable
 // arg2: Array of specific indexes affected in ~steps[n]. Default "all"
 ~clear_steps = {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]|
 	var a,dir = ~steps;
@@ -71,8 +69,8 @@
 	"Manually cleared step pattern".inform;
 };
 
-// Returns checked checkboxes from assigned track
-// arg1: assigns track with ~steps[n] global variable
+// Returns checked checkboxes for assigned track
+// arg1: assigns track with ~steps[\n] global variable
 // arg2: Array of specific indexes affected in ~steps[n]. Defaults "all"
 ~set_steps = {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]|
 	var a,b,dir = ~steps;
@@ -85,9 +83,9 @@
 	"Manualy added step pattern".inform;
 };
 
-// Returns checked checkboxes from assigned track
-// arg1: assigns track with ~steps[n] global variable
-// arg2: Array of specific indexes affected in ~steps[n]. Defaults "all"
+// Returns random checked checkboxes for assigned track
+// arg1: assigns track with ~steps[\n] global variable
+// arg2: number of used checkboxes
 ~rand_steps = {|track,steps_num = 1|
 	var a,b,step;
 	a = Array.new(32);
