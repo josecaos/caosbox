@@ -72,7 +72,7 @@ Tdef(\bass,{
 (
 Tdef(\bass2,{
 	var bass2mel=Prand(~mainmelody.scramble.mirror2,inf).asStream;
-	var out=Prand(~pat_arr.value(56,[0,4,8,12]),inf).asStream;
+	var out=Prand(~pat_arr.value(50,60,[0,4,8,12,16,20,30]),inf).asStream;
 	loop{
 		~bass2.set(\note,bass2mel.next,
 			\trig,1,
