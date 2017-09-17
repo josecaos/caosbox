@@ -49,6 +49,7 @@
 ~checkin=Array.fill(32,nil);
 ~lightsteps=Array.fill(32,nil);
 ~lightpos = 61;
+//
 //Automation divisors "Dont use 0 on these"
 ~divrev=1;
 ~divdel=1;
@@ -64,3 +65,19 @@
 ~t2=nil;//snare2
 ~h2=nil;//hat2
 );
+// Asociative array of checkbox tracks.
+~steps = Dictionary[
+	\kick -> [~checkbombo,~bombo,~b],
+	\snare -> [~checktarola,~tarola,~t],
+	\hihats -> [~checkcontras,~contras,~h],
+	\kick2 -> [~checkbombo2,~bombo2,~b2],
+	\snare2 -> [~checktarola2,~tarola2,~t2],
+	\hihats2 -> [~checkcontras2,~contras2,~h2],
+	\bass -> [~checkbajo,~bajo,~bass],
+	\bass2 -> [~checkbajo2,~bajo2,~bass2],
+	\amb -> [~checkambiente,~ambiente,~amb],
+	\amb2 -> [~checkambiente2,~ambiente2,~amb2],
+	\chords -> [~checksinte,~sinte,~chord],
+	\chords2 -> [~checksinte2,~sinte2,~chord2],
+	\in -> [~checkin,~in,~entrada]
+];

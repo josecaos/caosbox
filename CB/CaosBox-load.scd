@@ -1,4 +1,4 @@
-//CaosBox v1.1 Soundcheck, welcome and complementary files
+//CaosBox v1.1 Soundcheck + Welcome + Complementary files
 (
 Task({|i|
 	var texto = "CaosBox v1.1";

@@ -23,15 +23,19 @@
 	var a,b,step;
 	a = Array.new(32);
 	step = Pxrand((0..31),inf).asStream;
-	for(0,steps_num,{|i|
-		a = a.put(i,step.next);
+	for(1,steps_num,{|i|
+		a = a.add(step.next);
 	});
 	b = ~set_steps.value(track,a);
 	b;
-	"Random steps pattern".inform;
 };
 );
-~rand_steps.value(\hihats,2);
+(
+~rand_steps.value(\snare,4);
+~rand_steps.value(\hihats,22);
+~rand_steps.value(\kick,5);
+~rand_steps.value(\bass,16);
+);
 ~clear_steps.value(\kick);
 (
 Tdef(\rand, {
