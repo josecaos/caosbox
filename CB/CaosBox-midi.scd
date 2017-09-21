@@ -25,8 +25,7 @@ MIDIIn.control={|src,chan,num,val|
 		31,{~masthighf.set(\cutfreq,val.linexp(0,127,20,20000));{~highcfader.value_(val/127);~numf3.value_(val*157.4811)}.defer},
 		20,{~grains.set(\trigger,val.linlin(0,127,0.1,8));{~gfaders.x_(val/127)}.defer},
 		17,{~grains.set(\size,val.linlin(0,127,1,0.01));{~gfaders.y_(val/127)}.defer},
-		15,{~grains.set(\size,val.linlin(0,127,-1,-0.01));~grains.set(\trigger,val.linlin(0,127,-1,-0.01));
-			{~gfaders.y_(val/127);~gfaders.x_(val/127)}.defer
+		15,{~grains.set(\size,val.linlin(0,127,-1,-0.01));~grains.set(\trigger,val.linlin(0,127,-1,-0.01));{~gfaders.y_(val/127);~gfaders.x_(val/127)}.defer
 		}
 	)
 };

@@ -306,9 +306,9 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
 ~bot=Button(~w,Rect(275,650,515,25));
 ~bot.states=[["=>",Color.black,Color.green],
 	["[_]",Color.white,Color.red]];
-~bot.action={|val|if(val.value==0,{Tdef(\secuencias).pause;/*Tdef(\pasos).stop;*/Tdef(\autor).pause;Tdef(\autod).pause;Tdef(\autop).pause;Tdef(\autog).pause;
-	Tdef(\bass).pause;Tdef(\bass2).pause;Tdef(\pad).pause;Tdef(\pad2).pause;Tdef(\acordes).pause;Tdef(\acordes2).pause;
-	~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;/*~f.kill;~grains.free;Server.freeAll;History.stop;*/
+~bot.action={|val|if(val.value==0,{Tdef(\secuencias).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;Tdef(\autog).stop;
+	Tdef(\bass).stop;Tdef(\bass2).stop;Tdef(\pad).stop;Tdef(\pad2).stop;Tdef(\acordes).stop;Tdef(\acordes2).stop;
+	~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~hbutt.value=0;
 	"->You just Stopped CaosBox<-".inform;},
 	{Tdef(\secuencias).play;/*Tdef(\pasos).play;*/Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
 		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"-> Now playing, please start algoraving <-".inform})};

@@ -49,16 +49,15 @@ Tdef(\secuencias,{
 		////
 		~tiempos.wait;
 	}.loop;
-});
-);
-(//tiempo random
+}).quant_(1);
+//tiempo random
 Tdef(\randtime,{
 	{
 		var timer=Prand(~randtimes,inf).asStream;
 		TempoClock.tempo=timer.next/60;
 		~tiempos.wait;
 	}.loop;
-});
+}).quant_(1);
 );
 //
 /*
