@@ -24,7 +24,6 @@ s.waitForBoot{
 //GUI movement values are not recorded, On the
 //mean time is only saving written code,
 //still some interesting information kept.
-//keep improvising to infinity
 ////////////////////////////
 //use this to load your recorded history files, recompile library first
 History.loadStory(~url +/+ "Histories/hist-caosbox_5i3zb6140703.scd").play(verbose:true);

@@ -14,14 +14,14 @@
 /* Percussion Functions: */
 ///////////////////////////
 //kick
-~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.15,60,80,50,1,0.6,0.2,2))};
+~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.15,2,0.5,60,60,50,1,0.01,0.5,2))};
 
 //snare
-~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:320,rq:0.95,amp1:0.3,amp2:0.2))};//
+~t={var out=60;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.05,highcutfreq:220,rq:0.35,amp1:0.05,amp2:0.1))};//
 
-~t2={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:420,rq:0.65,amp1:0.25,amp2:0.1))};//
+~t2={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:420,rq:0.65,amp1:0.1,amp2:0.1))};//
 //hat
-~h={var out=50;Out.ar(out,CaosHats.ar(att:0.01,rel:0.05,highcutfreq:8330,rq:0.5,amp1:0.035,amp2:0.1))};//
+~h={var out=64;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:10330,rq:0.75,amp1:0.05,amp2:0.1))};//
 ~h={var out=50;Out.ar(out,CaosHats.ar(att:0.01,rel:0.2,highcutfreq:12330,rq:0.5,amp1:0.2,amp2:0.25))};//
 //kick
 ~b2={var out=58;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.16,modFreq:2,modbw:0.5,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
@@ -33,14 +33,14 @@
 // s.queryAllNodes;
 
 // Melodies as intervals array
-Scale.aeolian.degrees;
+Scale.hungarianMinor.degrees;
 Scale.directory;
 //core functions
 // ~mainmelody = [0, 3, 7, 10, 13, 17, 21]+60;
-~mainmelody = [ 0, 2, 3, 5, 7, 8, 10 ]+60;
+~mainmelody = [ 0, 2, 3, 6, 7, 8, 11 ]+60;
+~random_steps.value(\hihats,2);
 /*
 ~set_steps.value(\hihats,Array.series(16,0,2));
-~random_steps.value(\kick,4);
 ~clear_steps.value(\snare);
 ~steps.keys;
 */
@@ -49,18 +49,18 @@ Scale.directory;
 (//all Tdefs
 (//bass 1
 Tdef(\bass,{
-	var bassmel=Prand(~mainmelody,inf).asStream;
+	var bassmel=Prand(~mainmelody-24,inf).asStream;
 	// var out=Pseq(~pat_arr.value(52,(0..31)),inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
-			\filtminf,60,
+			\filtminf,80,
 			\filtmaxf,12700,
-			\filtime,0.1,
-			\rq,0.2525,
-			\iphase,0.5,
+			\filtime,0.01,
+			\rq,0.25,
+			\iphase,0.05,
 			\amp1,0.25,
 			\amp2,0.01,
-			\out,64);
+			\out,50);
 		// \out,~rand_stream.value('rand2',[52,60,58,54,64]));
 		~tiempos.wait;
 	}

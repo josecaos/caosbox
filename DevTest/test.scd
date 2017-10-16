@@ -62,3 +62,5 @@ Tdef(\testc).stop;
 ~x[\kick][0][1];
 ~x[\kick][1][1];
 ~x[\kick][2];
+//
+~set_steps.value(\kick, [1,3,6,7,8,9,0,11,22,]);
