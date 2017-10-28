@@ -14,14 +14,15 @@
 /* Percussion Functions: */
 ///////////////////////////
 //kick
-~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.15,2,0.5,60,60,50,1,0.01,0.5,2))};
+~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.25,2,0.5,60,60,50,1,0.01,0.3,2))};
+~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.25,2,0.5,60,60,50,1,0.01,0.3,2))};
 
 //snare
-~t={var out=60;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.05,highcutfreq:220,rq:0.35,amp1:0.05,amp2:0.1))};//
+~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:160,rq:0.5,amp1:0.1,amp2:0.5))};//
 
-~t2={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:420,rq:0.65,amp1:0.1,amp2:0.1))};//
+~t2={var out=60;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:160,rq:0.5,amp1:0.01,amp2:0.2))};//
 //hat
-~h={var out=64;Out.ar(out,CaosHats.ar(att:0.01,rel:0.15,highcutfreq:10330,rq:0.75,amp1:0.05,amp2:0.1))};//
+~h={var out=56;Out.ar(out,CaosHats.ar(att:0.01,rel:0.25,highcutfreq:6330,rq:0.75,amp1:0.15,amp2:0.2))};//
 ~h={var out=50;Out.ar(out,CaosHats.ar(att:0.01,rel:0.2,highcutfreq:12330,rq:0.5,amp1:0.2,amp2:0.25))};//
 //kick
 ~b2={var out=58;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.16,modFreq:2,modbw:0.5,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
@@ -33,12 +34,12 @@
 // s.queryAllNodes;
 
 // Melodies as intervals array
-Scale.hungarianMinor.degrees;
-Scale.directory;
+// Scale.hungarianMinor.degrees;
+// Scale.directory;
 //core functions
 // ~mainmelody = [0, 3, 7, 10, 13, 17, 21]+60;
 ~mainmelody = [ 0, 2, 3, 6, 7, 8, 11 ]+60;
-~random_steps.value(\hihats,2);
+// ~random_steps.value(\hihats,2);
 /*
 ~set_steps.value(\hihats,Array.series(16,0,2));
 ~clear_steps.value(\snare);
@@ -49,43 +50,43 @@ Scale.directory;
 (//all Tdefs
 (//bass 1
 Tdef(\bass,{
-	var bassmel=Prand(~mainmelody-24,inf).asStream;
+	var bassmel=Prand(~mainmelody-[12,0],inf).asStream;
 	// var out=Pseq(~pat_arr.value(52,(0..31)),inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
 			\filtminf,80,
-			\filtmaxf,12700,
-			\filtime,0.01,
-			\rq,0.25,
-			\iphase,0.05,
-			\amp1,0.25,
-			\amp2,0.01,
-			\out,50);
-		// \out,~rand_stream.value('rand2',[52,60,58,54,64]));
+			\filtmaxf,6700,
+			\filtime,0.07,
+			\rq,0.15,
+			\iphase,0.5,
+			\amp1,0.03,
+			\amp2,0.03,
+			// \out,50);
+			\out,~rand_stream.value('rand1',[52,60,58,54,64]));
 		~tiempos.wait;
 	}
-}).quant_(4);
+}).quant_(1);
 );
 //bass 2
 (
 Tdef(\bass2,{
-	var bass2mel=Prand(~mainmelody.scramble.mirror2-27,inf).asStream;
+	var bass2mel=Pseq(~mainmelody.scramble.mirror2-12,inf).asStream;
 	// var out=Prand(~pat_arr.value(50,62,[0,4,8,12,16,20,30]),inf).asStream;
 	loop{
 		~bass2.set(\note,bass2mel.next,
 			\trig,1,
 			\filtminf,56,
-			\filtmaxf,440,
-			\filtime,0.25,
-			\rq,0.5,
+			\filtmaxf,8400,
+			\filtime,0.0125,
+			\rq,0.15,
 			\bandw,0.05,
-			\iphase,0.15,
-			\amp1,0.25,
-			\amp2,0.35,
+			\iphase,0.05,
+			\amp1,0.02,
+			\amp2,0.13,
 		\out,~rand_stream.value('rand2',[52,60,58,54,64]));
 		~tiempos.wait;
 	}
-}).quant_(4);
+}).quant_(1);
 );
 //ambient pad
 (
@@ -94,16 +95,16 @@ Tdef(\pad,{
 	~amb.set(\waveform, 'pulse' );//use 'sin' or 'tri' or 'pulse' only
 	loop{
 		~amb.set(\note,padmel.next);
-		~amb.set(\trem,4);
-		~amb.set(\vrel,1);
+		~amb.set(\trem,16);
+		~amb.set(\vrel,2);
 		~amb.set(\iphase,0.5);
-		~amb.set(\cutf,16420);
-		~amb.set(\rq,0.25);
-		~amb.set(\amp,0.015);
-		~amb.set(\out,52);
+		~amb.set(\cutf,18420);
+		~amb.set(\rq,0.15);
+		~amb.set(\amp,0.005);
+		~amb.set(\out,[64,52]);
 		~tiempos.wait;
 	}
-}).quant_(4);
+}).quant_(1);
 );
 //ambiente pad 2
 (
@@ -155,11 +156,11 @@ Tdef(\acordes2,{
 		~chord2.set(\cutf,12220);
 		~chord2.set(\rq,0.5);
 		~chord2.set(\pan,[0,-0.97]);
-		~chord2.set(\amp,0.03);
-		~chord2.set(\out,~rand_stream.value('rand2',[58,60,62,64]));
+		~chord2.set(\amp,0.01);
+		~chord2.set(\out,~rand_stream.value('rand1',[58,60,62,64]));
 		~tiempos.wait;
 	}
-}).quant_(4);
+}).quant_(1);
 );
 //LineIn
 (

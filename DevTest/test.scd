@@ -63,4 +63,4 @@ Tdef(\testc).stop;
 ~x[\kick][1][1];
 ~x[\kick][2];
 //
-~set_steps.value(\kick, [1,3,6,7,8,9,0,11,22,]);
+~set_steps.value(\kick, [1,5,8,25,17] +  [3,5,7].scramble.choose);
