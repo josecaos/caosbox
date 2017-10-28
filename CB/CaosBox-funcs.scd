@@ -60,8 +60,8 @@
 	a = ~clear_steps.value(track,(0..31));
 	for(0,steps.size-1,{|i|
 		b=steps[i];
-		dir[track][0][b].value = 1;
-		dir[track][1].put(b,dir[track][2]);
+		dir[track][0][b].value=1;
+		// dir[track][1].put(b,dir[track][2]);
 	});
 	"Manualy added step pattern".inform;
 };

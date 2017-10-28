@@ -48,11 +48,19 @@ for (0, 31, { |i|
 	~checkbombo.put(i,variable);
 
 	~checkbombo[i] = CheckBox.new(~w,Rect(~checkbox, 10, 20, 20)).action={|val|
-		if(val.value,{~bombo.put(i,~b)},{~bombo.put(i,nil)})};
+		if(val.value,{~bombo.put(i,~b)},{~bombo.put(i,nil)});
+	};
 
 	~checkbox = ~checkbox + a;
 
 });
+//debugging
+//
+// ~checkbombo[3];
+// ~checktarola[0];
+// ~checktarola[0].value=0;
+
+// fin debug
 
 // borra steps
 ~delbombo=Button(~w,Rect(765,12,15,15));
