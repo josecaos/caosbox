@@ -46,8 +46,8 @@
 	var a,dir = ~steps;
 	for(0,steps.size-1,{|i|
 		a=steps[i];
-		dir[track][0][a].value = 0;
-		dir[track][1].put(a,nil);
+		dir[track][0][a].valueAction_(false);
+		// dir[track][1].put(a,nil);
 	});
 	"Manually cleared step pattern".inform;
 };
@@ -60,10 +60,10 @@
 	a = ~clear_steps.value(track,(0..31));
 	for(0,steps.size-1,{|i|
 		b=steps[i];
-		dir[track][0][b].value=1;
+		dir[track][0][b].valueAction_(true);
 		// dir[track][1].put(b,dir[track][2]);
 	});
-	"Manualy added step pattern".inform;
+	"Manually added step pattern".inform;
 };
 
 // Returns random checked checkboxes for assigned track
