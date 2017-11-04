@@ -54,14 +54,6 @@ for (0, 31, { |i|
 	~checkbox = ~checkbox + a;
 
 });
-//debugging
-//
-// ~checkbombo[3];
-// ~checktarola[0];
-// ~checktarola[0].value=0;
-
-// fin debug
-
 // borra steps
 ~delbombo=Button(~w,Rect(765,12,15,15));
 ~delbombo.states=[[" X ",Color.black,Color.red]];

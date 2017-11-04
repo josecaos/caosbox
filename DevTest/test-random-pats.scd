@@ -38,14 +38,21 @@
 );
 ~clear_steps.value(\kick);
 (
-Tdef(\rand, {
+Tdef(\func, {
 	inf.do({
 
-		~rand_steps.value(\kick,10);
+		~set_steps.value(\kick,[0,1,2,3,5,9,13,17]);
+		~rand_steps.value(\kick,8);
+		~rand_steps.value(\snare,5);
+		~rand_steps.value(\hihats,26);
+		~rand_steps.value(\bass,8);
 
 		1.wait;
 	});
 });
 );
-Tdef(\rand).play;
-Tdef(\rand).stop;
+Tdef(\func).play;
+Tdef(\func).stop;
+//
+~set_steps.value(\bass);
+s.scope;
