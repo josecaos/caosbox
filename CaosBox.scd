@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 //CaosBox v1.1
+// Note: This file will be deprecated in the next release
 //////////////////
 // Needs 'caosperclib': https://github.com/josecaos/caosperclib
 // Install here: Platform.userExtensionDir;

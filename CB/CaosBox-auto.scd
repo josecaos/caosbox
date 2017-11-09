@@ -2,7 +2,7 @@
 /*
 //Automation values
 /*Re-evaluate the sequence containing the updated array*/
-
+132/4
 ~autoreverbmix=[0.1,0.5];
 ~autodelaytime=[0.02,0.04,0.06,0.08,0.1];
 ~autopitchrate=[0.5,1,1.5,2];

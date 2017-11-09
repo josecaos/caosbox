@@ -13,7 +13,11 @@
 ////////////////////////////////////////////
 /* Percussion Functions: */
 ///////////////////////////
-//kick
+//Test
+// CaosBox.enviroment;
+//
+//
+//
 ~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.25,2,0.5,60,60,50,1,0.01,0.3,2))};
 ~b={var out=64;Out.ar(out,CaosKick.ar(0.01,0.25,2,0.5,60,60,50,1,0.01,0.3,2))};
 
@@ -41,10 +45,26 @@
 ~mainmelody = [ 0, 2, 3, 6, 7, 8, 11 ]+60;
 // ~random_steps.value(\hihats,2);
 /*
-~set_steps.value(\hihats,Array.series(16,0,2));
+~set_steps.value(\bass,[1,12,24]);
 ~clear_steps.value(\snare);
 ~steps.keys;
 */
+~set_steps.value(\bass,Array.geom(8,1,3));
+~set_steps.value(\kick,Array.geom(8,1,3));
+~set_steps.value(\kick,Array.geom(8,1,2));
+~set_steps.value(\hihats,(3..10)*[2,3]);
+
+Tdef(\ffr,{
+	inf.do{ |i|
+		~set_steps.value(\bass,Array.geom(8,1,3)/(2*((i+1)%4)));
+		~set_steps.value(\kick,Array.geom(8,1,3)/(2*((i+1)%4)));
+		~set_steps.value(\kick,Array.geom(8,1,2)/(2*((i+1)%4)));
+		~set_steps.value(\hihats,(3..10)*[2,3]/(2*((i+1)%4)));
+		4.wait;
+	}
+	}.defer
+).play
+
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
 (//all Tdefs
