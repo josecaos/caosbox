@@ -17,13 +17,20 @@ CaosBox {
 		s.waitForBoot {
 
 
-			// (~url +/+ "CB/CaosBox-load.scd").load;
+			(~url +/+ "CB/CaosBox-load.scd").load;
 
-			//debug
-			"Class in development ... Refer to 'CaosBox.scd' to use legacy boot of CaosBox".inform;
+			fork{1.do({12.wait;
+
+				//debug
+				"\n => Class in development ... if you are having trouble booting sequencer,Refer to file 'CaosBox.scd' to use legacy boot".inform;
+			})};
 
 		};
 
+	}
+
+	*play {
+		^~bot.valueAction_(1);
 	}
 
 }

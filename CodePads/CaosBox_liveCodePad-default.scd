@@ -49,22 +49,6 @@
 ~clear_steps.value(\snare);
 ~steps.keys;
 */
-~set_steps.value(\bass,Array.geom(8,1,3));
-~set_steps.value(\kick,Array.geom(8,1,3));
-~set_steps.value(\kick,Array.geom(8,1,2));
-~set_steps.value(\hihats,(3..10)*[2,3]);
-
-Tdef(\ffr,{
-	inf.do{ |i|
-		~set_steps.value(\bass,Array.geom(8,1,3)/(2*((i+1)%4)));
-		~set_steps.value(\kick,Array.geom(8,1,3)/(2*((i+1)%4)));
-		~set_steps.value(\kick,Array.geom(8,1,2)/(2*((i+1)%4)));
-		~set_steps.value(\hihats,(3..10)*[2,3]/(2*((i+1)%4)));
-		4.wait;
-	}
-	}.defer
-).play
-
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
 (//all Tdefs
