@@ -1,5 +1,6 @@
 //Main Enviroment init
 CaosBox {
+
 	classvar s,url;
 
 	*enviroment {
@@ -30,7 +31,14 @@ CaosBox {
 	}
 
 	*play {
-		^~bot.valueAction_(1);
+		~bot.valueAction_(1);
+		^"";
+	}
+
+	*bpm {|val|
+		~numclock.value = val;
+		~clock  = {TempoClock.tempo=~numclock.value/60};
+		^~clock.value;
 	}
 
 }
