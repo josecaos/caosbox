@@ -17,7 +17,6 @@ CaosBox {
 
 		s.waitForBoot {
 
-
 			(~url +/+ "CB/CaosBox-load.scd").load;
 
 			fork{1.do({13.wait;
@@ -32,14 +31,20 @@ CaosBox {
 
 	*play {
 		~bot.valueAction_(1);
+
 		^"";
 	}
 
 	*bpm {|val|
+
 		~numclock.value = val;
+
 		~clock  = {TempoClock.tempo=~numclock.value/60};
+
 		~clock.value;
+
 		("+ BPM set to" + ~numclock.value).inform;
+
 		^"";
 	}
 
@@ -66,6 +71,11 @@ CaosBox {
 
 	*metric {
 
+		var v = ~botm;
+
+		if(v.value == 0,{v.valueAction_(1)},{v.valueAction_(0)});
+
+		^"";
 	}
 
 }
