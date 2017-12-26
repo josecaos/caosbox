@@ -82,11 +82,31 @@ CaosBox {
 
 		~recbot.valueAction_(1);
 
+		^"";
+
 	}
 
 	*stopRecording {
 
 		~recbot.valueAction_(0);
+
+		^"";
+	}
+
+	*history {|state|
+
+		if(state == \start or: {state == \stop}, {
+				switch(state,
+					\start, {History.start},
+					\stop, {~hbutt.valueAction_(0)}
+				);
+
+				^"";
+			}, {
+
+				^"Use only 'start' or 'stop' keys";
+
+		});
 
 	}
 
