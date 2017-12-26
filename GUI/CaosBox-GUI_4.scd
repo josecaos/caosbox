@@ -155,7 +155,12 @@ StaticText(~w,Rect(785,540,235,12)).string_("Auto/Speed").align_(\center).backgr
 StaticText(~w,Rect(785,272,185,15)).string_("BPM:").align_(\center).background_(Color(1,0,0));
 ~numclock=NumberBox(~w,Rect(970,272,50,15)).background_(Color(0,1,0)).align_(\ceneter);
 ~numclock.value=94;
-~numclock.action={~clock={TempoClock.tempo=~numclock.value/60};~clock.value};
+~numclock.action={
+	~clock={
+		TempoClock.tempo=~numclock.value/60};
+	~clock.value;
+	("+ BPM set to" + ~numclock.value).inform;
+};
 //
 ~w.onClose={s.quit.freeAll.reboot};
 );

@@ -20,7 +20,7 @@ CaosBox {
 
 			(~url +/+ "CB/CaosBox-load.scd").load;
 
-			fork{1.do({12.wait;
+			fork{1.do({13.wait;
 
 				//debug
 				"\n => Class in development ... if you are having trouble booting sequencer,Refer to file 'CaosBox.scd' to use legacy boot".inform;
@@ -38,7 +38,24 @@ CaosBox {
 	*bpm {|val|
 		~numclock.value = val;
 		~clock  = {TempoClock.tempo=~numclock.value/60};
-		^~clock.value;
+		~clock.value;
+		("+ BPM set to" + ~numclock.value).inform;
+		^"";
+	}
+
+	*randomTime {|random = false|
+
+		if(true or:{false} ,{
+
+			switch(random,
+			true,{^~botr.valueAction_(1)},
+			false,{^~botr.valueAction_(0)})
+
+			},{
+
+		^"Use only 'true' or 'false'";
+		});
+
 	}
 
 }
