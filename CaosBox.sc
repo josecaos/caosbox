@@ -22,7 +22,7 @@ CaosBox {
 			fork{1.do({13.wait;
 
 				//debug
-				"\n => Class in development ... if you are having trouble booting sequencer,Refer to file 'CaosBox.scd' to use legacy boot".inform;
+				"\n => Class in development ... if you are having trouble booting sequencer, please refer to file 'CaosBox.scd' to use legacy boot".inform;
 			})};
 
 		};
@@ -76,6 +76,18 @@ CaosBox {
 		if(v.value == 0,{v.valueAction_(1)},{v.valueAction_(0)});
 
 		^"";
+	}
+
+	*record {
+
+		~recbot.valueAction_(1);
+
+	}
+
+	*stopRecording {
+
+		~recbot.valueAction_(0);
+
 	}
 
 }

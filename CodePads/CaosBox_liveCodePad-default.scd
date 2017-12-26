@@ -26,7 +26,7 @@
 
 ~t2={var out=60;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:160,rq:0.5,amp1:0.01,amp2:0.2))};//
 //hat
-~h={var out=56;Out.ar(out,CaosHats.ar(att:0.01,rel:0.25,highcutfreq:6330,rq:0.75,amp1:0.15,amp2:0.2))};//
+~h={var out=50;Out.ar(out,CaosHats.ar(att:0.01,rel:0.5,highcutfreq:8330,rq:0.25,amp1:0.35,amp2:0.01))};//
 ~h={var out=52;Out.ar(out,CaosHats.ar(att:0.01,rel:0.05,highcutfreq:8330,rq:0.15,amp1:0.5,amp2:0.95))};//
 //kick
 ~b2={var out=58;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.16,modFreq:2,modbw:0.5,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
