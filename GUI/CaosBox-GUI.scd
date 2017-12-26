@@ -263,16 +263,16 @@ for (0, 31, { |i|
 
 // tempo
 StaticText(~w,Rect(5,635,270,15)).string_("Beat:").align_(\center).background_(Color(0.65,0.65,0.65));
-~bott=Button(~w,Rect(5,650,135,25));
-~bott.states=[["Thirds",Color.white,Color.green(0.35)],
+~botm=Button(~w,Rect(5,650,135,25));
+~botm.states=[["Thirds",Color.white,Color.green(0.35)],
 	["Fourths",Color.black,Color.green(0.35)]];
-~bott.action={|val|if(val.value==0,{~tiempos=0.25;"->Fourths<-".inform},
+~botm.action={|val|if(val.value==0,{~tiempos=0.25;"->Fourths<-".inform},
 	{~tiempos=0.3333333333333333333;"->Thirds<-".inform})};
 //tempo aleatorio
 ~botr=Button(~w,Rect(140,650,135,25));
 ~botr.states=[["Random Time",Color.black,Color.green(0.35)],
 	["Regular Time",Color.white,Color.green(0.35)]];
-~botr.action={|val|if(val.value==0,{Tdef(\randtime).stop;~clock.value;"->Master BPM set<-".inform},
+~botr.action={|val|if(val.value==0,{Tdef(\randtime).stop;~clock.value;"->Main BPM <-".inform},
 	{Tdef(\randtime).play;"->Random Clock Values<-".inform})};
 //
 //automatizacion
@@ -308,7 +308,7 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
 	["[_]",Color.white,Color.red]];
 ~bot.action={|val|if(val.value==0,{Tdef(\secuencias).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;Tdef(\autog).stop;
 	Tdef(\bass).stop;Tdef(\bass2).stop;Tdef(\pad).stop;Tdef(\pad2).stop;Tdef(\acordes).stop;Tdef(\acordes2).stop;
-	~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~bott.value=0;~hbutt.value=0;
+	~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~botm.value=0;~hbutt.value=0;
 	"->You just Stopped CaosBox<-".inform;},
 	{Tdef(\secuencias).play;/*Tdef(\pasos).play;*/Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
 		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"\n -> Now playing, please start algoraving <-".inform})};
