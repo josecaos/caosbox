@@ -43,19 +43,29 @@ CaosBox {
 		^"";
 	}
 
-	*randomTime {|random = false|
+	*randomTime {|random = false, editBPM = false, bpmArray = #[47,62,94,141,188]|
 
-		if(true or:{false} ,{
+		if(random == true or:{ random == false} ,{
+
+			if(editBPM == true,{
+				~randtimes = bpmArray;
+			});
 
 			switch(random,
-			true,{^~botr.valueAction_(1)},
-			false,{^~botr.valueAction_(0)})
+				true,{~botr.valueAction_(1)},
+				false,{~botr.valueAction_(0)});
+
+			^"";
 
 			},{
 
-		^"Use only 'true' or 'false'";
+				^"Use only 'true' or 'false'";
 		});
 
 	}
+
+	// *metric {
+	//
+	// }
 
 }
