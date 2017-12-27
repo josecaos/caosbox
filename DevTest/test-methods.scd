@@ -9,6 +9,9 @@ x.metric;
 //
 x.record;
 x.stopRecording;
+x.history(\start);
+x.history(\stop);
+x.history(\load,"hist-caosbox_op63171226.scd");//name of locally saved file
 
 
 

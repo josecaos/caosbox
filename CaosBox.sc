@@ -93,15 +93,16 @@ CaosBox {
 		^"";
 	}
 
-	*history {|state|
+	*history {|state, name|
 
-		if(state == \start or: {state == \stop}, {
-				switch(state,
-					\start, {History.start},
-					\stop, {~hbutt.valueAction_(0)}
-				);
+		if(state == \start or: {state == \stop} or: {state == \load}, {
+			switch(state,
+				\start, {History.start},
+				\stop, {~hbutt.valueAction_(0)},
+				\load, {History.loadStory(~url +/+ "Histories" +/+ name).play(verbose:true)}
+			);
 
-				^"";
+			^"";
 			}, {
 
 				^"Use only 'start' or 'stop' keys";
