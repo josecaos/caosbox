@@ -22,7 +22,7 @@
 ~b={var out=58;Out.ar(out,CaosKick.ar(0.01,0.25,2,0.15,60,64,50,1,1,0.75,2))};
 
 //snare
-~t={var out=58;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:360,rq:0.25,amp1:0.55,amp2:0.25))};//
+~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:360,rq:0.25,amp1:0.55,amp2:0.25))};//
 
 ~t2={var out=60;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:160,rq:0.5,amp1:0.01,amp2:0.2))};//
 //hat
@@ -55,17 +55,17 @@
 (//all Tdefs
 (//bass 1
 Tdef(\bass,{
-	var bassmel=Prand(~mainmelody,inf).asStream;
+	var bassmel=Prand(~mainmelody-12,inf).asStream;
 	// var out=Pseq(~pat_arr.value(52,(0..31)),inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
-			\filtminf,80,
-			\filtmaxf,12700,
+			\filtminf,70,
+			\filtmaxf,8700,
 			\filtime,0.025,
-			\rq,0.15,
-			\iphase,0.35,
-			\amp1,0.07,
-			\amp2,0.05,
+			\rq,0.5,
+			\iphase,0.15,
+			\amp1,0.01,
+			\amp2,0.04,
 			// \out,58);
 		\out,~rand_stream.value('rand1',[52,56,60,58,54,64]));
 		~tiempos.wait;
@@ -75,19 +75,19 @@ Tdef(\bass,{
 //bass 2
 (
 Tdef(\bass2,{
-	var bass2mel=Pseq(~mainmelody-[2,7],inf).asStream;
+	var bass2mel=Pseq(~mainmelody-7,inf).asStream;
 	// var out=Prand(~pat_arr.value(50,62,[0,4,8,12,16,20,30]),inf).asStream;
 	loop{
 		~bass2.set(\note,bass2mel.next,
-			\trig,2,
+			\trig,4,
 			\filtminf,80,
-			\filtmaxf,8900,
-			\filtime,0.25,
-			\rq,0.5,
+			\filtmaxf,10900,
+			\filtime,0.0125,
+			\rq,0.15,
 			\bandw,0.45,
-			\iphase,0.5,
-			\amp1,0.1,
-			\amp2,0.05,
+			\iphase,0.15,
+			\amp1,0.01,
+			\amp2,0.4,
 			\out,64);
 		// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 		~tiempos.wait;
@@ -119,8 +119,8 @@ Tdef(\pad2,{
 	loop{
 		~amb2.set(\note,pad2mel.next);
 		~amb2.set(\fmax,[16,32,64,128,8].choose);
-		~amb2.set(\fm,[2].choose);
-		~amb2.set(\harm,440);
+		~amb2.set(\fm,[2,4,8].choose);
+		~amb2.set(\harm,20);
 		~amb2.set(\rmix,0.79);
 		~amb2.set(\rroom,0.15);
 		~amb2.set(\rfilt,0.5);

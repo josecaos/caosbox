@@ -1,9 +1,9 @@
 x = CaosBox;
 x.enviroment;
 x.play;
-x.bpm(90);
+x.bpm(190);
 //
-x.randomTime(true,true,[10,100,200]);
+x.randomTime(true,true,[45,90,180,360]);
 x.randomTime(false);
 x.metric;
 //
@@ -11,10 +11,16 @@ x.record;
 x.stopRecording;
 x.history(\start);
 x.history(\stop);
-x.history(\load,"hist-caosbox_op63171226.scd");//name of locally saved file
+CaosBox.history(\load,"hist-caosbox_op63171226.scd");//name of localy saved file
 
 
 
 //
-~clear_steps.value(\kick);
-~set_steps.value(\hihats);
+~clear_steps.value(\kick,[0,11,16,31]);
+~set_steps.value(\kick,[0,11,16]);
+~set_steps.value(\snare,[8,24]);
+~set_steps.value(\snare2,[8,13,19,24]);
+~set_steps.value(\hihats,[0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,29,30,31]);
+~set_steps.value(\bass,[0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,29,30,31]);
+
+~h = {Out.ar(64,CaosHats.ar(0.01,1))};
