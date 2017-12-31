@@ -1,7 +1,7 @@
 //Main Enviroment init
 CaosBox {
 
-	classvar s,url;
+	classvar server,url;
 
 	*enviroment {
 
@@ -13,9 +13,9 @@ CaosBox {
 
 	init {
 
-		s = Server.local;
+		server = Server.local;
 
-		s.waitForBoot {
+		server.waitForBoot {
 
 			(~url +/+ "CB/CaosBox-load.scd").load;
 
@@ -30,7 +30,15 @@ CaosBox {
 	}
 
 	*play {
+
 		~bot.valueAction_(1);
+
+		^"";
+	}
+
+	*stop {
+
+		~bot.valueAction_(0);
 
 		^"";
 	}
