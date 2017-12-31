@@ -55,13 +55,13 @@
 // Returns checked checkboxes for assigned track
 // arg1: assigns track with ~steps[\n] global variable
 // arg2: Array of specific indexes affected in ~steps[n]. Defaults "all"
-~set_steps = {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]|
-	var a,b,dir = ~steps;
-	a = ~clear_steps.value(track,(0..31));
+// arg3: Boolean wther or not to clear steps
+~set_steps = {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],clear = true|
+	var b,dir = ~steps;
+	if(clear == true,{~clear_steps.value(track,(0..31))});
 	for(0,steps.size-1,{|i|
 		b=steps[i];
 		dir[track][0][b].valueAction_(true);
-		// dir[track][1].put(b,dir[track][2]);
 	});
 	"Manually added step pattern".inform;
 };
