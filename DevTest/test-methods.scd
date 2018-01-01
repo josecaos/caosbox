@@ -12,7 +12,7 @@ x.record;
 x.stopRecording;
 x.history(\start);
 x.history(\stop);
-CaosBox.history(\load,"hist-caosbox_op63171226.scd");//name of localy saved file
+//experimental // CaosBox.history(\load,"hist-caosbox_op63171226.scd");//name of localy saved file
 
 //
 ~b = {Out.ar(54,CaosKick.ar(0.5,0.5,gate:1))};

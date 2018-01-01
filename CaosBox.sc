@@ -119,4 +119,10 @@ CaosBox {
 
 	}
 
+	*freqAnalyzer {|active = false|
+
+		~f.active_(active);
+
+	}
+
 }
