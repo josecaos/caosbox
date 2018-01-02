@@ -125,4 +125,16 @@ CaosBox {
 
 	}
 
+	*auto {|fx = 'rev',values = #[0.01]|
+		// fx => 'reverb','delay','pitch','grains','LPF','HPF','BPF'
+
+
+		switch(fx,
+
+
+		^"Use only 'reverb','delay','pitch','grains','LPF','HPF','BPF' keys to automate FX parameters";);
+	}
+
+
+
 }
