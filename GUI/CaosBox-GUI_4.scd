@@ -145,19 +145,18 @@ StaticText(~w,Rect(785,540,235,12)).string_("Auto/Speed").align_(\center).backgr
 ~autopopg.background_(~grandcolor).stringColor_(Color.gray(0.5));
 ~autopopg.action={|menu|
 	switch(menu.value,
-		0,{~divgrain=1;"+ Grains Automation Normal".inform;},
-		1,{~divgrain=0.5;"+ Grains Automation Fast".inform;},
-		2,{~divgrain=2;"+ Grains Automation Slow".inform;},
-		3,{~divgrain=4;"+ Grains Automation Slowest".inform;}
+		0,{~divgrain=1;"+ Grains Automation Normal".inform},
+		1,{~divgrain=0.5;"+ Grains Automation Fast".inform},
+		2,{~divgrain=2;"+ Grains Automation Slow".inform},
+		3,{~divgrain=4;"+ Grains Automation Slowest".inform}
 	);
 };
 //clock
 StaticText(~w,Rect(785,272,185,15)).string_("BPM:").align_(\center).background_(Color(1,0,0));
 ~numclock=NumberBox(~w,Rect(970,272,50,15)).background_(Color(0,1,0)).align_(\ceneter);
-~numclock.value=94;
+~numclock.value=115;
 ~numclock.action={
-	~clock={
-		TempoClock.tempo=~numclock.value/60};
+	~clock={TempoClock.tempo=~numclock.value/60};
 	~clock.value;
 	("+ BPM set to" + ~numclock.value).inform;
 };

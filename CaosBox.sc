@@ -125,15 +125,22 @@ CaosBox {
 
 	}
 
-	*auto {|fx = 'rev',values = #[0.01]|
+	// *auto {|fx = 'reverb', speed = 'normal', argArr1, argArr2, argArr3|
 		// fx => 'reverb','delay','pitch','grains','LPF','HPF','BPF'
+		// speed => 'fastest','fast','normal','slow','slowest'
 
+		// switch(fx,
+		// 'reverb',{},
+		// 	'delay',{},
+		// 	'pitch',{},
+		// 	'LPF',{},
+		// 	'BPF',{},
+		// 	'HPF',{},
+		// 	'grains',{},
+		//
+			// ^"Use only 'reverb','delay','pitch','grains','LPF','HPF','BPF' keys to automate FX parameters";);
 
-		switch(fx,
-
-
-		^"Use only 'reverb','delay','pitch','grains','LPF','HPF','BPF' keys to automate FX parameters";);
-	}
+// }
 
 
 

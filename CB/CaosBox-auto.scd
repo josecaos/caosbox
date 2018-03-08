@@ -8,7 +8,7 @@
 ~autopitchrate=[0.5,1,1.5,2];
 ~autopitchdispersion=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
 ~autograintrig=[0.04,0.08,0.16,0.32,0.64,1.28]*4;
-~autograinsize=Array.series(100,0.01,0.05);
+~autograinsize=Array.series(100,0.01,0.02);
 
 */
 //automation seqs

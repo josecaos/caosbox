@@ -324,7 +324,7 @@ StaticText(~w,Rect(790,635,130,15)).string_("Recording").align_(\center).backgro
 	"->Stoped Recording<-".inform;
 	~filename=["c","a","o","s","b","o","x","_",~filea.join,~l.choose,~n.choose];
 	},
-	{s.record(~url +/+ "Recorded" +/+  ~ftype[0] ++ ~filename.value.join ++ ~fecha.dayStamp ++ ".aiff");
+	{s.record(~url +/+ "Recorded" +/+  ~ftype[0] ++ ~filename.value.join ++ "-" ++ ~fecha.dayStamp ++ "-" ++ ~numclock.value ++ "bpm.aiff");
 		"->Recording<-".inform})
 };
 //Historial
