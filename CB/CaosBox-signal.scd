@@ -16,7 +16,7 @@ SynthDef(\aux1,{|vol=1,mix=0,room=0.1,damp=0.1|
 	var aux1,env;
 	aux1=In.ar([52,53]);
 	aux1=FreeVerb.ar(aux1,mix,room,damp);//reverb
-	env=EnvGen.ar(Env.asr(0.01,0.98,0.01),1);
+	env=EnvGen.ar(Env.asr(0.05,0.95,0.01),1);
 	Out.ar(50,Pan2.ar(aux1*env,[1,-1])*vol)
 }).add;
 //aux2 canal 54
