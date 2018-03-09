@@ -126,7 +126,7 @@ for (0, 31, { |i|
 ~numd.action={~mastrev.set(\damp,~numd.value);~auxdfader.value_(~numd.value)};
 ~auxdfader.value=0.1;
 ~numd.value=0.1;
-//rev valor atomatizacion
+//rev velocidad atomatizacion
 StaticText(~w,Rect(280,540,105,12)).string_("Auto/Speed").align_(\center).background_(Color(0.5,0.5,0.5));
 ~autopopr=PopUpMenu(~w,Rect(280,555,105,25)).items=["normal","fast","slow","slowest"];
 ~autopopr.background_(Color(0.05,0.05,0.25)).stringColor_(Color.gray(0.5));
@@ -226,4 +226,30 @@ StaticText(~w,Rect(465,540,105,12)).string_("Auto/Speed").align_(\center).backgr
 	);
 
 };
+//Botones automatizacion
+//autoreverb
+StaticText(~w,Rect(280,585,105,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
+~autobotr=Button(~w,Rect(280,600,105,30));
+~autobotr.states=[[" Auto On ",Color.white,Color(0.05,0.05,0.25)],
+	[" Auto Off ",Color.black,Color.green(0.9)]];
+~autobotr.action={|val|if(val.value==1,{Tdef(\autor).play},{Tdef(\autor).stop})};
+//autodelay
+StaticText(~w,Rect(390,585,70,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
+~autobotd=Button(~w,Rect(390,600,70,30));
+~autobotd.states=[[" Auto On ",Color.white,Color(0.05,0.15,0.25)],
+	[" Auto Off ",Color.black,Color.green(0.9)]];
+~autobotd.action={|val|if(val.value==1,{Tdef(\autod).play},{Tdef(\autod).stop})};
+//autopitch
+StaticText(~w,Rect(465,585,105,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
+~autobotp=Button(~w,Rect(465,600,105,30));
+~autobotp.states=[[" Auto On ",Color.white,Color(0.05,0.25,0.25)],
+	[" Auto Off ",Color.black,Color.green(0.9)]];
+~autobotp.action={|val|if(val.value==1,{Tdef(\autop).play},{Tdef(\autop).stop})};
+//autograin
+StaticText(~w,Rect(785,585,235,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
+~autobotg=Button(~w,Rect(785,600,235,30));
+~autobotg.states=[[" Auto On ",Color.gray(0.85),Color.black(0.5)],
+	[" Auto Off ",Color.black,Color.green(0.5)]];
+~autobotg.action={|val|if(val.value==1,{Tdef(\autog).play},{Tdef(\autog).stop})};
+//
 );
