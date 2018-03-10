@@ -31,14 +31,19 @@ CaosBox {
 
 	*play {
 
-		~bot.valueAction_(1);
+		if(Tdef(\secuencias).isPlaying,{
+			^"CaosBox already running";
+			},{
+				~bot.valueAction_(1);
+				^"";
+		});
 
-		^"";
 	}
 
 	*stop {
 
 		~bot.valueAction_(0);
+		Tdef(\secuencias).reset;
 
 		^"";
 	}
@@ -157,7 +162,7 @@ CaosBox {
 
 			},
 			'delay',{
-			if(play == true, {
+				if(play == true, {
 					switch(speed,
 						'normal',{~autopopd.valueAction_(0);"Delay normal speed".postln},
 						'fast',{~autopopd.valueAction_(1);"Delay fast speed".postln},
@@ -182,7 +187,7 @@ CaosBox {
 				});
 			},
 			'pitch',{
-			if(play == true, {
+				if(play == true, {
 					switch(speed,
 						'normal',{~autopopp.valueAction_(0);"Pitch normal speed".postln},
 						'fast',{~autopopp.valueAction_(1);"Pitch fast speed".postln},
@@ -206,8 +211,32 @@ CaosBox {
 						~autobotp.valueAction_(0);
 						^"Pitch Automation stopped";
 				});
-},
-			'grains',{},
+			},
+			'grains',{
+				if(play == true, {
+					switch(speed,
+						'normal',{~autopopg.valueAction_(0);"Grains normal speed".postln},
+						'fast',{~autopopg.valueAction_(1);"Grains fast speed".postln},
+						'slow',{~autopopg.valueAction_(2);"Grains slow speed".postln},
+						'slowest',{~autopopg.valueAction_(3);"grains slowest speed".postln}
+					);
+
+					~autograintrig=argArr1.asArray;
+					~autograinsize=argArr2.asArray;
+
+					(~url +/+ "CB/CaosBox-auto.scd").load;//reload
+
+					if(Tdef(\autog).isPlaying,{
+						^"Grains Automation already running";
+						},{
+							~autobotg.valueAction_(1);
+						^"Grains Automation running";
+					});
+					}, {
+						~autobotg.valueAction_(0);
+						^"Grains Automation stopped";
+				});
+			},
 			// 'LPF',{}, //later implementation of filter automation
 			// 'BPF',{},
 			// 'HPF',{},

@@ -72,15 +72,16 @@ Tdef(\autop,{
 //grains
 (
 Tdef(\autog,{
-	var univar, univar1;
+	var univar;
 	var trig=Pseq(~autograintrig.scramble,inf).asStream;
-	var siz=Pseq(~autograinsize.scramble,inf).asStream;
+	var size=Pseq(~autograinsize.scramble,inf).asStream;
 	{
-		univar=trig.resume;
-		univar1=siz.resume;
-		~grains.set(\trigger,univar);
-		~grains.set(\size,univar1);
-		{~grains.set(\trigger,~gfaders.x_(univar));~grains.set(\size,~gfaders.y_(univar1))}.defer(0.1);
+		univar=[trig.resume,size.resume];
+		~grains.set(\trigger,univar[0]);
+		~grains.set(\size,univar[1]);
+		{
+			~grains.set(\trigger,~gfaders.x_(univar[0]));~grains.set(\size,~gfaders.y_(univar[1]))
+		}.defer(0.1);
 		~tiempos/~divgrain.wait;
 	}.loop;
 })
