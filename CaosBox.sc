@@ -128,9 +128,23 @@ CaosBox {
 
 	}
 
+	// seq methoods
+	*randStream {|seq,array|
+		var out;
+		if(seq != \rand2 and:( seq != \rand1),
+			{
+				"Use 'seq' or 'rand' keys to choose output sequence style \n".inform
+			},{
+				switch(seq,
+					\rand1,{out=Prand(array,inf).asStream},
+					\rand2,{out=Pshuf(array,inf).asStream},
+				);
+				^out.next;
+		});
+	}
+	//
+
 	*auto {|fx = 'reverb', play = true, speed = 'normal', argArr1 = 0, argArr2 = 0, argArr3 = 0|
-		//fx => 'reverb','delay','pitch','grains','LPF','HPF','BPF'
-		// speed => 'normal','fast','slow','slowest'
 
 		switch(fx,
 			'reverb',{
@@ -173,7 +187,7 @@ CaosBox {
 					~autodelaytime=argArr1.asArray;
 					~autodelayfeed=argArr2.asArray;
 
-					(~url +/+ "CB/CaosBox-auto.scd").load;//reload
+					(~url +/+ "CB/CaosBox-auto.scd").load;
 
 					if(Tdef(\autod).isPlaying,{
 						^"Delay Automation already running";
@@ -196,10 +210,10 @@ CaosBox {
 					);
 
 					~autopitchrate=argArr1.asArray;
-					~autopitchdispersion=argArr1.asArray;
-					~autotimedispersion=argArr1.asArray;
+					~autopitchdispersion=argArr2.asArray;
+					~autotimedispersion=argArr3.asArray;
 
-					(~url +/+ "CB/CaosBox-auto.scd").load;//reload
+					(~url +/+ "CB/CaosBox-auto.scd").load;
 
 					if(Tdef(\autop).isPlaying,{
 						^"Pitch Automation already running";
@@ -224,7 +238,7 @@ CaosBox {
 					~autograintrig=argArr1.asArray;
 					~autograinsize=argArr2.asArray;
 
-					(~url +/+ "CB/CaosBox-auto.scd").load;//reload
+					(~url +/+ "CB/CaosBox-auto.scd").load;
 
 					if(Tdef(\autog).isPlaying,{
 						^"Grains Automation already running";

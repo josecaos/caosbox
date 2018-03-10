@@ -164,7 +164,8 @@ Tdef(\acordes2,{
 		~chord2.set(\rq,0.25);
 		~chord2.set(\pan,[0,-0.97]);
 		~chord2.set(\amp,0.025);
-		~chord2.set(\out,~rand_stream.value('rand2',[58,60,62,64]));
+		// ~chord2.set(\out,~rand_stream.value('rand2',[58,60,62,64]));
+		~chord2.set(\out,c.randStream('rand2',[56]));
 		~tiempos.wait;
 	}
 }).quant_(1);

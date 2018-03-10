@@ -24,11 +24,11 @@
 ~autoreverbroom=[0];
 ~autoreverbdamp=[0];
 //
-~autodelaytime=[0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1];
+~autodelaytime=[Array.series(10,0.01,0.0.01);
 ~autodelayfeed=[0.1];
 //
-~autopitchrate=[0.5,1,1.5,2,2.5,3,3.5,4];
-~autopitchdispersion=[0];
+~autopitchrate=Array.series(8,0.5,0.5);
+~autopitchdispersion=[0.01];
 ~autotimedispersion=[0];
 //
 ~autograintrig=[0.04,0.08,0.16,0.32,0.64,1.28]*4;
