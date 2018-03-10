@@ -14,24 +14,37 @@
 //automation seqs
 (
 Tdef(\autor,{
-	var revmix,univar;
+	var revmix,revroom,revdamp,univar;
 	revmix=Prand(~autoreverbmix,inf).asStream;
+	revroom=Prand(~autoreverbroom,inf).asStream;
+	revdamp=Prand(~autoreverbdamp,inf).asStream;
 	{
-		univar=revmix.resume;
-		~mastrev.set(\mix,univar);
-		{~numr.value=univar;~auxrfader.value=univar}.defer(0.1);
+		univar=[revmix.resume,revroom.resume,revdamp.resume];
+		~mastrev.set(\mix,univar[0]);
+		~mastrev.set(\room,univar[1]);
+		~mastrev.set(\damp,univar[2]);
+		{
+			~numr.value=univar[0];~auxrfader.value=univar[0];
+			~numroom.value=univar[1];~auxroomfader.value=univar[1];
+			~numd.value=univar[2];~auxdfader.value=univar[2]
+		}.defer(0.1);
 		~tiempos/~divrev.wait;
 	}.loop;
 }).quant_(4)
 );
 (
 Tdef(\autod,{
-	var deltm,univar;
+	var deltm,delf,univar;
 	deltm=Prand(~autodelaytime,inf).asStream;
+	delf=Prand(~autodelayfeed,inf).asStream;
 	{
-		univar=deltm.resume;
-		~mastdel.set(\deltime,univar);
-		{~numt.value=univar;~auxtfader.value=univar}.defer(0.1);
+		univar=[deltm.resume,delf.resume];
+		~mastdel.set(\deltime,univar[0]);
+		~mastdel.set(\feedback,univar[1]);
+		{
+			~numt.value=univar[0];~auxtfader.value=univar[0];
+			~numf.value=univar[1];~auxffader.value=univar[1]
+		}.defer(0.1);
 		~tiempos/~divdel.wait;
 	}.loop;
 }).quant_(4)

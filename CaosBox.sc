@@ -125,30 +125,71 @@ CaosBox {
 
 	}
 
-	*auto {|fx = 'reverb', play = true, speed = 'normal', argArr1, argArr2, argArr3|
+	*auto {|fx = 'reverb', play = true, speed = 'normal', argArr1 = 0, argArr2 = 0, argArr3 = 0|
 		//fx => 'reverb','delay','pitch','grains','LPF','HPF','BPF'
-		// speed => 'fastest','fast','normal','slow','slowest'
+		// speed => 'normal','fast','slow','slowest'
 
 		switch(fx,
 			'reverb',{
 				if(play == true, {
+					//velocidad
+					switch(speed,
+						'normal',{~autopopr.valueAction_(0);"Reverb normal speed".postln},
+						'fast',{~autopopr.valueAction_(1);"Reverb fast speed".postln},
+						'slow',{~autopopr.valueAction_(2);"Reverb slow speed".postln},
+						'slowest',{~autopopr.valueAction_(3);"Reverb slowest speed".postln}
+					);
+
+					~autoreverbmix=argArr1.asArray;
+					~autoreverbroom=argArr2.asArray;
+					~autoreverbdamp=argArr3.asArray;
+
+					(~url +/+ "CB/CaosBox-auto.scd").load;//reload
+
 					if(Tdef(\autor).isPlaying,{
-					^"Reverb Automatio already started";
+						^"Reverb Automation already running";
 						},{
 							~autobotr.valueAction_(1);
+						^"Reverb Automation running";
 					});
 					}, {
 						~autobotr.valueAction_(0);
+						^"Reverb Automation stopped";
+				});
+
+			},
+			'delay',{
+			if(play == true, {
+					switch(speed,
+						'normal',{~autopopd.valueAction_(0);"Delay normal speed".postln},
+						'fast',{~autopopd.valueAction_(1);"Delay fast speed".postln},
+						'slow',{~autopopd.valueAction_(2);"Delay slow speed".postln},
+						'slowest',{~autopopd.valueAction_(3);"Delay slowest speed".postln}
+					);
+
+					~autodelaytime=argArr1.asArray;
+					~autodelayfeed=argArr2.asArray;
+
+					(~url +/+ "CB/CaosBox-auto.scd").load;//reload
+
+					if(Tdef(\autod).isPlaying,{
+						^"Delay Automation already running";
+						},{
+							~autobotd.valueAction_(1);
+						^"Delay Automation running";
+					});
+					}, {
+						~autobotd.valueAction_(0);
+						^"Delay Automation stopped";
 				});
 			},
-			'delay',{},
 			'pitch',{},
-			'LPF',{},
-			'BPF',{},
-			'HPF',{},
 			'grains',{},
+			// 'LPF',{}, //later implementation of filter automation
+			// 'BPF',{},
+			// 'HPF',{},
 
-			"Use only 'reverb','delay','pitch','grains','LPF','HPF','BPF' keys to automate FX parameters";);
+			"Use only 'reverb','delay','pitch','grains','LPF','HPF','BPF' keys for FX  argument, and 'normal','fast','slow','slowest' keys for speed argument";);
 
 	}
 
