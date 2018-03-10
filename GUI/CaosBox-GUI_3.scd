@@ -200,7 +200,7 @@ StaticText(~w,Rect(390,540,70,12)).string_("Auto/Speed").align_(\center).backgro
 ~numpd=NumberBox(~w,Rect(500,337,35,20)).background_(Color(0,1,0));
 ~auxpdfader=Slider(~w,Rect(500,357,35,180)).background_(Color(0.05,0.25,0.25,0.1));
 ~auxpdfader.action={~mastpit.set(\pitchDispersion,~auxpdfader.value);~numpd.value_(~auxpdfader.value)};
-~numpd.action={~mastpit.set(\pitchdispersion,~numpd.value);~auxpdfader.value_(~numpd.value)};
+~numpd.action={~mastpit.set(\pitchDispersion,~numpd.value);~auxpdfader.value_(~numpd.value)};
 ~auxpdfader.value=0;
 ~numpd.value=0;
 //pitch time dispersion

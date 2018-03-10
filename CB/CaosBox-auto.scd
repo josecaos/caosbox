@@ -51,17 +51,20 @@ Tdef(\autod,{
 );
 (
 Tdef(\autop,{
-	var pitrat,pitdisp,univar,univar1;
+	var pitrat,pitdisp,pittdisp,univar;
 	pitrat=Prand(~autopitchrate,inf).asStream;
 	pitdisp=Prand(~autopitchdispersion,inf).asStream;
+	pittdisp=Prand(~autotimedispersion,inf).asStream;
 	{
-		univar=pitrat.resume;
-		univar1=pitdisp.resume;
-		~mastpit.set(\rate,univar);
-		~mastpit.set(\pitchDispersion,univar1);
-		{~nump.value=univar;~auxpfader.value=univar.next/4;
-			~numpd.value=univar1.next;~auxpdfader.value=univar1;
-		}.defer(0.1);//pitch rate GUI update
+		univar=[pitrat.resume,pitdisp.resume,pittdisp.resume];
+		~mastpit.set(\rate,univar[0]);
+		~mastpit.set(\pitchDispersion,univar[1]);
+		~mastpit.set(\timeDispersion,univar[2]);
+		{
+			~nump.value=univar[0];~auxpfader.value=univar[0]/4;
+			~numpd.value=univar[1];~auxpdfader.value=univar[1];
+			~numtd.value=univar[2];~auxtdfader.value=univar[2];
+		}.defer(0.1);
 		~tiempos/~divpitch.wait;
 	}.loop;
 }).quant_(4)

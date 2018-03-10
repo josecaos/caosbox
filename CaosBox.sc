@@ -51,9 +51,7 @@ CaosBox {
 
 		~clock.value;
 
-		("+ BPM set to" + ~numclock.value).inform;
-
-		^"";
+		^("+ BPM set to" + ~numclock.value);
 	}
 
 	*randomTime {|random = false, editBPM = false, bpmArray = #[47,62,94,141,188]|
@@ -183,7 +181,32 @@ CaosBox {
 						^"Delay Automation stopped";
 				});
 			},
-			'pitch',{},
+			'pitch',{
+			if(play == true, {
+					switch(speed,
+						'normal',{~autopopp.valueAction_(0);"Pitch normal speed".postln},
+						'fast',{~autopopp.valueAction_(1);"Pitch fast speed".postln},
+						'slow',{~autopopp.valueAction_(2);"Pitch slow speed".postln},
+						'slowest',{~autopopp.valueAction_(3);"Pitch slowest speed".postln}
+					);
+
+					~autopitchrate=argArr1.asArray;
+					~autopitchdispersion=argArr1.asArray;
+					~autotimedispersion=argArr1.asArray;
+
+					(~url +/+ "CB/CaosBox-auto.scd").load;//reload
+
+					if(Tdef(\autop).isPlaying,{
+						^"Pitch Automation already running";
+						},{
+							~autobotp.valueAction_(1);
+						^"Pitch Automation running";
+					});
+					}, {
+						~autobotp.valueAction_(0);
+						^"Pitch Automation stopped";
+				});
+},
 			'grains',{},
 			// 'LPF',{}, //later implementation of filter automation
 			// 'BPF',{},
