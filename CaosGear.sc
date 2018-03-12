@@ -6,11 +6,11 @@ CaosGear : CaosBox {
 
 	}
 
-/*	*dyn {|out,att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction|
+	*KickDyn {|out,att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction|
 
 		this.synth(out,att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction);
 
-		^"Dynamic kick function";
+		^"Dynamic kick";
 	}
 
 	synth {|out,att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction|
@@ -22,9 +22,9 @@ CaosGear : CaosBox {
 
 		}).add;
 
-	}*/
+	}
 
-	kick {|out,att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate=1,amp1,amp2,doneAction|
+	kick {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=1,amp1=1,amp2=0.25,doneAction=2|
 
 		~b = {
 			var signal;
