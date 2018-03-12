@@ -22,7 +22,7 @@
 ~b={var out=60;Out.ar(out,CaosKick.ar(0.01,0.25,2,0.15,60,64,50,1,1,0.75,2))};
 
 //snare
-~t={var out=64;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:360,rq:0.25,amp1:0.55,amp2:0.25))};//
+~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:360,rq:0.25,amp1:0.55,amp2:0.25))};//
 
 ~t2={var out=60;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:160,rq:0.5,amp1:0.01,amp2:0.2))};//
 //hat
@@ -164,8 +164,7 @@ Tdef(\acordes2,{
 		~chord2.set(\rq,0.25);
 		~chord2.set(\pan,[0,-0.97]);
 		~chord2.set(\amp,0.025);
-		// ~chord2.set(\out,~rand_stream.value('rand2',[58,60,62,64]));
-		~chord2.set(\out,c.randStream('rand2',[56]));
+		~chord2.set(\out,c.randStream('rand1',[52,54,56,64]));
 		~tiempos.wait;
 	}
 }).quant_(1);

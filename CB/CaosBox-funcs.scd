@@ -4,7 +4,8 @@
 // Returns random sequence stream
 // arg1: sequence type key: '\rand1' and '\rand2'
 // arg2: array of number ouputs
-~rand_stream = {|seq,array|
+// Deprecated function turned into a method
+/*~rand_stream = {|seq,array|
 	var out;
 	if(seq != \rand2 and:( seq != \rand1),
 		{"Use \seq or \rand keys to choose output sequence style \n".inform;},
@@ -15,7 +16,7 @@
 			);
 			out.next;
 	});
-};
+};*/
 
 // Returns an 32 step pattern array
 // arg1: Default value for unchanged steps

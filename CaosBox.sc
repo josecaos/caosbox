@@ -128,7 +128,7 @@ CaosBox {
 
 	}
 
-	// seq methoods
+	// seq methods
 	*randStream {|seq,array|
 		var out;
 		if(seq != \rand2 and:( seq != \rand1),
@@ -167,7 +167,7 @@ CaosBox {
 						^"Reverb Automation already running";
 						},{
 							~autobotr.valueAction_(1);
-						^"Reverb Automation running";
+							^"Reverb Automation running";
 					});
 					}, {
 						~autobotr.valueAction_(0);
@@ -193,7 +193,7 @@ CaosBox {
 						^"Delay Automation already running";
 						},{
 							~autobotd.valueAction_(1);
-						^"Delay Automation running";
+							^"Delay Automation running";
 					});
 					}, {
 						~autobotd.valueAction_(0);
@@ -219,7 +219,7 @@ CaosBox {
 						^"Pitch Automation already running";
 						},{
 							~autobotp.valueAction_(1);
-						^"Pitch Automation running";
+							^"Pitch Automation running";
 					});
 					}, {
 						~autobotp.valueAction_(0);
@@ -244,7 +244,7 @@ CaosBox {
 						^"Grains Automation already running";
 						},{
 							~autobotg.valueAction_(1);
-						^"Grains Automation running";
+							^"Grains Automation running";
 					});
 					}, {
 						~autobotg.valueAction_(0);
@@ -255,9 +255,8 @@ CaosBox {
 			// 'BPF',{},
 			// 'HPF',{},
 
-			"Use only 'reverb','delay','pitch','grains','LPF','HPF','BPF' keys for FX  argument, and 'normal','fast','slow','slowest' keys for speed argument";);
+			"Use only 'reverb','delay','pitch','grains' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
 
 	}
-
 
 }

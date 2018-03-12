@@ -24,7 +24,7 @@
 ~autoreverbroom=[0];
 ~autoreverbdamp=[0];
 //
-~autodelaytime=[Array.series(10,0.01,0.0.01);
+~autodelaytime=Array.series(10,0.01,0.01);
 ~autodelayfeed=[0.1];
 //
 ~autopitchrate=Array.series(8,0.5,0.5);
