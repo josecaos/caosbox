@@ -1,4 +1,4 @@
-Kick1 : CaosBox {
+CaosGear : CaosBox {
 
 	*new {
 
@@ -6,7 +6,7 @@ Kick1 : CaosBox {
 
 	}
 
-	*dyn {|out,att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction|
+/*	*dyn {|out,att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction|
 
 		this.synth(out,att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction);
 
@@ -22,12 +22,17 @@ Kick1 : CaosBox {
 
 		}).add;
 
-	}
+	}*/
 
-	static {|out,att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate=1,amp1,amp2,doneAction|
-		~b={Out.ar(out,CaosKick.ar(att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction))};
+	kick {|out,att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate=1,amp1,amp2,doneAction|
 
-		^"static kick Function";
+		~b = {
+			var signal;
+			signal = CaosKick.ar(att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction);
+			Out.ar(out,signal)
+		};
+
+		^"Kick values changed";
 	}
 
 }

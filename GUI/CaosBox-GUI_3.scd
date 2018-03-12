@@ -15,10 +15,9 @@ for (0, 31, { |i|
 	~checkin.put(i,variable);
 
 	~checkin[i] = CheckBox.new(~w,Rect(~checkbox, 250, 20, 20)).action={|val|
-		if(val.value,{~in.put(i,~entrada=Synth(\ent);)},{~in.put(i,nil)})};
+		if(val.value,{~in.put(i,~entrada=Synth(\ent))},{~in.put(i,nil)})};
 
 	~checkbox = ~checkbox + a;
-
 
 });
 //resetea secuencias In
