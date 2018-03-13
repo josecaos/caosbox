@@ -4,16 +4,16 @@ StaticText(~w,Rect(5,132,53,15)).string_("Bass:").align_(\left).background_(Colo
 ~checkbox = 60;
 for (0, 31, { |i|
 
-	var checkvar = "~bassteps";
+	// var checkvar = "~bassteps";
 
 	var a = ~checksteps[i%~checksteps.size];
 
-	var variable = checkvar ++ i;
+	// var variable = checkvar ++ i;
 
-	~checkbajo.put(i,variable);
+	// ~checkbajo.put(i,variable);
 
 	~checkbajo[i] = CheckBox.new(~w,Rect(~checkbox, 130, 20, 20)).action={|val|
-		if(val.value,{~bajo.put(i,~bass=Synth(\bajouno);)},{~bajo.put(i,nil)})};
+		if(val.value,{~bajo.put(i,~bass=Synth(\bajouno))},{~bajo.put(i,nil)})};
 
 	~checkbox = ~checkbox + a;
 

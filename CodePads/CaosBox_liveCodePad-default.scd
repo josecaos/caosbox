@@ -173,7 +173,7 @@ Tdef(\acordes2,{
 (
 SynthDef(\ent,{|out=64,gate,att,rel|
 	Out.ar(out,Pan2.ar(SoundIn.ar(0)*EnvGen.ar(Env.perc(att,rel),gate,doneAction:2)))}).add;
-)
+);
 
 );
 ////////////////////////////////////////

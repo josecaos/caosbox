@@ -2,15 +2,16 @@
 (
 Task({|i|
 	var texto = "CaosBox v1.1";
-	var display = texto.size*4;
-	var izq="x", der="+",crece=Array.new(display);
+	var display = texto.size*6;
+	// var izq="x", der="+";
+	var crece=Array.new(display);
 	var creseq=Pseq([0,1],31).asStream;
 	i=0;
-	2.yield;
+	4.yield;
 	display.do{
 		if(i>0,{
-			crece.add(if(creseq.next==1,{izq},{der}));
-			crece.join.inform;
+			// crece.add(if(creseq.next==1,{izq},{der}));
+			// crece.join.inform;
 			texto.rotate(i).inform
 			}, {
 				play{

@@ -19,7 +19,7 @@ x.freqAnalyzer(false);
 //
 ~b = {Out.ar(54,CaosKick.ar(0.5,2,gate:1))};
 ~set_steps.value(\kick);
-~set_steps.value(\kick,[4,12,20,28],false);
+~set_steps.value(\kick,[4,12,20,28],true);
 ~clear_steps.value(\kick,[1,2,3,9,10,11,17,18,19,25,26,27]);
 ~clear_steps.value(\kick);
 ~set_steps.value(\snare,[8,24]);

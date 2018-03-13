@@ -16,11 +16,12 @@
 ~sinte=Array.fill(32,nil);
 ~sinte2=Array.fill(32,nil);
 ~in=Array.fill(32,nil);
+//
 ~clock=TempoClock.tempo=94/60;
 ~indice=0;
 ~tiempos=0.25;
 //Fx automation values
-~autoreverbmix=[0.01,0.25,0.5,0.75];
+~autoreverbmix=Array.series(4,0.01,0.24);
 ~autoreverbroom=[0];
 ~autoreverbdamp=[0];
 //
