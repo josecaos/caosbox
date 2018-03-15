@@ -42,7 +42,7 @@ for (0, 31, { |i|
 	var a = ~checksteps[i%~checksteps.size];
 
 	~checkbombo[i] = CheckBox.new(~w,Rect(~checkbox, 10, 20, 20)).action={|val|
-		if(val.value,{~bombo.put(i,~b/*~kickgear*/)},{~bombo.put(i,nil)});
+		if(val.value,{~bombo.put(i,/*~b*/~kickgear=Synth(\kickgear))},{~bombo.put(i,nil)});
 	};
 
 	~checkbox = ~checkbox + a;

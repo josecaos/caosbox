@@ -16,13 +16,13 @@ a.kick([50,51,52,53,64],0.01,0.25,1,0.01);
 ~set_steps.value(\kick,[0,8,16,24]);
 );
 //
-a.kickDyn(52,0.5,1,amp1:0.25,amp2:1);
+a.kickDyn(56,0.5,1,amp1:1,amp2:1);
 ~kickgear.set(\out,52);
 
-~kickgear;
+~kickgear = Synth(\kickgear);
 (~url +/+ "CB/CaosBox-synths.scd").load;
 //
-~set_steps.value(\kick,[0],false);
+~set_steps.value(\kick,Array.series(8,0,4));
 ~set_steps.value(\kick,[0]);
 ~set_steps.value(\kick2,[0]);
 ~set_steps.value(\kick,[8,16,24],false);

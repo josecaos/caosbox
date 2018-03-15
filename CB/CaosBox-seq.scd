@@ -19,8 +19,8 @@ Tdef(\secuencias,{
 	//
 	// ~kickgear=Synth(\kickgear);
 	{
-		~bombo[~indice].play;
-		// if(~bombo[~indice] == nil,{nil},{~bombo[~indice].set(\gate,1);~bombo.put(~indice,~kickgear=Synth(\kickgear))});
+		// ~bombo[~indice].play;
+		if(~bombo[~indice] == nil,{nil},{~bombo[~indice].set(\gate,1);~bombo.put(~indice,~kickgear)});
 		~tarola[~indice].play;
 		~contras[~indice].play;
 		~bombo2[~indice].play;
