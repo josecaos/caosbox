@@ -45,12 +45,12 @@ Task({|i|
 (~url +/+ "CB/CaosBox-vars.scd").load;
 (~url +/+ "CB/CaosBox-signal.scd").load;
 (~url +/+ "CB/CaosBox-synths.scd").load;
-(~url +/+ "CB/CaosBox-seq.scd").load;
 (~url +/+ "CB/CaosBox-auto.scd").load;
 (~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").load;
 (~url +/+ "GUI/CaosBox-GUI.scd").load;
 (~url +/+ "GUI/CaosBox-GUI_2.scd").load;
 (~url +/+ "GUI/CaosBox-GUI_3.scd").load;
 (~url +/+ "GUI/CaosBox-GUI_4.scd").load;
+(~url +/+ "CB/CaosBox-seq.scd").load;
 (~url +/+ "CB/CaosBox-funcs.scd").load;
 (~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").openOS;

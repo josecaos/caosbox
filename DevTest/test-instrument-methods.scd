@@ -10,17 +10,18 @@ c.auto(\delay,true,\normal,Array.series(10,0.01,0.025),0.5);
 c.auto(\pitch,false,\normal,Array.series(8,0.5,0.5),0.5,0);
 c.auto(\grains,false,\normal,Array.series(10,0.1,0.1),Array.series(10,0.01,0.1));
 a = CaosGear.new;
+a.bass
 a.kick(50,0.01,0.04,8,0.01);
 (
-a.kick([50,51,52,53,64],0.01,0.25,1,0.01);
+a.kick(50,0.01,0.25,1,0.01);
 ~set_steps.value(\kick,[0,8,16,24]);
 );
 //
 a.kickDyn(56,0.5,1,amp1:1,amp2:1);
-~kickgear.set(\out,52);
 
-~kickgear = Synth(\kickgear);
-(~url +/+ "CB/CaosBox-synths.scd").load;
+~set_steps.value(\bass);
+
+// (~url +/+ "CB/CaosBox-synths.scd").load;
 //
 ~set_steps.value(\kick,Array.series(8,0,4));
 ~set_steps.value(\kick,[0]);
@@ -30,8 +31,7 @@ a.kickDyn(56,0.5,1,amp1:1,amp2:1);
 ~set_steps.value(\hihats,Array.series(8,0,4),false);
 ~set_steps.value(\snare,Array.series(4,4,8),true);
 ~set_steps.value(\snare,Array.series(1,6,16),false);
-~set_steps.value(\bass2);
-~set_steps.value(\bass,Array.series(0,4,4));
+~set_steps.value(\bass2,[0]);
 
 TdefAllGui.new(16);
 

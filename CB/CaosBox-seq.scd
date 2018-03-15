@@ -18,16 +18,16 @@ Tdef(\secuencias,{
 	~grains=Synth(\granulador);
 	//
 	// ~kickgear=Synth(\kickgear);
-	{
-		// ~bombo[~indice].play;
-		if(~bombo[~indice] == nil,{nil},{~bombo[~indice].set(\gate,1);~bombo.put(~indice,~kickgear)});
+	{//debugging
+		~bombo[~indice].play;
+		// if(~bombo[~indice] == nil,{nil},{~bombo[~indice].set(\gate,1);~bombo.put(~indice,~kickgear)});
 		~tarola[~indice].play;
 		~contras[~indice].play;
 		~bombo2[~indice].play;
 		~tarola2[~indice].play;
 		~contras2[~indice].play;
-		if(~bajo[~indice] == nil,{nil},
-			{~bajo[~indice].set(\gate,1,\att,~bass1attknob.value,\rel,~bass1relknob.value);~bajo.put(~indice,~bass=Synth(\bajouno))});
+		if(~bajo[~indice].notNil,{~bajo.put(~indice,~bass=Synth(\bajouno));~bajo[~indice].set(\gate,1,\att,~bass1attknob.value,\rel,~bass1relknob.value)});
+		// if(~bajo[~indice] == nil,{nil},{~bajo[~indice].set(\gate,1,\att,~bass1attknob.value,\rel,~bass1relknob.value);~bajo.put(~indice,~bass=Synth(\bajouno))});
 		if(~bajo2[~indice] == nil,{nil},
 			{~bajo2[~indice].set(\gate,1,\att,~bass2attknob.value,\rel,~bass2relknob.value);~bajo2.put(~indice,~bass2=Synth(\bajodos))});
 		if(~ambiente[~indice] == nil,{nil},

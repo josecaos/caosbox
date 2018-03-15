@@ -56,17 +56,17 @@
 (//all Tdefs
 (//bass 1
 Tdef(\bass,{
-	var bassmel=Prand(~mainmelody-12,inf).asStream;
+	var bassmel=Prand(~mainmelody-24,inf).asStream;
 	// var out=Pseq(~pat_arr.value(52,(0..31)),inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
 			\filtminf,45,
 			\filtmaxf,10420,
-			\filtime,0.5,
-			\rq,0.25,
+			\filtime,0.25,
+			\rq,0.125,
 			\iphase,0.015,
-			\amp1,0.1,
-			\amp2,0.04,
+			\amp1,0.2,
+			\amp2,0.06,
 			\out,[52,58]);
 			// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 		~tiempos.wait;

@@ -42,7 +42,7 @@ for (0, 31, { |i|
 	var a = ~checksteps[i%~checksteps.size];
 
 	~checkbombo[i] = CheckBox.new(~w,Rect(~checkbox, 10, 20, 20)).action={|val|
-		if(val.value,{~bombo.put(i,/*~b*/~kickgear=Synth(\kickgear))},{~bombo.put(i,nil)});
+		if(val.value,{~bombo.put(i,~b/*~kickgear=Synth(\kickgear)*/)},{~bombo.put(i,nil)});
 	};
 
 	~checkbox = ~checkbox + a;
@@ -274,11 +274,11 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
 ~bot=Button(~w,Rect(275,650,515,25));
 ~bot.states=[["=>",Color.black,Color.green],
 	["[_]",Color.white,Color.red]];
-~bot.action={|val|if(val.value==0,{Tdef(\secuencias).stop;Tdef(\autor).stop;Tdef(\autod).stop;Tdef(\autop).stop;Tdef(\autog).stop;
-	Tdef(\bass).stop;Tdef(\bass2).stop;Tdef(\pad).stop;Tdef(\pad2).stop;Tdef(\acordes).stop;Tdef(\acordes2).stop;
+~bot.action={|val|if(val.value==0,{Tdef(\secuencias).pause;Tdef(\autor).pause;Tdef(\autod).pause;Tdef(\autop).pause;Tdef(\autog).pause;
+	Tdef(\bass).pause;Tdef(\bass2).pause;Tdef(\pad).pause;Tdef(\pad2).pause;Tdef(\acordes).pause;Tdef(\acordes2).pause;
 	~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~botm.value=0;~hbutt.value=0;
 	"->You just Stopped CaosBox<-".inform;},
-	{Tdef(\secuencias).play;/*Tdef(\pasos).play;*/Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
+	{Tdef(\secuencias).play;Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
 		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"\n -> Now playing, please start algoraving <-".inform})};
 //record
 ~filea=[~n.choose,~l.choose,~n.choose,~l.choose];
