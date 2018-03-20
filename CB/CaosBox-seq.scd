@@ -26,7 +26,7 @@ Tdef(\secuencias,{
 		~bombo2[~indice].play;
 		~tarola2[~indice].play;
 		~contras2[~indice].play;
-		if(~bajo[~indice].notNil,{~bajo.put(~indice,~bass=Synth(\bajouno));~bajo[~indice].set(\gate,1,\att,~bass1attknob.value,\rel,~bass1relknob.value)});
+		if(~bajo[~indice].isNil,{nil},{~bajo.put(~indice,~bass=Synth(\bajouno));~bajo[~indice].set(\gate,1,\att,~bass1attknob.value,\rel,~bass1relknob.value)});
 		// if(~bajo[~indice] == nil,{nil},{~bajo[~indice].set(\gate,1,\att,~bass1attknob.value,\rel,~bass1relknob.value);~bajo.put(~indice,~bass=Synth(\bajouno))});
 		if(~bajo2[~indice] == nil,{nil},
 			{~bajo2[~indice].set(\gate,1,\att,~bass2attknob.value,\rel,~bass2relknob.value);~bajo2.put(~indice,~bass2=Synth(\bajodos))});

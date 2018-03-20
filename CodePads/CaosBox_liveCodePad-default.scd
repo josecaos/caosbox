@@ -56,19 +56,19 @@
 (//all Tdefs
 (//bass 1
 Tdef(\bass,{
-	var bassmel=Prand(~mainmelody-24,inf).asStream;
+	var bassmel=Prand(~mainmelody-5,inf).asStream;
 	// var out=Pseq(~pat_arr.value(52,(0..31)),inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
 			\filtminf,45,
-			\filtmaxf,10420,
-			\filtime,0.25,
-			\rq,0.125,
-			\iphase,0.015,
-			\amp1,0.2,
-			\amp2,0.06,
-			\out,[52,58]);
-			// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
+			\filtmaxf,12420,
+			\filtime,0.0125,
+			\rq,0.15,
+			\iphase,0.5,
+			\amp1,0.5,
+			\amp2,0.2,
+			\out,[52,53,56,57]);
+		// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 		~tiempos.wait;
 	}
 }).quant_(1);
@@ -76,20 +76,20 @@ Tdef(\bass,{
 //bass 2
 (
 Tdef(\bass2,{
-	var bass2mel=Pxrand(~mainmelody+7,inf).asStream;
+	var bass2mel=Pxrand(~mainmelody-36,inf).asStream;
 	// var out=Prand(~pat_arr.value(50,62,[0,4,8,12,16,20,30]),inf).asStream;
 	loop{
 		~bass2.set(\note,bass2mel.next,
 			\trig,1,
 			\filtminf,80,
-			\filtmaxf,10900,
+			\filtmaxf,12900,
 			\filtime,0.0125,
 			\rq,0.5,
 			\bandw,0.05,
 			\iphase,0.05,
-			\amp1,0.05,
-			\amp2,0.06,
-			\out,[64,58]);
+			\amp1,0.75,
+			\amp2,0.5,
+			\out,[64,50]);
 			// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 		~tiempos.wait;
 	}

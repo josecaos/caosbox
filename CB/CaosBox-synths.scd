@@ -34,6 +34,7 @@ SynthDef(\ent,{|out=50,gate=0,att=0.1,rel=0.25|
 );
 //
 (
+~kickgear=nil;
 ~bass=nil;
 ~bass2=nil;
 ~amb=nil;
@@ -42,5 +43,4 @@ SynthDef(\ent,{|out=50,gate=0,att=0.1,rel=0.25|
 ~chord2=nil;
 ~entrada=nil;
 //percs
-// ~kickgear=Synth(\kickgear);
 );

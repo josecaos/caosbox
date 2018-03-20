@@ -5,6 +5,8 @@ c.play;
 c.freqAnalyzer(true);
 c.bpm(260);
 
+c.scope;
+
 c.auto(\reverb,true,\normal,Array.series(4,0.01,0.24),[0.5,0.95],0.95);
 c.auto(\delay,true,\normal,Array.series(10,0.01,0.025),0.5);
 c.auto(\pitch,false,\normal,Array.series(8,0.5,0.5),0.5,0);
@@ -19,7 +21,7 @@ a.kick(50,0.01,0.25,1,0.01);
 //
 a.kickDyn(56,0.5,1,amp1:1,amp2:1);
 
-~set_steps.value(\bass);
+~set_steps.value(\bass,[0,2,4,6,8]);
 
 // (~url +/+ "CB/CaosBox-synths.scd").load;
 //
