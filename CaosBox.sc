@@ -133,12 +133,16 @@ CaosBox {
 		var out;
 		if(seq != \rand2 and:( seq != \rand1),
 			{
-				"Use 'seq' or 'rand' keys to choose output sequence style \n".inform
+
+				"Use 'seq' or 'rand' keys to choose output sequence style \n".inform;
+
 			},{
+
 				switch(seq,
 					\rand1,{out=Prand(array,inf).asStream},
 					\rand2,{out=Pshuf(array,inf).asStream},
 				);
+
 				^out.next;
 		});
 	}
