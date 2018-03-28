@@ -3,7 +3,7 @@ c.enviroment;
 
 c.play;
 c.freqAnalyzer(true);
-c.bpm(260);
+c.bpm(198);
 
 c.scope;
 
@@ -11,15 +11,21 @@ c.auto(\reverb,true,\normal,Array.series(4,0.01,0.24),[0.5,0.95],0.95);
 c.auto(\delay,true,\normal,Array.series(10,0.01,0.025),0.5);
 c.auto(\pitch,false,\normal,Array.series(8,0.5,0.5),0.5,0);
 c.auto(\grains,false,\normal,Array.series(10,0.1,0.1),Array.series(10,0.01,0.1));
+//
 a = CaosGear.new;
-a.bass
+a.bass(Scale.minor.degrees+60,8500);
+//debug
+a.melody(Scale.romanianMinor.degrees,60);
+Scale.directory;
+~mainmelody.value
+//
 a.kick(50,0.01,0.04,8,0.01);
 (
 a.kick(50,0.01,0.25,1,0.01);
 ~set_steps.value(\kick,[0,8,16,24]);
 );
 //
-a.kickDyn(56,0.5,1,amp1:1,amp2:1);
+// a.kickDyn(56,0.5,1,amp1:1,amp2:1);
 
 ~set_steps.value(\bass,[0,2,4,6,8]);
 

@@ -6,6 +6,25 @@ CaosGear : CaosBox {
 
 	}
 
+	melody {|scale=#[0,3,7,11,12], index=60|
+
+		if(scale.isArray, {
+
+		~mainmelody = scale + index;
+
+		(~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").load;
+
+			^"New Melody seted";
+
+		},{
+
+		^"Please use an array with degrees, 'Scale' can be useful";
+
+		});
+
+
+	}
+
 	kick {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=1,amp1=1,amp2=0.25,doneAction=2|
 
 		~b = {
@@ -26,9 +45,41 @@ CaosGear : CaosBox {
 	}
 
 	//
-	bass {
+	bass {|melodyArray,seqType,filtMinFreq=45,filtMaxFreq=12420,filtTime=0.125|
+		(//bass 1
+			Tdef(\bass,{|filtMinFreq,filtMaxFreq|
+				if(seqType === 'rand' or: {seqType === 'seq'},{
 
-		^"Basso";
+					if(seqType === 'rand',{
+
+						var bassmel=Prand(melodyArray,inf).asStream;
+
+					}, {
+
+						var bassmel=Pseq(melodyArray,inf).asStream;
+
+					});
+
+				}, {
+						"Sequence type bust be keys: 'seq' or 'rand' only "
+				})
+				loop{
+					~bass.set(\note,bassmel.next,
+						\filtminf,filtMinFreq,
+						\filtmaxf,filtMaxFreq,
+						\filtime,filtTime,
+						\rq,0.15,
+						\iphase,0.5,
+						\amp1,0.5,
+						\amp2,0.2,
+						\out,[52,53,56,57]);
+					// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
+					~tiempos.wait;
+				}
+			}).quant_(1);
+		);
+
+		^"Bass";
 
 	}
 
