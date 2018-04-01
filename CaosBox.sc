@@ -146,6 +146,22 @@ CaosBox {
 				^out.next;
 		});
 	}
+
+	*clearSteps {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]|
+
+		var a,dir = ~steps;
+
+		for(0,steps.size-1,{|i|
+
+			a=steps[i];
+
+			dir[track][0][a].valueAction_(false);
+
+		});
+
+		^"Manually cleared step pattern".inform;
+
+	}
 	//
 
 	*auto {|fx = 'reverb', play = true, speed = 'normal', argArr1 = 0, argArr2 = 0, argArr3 = 0|

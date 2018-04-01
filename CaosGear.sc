@@ -10,15 +10,15 @@ CaosGear : CaosBox {
 
 		if(scale.isArray, {
 
-		~mainmelody = scale + index;
+			~mainmelody = scale + index;
 
-		(~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").load;
+			(~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").load;
 
 			^"New Melody seted";
 
-		},{
+			},{
 
-		^"Please use an array with degrees, 'Scale' can be useful";
+				^"Please use an array with degrees, 'Scale' can be useful";
 
 		});
 
@@ -30,7 +30,7 @@ CaosGear : CaosBox {
 		~b = {
 			var signal;
 			signal = CaosKick.ar(att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction);
-			Out.ar(out,signal)
+			Out.ar(out,signal);
 		};
 
 		^"Kick values changed";
@@ -45,41 +45,56 @@ CaosGear : CaosBox {
 	}
 
 	//
-	bass {|melodyArray,seqType,filtMinFreq=45,filtMaxFreq=12420,filtTime=0.125|
+	bass {
+		|semitoneArray=#[ 0, 2, 4, 5, 7, 9, 11 ],
+		seqType='seq',
+		filtMinFreq=45,
+		filtMaxFreq=12420,
+		filtTime=0.125|
+		// var bassmel;
+		var note = semitoneArray;
+		var filt1 = filtMinFreq;
+		var filt2 = filtMaxFreq;
+		var filt3 = filtTime;
 		(//bass 1
-			Tdef(\bass,{|filtMinFreq,filtMaxFreq|
-				if(seqType === 'rand' or: {seqType === 'seq'},{
+			Tdef(\bass,{
 
-					if(seqType === 'rand',{
+				var	bassmel;//=Prand(note+60,inf).asStream;
 
-						var bassmel=Prand(melodyArray,inf).asStream;
+				if(seqType == 'rand' or: {seqType == 'seq'}, {
+
+					switch(seqType,
+						'rand', {
+							bassmel=Prand(note,inf).asStream;
+							bassmel.next.postcln;
+						},
+						'seq', {
+							bassmel=Pseq(note,inf).asStream;
+						},
+						("Bass Melodic secuence type is" + seqType).inform;
+					);
 
 					}, {
+						"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+				});
 
-						var bassmel=Pseq(melodyArray,inf).asStream;
-
-					});
-
-				}, {
-						"Sequence type bust be keys: 'seq' or 'rand' only "
-				})
 				loop{
 					~bass.set(\note,bassmel.next,
-						\filtminf,filtMinFreq,
-						\filtmaxf,filtMaxFreq,
-						\filtime,filtTime,
+						\filtminf,filt1,
+						\filtmaxf,filt2,
+						\filtime,filt3,
 						\rq,0.15,
 						\iphase,0.5,
 						\amp1,0.5,
 						\amp2,0.2,
-						\out,[52,53,56,57]);
+						\out,50);
 					// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 					~tiempos.wait;
 				}
-			}).quant_(1);
+			}).quant_(0.15);
 		);
 
-		^"Bass";
+		^"Bass values changed";
 
 	}
 
