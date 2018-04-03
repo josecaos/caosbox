@@ -50,26 +50,38 @@ CaosGear : CaosBox {
 		seqType='seq',
 		filtMinFreq=45,
 		filtMaxFreq=12420,
-		filtTime=0.125|
+		filtTime=0.125
+		rq=0.25,
+		iphase=0.5,
+		amp1=0.5,
+		amp2=0.5,
+		out=#[50]
+		|
 		// var bassmel;
 		var note = semitoneArray;
 		var filt1 = filtMinFreq;
 		var filt2 = filtMaxFreq;
 		var filt3 = filtTime;
+		var	bandwidth = rq;
+		var waveiphase = iphase;
+		var ampx = amp1;
+		var ampy = amp2;
+		var outbus = out;
 		(//bass 1
 			Tdef(\bass,{
 
-				var	bassmel;//=Prand(note+60,inf).asStream;
+				var	bassmel,outbus;
 
 				if(seqType == 'rand' or: {seqType == 'seq'}, {
 
 					switch(seqType,
 						'rand', {
 							bassmel=Prand(note,inf).asStream;
-							bassmel.next.postcln;
+							outbus=Prand(out.asArray,inf).asStream;
 						},
 						'seq', {
 							bassmel=Pseq(note,inf).asStream;
+							outbus=Pseq(out.asArray,inf).asStream;
 						},
 						("Bass Melodic secuence type is" + seqType).inform;
 					);
@@ -83,11 +95,11 @@ CaosGear : CaosBox {
 						\filtminf,filt1,
 						\filtmaxf,filt2,
 						\filtime,filt3,
-						\rq,0.15,
-						\iphase,0.5,
-						\amp1,0.5,
-						\amp2,0.2,
-						\out,50);
+						\rq,bandwidth,
+						\iphase,waveiphase,
+						\amp1,ampx,
+						\amp2,ampy,
+						\out,outbus);
 					// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 					~tiempos.wait;
 				}

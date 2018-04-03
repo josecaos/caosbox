@@ -130,7 +130,9 @@ CaosBox {
 
 	// seq methods
 	*randStream {|seq,array|
+
 		var out;
+
 		if(seq != \rand2 and:( seq != \rand1),
 			{
 
@@ -145,6 +147,30 @@ CaosBox {
 
 				^out.next;
 		});
+	}
+
+	//Regresa un array de 32 elementos
+	//valor 'default' en todos los slots del array + 'in' valor secundario en: 'steps' especificos
+	*patternArray {|default=50,in=52,steps=#[0,16]|
+
+		var arr = Array.fill(32,nil);
+
+		var a;
+
+		for(0,steps.size-1,{|i|
+			a=steps[i];
+			arr=arr.put(a,in);
+		});
+
+		arr.collect({|item,i|
+			if(item == nil,{
+				arr.put(i,default);
+			});
+
+		});
+
+		^arr;
+
 	}
 
 	*clearSteps {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]|

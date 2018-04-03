@@ -22,7 +22,7 @@
 // arg1: Default value for unchanged steps
 // arg2: Pattern of changed steps value
 // arg3: Array of affected steps
-~pat_arr = {|default=50,in=50,steps|
+~pat_arr = {|default=50,in=52,steps|
 	var arr = Array.fill(32,nil);
 	var a;
 	for(0,steps.size-1,{|i|
