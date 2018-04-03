@@ -210,6 +210,24 @@ CaosBox {
 
 		^"Manually added step pattern".inform;
 	}
+
+	*randSteps {|track,steps_num = 1|
+
+		var a,step;
+
+		a = Array.new(32);
+
+		step = Pxrand((0..31),inf).asStream;
+
+		for(1,steps_num,{|i|
+			a = a.add(step.next);
+		});
+
+		this.clearSteps(track);
+
+		^this.setSteps(track,a);
+
+	}
 //
 
 	*auto {|fx = 'reverb', play = true, speed = 'normal', argArr1 = 0, argArr2 = 0, argArr3 = 0|

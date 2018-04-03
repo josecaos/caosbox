@@ -2,6 +2,24 @@ c = CaosBox;
 c.enviroment;
 c.play;
 //
+(//experimental test, may crash
+Tdef(\randchecks,{
+	loop{
+		{
+			c.randSteps(\kick,8);
+			c.randSteps(\hihats2,4);
+			// c.randSteps(\bass,16);
+		}.defer(0.05);
+		1.wait;
+	}
+});
+);
+Tdef(\randchecks).play;
+c.randSteps(\kick,8);
+c.randSteps(\hihats2,4);
+c.randSteps(\bass,16);
+c.setSteps(\snare,[4,12,20,28]);
+//
 g=CaosGear.new;
 g.bass(Scale.locrian.semitones+48,out:54);
 g.bass(Scale.locrian.semitones+48,out:c.patternArray(52,64,[0,2,9,12,16,20,24,26,28]).postcln);
