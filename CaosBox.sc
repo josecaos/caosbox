@@ -5,9 +5,17 @@ CaosBox {
 
 	*enviroment {
 
+		if(~url.notNil,{
+
+			^"CaosBox.enviroment is already running"
+
+			},{
+
 		~url = this.filenameSymbol.asString.dirname;
 
 		^super.new.init;
+
+		});
 
 	}
 
