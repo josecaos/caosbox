@@ -167,7 +167,7 @@ CaosBox {
 
 	var index,dir = ~steps;
 
-		if(resetCheckboxes == true,{this.clearSteps(track)},{clearSteps(track,steps)});
+		if(resetCheckboxes == true,{this.clearSteps(track)},{this.clearSteps(track,steps)});
 
 		for(0,steps.size-1,{|i|
 			index=steps[i];
