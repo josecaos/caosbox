@@ -199,12 +199,14 @@ CaosBox {
 
 	*setSteps {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],resetCheckboxes = true|
 
-	var index,dir = ~steps;
+	var index,arr,dir = ~steps;
 
-		if(resetCheckboxes == true,{this.clearSteps(track)},{this.clearSteps(track,steps)});
+		arr = steps.asArray;//en caso de no usar array como parametro
 
-		for(0,steps.size-1,{|i|
-			index=steps[i];
+		if(resetCheckboxes == true,{this.clearSteps(track)},{this.clearSteps(track,arr)});
+
+		for(0,arr.size-1,{|i|
+			index=arr[i];
 			dir[track][0][index].valueAction_(true);
 		});
 

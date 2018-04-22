@@ -67,8 +67,8 @@ Tdef(\bass,{
 			\iphase,0.5,
 			\amp1,0.5,
 			\amp2,0.2,
-			\out,[52,53,56,57]);
-		// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
+			// \out,[52,53,56,57]);
+		\out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 		~tiempos.wait;
 	}
 }).quant_(1);
@@ -98,17 +98,18 @@ Tdef(\bass2,{
 //ambient pad
 (
 Tdef(\pad,{
-	var padmel=Pxrand(~mainmelody-[4,3],inf).asStream;
+	var padmel=Pxrand(~mainmelody+[4,12],inf).asStream;
 	~amb.set(\waveform, 'pulse' );//use 'sin' or 'tri' or 'pulse' only
 	loop{
 		~amb.set(\note,padmel.next);
-		~amb.set(\trem,32);
-		~amb.set(\vrel,4);
-		~amb.set(\iphase,0.15);
-		~amb.set(\cutf,9420);
-		~amb.set(\rq,0.15);
-		~amb.set(\amp,0.035);
-		~amb.set(\out,58);
+		~amb.set(\trem,8);
+		~amb.set(\vrel,2);
+		~amb.set(\iphase,0.25);
+		~amb.set(\cutf,12420);
+		~amb.set(\rq,0.5);
+		~amb.set(\amp,0.04);
+		~amb.set(~rand_stream.value('rand1',[52,56,60,58,54,64]));
+		// ~amb.set(\out,58);
 		~tiempos.wait;
 	}
 }).quant_(1);
