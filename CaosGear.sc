@@ -36,6 +36,12 @@ CaosGear : CaosBox {
 		^"Kick values changed";
 	}
 
+	kick2 {|out=50,att=0.01,rel=0.5,modFreq=2,modbw=0.5,bw=0.2,freq1=60,freq2=64,lowcutfreq=45,gate=1,amp=0.15|
+		var signal;
+		signal = CaosKick2.ar(att,rel,modFreq,modbw,bw,freq1,freq2,lowcutfreq,gate,amp);
+		Out.ar(out,signal)
+	}
+
 	snare {|out=50,att=0.01,rel=0.25,highcutfreq=360,rq=0.25,gate=1,amp1=0.55,amp2=0.25|
 
 		~t = {

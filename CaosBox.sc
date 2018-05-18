@@ -232,7 +232,7 @@ CaosBox {
 	}
 //
 
-	*auto {|fx = 'reverb', play = true, speed = 'normal', argArr1 = 0, argArr2 = 0, argArr3 = 0|
+	*autoFx {|fx = 'reverb', play = true, speed = 'normal', argArr1 = 0, argArr2 = 0, argArr3 = 0|
 
 		switch(fx,
 			'reverb',{

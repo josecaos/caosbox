@@ -19,11 +19,11 @@ for (0, 31, { |i|
 			~lightpos = ~lightpos + 10;//brinco de grupo
 		});
 
-		~lightsteps[i] = Button(~w,Rect(~lightpos,275,10,10)).states = [[" - ",Color.white(0.5),Color.green(0.25)],[i,Color.yellow,Color.green(0.9)]];
+		~lightsteps[i] = Button(~w,Rect(~lightpos,271,12,15)).states = [[" - ",Color.white(0.5),Color.green(0.15)],[i,Color.black,Color.green(0.95)]];
 
 		},{
 
-			~lightsteps[i] = Button(~w,Rect(~lightpos,275,10,10)).states = [[" - ",Color.white(0.5),Color.red(0.25)],[i,Color.yellow,Color.red(1)]];
+			~lightsteps[i] = Button(~w,Rect(~lightpos,271,12,15)).states = [[" - ",Color.white(0.5),Color.red(0.15)],[i,Color.white,Color.red(1)]];
 
 	});
 
