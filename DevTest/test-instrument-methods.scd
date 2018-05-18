@@ -29,7 +29,7 @@ c.setSteps(\kick,[0,2,6,8,14,16,18,24,28,30]);
 );
 //
 c.auto(\reverb,true,\normal,Array.series(4,0.01,0.24),[0.5,0.95],0.95);
-c.auto(\delay,true,\normal,Array.series(10,0.01,0.025),0.5);
+c.auto(\delay,true,\normal,Array.series(10,0.01,0.025),0.15);
 c.auto(\pitch,false,\normal,Array.series(8,0.5,0.5),0.5,0);
 c.auto(\grains,false,\normal,Array.series(10,0.1,0.1),Array.series(10,0.01,0.1));
 // (~url +/+ "CB/CaosBox-synths.scd").load;

@@ -159,7 +159,7 @@ CaosBox {
 
 	//Regresa un array de 32 elementos
 	//valor 'default' en todos los slots del array + 'in' valor secundario en: 'steps' especificos
-	*patternArray {|default=50,in=52,steps=#[0,16]|
+	*stepsArray {|default=50,in=52,steps=#[0,16]|
 
 		var arr = Array.fill(32,nil);
 

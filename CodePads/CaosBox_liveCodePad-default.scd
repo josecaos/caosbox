@@ -117,17 +117,17 @@ Tdef(\pad,{
 //ambiente pad 2
 (
 Tdef(\pad2,{
-	var pad2mel=Pseq(~mainmelody,inf).asStream;
+	var pad2mel=Pseq(~mainmelody-12,inf).asStream;
 	loop{
 		~amb2.set(\note,pad2mel.next);
 		~amb2.set(\fmax,[16,32,64,128,8].choose);
 		~amb2.set(\fm,[2,4,8].choose);
-		~amb2.set(\harm,20);
+		~amb2.set(\harm,120);
 		~amb2.set(\rmix,0.79);
 		~amb2.set(\rroom,0.15);
 		~amb2.set(\rfilt,0.5);
-		~amb2.set(\amp1,0.03);
-		~amb2.set(\amp2,0.02);
+		~amb2.set(\amp1,0.07);
+		~amb2.set(\amp2,0.05);
 		~amb2.set(\out,~rand_stream.value('rand2',[50,52,56,58,60,62,64]));
 		~tiempos.wait;
 	}
@@ -164,7 +164,7 @@ Tdef(\acordes2,{
 		~chord2.set(\cutf,12220);
 		~chord2.set(\rq,0.25);
 		~chord2.set(\pan,[0,-0.97]);
-		~chord2.set(\amp,0.025);
+		~chord2.set(\amp,0.005);
 		~chord2.set(\out,c.randStream('rand1',[52,54,56,64]));
 		~tiempos.wait;
 	}
