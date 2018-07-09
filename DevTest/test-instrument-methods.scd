@@ -20,7 +20,7 @@ Scale.major.degrees;
 ~mainmelody.value
 //
 //
-c.setSteps(\bass,[2,4,8,16,24,28]);
+c.setSteps(\bass,[2,4,8,16,24,28],false);
 c.clearSteps(\bass);
 
 (
@@ -28,10 +28,10 @@ a.kick(50,0.01,0.25,1,0.01);
 c.setSteps(\kick,[0,2,6,8,14,16,18,24,28,30]);
 );
 //
-c.auto(\reverb,true,\normal,Array.series(4,0.01,0.24),[0.5,0.95],0.95);
-c.auto(\delay,true,\normal,Array.series(10,0.01,0.025),0.15);
-c.auto(\pitch,false,\normal,Array.series(8,0.5,0.5),0.5,0);
-c.auto(\grains,false,\normal,Array.series(10,0.1,0.1),Array.series(10,0.01,0.1));
+c.autoFx(\reverb,true,\normal,Array.series(4,0.01,0.24),[0.5,0.95],0.95);
+c.autoFx(\delay,true,\normal,Array.series(10,0.01,0.025),0.15);
+c.autoFx(\pitch,false,\normal,Array.series(8,0.5,0.5),0.5,0);
+c.autoFx(\grains,false,\normal,Array.series(10,0.1,0.1),Array.series(10,0.01,0.1));
 // (~url +/+ "CB/CaosBox-synths.scd").load;
 //
 c.setSteps(\kick,Array.series(8,0,4));
@@ -45,4 +45,3 @@ c.setSteps(\snare,Array.series(1,6,16),false);
 c.setSteps(\bass2,[0]);
 
 TdefAllGui.new(16);
-

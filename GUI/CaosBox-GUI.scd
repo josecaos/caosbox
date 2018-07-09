@@ -19,11 +19,11 @@ for (0, 31, { |i|
 			~lightpos = ~lightpos + 10;//brinco de grupo
 		});
 
-		~lightsteps[i] = Button(~w,Rect(~lightpos-1,271,15,15)).font_(Font("ejaVu Sans",9,true)).states = [[" - ",Color.white(0.5),Color.green(0.15)],[i,Color.black,Color.green(0.95)]];
+		~lightsteps[i] = Button(~w,Rect(~lightpos-1,271,15,15)).font_(Font("DejaVu Sans",9,true)).states = [[" - ",Color.white(0.5),Color.green(0.15)],[i,Color.black,Color.green(0.95)]];
 
 		},{
 
-			~lightsteps[i] = Button(~w,Rect(~lightpos-1,271,15,15)).font_(Font("ejaVu Sans",9,true)).states = [[" - ",Color.white(0.5),Color.red(0.15)],[i,Color.white,Color.red(1)]];
+			~lightsteps[i] = Button(~w,Rect(~lightpos-1,271,15,15)).font_(Font("DejaVu Sans",9,true)).states = [[" - ",Color.white(0.5),Color.red(0.15)],[i,Color.white,Color.red(1)]];
 
 	});
 

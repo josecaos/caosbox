@@ -64,18 +64,21 @@ CaosGear : CaosBox {
 
 	}
 
-	kickDyn {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=0,amp1=1,amp2=0.25,doneAction=2|
+/*	kickDyn {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=0,amp1=1,amp2=0.25,doneAction=2|
 
 		// ~kickgear.set(\out,out,\att,att,\rel,rel,\modFreq,modFreq,\modbw,modbw,\freq1,freq1,\freq2,freq2,\lowcutfreq,lowcutfreq,\gate,gate,\amp1,amp1,\amp2,amp2,\doneAction,doneAction);
 		// Synth(\kickgear,[\out,out,\att,att,\rel,rel,\modFreq,modFreq,\modbw,modbw,\freq1,freq1,\freq2,freq2,\lowcutfreq,lowcutfreq,\gate,gate,\amp1,amp1,\amp2,amp2,\doneAction,doneAction]);
 
 		^"Dynamic kick";
-	}
+	}*/
 
 	//
 	bass {
-		|semitoneArray=#[ 0, 2, 4, 5, 7, 9, 11 ],
+		|
+		semitoneArray=#[ 0, 2, 4, 5, 7, 9, 11 ],
 		seqType='seq',
+		attack=0.01,
+		release=0.25,
 		filtMinFreq=45,
 		filtMaxFreq=12420,
 		filtTime=0.125
@@ -87,6 +90,8 @@ CaosGear : CaosBox {
 		|
 		// var bassmel;
 		var note = semitoneArray;
+		var attk = attack;
+		var rel = release;
 		var filt1 = filtMinFreq;
 		var filt2 = filtMaxFreq;
 		var filt3 = filtTime;
@@ -119,7 +124,10 @@ CaosGear : CaosBox {
 				});
 
 				loop{
-					~bass.set(\note,bassmel.next,
+					~bass.set(
+						\att,attk,
+						\rel,rel,
+						\note,bassmel.next,
 						\filtminf,filt1,
 						\filtmaxf,filt2,
 						\filtime,filt3,
