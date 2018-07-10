@@ -2,7 +2,7 @@
 ~w=Window.new("CaosBox v1.1 live Coding Machine for Algorave music ~" + "today is " + ~fecha,Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
 //
 // leds
-StaticText(~w,Rect(5,272,53,15)).string_("Steps:").align_(\left).background_(Color(0,0.9,0));
+StaticText(~w,Rect(5,272,53,15)).string_("Steps:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0,0.9,0));
 for (0, 31, { |i|
 
 	var gvar = "~step";
@@ -32,7 +32,7 @@ for (0, 31, { |i|
 });
 //
 // bombo steps
-StaticText(~w,Rect(5,12,53,15)).string_("Kick:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,12,53,15)).string_("Kick:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
 
 ~checkbox = 60;
 
@@ -67,7 +67,7 @@ for (0, 31, { |i|
 
 
 //tarola steps
-StaticText(~w,Rect(5,32,53,15)).string_("Snare:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,32,53,15)).string_("Snare:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
 
 ~checkbox = 60;
 for (0, 31, { |i|
@@ -105,7 +105,7 @@ for (0, 31, { |i|
 })};
 
 // hihat steps
-StaticText(~w,Rect(5,52,53,15)).string_("HiHats:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,52,53,15)).string_("HiHats:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
 
 ~checkbox = 60;
 for (0, 31, { |i|
@@ -143,7 +143,7 @@ for (0, 31, { |i|
 })};
 
 // bombo 2 steps
-StaticText(~w,Rect(5,72,53,15)).string_("Kick2:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,72,53,15)).string_("Kick2:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
 ~checkbox = 60;
 //crea los steps
 for (0, 31, { |i|
@@ -181,7 +181,7 @@ for (0, 31, { |i|
 })};
 
 //tarola 2 steps
-StaticText(~w,Rect(5,92,53,15)).string_("Snare2:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,92,53,15)).string_("Snare2:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
 ~checkbox = 60;
 for (0, 31, { |i|
 
@@ -218,7 +218,7 @@ for (0, 31, { |i|
 })};
 
 // hihat 2 steps
-StaticText(~w,Rect(5,112,53,15)).string_("HiHats2:").align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(5,112,53,15)).string_("HiHats2:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
 ~checkbox = 60;
 for (0, 31, { |i|
 
@@ -255,7 +255,7 @@ for (0, 31, { |i|
 })};
 
 // tempo
-StaticText(~w,Rect(5,635,270,15)).string_("Beat:").align_(\center).background_(Color(0.65,0.65,0.65));
+StaticText(~w,Rect(5,635,270,15)).string_("Beat:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.65,0.65,0.65));
 ~botm=Button(~w,Rect(5,650,135,25));
 ~botm.states=[["Thirds",Color.white,Color.green(0.35)],
 	["Fourths",Color.black,Color.green(0.35)]];
@@ -269,7 +269,7 @@ StaticText(~w,Rect(5,635,270,15)).string_("Beat:").align_(\center).background_(C
 	{Tdef(\randtime).play;"->Random Clock Values<-".inform})};
 //
 //play
-StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).background_(Color(0.5,0.5,0.5));
+StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").font_(Font("Dejavu Sans",14,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~bot=Button(~w,Rect(275,650,515,25));
 ~bot.states=[["=>",Color.black,Color.green],
 	["[_]",Color.white,Color.red]];
@@ -283,7 +283,7 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").align_(\center).backgr
 ~filea=[~n.choose,~l.choose,~n.choose,~l.choose];
 ~filename=~filename.add(~filea.stutter((1..2).choose).scramble.join);
 //
-StaticText(~w,Rect(790,635,130,15)).string_("Recording").align_(\center).background_(Color(0.65,0.65,0.65));
+StaticText(~w,Rect(790,635,130,15)).string_("Recording").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.65,0.65,0.65));
 ~recbot=Button(~w,Rect(790,650,130,25));
 ~recbot.states=[["Record",Color.black,Color.green(0.35)],
 	["Stop Recording",Color.white,Color.red]];
@@ -295,7 +295,7 @@ StaticText(~w,Rect(790,635,130,15)).string_("Recording").align_(\center).backgro
 		"->Recording<-".inform})
 };
 //Historial
-StaticText(~w,Rect(920,635,99,20)).string_("History:").align_(\center).background_(Color(0.75,0.75,0.75));
+StaticText(~w,Rect(920,635,99,15)).string_("History:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 ~hbutt=Button(~w,Rect(920,650,99,25));
 ~hbutt.states=[[" Save File ",Color.green,Color.black]];
 ~hbutt.action={|val| var h=History; if(val.value==0,{"->History saved @ caosbox/Histories folder<-".inform;

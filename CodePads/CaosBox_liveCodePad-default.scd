@@ -17,24 +17,18 @@
 // CaosBox.enviroment;
 //
 //
-//
+//kick
 ~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.25,60,64,50,1,1,0.2,2))};
-~b={var out=60;Out.ar(out,CaosKick.ar(0.01,0.25,2,0.15,60,64,50,1,1,0.75,2))};
-
 //snare
 ~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:360,rq:0.25,amp1:0.55,amp2:0.25))};//
-
-~t2={var out=60;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.15,highcutfreq:160,rq:0.5,amp1:0.01,amp2:0.2))};//
 //hat
 ~h={var out=50;Out.ar(out,CaosHats.ar(att:0.01,rel:0.5,highcutfreq:8330,rq:0.25,amp1:0.35,amp2:0.01))};//
-~h={var out=60;Out.ar(out,CaosHats.ar(att:0.01,rel:0.1,highcutfreq:6330,rq:0.05,amp1:0.9,amp2:0.9))};//
 //kick
 ~b2={var out=58;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.16,modFreq:2,modbw:0.5,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
-//snare
+//snare2
 ~t2={var out=58;Out.ar(out,CaosSnare2.ar(att:0.01,rel:0.16,iphase:0.5,bw:0.35,highcutfreq:270,rq:0.35,amp1:0.1,amp2:0.05))};//
-//hat
+//hat2
 ~h2={var out=50;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
-~h2={var out=58;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.75,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
 // s.queryAllNodes;
 
 // Melodies as intervals array
@@ -45,12 +39,7 @@
 // ~mainmelody = [ 0, 2, 3, 6, 7, 8, 11 ]+60;
 ~mainmelody = Scale.phrygian.degrees+60;
 ~mainmelody = LCNE.dupOctave(~mainmelody,2);
-// ~random_steps.value(\hihats,2);
-/*
-~set_steps.value(\bass,[1,12,24]);
-~clear_steps.value(\snare);
-~steps.keys;
-*/
+
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
 (//all Tdefs

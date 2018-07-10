@@ -3,29 +3,15 @@
 Task({|i|
 	var texto = "CaosBox v1.1";
 	var display = texto.size*6;
-	// var izq="x", der="+";
 	var crece=Array.new(display);
 	var creseq=Pseq([0,1],31).asStream;
 	i=0;
 	4.yield;
 	display.do{
 		if(i>0,{
-			// crece.add(if(creseq.next==1,{izq},{der}));
-			// crece.join.inform;
-			texto.rotate(i).inform
-			}, {
-				play{
-					var noise=[LFNoise0,LFNoise1,LFNoise2].choose;
-					var linea=[XLine,Line];
-					EnvGen.ar(Env.perc(0.02,5),doneAction:2)*
-					FreeVerb.ar(
-						RHPF.ar(
-							LFPulse.ar([{linea.choose.ar(120.10760.rand,10760.140.rand,rrand(1,8))}.dup(display),
-								Phasor.kr(Impulse.kr(rrand(1,16)),1,119.10760.rand,120.10760.rand)],
-								rrand(0.01,0.5),rrand(0.1,0.5),0.25)*
-							noise.ar(1.32.rand),linea.choose.ar(rrand(60,10760),rrand(10760,60),0.5),rrand(0.15,0.5),0.35),
-						linea.choose.kr(0.01,0.5,2),1,0.025)!2
-				};
+			texto.rotate(i).inform;
+		}, {
+			play{PinkNoise.ar(SinOsc.ar(2,0,0.01,1))*EnvGen.ar(Env.perc(0.5,5),1,doneAction:2)}
 		});
 		i=i+1;
 		0.1.wait;

@@ -11,7 +11,7 @@ c.randomTime(true,false,Array.series(24,15,25));
 
 a = CaosGear.new;
 b = [0,3,7,11,12,15,19]+36;
-a.bass(b+24,'rand',400,10100,0.25);
+a.bass(b+24,'seq',0.01,10,400,10100,0.25);
 //debug
 a.melody(Scale.romanianMinor.degrees,60);
 Scale.directory;
