@@ -4,10 +4,10 @@
 ~rqmaxmin=ControlSpec(0.01,1,\lin,0.01,0.5);
 //Filter Aux tag
 ~filttag=StaticText(~w,Rect(575,290,205,12));
-~filttag.string_("Filters-> code out to channel:").align_(\center).background_(Color(0.85,0.85,0.85));
+~filttag.string_("Filters-> code out to channel:").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 //Lowpass tag
 ~lowfiltag=StaticText(~w,Rect(575,305,205,12));
-~lowfiltag.string_("LowPassFilter: 58").align_(\center).background_(Color(0.75,0.75,0.75));
+~lowfiltag.string_("LowPassFilter: 58").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 //Lowpass out
 ~lowoutpop=PopUpMenu(~w,Rect(575,320,205,15)).items=["LPF Out to Master","LPF Out to Reverb",
 	"LPF Out to Delay","LPF Out to Pitch"];
@@ -21,7 +21,7 @@
 	);
 };
 //Lowpass cutfreq
-StaticText(~w,Rect(575,338,125,14)).string_("Cut Frequency").align_(\center).background_(Color(0,0.5,0));
+StaticText(~w,Rect(575,338,125,14)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~numf1=NumberBox(~w,Rect(700,337,80,16)).background_(Color(0,1,0));
 ~lowcfader=Slider(~w,Rect(575,355,205,20)).background_(Color(0.05,0.05,0.25,0.1));
 ~lowcfader.action={~mastlowf.set(\cutfreq,~fmaxmin.map(~lowcfader.value));~numf1.value_(~fmaxmin.map(~lowcfader.value))};
@@ -29,7 +29,7 @@ StaticText(~w,Rect(575,338,125,14)).string_("Cut Frequency").align_(\center).bac
 ~lowcfader.value=20000;
 ~numf1.value=20000;
 //rq
-StaticText(~w,Rect(575,380,125,14)).string_("Bandwidth").align_(\center).background_(Color(0,0.5,0));
+StaticText(~w,Rect(575,380,125,14)).string_("Bandwidth").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~numf2=NumberBox(~w,Rect(700,379,80,16)).background_(Color(0,1,0));
 ~lowrqfader=Slider(~w,Rect(575,400,205,10)).background_(Color(0.05,0.05,0.25,0.1));
 ~lowrqfader.action={~mastlowf.set(\rq,~rqmaxmin.map(~lowrqfader.value));~numf2.value_(~rqmaxmin.map(~lowrqfader.value))};
@@ -38,7 +38,7 @@ StaticText(~w,Rect(575,380,125,14)).string_("Bandwidth").align_(\center).backgro
 ~numf2.value=0.5;
 //Highpass tag
 ~highfiltag=StaticText(~w,Rect(575,420,205,12));
-~highfiltag.string_("HighPassFilter: 60").align_(\center).background_(Color(0.75,0.75,0.75));
+~highfiltag.string_("HighPassFilter: 60").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 //Highpass out
 ~highoutpop=PopUpMenu(~w,Rect(575,435,205,15)).items=["HPF Out to Master","HPF Out to Reverb",
 	"HPF Out to Delay","HPF Out to Pitch"];
@@ -52,7 +52,7 @@ StaticText(~w,Rect(575,380,125,14)).string_("Bandwidth").align_(\center).backgro
 	);
 };
 //Highpass cutfreq
-StaticText(~w,Rect(575,453,125,14)).string_("Cut Frequency").align_(\center).background_(Color(0,0.5,0));
+StaticText(~w,Rect(575,453,125,14)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~numf3=NumberBox(~w,Rect(700,452,80,16)).background_(Color(0,1,0));
 ~highcfader=Slider(~w,Rect(575,470,205,20)).background_(Color(0.05,0.05,0.25,0.1));
 ~highcfader.action={~masthighf.set(\cutfreq,~fmaxmin.map(~highcfader.value));~numf3.value_(~fmaxmin.map(~highcfader.value))};
@@ -60,7 +60,7 @@ StaticText(~w,Rect(575,453,125,14)).string_("Cut Frequency").align_(\center).bac
 ~highcfader.value=0.15;
 ~numf3.value=45;
 //rq
-StaticText(~w,Rect(575,493,125,14)).string_("Bandwidth").align_(\center).background_(Color(0,0.5,0));
+StaticText(~w,Rect(575,493,125,14)).string_("Bandwidth").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~numf4=NumberBox(~w,Rect(700,492,80,16)).background_(Color(0,1,0));
 ~highrqfader=Slider(~w,Rect(575,510,205,10)).background_(Color(0.05,0.05,0.25,0.1));
 ~highrqfader.action={~masthighf.set(\rq,~rqmaxmin.map(~highrqfader.value));~numf4.value_(~rqmaxmin.map(~highrqfader.value))};
@@ -69,7 +69,7 @@ StaticText(~w,Rect(575,493,125,14)).string_("Bandwidth").align_(\center).backgro
 ~numf4.value=0.5;
 //Bandpass tag
 ~bandfiltag=StaticText(~w,Rect(575,530,205,12));
-~bandfiltag.string_("BandPassFilter: 62").align_(\center).background_(Color(0.75,0.75,0.75));
+~bandfiltag.string_("BandPassFilter: 62").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 //Bandpass out
 ~bandoutpop=PopUpMenu(~w,Rect(575,545,205,15)).items=["BPF Out to Master","BPF Out to Reverb",
 	"BPF Out to Delay","BPF Out to Pitch"];
@@ -84,7 +84,7 @@ StaticText(~w,Rect(575,493,125,14)).string_("Bandwidth").align_(\center).backgro
 
 };
 //Bandpass cutfreq
-StaticText(~w,Rect(575,563,125,14)).string_("Cut Frequency").align_(\center).background_(Color(0,0.5,0));
+StaticText(~w,Rect(575,563,125,14)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~numf5=NumberBox(~w,Rect(700,562,80,16)).background_(Color(0,1,0));
 ~bandcfader=Slider(~w,Rect(575,580,205,20)).background_(Color(0.05,0.05,0.25,0.1));
 ~numf5.action={~mastbandf.set(\cutfreq,~fmaxmin.map(~numf5.value));~bandcfader.value=~numf5.value/19980};//el cambio de numbox al fader es lineal
@@ -92,7 +92,7 @@ StaticText(~w,Rect(575,563,125,14)).string_("Cut Frequency").align_(\center).bac
 ~bandcfader.value=20000;
 ~numf5.value=20000;
 //rq
-StaticText(~w,Rect(575,603,125,14)).string_("Bandwidth").align_(\center).background_(Color(0,0.5,0));
+StaticText(~w,Rect(575,603,125,14)).string_("Bandwidth").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~numf6=NumberBox(~w,Rect(700,602,80,16)).background_(Color(0,1,0));
 ~bandrqfader=Slider(~w,Rect(575,620,205,10)).background_(Color(0.05,0.05,0.25,0.1));
 ~bandrqfader.action={~mastbandf.set(\rq,~rqmaxmin.map(~bandrqfader.value));~numf6.value_(~rqmaxmin.map(~bandrqfader.value))};
@@ -100,7 +100,7 @@ StaticText(~w,Rect(575,603,125,14)).string_("Bandwidth").align_(\center).backgro
 ~bandrqfader.value=0.5;
 ~numf6.value=0.5;
 //freqscope
-StaticText(~w,Rect(785,12,155,15)).string_("Frequency Analyzer:").align_(\center).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(785,12,155,15)).string_("Frequency Analyzer:").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 ~fbot=Button(~w,Rect(940,12,80,15));
 ~fbot.states=[["On",Color.black,Color.green],
 	["Off",Color.white,Color.red]];
@@ -111,8 +111,8 @@ StaticText(~w,Rect(785,12,155,15)).string_("Frequency Analyzer:").align_(\center
 ~f.active_(false);
 //granulator
 ~grandcolor=Color(0,rrand(0.01,rrand(0.25,0.75)),rrand(0.01,rrand(0.25,0.75)));//color aleatorio para el pad del granulador
-StaticText(~w,Rect(785,290,235,12)).string_("Granulator-> code out to" ).align_(\center).background_(Color(0.85,0.85,0.85));
-StaticText(~w,Rect(785,305,235,12)).string_(" channel: 64").align_(\center).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(785,290,235,12)).string_("Granulator-> code out to" ).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
+StaticText(~w,Rect(785,305,235,12)).string_(" channel: 64").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 //granulator out
 ~grainpop=PopUpMenu(~w,Rect(785,320,235,15)).items=["Granulator Out to Master","Granulator Out to Reverb",
 	"Granulator Out to Delay","Granulator Out to Pitch",
@@ -140,7 +140,7 @@ StaticText(~w,Rect(785,305,235,12)).string_(" channel: 64").align_(\center).back
 ~gfaders.action_({|sl| ~grains.set(\trigger,~gtparam.map(sl.x.value),\size,~gsparam.map(sl.y.value))});
 ~gfaders.background_(~grandcolor);
 //Automatizacion granulador
-StaticText(~w,Rect(785,540,235,12)).string_("Auto/Speed").align_(\center).background_(Color(0.5,0.5,0.5));
+StaticText(~w,Rect(785,540,235,12)).string_("Auto/Speed").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~autopopg=PopUpMenu(~w,Rect(785,555,235,25)).items=["normal","fast","slow","slowest"];
 ~autopopg.background_(~grandcolor).stringColor_(Color.gray(0.5));
 ~autopopg.action={|menu|
@@ -152,7 +152,7 @@ StaticText(~w,Rect(785,540,235,12)).string_("Auto/Speed").align_(\center).backgr
 	);
 };
 //clock
-StaticText(~w,Rect(785,272,185,15)).string_("BPM:").align_(\center).background_(Color(1,0,0));
+StaticText(~w,Rect(785,272,185,15)).string_("BPM:").font_(Font("Dejavu Sans",14,true)).align_(\center).background_(Color(1,0,0));
 ~numclock=NumberBox(~w,Rect(970,272,50,15)).background_(Color(0,1,0)).align_(\ceneter);
 ~numclock.value=115;
 ~numclock.action={

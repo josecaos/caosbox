@@ -45,10 +45,10 @@ for (0, 31, { |i|
 //master sliders
 //master tag
 ~mastertag=StaticText(~w,Rect(5,290,270,12));
-~mastertag.string_("Master Compressor/Limiter: 50").align_(\center).background_(Color(0.85,0.85,0.85));
+~mastertag.string_("Master Compressor/Limiter: 50").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 //master Vol
 ~mastervol=StaticText(~w,Rect(5,305,50,15));//
-~mastervol.string_("Amp:").align_(\left).background_(Color(0.5,0.5,0.5));
+~mastervol.string_("Amp:").font_(Font("Dejavu Sans",12,true)).align_(\left).background_(Color(0.5,0.5,0.5));
 ~num=NumberBox(~w,Rect(5,322,50,20)).background_(Color(0,1,0));
 ~mastfader=Slider(~w,Rect(5,342,50,290)).background_(Color(0.05,0.25,0.05,0.1));
 ~mastfader.action={~mast.set(\vol,~mastfader.value);~num.value_(~mastfader.value)};
@@ -57,7 +57,7 @@ for (0, 31, { |i|
 ~num.value=1;
 //compresor threshold
 ~mastercomp=StaticText(~w,Rect(60,305,50,15));//
-~mastercomp.string_("Thres:").align_(\left).background_(Color(0.5,0.5,0.5));
+~mastercomp.string_("Thres:").font_(Font("Dejavu Sans",12,true)).align_(\left).background_(Color(0.5,0.5,0.5));
 ~num1=NumberBox(~w,Rect(60,322,50,20)).background_(Color(0,1,0));
 ~mastfader1=Slider(~w,Rect(60,342,50,290)).background_(Color(0.05,0.25,0.05,0.1));
 ~mastfader1.action={~mast.set(\compThres,~mastfader1.value);~num1.value_(~mastfader1.value)};
@@ -66,7 +66,7 @@ for (0, 31, { |i|
 ~num1.value=1;
 //compresor slopeBelow
 ~mastercomp1=StaticText(~w,Rect(115,305,50,15));//
-~mastercomp1.string_("Below:").align_(\left).background_(Color(0.5,0.5,0.5));
+~mastercomp1.string_("Below:").font_(Font("Dejavu Sans",12,true)).align_(\left).background_(Color(0.5,0.5,0.5));
 ~num2=NumberBox(~w,Rect(115,322,50,20)).background_(Color(0,1,0));
 ~mastfader2=Slider(~w,Rect(115,342,50,290)).background_(Color(0.05,0.25,0.05,0.1));
 ~mastfader2.action={~mast.set(\below,~mastfader2.value);~num2.value_(~mastfader2.value)};
@@ -75,7 +75,7 @@ for (0, 31, { |i|
 ~num2.value=0.5;
 //compresor relaxtime
 ~mastercomp2=StaticText(~w,Rect(170,305,50,15));//
-~mastercomp2.string_("Relax:").align_(\left).background_(Color(0.5,0.5,0.5));
+~mastercomp2.string_("Relax:").font_(Font("Dejavu Sans",12,true)).align_(\left).background_(Color(0.5,0.5,0.5));
 ~num3=NumberBox(~w,Rect(170,322,50,20)).background_(Color(0,1,0));
 ~mastfader3=Slider(~w,Rect(170,342,50,290)).background_(Color(0.05,0.25,0.05,0.1));
 ~mastfader3.action={~mast.set(\relaxTime,~mastfader3.value);~num3.value_(~mastfader3.value)};
@@ -84,7 +84,7 @@ for (0, 31, { |i|
 ~num3.value=1;
 //limiter
 ~masterlimit=StaticText(~w,Rect(225,305,50,15));//
-~masterlimit.string_("limiter:").align_(\left).background_(Color(0.5,0.5,0.5));
+~masterlimit.string_("limiter:").font_(Font("Dejavu Sans",12,true)).align_(\left).background_(Color(0.5,0.5,0.5));
 ~num4=NumberBox(~w,Rect(225,322,50,20)).background_(Color(0,1,0));
 ~mastfader4=Slider(~w,Rect(225,342,50,290)).background_(Color(0.05,0.25,0.05,0.1));
 ~mastfader4.action={~mast.set(\limit,~mastfader4.value);~num4.value_(~mastfader4.value)};
@@ -94,13 +94,13 @@ for (0, 31, { |i|
 //
 //Aux tag
 ~auxtag=StaticText(~w,Rect(280,290,290,12));
-~auxtag.string_("Aux-> code out to channel:").align_(\center).background_(Color(0.85,0.85,0.85));
+~auxtag.string_("Aux-> code out to channel:").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 //aux tag
 ~auxrtag=StaticText(~w,Rect(280,305,105,12));
-~auxrtag.string_("Reverb:52").align_(\center).background_(Color(0.5,0.5,0.5));
+~auxrtag.string_("Reverb:52").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 //reverb mix
 ~auxrmix=StaticText(~w,Rect(280,320,35,15));//
-~auxrmix.string_("mix").align_(\center).background_(Color(0.5,0.5,0.5));
+~auxrmix.string_("mix").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~numr=NumberBox(~w,Rect(280,337,35,20)).background_(Color(0,1,0));
 ~auxrfader=Slider(~w,Rect(280,357,35,180)).background_(Color(0.05,0.05,0.25,0.1));
 ~auxrfader.action={~mastrev.set(\mix,~auxrfader.value);~numr.value_(~auxrfader.value)};
@@ -109,7 +109,7 @@ for (0, 31, { |i|
 ~numr.value=0;
 //reverb room
 ~auxroom=StaticText(~w,Rect(315,320,35,15));//
-~auxroom.string_("room").align_(\center).background_(Color(0.5,0.5,0.5));
+~auxroom.string_("room").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~numroom=NumberBox(~w,Rect(315,337,35,20)).background_(Color(0,1,0));
 ~auxroomfader=Slider(~w,Rect(315,357,35,180)).background_(Color(0.05,0.05,0.25,0.1));
 ~auxroomfader.action={~mastrev.set(\room,~auxroomfader.value);~numroom.value_(~auxroomfader.value)};
@@ -118,7 +118,7 @@ for (0, 31, { |i|
 ~numroom.value=0.1;
 //reverb damp
 ~auxd=StaticText(~w,Rect(350,320,35,15));//
-~auxd.string_("damp").align_(\center).background_(Color(0.5,0.5,0.5));
+~auxd.string_("damp").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~numd=NumberBox(~w,Rect(350,337,35,20)).background_(Color(0,1,0));
 ~auxdfader=Slider(~w,Rect(350,357,35,180)).background_(Color(0.05,0.05,0.25,0.1));
 ~auxdfader.action={~mastrev.set(\damp,~auxdfader.value);~numd.value_(~auxdfader.value)};
@@ -126,7 +126,7 @@ for (0, 31, { |i|
 ~auxdfader.value=0.1;
 ~numd.value=0.1;
 //rev velocidad atomatizacion
-StaticText(~w,Rect(280,540,105,12)).string_("Auto/Speed").align_(\center).background_(Color(0.5,0.5,0.5));
+StaticText(~w,Rect(280,540,105,12)).string_("Auto/Speed").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~autopopr=PopUpMenu(~w,Rect(280,555,105,25)).items=["normal","fast","slow","slowest"];
 ~autopopr.background_(Color(0.05,0.05,0.25)).stringColor_(Color.gray(0.5));
 ~autopopr.action={|menu|
@@ -141,9 +141,9 @@ StaticText(~w,Rect(280,540,105,12)).string_("Auto/Speed").align_(\center).backgr
 };
 //aux2 tag
 ~auxdtag=StaticText(~w,Rect(390,305,70,12));
-~auxdtag.string_("Delay:54").align_(\center).background_(Color(0.5,0.5,0.5));
+~auxdtag.string_("Delay:54").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 //tipo delay
-StaticText(~w,Rect(390,497,70,15)).string_("Cub/Lin").align_(\center).background_(Color(0.5,0.5,0.5));
+StaticText(~w,Rect(390,497,70,15)).string_("Cub/Lin").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~bott=Button(~w,Rect(390,515,70,22));
 ~bott.states=[["CombC",Color.white,Color.gray(0.25)],
 	["CombL",Color.black,Color.gray(0.35)]];
@@ -151,7 +151,7 @@ StaticText(~w,Rect(390,497,70,15)).string_("Cub/Lin").align_(\center).background
 	{~mastdel.set(\delind,1);"->Lineal Delay<-".inform})};
 //delay time
 ~auxt=StaticText(~w,Rect(390,320,35,15));//
-~auxt.string_("time").align_(\center).background_(Color(0.5,0.5,0.5));
+~auxt.string_("time").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~numt=NumberBox(~w,Rect(390,337,35,20)).background_(Color(0,1,0));
 ~auxtfader=Slider(~w,Rect(390,357,35,135)).background_(Color(0.05,0.15,0.25,0.1));
 ~auxtfader.action={~mastdel.set(\deltime,~auxtfader.value);~numt.value_(~auxtfader.value)};
@@ -160,7 +160,7 @@ StaticText(~w,Rect(390,497,70,15)).string_("Cub/Lin").align_(\center).background
 ~numt.value=0;
 //delay feedback
 ~auxf=StaticText(~w,Rect(425,320,35,15));//
-~auxf.string_("feed").align_(\center).background_(Color(0.5,0.5,0.5));
+~auxf.string_("feed").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~numf=NumberBox(~w,Rect(425,337,35,20)).background_(Color(0,1,0));
 ~auxffader=Slider(~w,Rect(425,357,35,135)).background_(Color(0.05,0.15,0.25,0.1));
 ~auxffader.action={~mastdel.set(\delfeed,~auxffader.value*4);~numf.value_(~auxffader.value*4)};
@@ -168,7 +168,7 @@ StaticText(~w,Rect(390,497,70,15)).string_("Cub/Lin").align_(\center).background
 ~auxffader.value=0.1;
 ~numf.value=0.1;
 //delay valor atomatizacion
-StaticText(~w,Rect(390,540,70,12)).string_("Auto/Speed").align_(\center).background_(Color(0.5,0.5,0.5));
+StaticText(~w,Rect(390,540,70,12)).string_("Auto/Speed").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~autopopd=PopUpMenu(~w,Rect(390,555,70,25)).items=["normal","fast","slow","slowest"];
 ~autopopd.background_(Color(0.05,0.15,0.25)).stringColor_(Color.gray(0.5));
 ~autopopd.action={|menu|
@@ -183,10 +183,10 @@ StaticText(~w,Rect(390,540,70,12)).string_("Auto/Speed").align_(\center).backgro
 };
 //aux3 tag
 ~auxdtag=StaticText(~w,Rect(465,305,105,12));
-~auxdtag.string_("Pitch:56").align_(\center).background_(Color(0.5,0.5,0.5));
+~auxdtag.string_("Pitch:56").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 //pitch rate
 ~auxp=StaticText(~w,Rect(465,320,35,15));//
-~auxp.string_("rate").align_(\center).background_(Color(0.5,0.5,0.5));
+~auxp.string_("rate").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~nump=NumberBox(~w,Rect(465,337,35,20)).background_(Color(0,1,0));
 ~auxpfader=Slider(~w,Rect(465,357,35,180)).background_(Color(0.05,0.25,0.25,0.1));
 ~auxpfader.action={~mastpit.set(\pitch,~auxpfader.value*4);~nump.value_(~auxpfader.value*4)};
@@ -195,7 +195,7 @@ StaticText(~w,Rect(390,540,70,12)).string_("Auto/Speed").align_(\center).backgro
 ~nump.value=1;
 // pitch dispersion
 ~auxpd=StaticText(~w,Rect(500,320,35,15));//
-~auxpd.string_("pDisp").align_(\center).background_(Color(0.5,0.5,0.5));
+~auxpd.string_("pDis").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~numpd=NumberBox(~w,Rect(500,337,35,20)).background_(Color(0,1,0));
 ~auxpdfader=Slider(~w,Rect(500,357,35,180)).background_(Color(0.05,0.25,0.25,0.1));
 ~auxpdfader.action={~mastpit.set(\pitchDispersion,~auxpdfader.value);~numpd.value_(~auxpdfader.value)};
@@ -204,7 +204,7 @@ StaticText(~w,Rect(390,540,70,12)).string_("Auto/Speed").align_(\center).backgro
 ~numpd.value=0;
 //pitch time dispersion
 ~auxtd=StaticText(~w,Rect(535,320,35,15));//
-~auxtd.string_("tDisp").align_(\center).background_(Color(0.5,0.5,0.5));
+~auxtd.string_("tDis").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~numtd=NumberBox(~w,Rect(535,337,35,20)).background_(Color(0,1,0));
 ~auxtdfader=Slider(~w,Rect(535,357,35,180)).background_(Color(0.05,0.25,0.25,0.1));
 ~auxtdfader.action={~mastpit.set(\timeDispersion,~auxtdfader.value/5);~numtd.value_(~auxtdfader.value/5)};
@@ -212,7 +212,7 @@ StaticText(~w,Rect(390,540,70,12)).string_("Auto/Speed").align_(\center).backgro
 ~auxtdfader.value=0;
 ~numtd.value=0;
 //pitch valor atomatizacion
-StaticText(~w,Rect(465,540,105,12)).string_("Auto/Speed").align_(\center).background_(Color(0.5,0.5,0.5));
+StaticText(~w,Rect(465,540,105,12)).string_("Auto/Speed").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~autopopp=PopUpMenu(~w,Rect(465,555,105,25)).items=["normal","fast","slow","slowest"];
 ~autopopp.background_(Color(0.05,0.25,0.25)).stringColor_(Color.gray(0.5));
 ~autopopp.action={|menu|
@@ -227,25 +227,25 @@ StaticText(~w,Rect(465,540,105,12)).string_("Auto/Speed").align_(\center).backgr
 };
 //Botones automatizacion
 //autoreverb
-StaticText(~w,Rect(280,585,105,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
+StaticText(~w,Rect(280,585,105,15)).string_("Automation:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 ~autobotr=Button(~w,Rect(280,600,105,30));
 ~autobotr.states=[[" Auto On ",Color.white,Color(0.05,0.05,0.25)],
 	[" Auto Off ",Color.black,Color.green(0.9)]];
 ~autobotr.action={|val|if(val.value==1,{Tdef(\autor).play},{Tdef(\autor).stop})};
 //autodelay
-StaticText(~w,Rect(390,585,70,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
+StaticText(~w,Rect(390,585,70,15)).string_("Automation:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 ~autobotd=Button(~w,Rect(390,600,70,30));
 ~autobotd.states=[[" Auto On ",Color.white,Color(0.05,0.15,0.25)],
 	[" Auto Off ",Color.black,Color.green(0.9)]];
 ~autobotd.action={|val|if(val.value==1,{Tdef(\autod).play},{Tdef(\autod).stop})};
 //autopitch
-StaticText(~w,Rect(465,585,105,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
+StaticText(~w,Rect(465,585,105,15)).string_("Automation:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 ~autobotp=Button(~w,Rect(465,600,105,30));
 ~autobotp.states=[[" Auto On ",Color.white,Color(0.05,0.25,0.25)],
 	[" Auto Off ",Color.black,Color.green(0.9)]];
 ~autobotp.action={|val|if(val.value==1,{Tdef(\autop).play},{Tdef(\autop).stop})};
 //autograin
-StaticText(~w,Rect(785,585,235,15)).string_("Automation:").align_(\center).background_(Color(0.75,0.75,0.75));
+StaticText(~w,Rect(785,585,235,15)).string_("Automation:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 ~autobotg=Button(~w,Rect(785,600,235,30));
 ~autobotg.states=[[" Auto On ",Color.gray(0.85),Color.black(0.5)],
 	[" Auto Off ",Color.black,Color.green(0.5)]];

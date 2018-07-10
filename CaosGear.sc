@@ -75,6 +75,7 @@ CaosGear : CaosBox {
 	//
 	bass {
 		|
+		out=#[50],
 		semitoneArray=#[ 0, 2, 4, 5, 7, 9, 11 ],
 		seqType='seq',
 		attack=0.01,
@@ -85,8 +86,7 @@ CaosGear : CaosBox {
 		rq=0.25,
 		iphase=0.5,
 		amp1=0.5,
-		amp2=0.5,
-		out=#[50]
+		amp2=0.5
 		|
 		// var bassmel;
 		var note = semitoneArray;
