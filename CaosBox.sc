@@ -132,7 +132,7 @@ CaosBox {
 
 	*freqAnalyzer {|active = false|
 
-		~f.active_(active);
+		~f.valueAction_(active);
 
 	}
 

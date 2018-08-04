@@ -24,7 +24,7 @@
 //hat
 ~h={var out=50;Out.ar(out,CaosHats.ar(att:0.01,rel:0.5,highcutfreq:8330,rq:0.25,amp1:0.35,amp2:0.01))};//
 //kick
-~b2={var out=58;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.16,modFreq:2,modbw:0.5,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
+~b2={var out=64;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.7,modFreq:2,modbw:0.5,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
 //snare2
 ~t2={var out=58;Out.ar(out,CaosSnare2.ar(att:0.01,rel:0.16,iphase:0.5,bw:0.35,highcutfreq:270,rq:0.35,amp1:0.1,amp2:0.05))};//
 //hat2
@@ -37,25 +37,25 @@
 //core functions
 // ~mainmelody = [0, 3, 7, 10, 13, 17, 21]+60;
 // ~mainmelody = [ 0, 2, 3, 6, 7, 8, 11 ]+60;
-~mainmelody = Scale.phrygian.degrees+60;
+// ~mainmelody = Scale.phrygian.degrees+60;
+~mainmelody = Scale.minor.degrees+60;
 ~mainmelody = LCNE.dupOctave(~mainmelody,2);
-
+Scale.directory;
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
-(//all Tdefs
 (//bass 1
 Tdef(\bass,{
 	var bassmel=Prand(~mainmelody-5,inf).asStream;
 	// var out=Pseq(~pat_arr.value(52,(0..31)),inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
-			\filtminf,45,
-			\filtmaxf,12420,
+			\filtminf,50,
+			\filtmaxf,8420,
 			\filtime,0.0125,
-			\rq,0.15,
+			\rq,0.5,
 			\iphase,0.5,
-			\amp1,0.5,
-			\amp2,0.2,
+			\amp1,0.05,
+			\amp2,0.07,
 			// \out,[52,53,56,57]);
 		\out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 		~tiempos.wait;
@@ -65,20 +65,20 @@ Tdef(\bass,{
 //bass 2
 (
 Tdef(\bass2,{
-	var bass2mel=Pxrand(~mainmelody-36,inf).asStream;
+	var bass2mel=Pxrand([0,3,7,9,12,15,19,24]+24,inf).asStream;
 	// var out=Prand(~pat_arr.value(50,62,[0,4,8,12,16,20,30]),inf).asStream;
 	loop{
 		~bass2.set(\note,bass2mel.next,
 			\trig,1,
 			\filtminf,80,
-			\filtmaxf,12900,
-			\filtime,0.0125,
+			\filtmaxf,8900,
+			\filtime,0.25,
 			\rq,0.5,
 			\bandw,0.05,
 			\iphase,0.05,
-			\amp1,0.75,
-			\amp2,0.5,
-			\out,[64,50]);
+			\amp1,0.5,
+			\amp2,0.2,
+			\out,50);
 			// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 		~tiempos.wait;
 	}
@@ -144,7 +144,7 @@ Tdef(\acordes,{
 );
 (
 Tdef(\acordes2,{
-	var ac2mel=Prand(~mainmelody,inf).asStream;
+	var ac2mel=Prand(~mainmelody-12,inf).asStream;
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', 'M9',  'M9m', 'm9' or 'm9m' keys only
 	var cambia2=Prand(['m','M','M9','mmaj7','m9m'],inf).asStream;
 	loop{
@@ -153,9 +153,9 @@ Tdef(\acordes2,{
 		~chord2.set(\cutf,12220);
 		~chord2.set(\rq,0.25);
 		~chord2.set(\pan,[0,-0.97]);
-		~chord2.set(\amp,0.005);
+		~chord2.set(\amp,0.01);
 		~chord2.set(\out,c.randStream('rand1',[52,54,56,64]));
-		~tiempos.wait;
+		~tiempos*2.wait;
 	}
 }).quant_(1);
 );
@@ -165,7 +165,6 @@ SynthDef(\ent,{|out=64,gate,att,rel|
 	Out.ar(out,Pan2.ar(SoundIn.ar(0)*EnvGen.ar(Env.perc(att,rel),gate,doneAction:2)))}).add;
 );
 
-);
 ////////////////////////////////////////
 //You can configure the Automation file:
 // (~url +/+ "CB/CaosBox-auto.scd").openOS;
