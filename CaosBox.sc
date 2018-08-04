@@ -132,8 +132,15 @@ CaosBox {
 
 	*freqAnalyzer {|active = false|
 
-		~f.valueAction_(active);
+		var onoff;
+		if(active==false, {
+			onoff = 0;
+		},{
+			onoff = 1;
+		});
+		~fbot.valueAction_(onoff);
 
+		^"";
 	}
 
 	// seq methods
@@ -258,7 +265,7 @@ CaosBox {
 							^"Reverb Automation running";
 					});
 					}, {
-						~autobotr.valueAction_(0);
+					~autobotr.valueAction_(0);
 						^"Reverb Automation stopped";
 				});
 
@@ -342,6 +349,74 @@ CaosBox {
 			// 'LPF',{}, //later implementation of filter automation
 			// 'BPF',{},
 			// 'HPF',{},
+
+			"Use only 'reverb','delay','pitch','grains' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
+
+	}
+	*fx {|fx = 'reverb', argArr1 = 0, argArr2 = 0, argArr3 = 0|
+
+		switch(fx,
+			'reverb',{
+				if(Tdef(\autor).isPlaying,{
+
+						^"Reverb Automation is running, use .autoFx Method to stop it";
+				},{
+					~autoreverbmix=argArr1.asArray;
+					~autoreverbroom=argArr2.asArray;
+					~autoreverbdamp=argArr3.asArray;
+
+					~mastrev.set(\mix,~autoreverbmix);
+					~mastrev.set(\room,~autoreverbroom);
+					~mastrev.set(\damp,~autoreverbdamp);
+					{
+						~numr.value=~autoreverbmix;
+						~auxrfader.value=~autoreverbmix;
+						~numroom.value=~autoreverbroom;
+						~auxroomfader.value=~autoreverbroom;
+						~numd.value=~autoreverbdamp;
+						~auxdfader.value=~autoreverbdamp
+					}.defer(0.05);
+
+					});
+			},
+			'delay',{
+				if(Tdef(\autod).isPlaying,{
+
+						^"Delay Automation is running, use .autoFx Method to stop it";
+				},{
+					~autodelaytime=argArr1.asArray;
+					~autodelayfeed=argArr2.asArray;
+
+					(~url +/+ "CB/CaosBox-auto.scd").load;
+
+				});
+			},
+			'pitch',{
+				if(Tdef(\autoz).isPlaying,{
+
+						^"Pitch Automation is running, use .autoFx Method to stop it";
+				},{
+					~autopitchrate=argArr1.asArray;
+					~autopitchdispersion=argArr2.asArray;
+					~autotimedispersion=argArr3.asArray;
+
+					(~url +/+ "CB/CaosBox-auto.scd").load;
+
+				});
+			},
+			'grains',{
+				if(Tdef(\autog).isPlaying,{
+
+						^"Grains Automation is running, use .autoFx Method to stop it";
+				},{
+
+					~autograintrig=argArr1.asArray;
+					~autograinsize=argArr2.asArray;
+
+					(~url +/+ "CB/CaosBox-auto.scd").load;
+
+				});
+			},
 
 			"Use only 'reverb','delay','pitch','grains' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
 
