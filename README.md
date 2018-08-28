@@ -4,25 +4,47 @@ It's a not-so-common LiveCoding/AlgoRave music GUI secuencer/processor for the C
 #### You can download library here: https://github.com/josecaos/caosperclib/releases
 Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
 
-#### The idea is:
- -Improvising;
-	 - By changing ##the library arguments in CaosBox_liveCodePad-default.scd file you can route and give shape to the signal. Sequence, mix and automate in the GUI, Each percussion function on the GUI sequencer acts as one independent node in server memory, this box was made for LiveCoding. }:]
+### New use
+=======
+- Moving along to V2.0 a programming interface has been created to control the GUI, exanmple to start CaosBox:
+##
+    c = CaosBox;
+    c.enviroment;
 
-### Instructions:
+    c.play;
+    c.bpm(194);
+    c.frequencyAnalyzer(true);
+    
+    k = CaosGear;
+    k.kick();
+    c.setSteps(\kick,Array.series(8,0,4));
+
+    //etc...
+
+    c.stop;
 ##
-		->1- Open file CaosBox.scd and evaluate the indicated text:
-			+ welcome sound, GUI and CaosBox_liveCodePad-default.scd file automatically opens.
+
+
+#### Legacy use:
+=======
+ - Improvising;
+ - By changing ##the library arguments in CaosBox_liveCodePad-default.scd file you can route and give shape to the signal. Sequence, mix and automate in the GUI, Each percussion function on the GUI sequencer acts as one independent node in server memory, this box was made for LiveCoding. }:]
+
 ##
-		->2- First: Go to CaosBox_liveCodePad-default.scd, manipulate the Class arguments within functions or Tdefs and evaluate them:
-			+ so you can route and change sound qualities.
+    ->1- Open file CaosBox.scd and evaluate the indicated text:
+	+ welcome sound, GUI and CaosBox_liveCodePad-default.scd file automatically opens.
 ##
-		->3- Then: Go to CaosBox GUI:
-			+ start filling the checkbox sequencer on its respective instrument channel and alter the signal route with faders and buttons.
+    ->2- First: Go to CaosBox_liveCodePad-default.scd, manipulate the Class arguments within functions or Tdefs and evaluate them:
+	+ so you can route and change sound qualities.
 ##
-		->4- Improvise, have fun and algorave a lot.
+    ->3- Then: Go to CaosBox GUI:
+	+ start filling the checkbox sequencer on its respective instrument channel and alter the signal route with faders and buttons.
 ##
+    ->4- Improvise, have fun and algorave a lot.
+##
+=======
 
 ##### Notes:
 - No audio buffers, only synthesis. Without "caosperclib" won't work.
-- Since CaosBox workshop in CMM CNA Mexico city, it was tested on SuperCollider 3.5.3 and above over Linux, Windows and OSX.
-- Written in Puerto Morelos, Q. Roo, Mexico 2014.
+- Tested on SuperCollider 3.8.0 and below over Linux, Windows and OSX.
+- Written by josecaos.xyz
