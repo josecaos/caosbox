@@ -43,6 +43,7 @@ Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
 
 
 ##### Notes:
+- You can still mix New & Legacy uses.
 - No audio buffers, only synthesis. Without "caosperclib" won't work.
 - Tested on SuperCollider 3.8.0 and below over Linux, Windows and OSX.
 - Written by josecaos.xyz
