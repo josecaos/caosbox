@@ -6,8 +6,9 @@ It's a not-so-common LiveCoding/AlgoRave music GUI secuencer/processor for the C
 Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
 
 ### New use
-- Moving along to V2.0 a programming interface has been created to control the GUI, example to start CaosBox:
+- Moving along to V2.0 a programming interface has been created to control the GUI, still in progress, example to start CaosBox:
 ##
+    //instance sequencer
     c = CaosBox;
     c.enviroment;
 
@@ -15,8 +16,11 @@ Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
     c.bpm(194);
     c.frequencyAnalyzer(true);
     
-    k = CaosGear;
+    // instance an instrument
+    k = CaosGear.new;
     k.kick();
+    
+    // Populate sequencer
     c.setSteps(\kick,Array.series(8,0,4));
 
     //etc...
@@ -43,7 +47,7 @@ Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
 
 
 ##### Notes:
-- You can still mix New & Legacy uses.
+- Right now you can mix New & Legacy uses.
 - No audio buffers, only synthesis. Without "caosperclib" won't work.
 - Tested on SuperCollider 3.8.0 and below over Linux, Windows and OSX.
 - Written by josecaos.xyz
