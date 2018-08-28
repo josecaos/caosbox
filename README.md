@@ -14,7 +14,7 @@ Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
 
     c.play;
     c.bpm(194);
-    c.frequencyAnalyzer(true);
+    c.freqAnalyzer(true);
     
     // instance an instrument
     k = CaosGear.new;
