@@ -1,12 +1,12 @@
 CaosBox v1.1
 =======
 It's a not-so-common LiveCoding/AlgoRave music GUI secuencer/processor for the CaosPercLib Pseudo-Class library, written in SuperCollider.
+
 #### You can download library here: https://github.com/josecaos/caosperclib/releases
 Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
 
 ### New use
-=======
-- Moving along to V2.0 a programming interface has been created to control the GUI, exanmple to start CaosBox:
+- Moving along to V2.0 a programming interface has been created to control the GUI, example to start CaosBox:
 ##
     c = CaosBox;
     c.enviroment;
@@ -24,9 +24,7 @@ Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
     c.stop;
 ##
 
-
 #### Legacy use:
-=======
  - Improvising;
  - By changing ##the library arguments in CaosBox_liveCodePad-default.scd file you can route and give shape to the signal. Sequence, mix and automate in the GUI, Each percussion function on the GUI sequencer acts as one independent node in server memory, this box was made for LiveCoding. }:]
 
@@ -42,7 +40,7 @@ Unzip and place the - caosperclib-1.0 - folder here:  Platform.userExtensionDir;
 ##
     ->4- Improvise, have fun and algorave a lot.
 ##
-=======
+
 
 ##### Notes:
 - No audio buffers, only synthesis. Without "caosperclib" won't work.
