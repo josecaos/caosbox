@@ -1,20 +1,9 @@
 ///////////////////////////////////////////
 //CaosBox v1.1 default liveCodePad
 /////////////////Leeme//////////////////////////
-//Archivo complementario para modificar la 'CaosPercLib' junto con la GUI.
-//Primero: Cambia los argumentos de las clases qué desees y evalua.
-//Segundo: Secuencia la función del instrumento en los chckboxes de la GUI.
-//Rutas: El canal Master es el #50.
-/////////////////ReadMe//////////////////////////
-//Complementary file to live code 'CaosPercLib' along the secuence on GUI.
-//First: Change the class argument value you desire, and evaluate.
-//Second: Sequence the instrument function in the checkboxes on the GUI.
-//Routing: Master channel is #50.
 ////////////////////////////////////////////
 /* Percussion Functions: */
 ///////////////////////////
-//Test
-// CaosBox.enviroment;
 //
 //
 //kick
@@ -26,21 +15,18 @@
 //kick
 ~b2={var out=64;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.7,modFreq:2,modbw:0.5,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
 //snare2
-~t2={var out=58;Out.ar(out,CaosSnare2.ar(att:0.01,rel:0.16,iphase:0.5,bw:0.35,highcutfreq:270,rq:0.35,amp1:0.1,amp2:0.05))};//
+~t2={var out=52;Out.ar(out,CaosSnare2.ar(att:0.01,rel:0.16,iphase:0.5,bw:0.35,highcutfreq:270,rq:0.35,amp1:0.1,amp2:0.05))};//
 //hat2
 ~h2={var out=50;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
 // s.queryAllNodes;
-
 // Melodies as intervals array
 // Scale.hungarianMinor.degrees;
 // Scale.directory;
-//core functions
 // ~mainmelody = [0, 3, 7, 10, 13, 17, 21]+60;
 // ~mainmelody = [ 0, 2, 3, 6, 7, 8, 11 ]+60;
 // ~mainmelody = Scale.phrygian.degrees+60;
 ~mainmelody = Scale.minor.degrees+60;
 ~mainmelody = LCNE.dupOctave(~mainmelody,2);
-Scale.directory;
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
 (//bass 1
@@ -54,33 +40,33 @@ Tdef(\bass,{
 			\filtime,0.0125,
 			\rq,0.5,
 			\iphase,0.5,
-			\amp1,0.05,
-			\amp2,0.07,
+			\amp1,0.01,
+			\amp2,0.01,
 			// \out,[52,53,56,57]);
 		\out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
-		~tiempos.wait;
+		~tiempos/2.wait;
 	}
 }).quant_(1);
 );
 //bass 2
 (
 Tdef(\bass2,{
-	var bass2mel=Pxrand([0,3,7,9,12,15,19,24]+24,inf).asStream;
+	var bass2mel=Pxrand(~mainmelody,inf).asStream;
 	// var out=Prand(~pat_arr.value(50,62,[0,4,8,12,16,20,30]),inf).asStream;
 	loop{
 		~bass2.set(\note,bass2mel.next,
 			\trig,1,
 			\filtminf,80,
-			\filtmaxf,8900,
+			\filtmaxf,12900,
 			\filtime,0.25,
 			\rq,0.5,
-			\bandw,0.05,
+			\bandw,0.5,
 			\iphase,0.05,
-			\amp1,0.5,
-			\amp2,0.2,
-			\out,50);
-			// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
-		~tiempos.wait;
+			\amp1,0.025,
+			\amp2,0.01,
+			// \out,);
+		\out,~rand_stream.value('rand1',[52,54,58,64]));
+		~tiempos/2.wait;
 	}
 }).quant_(1);
 );
@@ -153,8 +139,8 @@ Tdef(\acordes2,{
 		~chord2.set(\cutf,12220);
 		~chord2.set(\rq,0.25);
 		~chord2.set(\pan,[0,-0.97]);
-		~chord2.set(\amp,0.01);
-		~chord2.set(\out,c.randStream('rand1',[52,54,56,64]));
+		~chord2.set(\amp,0.1);
+		~chord2.set(\out,c.randStream('rand2',[[52,52],[52,54],56,64]));
 		~tiempos*2.wait;
 	}
 }).quant_(1);

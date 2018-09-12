@@ -16,9 +16,9 @@ CaosGear : CaosBox {
 
 			^"New Melody seted";
 
-			},{
+		},{
 
-				^"Please use an array with degrees, 'Scale' can be useful";
+			^"Please use an array with degrees, 'Scale' can be useful";
 
 		});
 
@@ -64,12 +64,12 @@ CaosGear : CaosBox {
 
 	}
 
-/*	kickDyn {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=0,amp1=1,amp2=0.25,doneAction=2|
+	/*	kickDyn {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=0,amp1=1,amp2=0.25,doneAction=2|
 
-		// ~kickgear.set(\out,out,\att,att,\rel,rel,\modFreq,modFreq,\modbw,modbw,\freq1,freq1,\freq2,freq2,\lowcutfreq,lowcutfreq,\gate,gate,\amp1,amp1,\amp2,amp2,\doneAction,doneAction);
-		// Synth(\kickgear,[\out,out,\att,att,\rel,rel,\modFreq,modFreq,\modbw,modbw,\freq1,freq1,\freq2,freq2,\lowcutfreq,lowcutfreq,\gate,gate,\amp1,amp1,\amp2,amp2,\doneAction,doneAction]);
+	// ~kickgear.set(\out,out,\att,att,\rel,rel,\modFreq,modFreq,\modbw,modbw,\freq1,freq1,\freq2,freq2,\lowcutfreq,lowcutfreq,\gate,gate,\amp1,amp1,\amp2,amp2,\doneAction,doneAction);
+	// Synth(\kickgear,[\out,out,\att,att,\rel,rel,\modFreq,modFreq,\modbw,modbw,\freq1,freq1,\freq2,freq2,\lowcutfreq,lowcutfreq,\gate,gate,\amp1,amp1,\amp2,amp2,\doneAction,doneAction]);
 
-		^"Dynamic kick";
+	^"Dynamic kick";
 	}*/
 
 	//
@@ -119,8 +119,8 @@ CaosGear : CaosBox {
 						("Bass Melodic secuence type is" + seqType).inform;
 					);
 
-					}, {
-						"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+				}, {
+					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
 				});
 
 				loop{
@@ -139,11 +139,28 @@ CaosGear : CaosBox {
 					// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 					~tiempos.wait;
 				}
-			}).quant_(0.15);
+			}).quant_(4);
 		);
 
 		^"Bass values changed";
 
 	}
 
+
+
+	lineIn {|out=64,inchan=0,gate=1,att=0.05,rel=0.25|
+
+		var synth;
+
+		synth = {SynthDef(\ent,{|out,gate,att,rel|
+			Out.ar(out,Pan2.ar(
+				SoundIn.ar(inchan)*EnvGen.ar(
+					Env.perc(att,rel),gate,doneAction:2)))}
+		).add};
+
+
+		// Synth(\ent,[\out,out,\chan,chan,\att,att,\rel,rel]);
+
+		^"WTF Yeahhh".inform;
+	}
 }

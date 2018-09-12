@@ -355,27 +355,31 @@ CaosBox {
 	}
 	*fx {|fx = 'reverb', argArr1 = 0, argArr2 = 0, argArr3 = 0|
 
+		var arg1,arg2,arg3;
 		switch(fx,
 			'reverb',{
 				if(Tdef(\autor).isPlaying,{
 
 						^"Reverb Automation is running, use .autoFx Method to stop it";
 				},{
-					~autoreverbmix=argArr1.asArray;
-					~autoreverbroom=argArr2.asArray;
-					~autoreverbdamp=argArr3.asArray;
-
-					~mastrev.set(\mix,~autoreverbmix);
-					~mastrev.set(\room,~autoreverbroom);
-					~mastrev.set(\damp,~autoreverbdamp);
-					{
-						~numr.value=~autoreverbmix;
-						~auxrfader.value=~autoreverbmix;
-						~numroom.value=~autoreverbroom;
-						~auxroomfader.value=~autoreverbroom;
-						~numd.value=~autoreverbdamp;
-						~auxdfader.value=~autoreverbdamp
-					}.defer(0.05);
+					arg1=argArr1.asArray;
+					arg2=argArr2.asArray;
+					arg3=argArr3.asArray;
+/*
+					~mastrev.set(\mix,arg1);
+					~mastrev.set(\room,arg2);
+					~mastrev.set(\damp,arg3);
+					*/
+					// {
+							// ~numr.value=arg1;
+							// ~auxrfader.value=arg1;
+						~auxrfader.valueAction_(1);
+						~numr.valueAction_(1);
+							// ~numroom.value=arg2;
+							// ~auxroomfader.value=arg2;
+							// ~numd.value=arg3;
+							// ~auxdfader.value=arg3;
+				// }.defer(0.05);
 
 					});
 			},
