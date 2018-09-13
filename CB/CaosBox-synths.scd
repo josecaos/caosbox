@@ -29,8 +29,8 @@ SynthDef(\acordesdos,{|chord,att=0.1,rel=1,note=57,cutf=420,rq=0.5,pan=0,gate=0,
 	var type= 'M';
 	Out.ar(out,CaosGuitChords.ar(type,att,rel,note,cutf,rq,pan,gate,amp))}).add;
 //LineIn
-SynthDef(\ent,{|out=50,gate=0,att=0.1,rel=0.25|
-	Out.ar(out,Pan2.ar(SoundIn.ar([0,1])*EnvGen.ar(Env.perc(att,rel),gate,doneAction:2)))}).add;
+SynthDef(\ent,{|out=50,inchan=#[0,1],gate=0,att=0.1,rel=0.25|
+	Out.ar(out,Pan2.ar(SoundIn.ar(inchan)*EnvGen.ar(Env.perc(att,rel),gate,doneAction:2)))}).add;
 );
 //
 (

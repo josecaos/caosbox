@@ -9,11 +9,16 @@ CaosBox {
 
 			^"CaosBox.enviroment is already running"
 
-			},{
+		},{
+			// System files
+			~urls = ["CB/CaosBox-midi.scd","CB/CaosBox-vars.scd","CB/CaosBox-signal.scd","CB/CaosBox-synths.scd",
+				"CB/CaosBox-auto.scd","CodePads/CaosBox_liveCodePad-default.scd","GUI/CaosBox-GUI.scd",
+				"GUI/CaosBox-GUI_2.scd","GUI/CaosBox-GUI_3.scd","GUI/CaosBox-GUI_4.scd","CB/CaosBox-seq.scd",
+				"CB/CaosBox-funcs.scd"];
 
-		~url = this.filenameSymbol.asString.dirname;
+			~url = this.filenameSymbol.asString.dirname;
 
-		^super.new.init;
+			^super.new.init;
 
 		});
 
@@ -41,9 +46,9 @@ CaosBox {
 
 		if(Tdef(\secuencias).isPlaying,{
 			^"CaosBox already running";
-			},{
-				~bot.valueAction_(1);
-				^"";
+		},{
+			~bot.valueAction_(1);
+			^"";
 		});
 
 	}
@@ -81,9 +86,9 @@ CaosBox {
 
 			^"";
 
-			},{
+		},{
 
-				^"Use only 'true' or 'false'";
+			^"Use only 'true' or 'false'";
 		});
 
 	}
@@ -122,9 +127,9 @@ CaosBox {
 			);
 
 			^"";
-			}, {
+		}, {
 
-				^"Use only 'start' or 'stop' keys";
+			^"Use only 'start' or 'stop' keys";
 
 		});
 
@@ -206,7 +211,7 @@ CaosBox {
 
 	*setSteps {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],resetCheckboxes = true|
 
-	var index,arr,dir = ~steps;
+		var index,arr,dir = ~steps;
 
 		arr = steps.asArray;//en caso de no usar array como parametro
 
@@ -237,7 +242,7 @@ CaosBox {
 		^this.setSteps(track,a);
 
 	}
-//
+	//
 
 	*autoFx {|fx = 'reverb', play = true, speed = 'normal', argArr1 = 0, argArr2 = 0, argArr3 = 0|
 
@@ -260,13 +265,13 @@ CaosBox {
 
 					if(Tdef(\autor).isPlaying,{
 						^"Reverb Automation already running";
-						},{
-							~autobotr.valueAction_(1);
-							^"Reverb Automation running";
+					},{
+						~autobotr.valueAction_(1);
+						^"Reverb Automation running";
 					});
-					}, {
+				}, {
 					~autobotr.valueAction_(0);
-						^"Reverb Automation stopped";
+					^"Reverb Automation stopped";
 				});
 
 			},
@@ -286,13 +291,13 @@ CaosBox {
 
 					if(Tdef(\autod).isPlaying,{
 						^"Delay Automation already running";
-						},{
-							~autobotd.valueAction_(1);
-							^"Delay Automation running";
+					},{
+						~autobotd.valueAction_(1);
+						^"Delay Automation running";
 					});
-					}, {
-						~autobotd.valueAction_(0);
-						^"Delay Automation stopped";
+				}, {
+					~autobotd.valueAction_(0);
+					^"Delay Automation stopped";
 				});
 			},
 			'pitch',{
@@ -312,13 +317,13 @@ CaosBox {
 
 					if(Tdef(\autop).isPlaying,{
 						^"Pitch Automation already running";
-						},{
-							~autobotp.valueAction_(1);
-							^"Pitch Automation running";
+					},{
+						~autobotp.valueAction_(1);
+						^"Pitch Automation running";
 					});
-					}, {
-						~autobotp.valueAction_(0);
-						^"Pitch Automation stopped";
+				}, {
+					~autobotp.valueAction_(0);
+					^"Pitch Automation stopped";
 				});
 			},
 			'grains',{
@@ -337,13 +342,13 @@ CaosBox {
 
 					if(Tdef(\autog).isPlaying,{
 						^"Grains Automation already running";
-						},{
-							~autobotg.valueAction_(1);
-							^"Grains Automation running";
+					},{
+						~autobotg.valueAction_(1);
+						^"Grains Automation running";
 					});
-					}, {
-						~autobotg.valueAction_(0);
-						^"Grains Automation stopped";
+				}, {
+					~autobotg.valueAction_(0);
+					^"Grains Automation stopped";
 				});
 			},
 			// 'LPF',{}, //later implementation of filter automation
@@ -360,33 +365,33 @@ CaosBox {
 			'reverb',{
 				if(Tdef(\autor).isPlaying,{
 
-						^"Reverb Automation is running, use .autoFx Method to stop it";
+					^"Reverb Automation is running, use .autoFx Method to stop it";
 				},{
 					arg1=argArr1.asArray;
 					arg2=argArr2.asArray;
 					arg3=argArr3.asArray;
-/*
+					/*
 					~mastrev.set(\mix,arg1);
 					~mastrev.set(\room,arg2);
 					~mastrev.set(\damp,arg3);
 					*/
 					// {
-							// ~numr.value=arg1;
-							// ~auxrfader.value=arg1;
-						~auxrfader.valueAction_(1);
-						~numr.valueAction_(1);
-							// ~numroom.value=arg2;
-							// ~auxroomfader.value=arg2;
-							// ~numd.value=arg3;
-							// ~auxdfader.value=arg3;
-				// }.defer(0.05);
+					// ~numr.value=arg1;
+					// ~auxrfader.value=arg1;
+					~auxrfader.valueAction_(1);
+					~numr.valueAction_(1);
+					// ~numroom.value=arg2;
+					// ~auxroomfader.value=arg2;
+					// ~numd.value=arg3;
+					// ~auxdfader.value=arg3;
+					// }.defer(0.05);
 
-					});
+				});
 			},
 			'delay',{
 				if(Tdef(\autod).isPlaying,{
 
-						^"Delay Automation is running, use .autoFx Method to stop it";
+					^"Delay Automation is running, use .autoFx Method to stop it";
 				},{
 					~autodelaytime=argArr1.asArray;
 					~autodelayfeed=argArr2.asArray;
@@ -398,7 +403,7 @@ CaosBox {
 			'pitch',{
 				if(Tdef(\autoz).isPlaying,{
 
-						^"Pitch Automation is running, use .autoFx Method to stop it";
+					^"Pitch Automation is running, use .autoFx Method to stop it";
 				},{
 					~autopitchrate=argArr1.asArray;
 					~autopitchdispersion=argArr2.asArray;
@@ -411,7 +416,7 @@ CaosBox {
 			'grains',{
 				if(Tdef(\autog).isPlaying,{
 
-						^"Grains Automation is running, use .autoFx Method to stop it";
+					^"Grains Automation is running, use .autoFx Method to stop it";
 				},{
 
 					~autograintrig=argArr1.asArray;

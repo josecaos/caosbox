@@ -150,17 +150,8 @@ CaosGear : CaosBox {
 
 	lineIn {|out=64,inchan=0,gate=1,att=0.05,rel=0.25|
 
-		var synth;
+		~entrada.set(\out,out,\inchan,inchan,\gate,gate,\att,att,\rel,rel);
 
-		synth = {SynthDef(\ent,{|out,gate,att,rel|
-			Out.ar(out,Pan2.ar(
-				SoundIn.ar(inchan)*EnvGen.ar(
-					Env.perc(att,rel),gate,doneAction:2)))}
-		).add};
-
-
-		// Synth(\ent,[\out,out,\chan,chan,\att,att,\rel,rel]);
-
-		^"WTF Yeahhh".inform;
+		^"LineIn".inform;
 	}
 }

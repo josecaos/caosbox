@@ -1,8 +1,9 @@
 ////////////////////////////////////////////
 //These are the global variables for CaosBox v1.1
 ///////////////////////////////////////////
-(
-//General
+// System files
+~urls = ["CB/CaosBox-midi.scd","CB/CaosBox-vars.scd","CB/CaosBox-signal.scd","CB/CaosBox-synths.scd","CB/CaosBox-auto.scd","CodePads/CaosBox_liveCodePad-default.scd","GUI/CaosBox-GUI.scd","GUI/CaosBox-GUI_2.scd","GUI/CaosBox-GUI_3.scd","GUI/CaosBox-GUI_4.scd","CB/CaosBox-seq.scd","CB/CaosBox-funcs.scd"];
+// General
 ~bombo=Array.fill(32,nil);
 ~tarola=Array.fill(32,nil);
 ~contras=Array.fill(32,nil);
@@ -20,7 +21,7 @@
 ~clock=TempoClock.tempo=94/60;
 ~indice=0;
 ~tiempos=0.25;
-//Fx automation values
+// Fx automation values
 ~autoreverbmix=Array.series(4,0.01,0.24);
 ~autoreverbroom=[0];
 ~autoreverbdamp=[0];
@@ -34,10 +35,9 @@
 //
 ~autograintrig=[0.04,0.08,0.16,0.32,0.64,1.28]*4;
 ~autograinsize=Array.series(100,0.01,0.005);
-
-//bpm
+// bpm
 ~randtimes=[47,62,94,141,188];
-//GUI steps
+// GUI steps
 ~checksteps = [20,20,20,30];
 ~checkbox = 60;
 ~checkbombo=Array.fill(32,nil);
@@ -55,21 +55,19 @@
 ~checkin=Array.fill(32,nil);
 ~lightsteps=Array.fill(32,nil);
 ~lightpos = 61;
-//
-//Automation divisors "Dont use 0 on these"
+// Automation divisors "Dont use 0 on these"
 ~divrev=1;
 ~divdel=1;
 ~divpitch=1;
 ~divgrain=1;
-//Instuments
+// Instuments
 ~b=nil;//kick
 ~t=nil;//snare
 ~h=nil;//hat
 ~b2=nil;//kick2
 ~t2=nil;//snare2
 ~h2=nil;//hat2
-);
-//Array for core functions.
+// Array for core functions.
 ~steps = Dictionary[
 	\kick -> [~checkbombo,~bombo,~b],
 	\snare -> [~checktarola,~tarola,~t],
