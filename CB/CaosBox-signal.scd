@@ -63,4 +63,4 @@ SynthDef(\bandfilt,{|cutfreq=1000,rq=1,out=50,vol=1|
 }).add;
 );
 //granulador
-SynthDef(\granulador,{|trigger,size,out=50| Out.ar(out,Pan2.ar(GrainIn.ar(2,Impulse.kr(trigger),size,In.ar(64),2,-1,512,mul:2),[1,-0.98]))}).add;
+SynthDef(\granulador,{|trigger,size,out=#[50,50]| Out.ar(out,Pan2.ar(GrainIn.ar(2,Impulse.kr(trigger),size,In.ar(64),2,-1,512,mul:2),[1,-0.98]))}).add;

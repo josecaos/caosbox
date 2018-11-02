@@ -1,8 +1,6 @@
 ////////////////////////////////////////////
 //These are the global variables for CaosBox v1.1
 ///////////////////////////////////////////
-// System files
-~urls = ["CB/CaosBox-midi.scd","CB/CaosBox-vars.scd","CB/CaosBox-signal.scd","CB/CaosBox-synths.scd","CB/CaosBox-auto.scd","CodePads/CaosBox_liveCodePad-default.scd","GUI/CaosBox-GUI.scd","GUI/CaosBox-GUI_2.scd","GUI/CaosBox-GUI_3.scd","GUI/CaosBox-GUI_4.scd","CB/CaosBox-seq.scd","CB/CaosBox-funcs.scd"];
 // General
 ~bombo=Array.fill(32,nil);
 ~tarola=Array.fill(32,nil);
