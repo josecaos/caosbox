@@ -6,15 +6,15 @@ CaosGear : CaosBox {
 
 	}
 
-	melody {|scale=#[0,3,7,11,12], index=60|
+	melody {|scaleArray=#[0,3,7,11,12], index=60|
 
-		if(scale.isArray, {
+		if(scaleArray.isArray, {
 
-			~mainmelody = scale + index;
+			~mainmelody = scaleArray + index;
 
 			(~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").load;
 
-			^"New Melody seted";
+			^"New Melody loaded";
 
 		},{
 
@@ -47,6 +47,15 @@ CaosGear : CaosBox {
 		~t = {
 			var signal;
 			signal = CaosSnare.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
+			Out.ar(out,signal);
+		};
+
+	}
+
+	snare2 {|out=50,att=0.01,rel=0.25,iphase=0.03,bw=0.5,highcutfreq=360,rq=0.25,gate=1,amp1=0.55,amp2=0.25|
+		~t2 = {
+			var signal;
+			signal = CaosSnare2.ar(att,rel,iphase,bw,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
 		};
 
