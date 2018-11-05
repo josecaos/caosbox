@@ -42,7 +42,7 @@ CaosGear : CaosBox {
 		Out.ar(out,signal)
 	}
 
-	snare {|out=50,att=0.01,rel=0.25,highcutfreq=360,rq=0.25,gate=1,amp1=0.55,amp2=0.25|
+	snare {|out=50,att=0.01,rel=0.25,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.1|
 
 		~t = {
 			var signal;
@@ -52,7 +52,7 @@ CaosGear : CaosBox {
 
 	}
 
-	snare2 {|out=50,att=0.01,rel=0.25,iphase=0.03,bw=0.5,highcutfreq=360,rq=0.25,gate=1,amp1=0.55,amp2=0.25|
+	snare2 {|out=50,att=0.01,rel=0.25,iphase=0.03,bw=0.5,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.25|
 		~t2 = {
 			var signal;
 			signal = CaosSnare2.ar(att,rel,iphase,bw,highcutfreq,rq,gate,amp1,amp2);
@@ -61,12 +61,24 @@ CaosGear : CaosBox {
 
 	}
 
-	hihats {|out=50,att=0.01,rel=0.1,highcutfreq=6330,rq=0.05,gate=1,amp1=0.9,amp2=0.9|
+	hihats {|out=50,att=0.01,rel=0.1,highcutfreq=8330,rq=0.15,gate=1,amp1=0.9,amp2=0.9|
 
 		~h = {
 
 			var signal;
 			signal = CaosHats.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
+			Out.ar(out,signal);
+
+		};//
+
+	}
+
+	hihats2 {|out=50,att=0.01,rel=0.1,highcutfreq=12330,rq=0.5,gate=1,amp1=0.9,amp2=0.9|
+
+		~h2 = {
+
+			var signal;
+			signal = CaosHats2.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
 
 		};//
