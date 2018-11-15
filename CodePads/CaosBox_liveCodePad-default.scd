@@ -20,18 +20,12 @@
 ~h2={var out=50;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
 // s.queryAllNodes;
 // Melodies as intervals array
-// Scale.hungarianMinor.degrees;
-// Scale.directory;
-// ~mainmelody = [0, 3, 7, 10, 13, 17, 21]+60;
-// ~mainmelody = [ 0, 2, 3, 6, 7, 8, 11 ]+60;
-// ~mainmelody = Scale.phrygian.degrees+60;
-~mainmelody = Scale.minor.degrees+60;
-~mainmelody = LCNE.dupOctave(~mainmelody,3);
+// m.melody(x,36);
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
 (//bass 1
 Tdef(\bass,{
-	var bassmel=Prand(~mainmelody,inf).asStream;
+	var bassmel=Prand(m.melody(x,24),inf).asStream;
 	// var out=Pseq(~pat_arr.value(52,(0..31)),inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
@@ -43,8 +37,8 @@ Tdef(\bass,{
 			\amp1,0.01,
 			\amp2,0.01,
 			// \out,[52,53,56,57]);
-			// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
-			\out,52);
+			\out,~rand_stream.value('rand1',[52,56,60,58,54,64]));
+		// \out,52);
 		~tiempos/2.wait;
 	}
 }).quant_(1);
@@ -52,7 +46,7 @@ Tdef(\bass,{
 //bass 2
 (
 Tdef(\bass2,{
-	var bass2mel=Pxrand(~mainmelody,inf).asStream;
+	var bass2mel=Pxrand(m.melody(x,36),inf).asStream;
 	// var out=Prand(~pat_arr.value(50,62,[0,4,8,12,16,20,30]),inf).asStream;
 	loop{
 		~bass2.set(\note,bass2mel.next,
@@ -74,7 +68,7 @@ Tdef(\bass2,{
 //ambient pad
 (
 Tdef(\pad,{
-	var padmel=Pxrand(~mainmelody+[4,12],inf).asStream;
+	var padmel=Pxrand(m.melody(x),inf).asStream;
 	~amb.set(\waveform, 'pulse' );//use 'sin' or 'tri' or 'pulse' only
 	loop{
 		~amb.set(\note,padmel.next);
@@ -93,7 +87,7 @@ Tdef(\pad,{
 //ambiente pad 2
 (
 Tdef(\pad2,{
-	var pad2mel=Pseq(~mainmelody-12,inf).asStream;
+	var pad2mel=Pseq(m.melody(x),inf).asStream;
 	loop{
 		~amb2.set(\note,pad2mel.next);
 		~amb2.set(\fmax,[16,32,64,128,8].choose);
@@ -102,9 +96,9 @@ Tdef(\pad2,{
 		~amb2.set(\rmix,0.79);
 		~amb2.set(\rroom,0.15);
 		~amb2.set(\rfilt,0.5);
-		~amb2.set(\amp1,0.07);
+		~amb2.set(\amp1,0.09);
 		~amb2.set(\amp2,0.05);
-		~amb2.set(\out,~rand_stream.value('rand2',[50,52,56,58,60,62,64]));
+		~amb2.set(\out,~rand_stream.value('rand1',[52,56,58]));
 		~tiempos.wait;
 	}
 }).quant_(4);
@@ -112,7 +106,7 @@ Tdef(\pad2,{
 //Chord Synths
 (
 Tdef(\acordes,{
-	var acmel=Pseq(~mainmelody-12,inf).asStream;
+	var acmel=Pseq(m.melody(x,36),inf).asStream;
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
 	var cambia=Prand(['m','m7','mmaj7'],inf).asStream;
 	loop{
@@ -131,7 +125,7 @@ Tdef(\acordes,{
 );
 (
 Tdef(\acordes2,{
-	var ac2mel=Prand(~mainmelody-12,inf).asStream;
+	var ac2mel=Prand(m.melody(x,24),inf).asStream;
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', 'M9',  'M9m', 'm9' or 'm9m' keys only
 	var cambia2=Prand(['m','M','M9','mmaj7','m9m'],inf).asStream;
 	loop{

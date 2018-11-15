@@ -5,7 +5,7 @@ c.play;
 c.stop;
 c.freqAnalyzer(true);
 
-c.bpm(198);
+c.bpm(192);
 c.randomTime(true,false,Array.series(24,15,25));
 // c.scope;
 

@@ -10,18 +10,23 @@ CaosGear : CaosBox {
 
 		if(scaleArray.isArray, {
 
+			// soporte para version anterior
+			/*
 			~mainmelody = scaleArray + index;
 
 			(~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").load;
+			*/
+			//
 
-			^"New Melody loaded";
+			"New Melody loaded".inform;
+
+			^scaleArray + index;
 
 		},{
 
-			^"Please use an array with degrees, 'Scale' can be useful";
+			^"Please use an array with degrees, 'Scale.mayor.degrees' can be useful";
 
 		});
-
 
 	}
 
@@ -160,7 +165,7 @@ CaosGear : CaosBox {
 					// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 					~tiempos.wait;
 				}
-			}).quant_(4);
+			}).quant_(0);
 		);
 
 		^"Bass values changed";

@@ -18,7 +18,16 @@ Tdef(\secuencias,{
 	~grains=Synth(\granulador);
 	//
 	// ~kickgear=Synth(\kickgear);
-	{//debugging
+	{
+		//guide light steps
+		if(~indice == 32,{~indice=0},{nil});
+		// elimina el step anterior
+		if(~indice == 0,{reset = 31},{reset = ~indice-1});
+		{switch(~indice,
+			~indice,{~lightsteps[~indice].value = 1;~lightsteps[reset].value = 0},
+		)
+		}.defer(0.01);
+		//
 		~bombo[~indice].play;
 		// if(~bombo[~indice] == nil,{nil},{~bombo[~indice].set(\gate,1);~bombo.put(~indice,~kickgear)});
 		~tarola[~indice].play;
@@ -41,14 +50,8 @@ Tdef(\secuencias,{
 			{~sinte2[~indice].set(\gate,1,\att,~sinte2attknob.value,\rel,~sinte2relknob.value);~sinte2.put(~indice,~chord2=Synth(\acordesdos))});
 		if(~in[~indice] == nil,{nil},
 			{~in[~indice].set(\gate,1,\att,~inattknob.value,\rel,~inrelknob.value);~in.put(~indice,~entrada=Synth(\ent))});
+		//
 		~indice = ~indice+1;
-		if(~indice == 32,{~indice=0},{nil});
-		//guide light steps
-		if(~indice == 0,{reset = 31},{reset = ~indice-1});
-		{switch(~indice,
-			~indice,{~lightsteps[~indice].value = 1;~lightsteps[reset].value = 0},
-			)
-		}.defer(0.01);
 		////
 		~tiempos.wait;
 	}.loop;

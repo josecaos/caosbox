@@ -16,7 +16,7 @@
 ~sinte2=Array.fill(32,nil);
 ~in=Array.fill(32,nil);
 //
-~clock=TempoClock.tempo=94/60;
+~clock=TempoClock.tempo=126/60;
 ~indice=0;
 ~tiempos=0.25;
 // Fx automation values
@@ -87,3 +87,7 @@
 ~ftype=["loop-","hist-"];
 ~l=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"];
 ~n=["1","2","3","4","5","6","7","8","9","0"];
+//mainmelody
+m = CaosGear.new;
+x = Scale.minor.degrees;
+x = LCNE.dupOctave(x,3);
