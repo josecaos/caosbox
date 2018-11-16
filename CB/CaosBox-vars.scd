@@ -1,5 +1,5 @@
 ////////////////////////////////////////////
-//These are the global variables for CaosBox v1.1
+//Global variables for CaosBox v1.1
 ///////////////////////////////////////////
 // General
 ~bombo=Array.fill(32,nil);
@@ -16,8 +16,8 @@
 ~sinte2=Array.fill(32,nil);
 ~in=Array.fill(32,nil);
 //
-~clock=TempoClock.tempo=126/60;
 ~indice=0;
+~clock=TempoClock.tempo=126/60;
 ~tiempos=0.25;
 // Fx automation values
 ~autoreverbmix=Array.series(4,0.01,0.24);

@@ -32,10 +32,11 @@ CaosBox {
 
 			(~url +/+ "CB/CaosBox-load.scd").load;
 
+			//debug
 			fork{1.do({13.wait;
 
-				//debug
 				"\n => Class in development ... if you are having trouble booting sequencer, please refer to file 'CaosBox.scd' to use legacy boot".inform;
+
 			})};
 
 		};
