@@ -10,16 +10,6 @@ CaosGear : CaosBox {
 
 		if(scaleArray.isArray, {
 
-			// soporte para version anterior
-			/*
-			~mainmelody = scaleArray + index;
-
-			(~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").load;
-			*/
-			//
-
-			"New Melody loaded".inform;
-
 			^scaleArray + index;
 
 		},{

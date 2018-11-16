@@ -34,12 +34,12 @@ Tdef(\bass,{
 			\filtime,0.0125,
 			\rq,0.5,
 			\iphase,0.5,
-			\amp1,0.01,
-			\amp2,0.01,
+			\amp1,0.5,
+			\amp2,0.5,
 			// \out,[52,53,56,57]);
-			\out,~rand_stream.value('rand1',[52,56,60,58,54,64]));
-		// \out,52);
-		~tiempos/2.wait;
+			// \out,~rand_stream.value('rand1',[52,56,60,58,54,64]));
+			\out,64);
+		~tiempos.wait;
 	}
 }).quant_(1);
 );
@@ -61,7 +61,7 @@ Tdef(\bass2,{
 			\amp2,0.01,
 			// \out,);
 		\out,~rand_stream.value('rand1',[52,54,58,64]));
-		~tiempos/2.wait;
+		~tiempos.wait;
 	}
 }).quant_(1);
 );

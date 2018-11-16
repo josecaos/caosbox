@@ -5,10 +5,12 @@
 ///////////////////////////////////////////
 (
 //Dynamic kick
-SynthDef(\kickgear,{|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=0,amp1=1,amp2=0.25,doneAction=2|
+// debug
+/*SynthDef(\kickgear,{|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=0,amp1=1,amp2=0.25,doneAction=2|
 	var sig;
 	sig = CaosKick.ar(att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction);
-	Out.ar(out,sig)}).add;
+	Out.ar(out,sig)}).add;*/
+//
 //bass
 SynthDef(\bajouno,{|att=0.05,rel=1,note=38,filtminf=45,filtmaxf=750,filtime=0.25,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25,out=50|
 	Out.ar(out,CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2))}).add;
