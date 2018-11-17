@@ -89,8 +89,7 @@ CaosGear : CaosBox {
 	}*/
 
 	//
-	bass {
-		|
+	bass {|
 		out=#[50],
 		semitoneArray=#[ 0, 2, 4, 5, 7, 9, 11 ],
 		seqType='seq',
@@ -102,8 +101,7 @@ CaosGear : CaosBox {
 		rq=0.25,
 		iphase=0.5,
 		amp1=0.5,
-		amp2=0.5
-		|
+		amp2=0.5|
 		// var bassmel;
 		var note = semitoneArray;
 		var attk = attack;
@@ -152,17 +150,90 @@ CaosGear : CaosBox {
 						\amp1,ampx,
 						\amp2,ampy,
 						\out,outbus);
-					// \out,~rand_stream.value('rand2',[52,56,60,58,54,64]));
 					~tiempos.wait;
 				}
-			}).quant_(0);
+			}).quant_(4);
 		);
 
 		^"Bass values changed";
 
 	}
 
+	bass2 {|
+		out=#[50],
+		semitoneArray=#[ 0, 2, 4, 5, 7, 9, 11 ],
+		seqType='seq',
+		attack=0.01,
+		release=0.25,
+		filtTrig=1,
+		filtMinFreq=45,
+		filtMaxFreq=12420,
+		filtTime=0.125
+		rq=0.25,
+		bw=0.5,
+		iphase=0.5,
+		amp1=0.5,
+		amp2=0.5|
+		// var bassmel;
+		var note = semitoneArray;
+		var attk = attack;
+		var rel = release;
+		var trigger = filtTrig;
+		var filt1 = filtMinFreq;
+		var filt2 = filtMaxFreq;
+		var filt3 = filtTime;
+		var	bandwidth = rq;
+		var band = bw;
+		var waveiphase = iphase;
+		var ampx = amp1;
+		var ampy = amp2;
+		var outbus = out;
 
+		Tdef(\bass2,{
+
+				var	bassmel,outbus;
+
+				if(seqType == 'rand' or: {seqType == 'seq'}, {
+
+					switch(seqType,
+						'rand', {
+							bassmel=Prand(note,inf).asStream;
+							outbus=Prand(out.asArray,inf).asStream;
+						},
+						'seq', {
+							bassmel=Pseq(note,inf).asStream;
+							outbus=Pseq(out.asArray,inf).asStream;
+						},
+						("Bass Melodic secuence type is" + seqType).inform;
+					);
+
+				}, {
+					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+				});
+
+				loop{
+					~bass.set(
+						\att,attk,
+						\rel,rel,
+						\note,bassmel.next,
+						\trig,trigger,//
+						\filtminf,filt1,
+						\filtmaxf,filt2,
+						\filtime,filt3,
+						\rq,bandwidth,
+						\bandw,band,//
+						\iphase,waveiphase,
+						\amp1,ampx,
+						\amp2,ampy,
+						\out,outbus);
+				bassmel.next.postcln;//debug
+					~tiempos.wait;
+				}
+			}).quant_(4);
+
+		^"Bass2 values changed";
+
+	}
 
 	lineIn {|out=64,inchan=0,gate=1,att=0.05,rel=0.25|
 
