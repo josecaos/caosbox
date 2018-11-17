@@ -188,7 +188,7 @@ CaosGear : CaosBox {
 		var ampx = amp1;
 		var ampy = amp2;
 		var outbus = out;
-
+		(
 		Tdef(\bass2,{
 
 				var	bassmel,outbus;
@@ -212,7 +212,7 @@ CaosGear : CaosBox {
 				});
 
 				loop{
-					~bass.set(
+					~bass2.set(
 						\att,attk,
 						\rel,rel,
 						\note,bassmel.next,
@@ -226,10 +226,10 @@ CaosGear : CaosBox {
 						\amp1,ampx,
 						\amp2,ampy,
 						\out,outbus);
-				bassmel.next.postcln;//debug
 					~tiempos.wait;
 				}
 			}).quant_(4);
+		);
 
 		^"Bass2 values changed";
 
