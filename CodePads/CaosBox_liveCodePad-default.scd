@@ -20,12 +20,12 @@
 ~h2={var out=50;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
 // s.queryAllNodes;
 // Melodies as intervals array
-// m.melody(x,36);
+// ~mainmelody.melody(~degrees,36);
 /* Bass, Pad, Chord functions: */
 /////////////////////////////////
 (//bass 1
 Tdef(\bass,{
-	var bassmel=Prand(m.melody(x,24),inf).asStream;
+	var bassmel=Prand(~mainmelody.melody(~degrees,24),inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
 			\filtminf,50,
@@ -45,7 +45,7 @@ Tdef(\bass,{
 //bass 2
 (
 Tdef(\bass2,{
-	var bass2mel=Pseq(m.melody(x,48).mirror2,inf).asStream;
+	var bass2mel=Pseq(~mainmelody.melody(~degrees,48).mirror2,inf).asStream;
 
 	loop{
 		~bass2.set(\note,bass2mel.next,
@@ -67,7 +67,7 @@ Tdef(\bass2,{
 //ambient pad
 (
 Tdef(\pad,{
-	var padmel=Pxrand(m.melody(x),inf).asStream;
+	var padmel=Pxrand(~mainmelody.melody(~degrees),inf).asStream;
 	~amb.set(\waveform, 'pulse' );//use 'sin' or 'tri' or 'pulse' only
 	loop{
 		~amb.set(\note,padmel.next);
@@ -86,7 +86,7 @@ Tdef(\pad,{
 //ambiente pad 2
 (
 Tdef(\pad2,{
-	var pad2mel=Pseq(m.melody(x),inf).asStream;
+	var pad2mel=Pseq(~mainmelody.melody(~degrees),inf).asStream;
 	loop{
 		~amb2.set(\note,pad2mel.next);
 		~amb2.set(\fmax,[16,32,64,128,8].choose);
@@ -105,7 +105,7 @@ Tdef(\pad2,{
 //Chord Synths
 (
 Tdef(\acordes,{
-	var acmel=Pseq(m.melody(x,36),inf).asStream;
+	var acmel=Pseq(~mainmelody.melody(~degrees,36),inf).asStream;
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
 	var cambia=Prand(['m','m7','mmaj7'],inf).asStream;
 	loop{
@@ -124,7 +124,7 @@ Tdef(\acordes,{
 );
 (
 Tdef(\acordes2,{
-	var ac2mel=Prand(m.melody(x,24),inf).asStream;
+	var ac2mel=Prand(~mainmelody.melody(~degrees,24),inf).asStream;
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', 'M9',  'M9m', 'm9' or 'm9m' keys only
 	var cambia2=Prand(['m','M','M9','mmaj7','m9m'],inf).asStream;
 	loop{

@@ -88,6 +88,6 @@
 ~l=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"];
 ~n=["1","2","3","4","5","6","7","8","9","0"];
 //mainmelody
-m = CaosGear.new;
-x = Scale.minor.degrees;
-x = LCNE.dupOctave(x,3);
+~mainmelody = CaosGear.new;
+~degrees = Scale.minor.degrees;
+~degrees = LCNE.dupOctave(~degrees,3);
