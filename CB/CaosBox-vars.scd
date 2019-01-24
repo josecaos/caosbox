@@ -88,6 +88,10 @@
 ~l=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"];
 ~n=["1","2","3","4","5","6","7","8","9","0"];
 //mainmelody
-~mainmelody = CaosGear.new;
+~maoinmelody = CaosGear.new;
 ~degrees = Scale.minor.degrees;
+// soporte para lcne-lib
+if('LCNE'.asClass == true,{
 ~degrees = LCNE.dupOctave(~degrees,3);
+});
+

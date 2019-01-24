@@ -12,7 +12,7 @@ CaosBox {
 		},{
 			// System files
 			~urls = ["CB/CaosBox-midi.scd","CB/CaosBox-vars.scd","CB/CaosBox-signal.scd","CB/CaosBox-synths.scd",
-				"CB/CaosBox-auto.scd","CodePads/CaosBox_liveCodePad-default.scd","GUI/CaosBox-GUI.scd",
+				"CB/CaosBox-auto.scd","CB/CaosBox-defaults.scd","GUI/CaosBox-GUI.scd",
 				"GUI/CaosBox-GUI_2.scd","GUI/CaosBox-GUI_3.scd","GUI/CaosBox-GUI_4.scd","CB/CaosBox-seq.scd",
 				"CB/CaosBox-funcs.scd"];
 
@@ -32,7 +32,6 @@ CaosBox {
 
 			(~url +/+ "CB/CaosBox-load.scd").load;
 
-			//debug
 			fork{1.do({13.wait;
 
 				"\n => Class in development ... if you are having trouble booting sequencer, please refer to file 'CaosBox.scd' to use legacy boot".inform;
@@ -98,7 +97,7 @@ CaosBox {
 
 		var v = ~botm;
 
-		if(v.value == 0,{v.valueAction_(1)},{v.valueAction_(0)});
+		if(v.value == 0,{v.valueAction_(1);"Metric on thirds".inform;},{v.valueAction_(0)};"Metric on fourths".inform);
 
 		^"";
 	}

@@ -20,7 +20,8 @@ Task({|i|
 	1.yield;
 	1.do{"Bienvenido/Welcome.".inform};
 	1.yield;
-	1.do{" + CaosBox v1.1 es una Máquina no tan común, para hacer Algorave/Livecoding con CaosPercLib. \n + CaosBox v1.1 is a not so common Algoraving/Livecoding Machine for CaosPercLib. \n + Escrito/Written: @joseCao5  [at]: http://www.josecaos.xyz".inform};
+	1.do{" + CaosBox v1.1 es una Máquina no tan común, para hacer Algorave/Livecoding con CaosPercLib. \n + CaosBox v1.1 is a not so common Algoraving/Livecoding Machine for CaosPercLib. \n + Escrito/Written: @Ill_Slide  [at]: http://www.josecaos.xyz".inform;
+	};
 	2.yield;
 	//
 	1.do{" => Abierto/Opened: CaosBox_liveCodePad-default.scd".inform};
@@ -33,4 +34,4 @@ for(0,~urls.size,{|i|
 
 });
 //
-(~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").openOS;
+// (~url +/+ "CodePads/CaosBox_liveCodePad-default.scd").openOS;
