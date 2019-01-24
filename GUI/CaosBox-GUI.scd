@@ -280,9 +280,11 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").font_(Font("Dejavu San
 {
 	var bool = true;
 	if(bool  != true, {
+		"RESUME".inform;
 		Tdef(\secuencias).resume;Tdef(\pad).resume;Tdef(\bass).resume;Tdef(\bass2).resume;
 		Tdef(\pad2).resume;Tdef(\acordes).resume;Tdef(\acordes2).resume;"\n -> Now playing, please start algoraving <-".inform;
 	},{
+		"PLAYYYYY".inform;
 		Tdef(\secuencias).play;Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
 		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"\n -> Now playing, please start algoraving <-".inform;
 	});

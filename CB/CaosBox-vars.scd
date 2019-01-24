@@ -88,10 +88,14 @@
 ~l=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"];
 ~n=["1","2","3","4","5","6","7","8","9","0"];
 //mainmelody
-~maoinmelody = CaosGear.new;
+~mainmelody = CaosGear.new;
 ~degrees = Scale.minor.degrees;
 // soporte para lcne-lib
-if('LCNE'.asClass == true,{
-~degrees = LCNE.dupOctave(~degrees,3);
-});
+if('LCNE'.asClass != nil,{
+	"lcne-lib: OK.".inform;
+	"3 Octave melody".inform  + ~degrees = LCNE.dupOctave(~degrees,3);
 
+}, {
+	"lcne-lib: Not Installed.".inform;
+	"'lcne-dev' library helps to duplicate melodies length in  octaves. \n Clone here: git@github.com:liveCodeNetEnsamble/lcne-dev.git".inform;
+});

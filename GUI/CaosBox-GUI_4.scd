@@ -161,5 +161,5 @@ StaticText(~w,Rect(785,272,185,15)).string_("BPM:").font_(Font("Dejavu Sans",14,
 	("+ BPM set to" + ~numclock.value).inform;
 };
 //
-~w.onClose={s.quit.freeAll.reboot};
+~w.onClose={~url = nil; s.quit.freeAll.reboot};//ALV todo!
 );
