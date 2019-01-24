@@ -28,7 +28,7 @@ Task({|i|
 }).play;
 );
 // Complementary files
-for(0,~urls.size,{|i|
+for(0,~urls.size-1,{|i|
 
 	(~url +/+ ~urls[i]).load;
 

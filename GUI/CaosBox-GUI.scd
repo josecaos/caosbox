@@ -21,9 +21,9 @@ for (0, 31, { |i|
 
 		~lightsteps[i] = Button(~w,Rect(~lightpos-1,271,15,15)).font_(Font("DejaVu Sans",9,true)).states = [[" - ",Color.white(0.5),Color.green(0.15)],[i,Color.black,Color.green(0.95)]];
 
-		},{
+	},{
 
-			~lightsteps[i] = Button(~w,Rect(~lightpos-1,271,15,15)).font_(Font("DejaVu Sans",9,true)).states = [[" - ",Color.white(0.5),Color.red(0.15)],[i,Color.white,Color.red(1)]];
+		~lightsteps[i] = Button(~w,Rect(~lightpos-1,271,15,15)).font_(Font("DejaVu Sans",9,true)).states = [[" - ",Color.white(0.5),Color.red(0.15)],[i,Color.white,Color.red(1)]];
 
 	});
 
@@ -273,12 +273,21 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").font_(Font("Dejavu San
 ~bot=Button(~w,Rect(275,650,515,25));
 ~bot.states=[["=>",Color.black,Color.green],
 	["[_]",Color.white,Color.red]];
-~bot.action={|val|if(val.value==0,{Tdef(\secuencias).pause;Tdef(\autor).pause;Tdef(\autod).pause;Tdef(\autop).pause;Tdef(\autog).pause;
+~bot.action={|val|if(val.value == 0,{Tdef(\secuencias).pause;Tdef(\autor).pause;Tdef(\autod).pause;Tdef(\autop).pause;Tdef(\autog).pause;
 	Tdef(\bass).pause;Tdef(\bass2).pause;Tdef(\pad).pause;Tdef(\pad2).pause;Tdef(\acordes).pause;Tdef(\acordes2).pause;
 	~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~botm.value=0;~hbutt.value=0;
 	"->You just Stopped CaosBox<-".inform;},
-	{Tdef(\secuencias).play;Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
-		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"\n -> Now playing, please start algoraving <-".inform})};
+{
+	var bool = true;
+	if(bool  != true, {
+		Tdef(\secuencias).resume;Tdef(\pad).resume;Tdef(\bass).resume;Tdef(\bass2).resume;
+		Tdef(\pad2).resume;Tdef(\acordes).resume;Tdef(\acordes2).resume;"\n -> Now playing, please start algoraving <-".inform;
+	},{
+		Tdef(\secuencias).play;Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
+		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"\n -> Now playing, please start algoraving <-".inform;
+	});
+});
+};
 //record
 ~filea=[~n.choose,~l.choose,~n.choose,~l.choose];
 ~filename=~filename.add(~filea.stutter((1..2).choose).scramble.join);
@@ -290,9 +299,9 @@ StaticText(~w,Rect(790,635,130,15)).string_("Recording").font_(Font("Dejavu Sans
 ~recbot.action={|val|if(val.value==0,{s.stopRecording;
 	"->Stoped Recording<-".inform;
 	~filename=["c","a","o","s","b","o","x","_",~filea.join,~l.choose,~n.choose];
-	},
-	{s.record(~url +/+ "Recorded" +/+  ~ftype[0] ++ ~filename.value.join ++ "-" ++ ~fecha.dayStamp ++ "-" ++ ~numclock.value ++ "bpm.aiff");
-		"->Recording<-".inform})
+},
+{s.record(~url +/+ "Recorded" +/+  ~ftype[0] ++ ~filename.value.join ++ "-" ++ ~fecha.dayStamp ++ "-" ++ ~numclock.value ++ "bpm.aiff");
+	"->Recording<-".inform})
 };
 //Historial
 StaticText(~w,Rect(920,635,99,15)).string_("History:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.75,0.75,0.75));

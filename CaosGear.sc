@@ -80,14 +80,6 @@ CaosGear : CaosBox {
 
 	}
 
-	/*	kickDyn {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=0,amp1=1,amp2=0.25,doneAction=2|
-
-	// ~kickgear.set(\out,out,\att,att,\rel,rel,\modFreq,modFreq,\modbw,modbw,\freq1,freq1,\freq2,freq2,\lowcutfreq,lowcutfreq,\gate,gate,\amp1,amp1,\amp2,amp2,\doneAction,doneAction);
-	// Synth(\kickgear,[\out,out,\att,att,\rel,rel,\modFreq,modFreq,\modbw,modbw,\freq1,freq1,\freq2,freq2,\lowcutfreq,lowcutfreq,\gate,gate,\amp1,amp1,\amp2,amp2,\doneAction,doneAction]);
-
-	^"Dynamic kick";
-	}*/
-
 	//
 	bass {|
 		out=#[50],
@@ -149,10 +141,10 @@ CaosGear : CaosBox {
 						\iphase,waveiphase,
 						\amp1,ampx,
 						\amp2,ampy,
-						\out,outbus);
+						\out,outbus.next);
 					~tiempos.wait;
 				}
-			}).quant_(4);
+			}).quant_(1);
 		);
 
 		^"Bass values changed";
@@ -228,7 +220,7 @@ CaosGear : CaosBox {
 						\out,outbus);
 					~tiempos.wait;
 				}
-			}).quant_(4);
+			}).quant_(1);
 		);
 
 		^"Bass2 values changed";

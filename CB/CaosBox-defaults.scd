@@ -1,25 +1,14 @@
 ///////////////////////////////////////////
 //CaosBox v1.1 Timbre  default parameters
-/////////////////Leeme//////////////////////////
-////////////////////////////////////////////
-/* Percussion Functions: */
-///////////////////////////
-//
-//
-//kick
+///////////////////////////////////////////
 ~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.25,60,64,50,1,1,0.2,2))};
-//snare
-~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:360,rq:0.25,amp1:0.75,amp2:0.5))};//
-//hat
-~h={var out=50;Out.ar(out,CaosHats.ar(att:0.01,rel:0.5,highcutfreq:8330,rq:0.25,amp1:0.35,amp2:0.01))};//
-//kick
-~b2={var out=64;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.7,modFreq:2,modbw:0.5,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};//
-//snare2
-~t2={var out=58;Out.ar(out,CaosSnare2.ar(att:0.01,rel:0.16,iphase:0.5,bw:0.35,highcutfreq:270,rq:0.35,amp1:0.1,amp2:0.05))};//
-//hat2
-~h2={var out=50;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
+~b2={var out=50;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.7,modFreq:2,modbw:0.5,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};
+~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:360,rq:0.25,amp1:0.75,amp2:0.5))};
+~t2={var out=50;Out.ar(out,CaosSnare2.ar(att:0.01,rel:0.16,iphase:0.5,bw:0.35,highcutfreq:270,rq:0.35,amp1:0.1,amp2:0.05))};
+~h={var out=50;Out.ar(out,CaosHats.ar(att:0.01,rel:0.5,highcutfreq:8330,rq:0.25,amp1:0.35,amp2:0.01))};
+~h2={var out=50;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};
 /////////////////////////////////
-(//bass 1
+(
 Tdef(\bass,{
 	var bassmel=Prand(~mainmelody.melody(~degrees,24),inf).asStream;
 	loop{
@@ -31,9 +20,7 @@ Tdef(\bass,{
 			\iphase,0.5,
 			\amp1,0.5,
 			\amp2,0.5,
-			// \out,[52,53,56,57]);
-			// \out,~rand_stream.value('rand1',[52,56,60,58,54,64]));
-			\out,64);
+			\out,50);
 		~tiempos.wait;
 	}
 }).quant_(1);

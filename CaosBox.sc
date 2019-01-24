@@ -97,7 +97,7 @@ CaosBox {
 
 		var v = ~botm;
 
-		if(v.value == 0,{v.valueAction_(1);"Metric on thirds".inform;},{v.valueAction_(0)};"Metric on fourths".inform);
+		if(v.value == 0,{v.valueAction_(1);},{v.valueAction_(0);});
 
 		^"";
 	}
