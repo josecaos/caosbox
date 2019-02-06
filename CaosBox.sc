@@ -11,10 +11,7 @@ CaosBox {
 
 		},{
 			// System files
-			~urls = ["CB/CaosBox-midi.scd","CB/CaosBox-vars.scd","CB/CaosBox-signal.scd","CB/CaosBox-synths.scd",
-				"CB/CaosBox-auto.scd","CB/CaosBox-defaults.scd","GUI/CaosBox-GUI.scd",
-				"GUI/CaosBox-GUI_2.scd","GUI/CaosBox-GUI_3.scd","GUI/CaosBox-GUI_4.scd","CB/CaosBox-seq.scd",
-				"CB/CaosBox-funcs.scd"];
+			~urls = ["CB/CaosBox-midi.scd","CB/CaosBox-vars.scd","CB/CaosBox-signal.scd","CB/CaosBox-synths.scd",	"CB/CaosBox-auto.scd","CB/CaosBox-defaults.scd","GUI/CaosBox-GUI.scd",	"GUI/CaosBox-GUI_2.scd","GUI/CaosBox-GUI_3.scd","GUI/CaosBox-GUI_4.scd","CB/CaosBox-seq.scd","CB/CaosBox-funcs.scd"];
 
 			~url = this.filenameSymbol.asString.dirname;
 
@@ -56,7 +53,7 @@ CaosBox {
 	*stop {
 
 		~bot.valueAction_(0);
-		Tdef(\secuencias).reset;
+		Tdef(\secuencias).pause;
 
 		^"";
 	}
