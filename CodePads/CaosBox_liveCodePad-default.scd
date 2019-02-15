@@ -7,7 +7,7 @@
 //
 //
 //kick
-~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.25,60,64,50,1,1,0.2,2))};
+~b={var out=62;Out.ar(out,CaosKick.ar(0.01,0.85,1,0.25,60,64,50,1,0.88,0.45,2))};
 //snare
 ~t={var out=50;Out.ar(out,CaosSnare.ar(att:0.01,rel:0.25,highcutfreq:360,rq:0.25,amp1:0.75,amp2:0.5))};//
 //hat
@@ -17,7 +17,7 @@
 //snare2
 ~t2={var out=58;Out.ar(out,CaosSnare2.ar(att:0.01,rel:0.16,iphase:0.5,bw:0.35,highcutfreq:270,rq:0.35,amp1:0.1,amp2:0.05))};//
 //hat2
-~h2={var out=50;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
+~h2={var out=52;Out.ar(out,CaosHats2.ar(att:0.025,rel:0.25,highcutfreq:6950,rq:0.45,amp1:0.5,amp2:0.3))};//
 // s.queryAllNodes;
 // Melodies as intervals array
 // ~mainmelody.melody(~degrees,36);
@@ -25,16 +25,16 @@
 /////////////////////////////////
 (//bass 1
 Tdef(\bass,{
-	var bassmel=Prand(~mainmelody.melody(~degrees,24),inf).asStream;
+	var bassmel=Prand(~mainmelody.melody(~degrees,36),inf).asStream;
 	loop{
 		~bass.set(\note,bassmel.next,
 			\filtminf,50,
-			\filtmaxf,8420,
-			\filtime,0.0125,
-			\rq,0.5,
-			\iphase,0.5,
-			\amp1,0.5,
-			\amp2,0.5,
+			\filtmaxf,12420,
+			\filtime,0.1125,
+			\rq,0.25,
+			\iphase,0.15,
+			\amp1,0.15,
+			\amp2,0.15,
 			// \out,[52,53,56,57]);
 			// \out,~rand_stream.value('rand1',[52,56,60,58,54,64]));
 			\out,64);
@@ -45,7 +45,7 @@ Tdef(\bass,{
 //bass 2
 (
 Tdef(\bass2,{
-	var bass2mel=Pseq(~mainmelody.melody(~degrees,48).mirror2,inf).asStream;
+	var bass2mel=Pseq(~mainmelody.melody(~degrees,24).mirror2,inf).asStream;
 
 	loop{
 		~bass2.set(\note,bass2mel.next,
@@ -124,7 +124,7 @@ Tdef(\acordes,{
 );
 (
 Tdef(\acordes2,{
-	var ac2mel=Prand(~mainmelody.melody(~degrees,24),inf).asStream;
+	var ac2mel=Prand(~mainmelody.melody(~degrees,[24,60]),inf).asStream;
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', 'M9',  'M9m', 'm9' or 'm9m' keys only
 	var cambia2=Prand(['m','M','M9','mmaj7','m9m'],inf).asStream;
 	loop{
@@ -133,9 +133,9 @@ Tdef(\acordes2,{
 		~chord2.set(\cutf,12220);
 		~chord2.set(\rq,0.25);
 		~chord2.set(\pan,[0,-0.97]);
-		~chord2.set(\amp,0.1);
-		~chord2.set(\out,c.randStream('rand2',[[52,52],[52,54],56,64]));
-		~tiempos*2.wait;
+		~chord2.set(\amp,0.025);
+		~chord2.set(\out,c.randStream('rand2',[64,52,62,56,60]));
+		~tiempos.wait;
 	}
 }).quant_(1);
 );
