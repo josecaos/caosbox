@@ -50,7 +50,7 @@ Tdef(\bass2,{
 //ambient pad
 (
 Tdef(\pad,{
-	var padmel=Pxrand(~mainmelody.melody(~degrees),inf).asStream;
+	var padmel=Pxrand(~mainmelody.melody(~degrees,36),inf).asStream;
 	~amb.set(\waveform, 'pulse' );//use 'sin' or 'tri' or 'pulse' only
 	loop{
 		~amb.set(\note,padmel.next);
@@ -59,7 +59,7 @@ Tdef(\pad,{
 		~amb.set(\iphase,0.25);
 		~amb.set(\cutf,12420);
 		~amb.set(\rq,0.5);
-		~amb.set(\amp,0.04);
+		~amb.set(\amp,0.05);
 		~amb.set(~rand_stream.value('rand1',[52,56,60,58,54,64]));
 		// ~amb.set(\out,58);
 		~tiempos.wait;

@@ -11,7 +11,9 @@ Task({|i|
 		if(i>0,{
 			texto.rotate(i).inform;
 		}, {
-			play{PinkNoise.ar(SinOsc.ar(2,0,0.01,1))*EnvGen.ar(Env.perc(0.5,8),1,doneAction:2)!2};
+
+			CaosBox.soundcheck(\pink);
+
 		});
 		i=i+1;
 		0.1.wait;
