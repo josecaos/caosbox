@@ -90,14 +90,18 @@
 //mainmelody
 ~mainmelody = CaosGear.new;
 ~degrees = Scale.minor.degrees;
+// Optionals
+"// \n Optional Dependencies".inform;
 // soporte para lcne-lib
 ~lcne = 'LCNE'.asClass;
 switch(~lcne,
 	nil, {
-		"lcne-lib: OK.".inform;
-		"3 Octaves melody".inform  + ~degrees = LCNE.dupOctave(~degrees,3);
-	},
-	{
 		"lcne-lib: Not Installed.".inform;
+	},
+	 {
+		"lcne-lib: OK.".inform;
+		(~url +/+ "opt/lcne-lib.scd").load;
 	}
 );
+"// End optionals".inform;
+// 
