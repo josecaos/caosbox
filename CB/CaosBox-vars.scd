@@ -91,11 +91,13 @@
 ~mainmelody = CaosGear.new;
 ~degrees = Scale.minor.degrees;
 // soporte para lcne-lib
-if('LCNE'.asClass != nil,{
-	"lcne-lib: OK.".inform;
-	"3 Octave melody".inform  + ~degrees = LCNE.dupOctave(~degrees,3);
-
-}, {
-	"lcne-lib: Not Installed.".inform;
-	"'lcne-dev' library helps to duplicate melodies length in  octaves. \n Clone here: git@github.com:liveCodeNetEnsamble/lcne-dev.git".inform;
-});
+~lcne = 'LCNE'.asClass;
+switch(~lcne,
+	nil, {
+		"lcne-lib: OK.".inform;
+		"3 Octaves melody".inform  + ~degrees = LCNE.dupOctave(~degrees,3);
+	},
+	{
+		"lcne-lib: Not Installed.".inform;
+	}
+);
