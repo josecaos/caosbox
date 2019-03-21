@@ -29,12 +29,6 @@ CaosBox {
 
 			(~url +/+ "CB/CaosBox-load.scd").load;
 
-			fork{1.do({13.wait;
-
-				"\n => Class in development ...".inform;
-
-			})};
-
 		};
 
 	}
@@ -58,13 +52,13 @@ CaosBox {
 	}
 
 
-		*openDefaults {
+	*openDefaults {
 
-			(~url +/+ "CB/CaosBox-defaults.scd").openOS;
+		(~url +/+ "CB/CaosBox-defaults.scd").openOS;
 
-			^"Defaults file opened";
+		^"Defaults file opened";
 
-		}
+	}
 
 	*play {
 
@@ -153,7 +147,7 @@ CaosBox {
 			^"";
 		}, {
 
-			^"Use only 'start' or 'stop' keys";
+			^"Use only 'start','stop' or 'load' keys";
 
 		});
 
@@ -375,41 +369,26 @@ CaosBox {
 					^"Grains Automation stopped";
 				});
 			},
-			// 'LPF',{}, //later implementation of filter automation
-			// 'BPF',{},
-			// 'HPF',{},
 
 			"Use only 'reverb','delay','pitch','grains' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
 
 	}
-	*fx {|fx = 'reverb', argArr1 = 0, argArr2 = 0, argArr3 = 0|
 
-		var arg1,arg2,arg3;
+	*fx {|fx = 'reverb', arg1 = 0, arg2 = 0, arg3 = 0, arg4 = 0, arg5 = 0|
+
 		switch(fx,
 			'reverb',{
 				if(Tdef(\autor).isPlaying,{
 
 					^"Reverb Automation is running, use .autoFx Method to stop it";
 				},{
-					arg1=argArr1.asArray;
-					arg2=argArr2.asArray;
-					arg3=argArr3.asArray;
-					/*
-					~mastrev.set(\mix,arg1);
-					~mastrev.set(\room,arg2);
-					~mastrev.set(\damp,arg3);
-					*/
-					// {
-					// ~numr.value=arg1;
-					// ~auxrfader.value=arg1;
-					~auxrfader.valueAction_(1);
-					~numr.valueAction_(1);
-					// ~numroom.value=arg2;
-					// ~auxroomfader.value=arg2;
-					// ~numd.value=arg3;
-					// ~auxdfader.value=arg3;
-					// }.defer(0.05);
-
+					~numr.value=arg1;
+					~auxrfader.value=arg1;
+					~numroom.value=arg2;
+					~auxroomfader.value=arg2;
+					~numd.value=arg3;
+					~auxdfader.value=arg3;
+					^"Reverb Parameters, Seted";
 				});
 			},
 			'delay',{
@@ -417,11 +396,11 @@ CaosBox {
 
 					^"Delay Automation is running, use .autoFx Method to stop it";
 				},{
-					~autodelaytime=argArr1.asArray;
-					~autodelayfeed=argArr2.asArray;
-
-					(~url +/+ "CB/CaosBox-auto.scd").load;
-
+					~numt.value=arg1;
+					~auxtfader.value=arg1;
+					~numf.value=arg2;
+					~auxffader.value=arg2;
+					^"Delay Parameters ,Seted";
 				});
 			},
 			'pitch',{
@@ -429,12 +408,13 @@ CaosBox {
 
 					^"Pitch Automation is running, use .autoFx Method to stop it";
 				},{
-					~autopitchrate=argArr1.asArray;
-					~autopitchdispersion=argArr2.asArray;
-					~autotimedispersion=argArr3.asArray;
-
-					(~url +/+ "CB/CaosBox-auto.scd").load;
-
+					~nump.value=arg1;
+					~auxpfader.value=arg1;
+					~numpd.value=arg2;
+					~auxpdfader.value=arg2;
+					~numtd.value=arg3;
+					~auxtdfader.value=arg3;
+					^"Pitch Parameters, Seted";
 				});
 			},
 			'grains',{
@@ -443,16 +423,20 @@ CaosBox {
 					^"Grains Automation is running, use .autoFx Method to stop it";
 				},{
 
-					~autograintrig=argArr1.asArray;
-					~autograinsize=argArr2.asArray;
-
-					(~url +/+ "CB/CaosBox-auto.scd").load;
-
+					~grains.set(\trigger,~gfaders.x_(arg1));
+					~grains.set(\size,~gfaders.y_(arg2));
+					^"Granulator Parameters, Seted";
 				});
 			},
+			'master',{
 
-			"Use only 'reverb','delay','pitch','grains' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
+					^"Master Parameters, Seted ";
 
+			},
+
+			"Use only 'reverb','delay','pitch','grains' keys for FX type argument";
+
+		);
 	}
 
 }

@@ -33,6 +33,7 @@ CaosGear : CaosBox {
 
 	toTrack {
 
+		this.postcln;
 		if(thisMethod == "kick", {
 			"hell yeah".inform
 			},{
