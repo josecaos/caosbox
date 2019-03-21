@@ -430,11 +430,21 @@ CaosBox {
 			},
 			'master',{
 
-					^"Master Parameters, Seted ";
+				~num.value = arg1;
+				~mastfader.value = arg1;
+				~num1.value = arg2;
+				~mastfader1.value = arg2;
+				~num2.value = arg3;
+				~mastfader2.value = arg3;
+				~num3.value = arg4;
+				~mastfader3.value = arg4;
+				~num4.value = arg5;
+				~mastfader4.value = arg5;
 
+				^"Master Parameters, Seted ";
 			},
 
-			"Use only 'reverb','delay','pitch','grains' keys for FX type argument";
+			"Use only 'reverb','delay','pitch','grains' or 'master' keys for FX type argument";
 
 		);
 	}

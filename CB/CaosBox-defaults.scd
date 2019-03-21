@@ -1,5 +1,5 @@
 ///////////////////////////////////////////
-//CaosBox v1.1 Timbre  default parameters
+//CaosBox v1.1 instruments  default parameters
 ///////////////////////////////////////////
 ~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.25,60,64,50,1,1,0.2,2))};
 ~b2={var out=50;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.7,modFreq:2,modbw:0.5,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};
@@ -41,7 +41,7 @@ Tdef(\bass2,{
 			\iphase,0.05,
 			\amp1,0.25,
 			\amp2,0.1,
-			\out,64);
+			\out,50);
 		// \out,~rand_stream.value('rand1',[52,54,58,64]));
 		~tiempos.wait;
 	}
@@ -60,8 +60,7 @@ Tdef(\pad,{
 		~amb.set(\cutf,12420);
 		~amb.set(\rq,0.5);
 		~amb.set(\amp,0.05);
-		~amb.set(~rand_stream.value('rand1',[52,56,60,58,54,64]));
-		// ~amb.set(\out,58);
+		~amb.set(\out,50);
 		~tiempos.wait;
 	}
 }).quant_(1);
@@ -80,7 +79,7 @@ Tdef(\pad2,{
 		~amb2.set(\rfilt,0.5);
 		~amb2.set(\amp1,0.09);
 		~amb2.set(\amp2,0.05);
-		~amb2.set(\out,~rand_stream.value('rand1',[52,56,58]));
+		~amb2.set(\out,50);
 		~tiempos.wait;
 	}
 }).quant_(4);
@@ -100,7 +99,7 @@ Tdef(\acordes,{
 		~chord.set(\rq,0.5);
 		~chord.set(\pan,0);
 		~chord.set(\amp,0.1);
-		~chord.set(\out,60);
+		~chord.set(\out,50);
 		~tiempos.wait;
 	}
 }).quant_(4);
@@ -117,8 +116,8 @@ Tdef(\acordes2,{
 		~chord2.set(\rq,0.25);
 		~chord2.set(\pan,[0,-0.97]);
 		~chord2.set(\amp,0.1);
-		~chord2.set(\out,this.randStream('rand2',[[52,52],[52,54],56,64]));
-		~tiempos*2.wait;
+		~chord2.set(\out,50);
+		~tiempos.wait;
 	}
 }).quant_(1);
 );
