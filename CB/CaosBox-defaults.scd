@@ -1,5 +1,5 @@
 ///////////////////////////////////////////
-//CaosBox v1.1 instruments  default parameters
+//CaosBox v1.1 Instruments  default parameters
 ///////////////////////////////////////////
 ~b={var out=50;Out.ar(out,CaosKick.ar(0.01,0.25,1,0.25,60,64,50,1,1,0.2,2))};
 ~b2={var out=50;Out.ar(out,CaosKick2.ar(att:0.01,rel:0.7,modFreq:2,modbw:0.5,bw:0.15,freq1:60,freq2:62,lowcutfreq:45,amp:0.1))};

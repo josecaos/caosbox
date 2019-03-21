@@ -379,74 +379,89 @@ CaosBox {
 		switch(fx,
 			'reverb',{
 				if(Tdef(\autor).isPlaying,{
-
 					^"Reverb Automation is running, use .autoFx Method to stop it";
 				},{
-					~numr.value=arg1;
-					~auxrfader.value=arg1;
-					~numroom.value=arg2;
-					~auxroomfader.value=arg2;
-					~numd.value=arg3;
-					~auxdfader.value=arg3;
-					^"Reverb Parameters, Seted";
+					if(arg1 < 0 or: {arg1 > 1} or: {arg2 < 0} or: {arg2 > 1} or: {arg3 < 0 }	or: {arg3 > 1}, {
+						^"Reverb FX parameters only between 0 and 1";
+					}, {
+						~numr.value=arg1;
+						~auxrfader.value=arg1;
+						~numroom.value=arg2;
+						~auxroomfader.value=arg2;
+						~numd.value=arg3;
+						~auxdfader.value=arg3;
+						^"Reverb Parameters, Seted";
+					});
 				});
 			},
 			'delay',{
 				if(Tdef(\autod).isPlaying,{
-
 					^"Delay Automation is running, use .autoFx Method to stop it";
 				},{
-					~numt.value=arg1;
-					~auxtfader.value=arg1;
-					~numf.value=arg2;
-					~auxffader.value=arg2;
-					^"Delay Parameters ,Seted";
+					if(arg1 < 0 or: {arg1 > 4} or: {arg2 < 0} or: {arg2 > 10}, {
+							^"Delay Time Parameter between 0 and 6, feedback parameter between 0 or 10";
+					},
+						{
+							~numt.value=arg1;
+							~auxtfader.value=arg1;
+							~numf.value=arg2;
+							~auxffader.value=arg2;
+							^"Delay Parameters, Seted";
+						});
 				});
 			},
 			'pitch',{
 				if(Tdef(\autoz).isPlaying,{
-
 					^"Pitch Automation is running, use .autoFx Method to stop it";
 				},{
-					~nump.value=arg1;
-					~auxpfader.value=arg1;
-					~numpd.value=arg2;
-					~auxpdfader.value=arg2;
-					~numtd.value=arg3;
-					~auxtdfader.value=arg3;
-					^"Pitch Parameters, Seted";
+					if(arg1 < 0 or: {arg1 > 6} or: {arg2 < 0} or: {arg2 > 1} or: {arg3 < 0 }	or: {arg3 > 1},{
+						^"Pitch Rate parameter only btween 0 and 6, other args between 0 and 1";
+					}, {
+						~nump.value=arg1;
+						~auxpfader.value=arg1;
+						~numpd.value=arg2;
+						~auxpdfader.value=arg2;
+						~numtd.value=arg3;
+						~auxtdfader.value=arg3;
+						^"Pitch Parameters, Seted";
+					});
 				});
 			},
 			'grains',{
 				if(Tdef(\autog).isPlaying,{
-
 					^"Grains Automation is running, use .autoFx Method to stop it";
 				},{
-
-					~grains.set(\trigger,~gfaders.x_(arg1));
-					~grains.set(\size,~gfaders.y_(arg2));
-					^"Granulator Parameters, Seted";
+					if(arg1 < 0 or: {arg1 > 1} or: {arg2 < 0} or: {arg2 > 1},{
+							^"Granulator FX Parameters only between 0 and 1";
+					},
+						{
+							~grains.set(\trigger,~gfaders.x_(arg1));
+							~grains.set(\size,~gfaders.y_(arg2));
+							^"Granulator Parameters, Seted";
+						});
 				});
 			},
 			'master',{
-
-				~num.value = arg1;
-				~mastfader.value = arg1;
-				~num1.value = arg2;
-				~mastfader1.value = arg2;
-				~num2.value = arg3;
-				~mastfader2.value = arg3;
-				~num3.value = arg4;
-				~mastfader3.value = arg4;
-				~num4.value = arg5;
-				~mastfader4.value = arg5;
-
-				^"Master Parameters, Seted ";
+				if(arg1 < 0 or: {arg1 > 1} or: {arg2 < 0} or: {arg2 > 1} or: {arg3 < 0 }	or: {arg3 > 1}
+					or: {arg4 < 0} or: {arg4 > 1} or: {arg5 < 0} or: {arg5 > 1}, {
+						^"Master FX parameters only between 0 and 1";
+					},{
+						~num.value = arg1;
+						~mastfader.value = arg1;
+						~num1.value = arg2;
+						~mastfader1.value = arg2;
+						~num2.value = arg3;
+						~mastfader2.value = arg3;
+						~num3.value = arg4;
+						~mastfader3.value = arg4;
+						~num4.value = arg5;
+						~mastfader4.value = arg5;
+						^"Master Parameters, Seted ";
+				});
 			},
-
 			"Use only 'reverb','delay','pitch','grains' or 'master' keys for FX type argument";
-
 		);
+
 	}
 
 }
