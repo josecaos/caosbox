@@ -1,5 +1,7 @@
 CaosGear : CaosBox {
 
+	var instance_id;
+
 	*new {
 
 		^super.new;
@@ -28,21 +30,23 @@ CaosGear : CaosBox {
 			Out.ar(out,signal);
 		};
 
-		^"Kick values changed";
+		instance_id = "I'm a kick";
+
+		^instance_id;
 	}
 
-	toTrack {
+	toTrack {|steps = 0, overrideSteps = false |
 
-		this.postcln;
-		if(thisMethod == "kick", {
-			"hell yeah".inform
-			},{
-				"fack nooo class identified".inform;
-		});
+		var track;
 
-		thisMethod.postcln;
+		switch( instance_id,
+			"I'm a kick", {"hell yeah".inform;	track = \kick	},
+			"Default switch";
+		);
 
-		^"SOIEFMEQWEDFPOKJA";
+		CaosBox.setSteps(track,steps, overrideSteps);
+
+		^"Instance added to sequencer";
 	}
 
 	kick2 {|out=50,att=0.01,rel=0.5,modFreq=2,modbw=0.5,bw=0.2,freq1=60,freq2=64,lowcutfreq=45,gate=1,amp=0.15|

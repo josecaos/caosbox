@@ -227,13 +227,13 @@ CaosBox {
 
 	}
 
-	*setSteps {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],resetCheckboxes = false|
+	*setSteps {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],overrideSteps = false|
 
 		var index,arr,dir = ~steps;
 
 		arr = steps.asArray;//en caso de no usar array como parametro
 
-		if(resetCheckboxes == true,{this.clearSteps(track)},{this.clearSteps(track,arr)});
+		if(overrideSteps == true,{this.clearSteps(track)},{this.clearSteps(track,arr)});
 
 		for(0,arr.size-1,{|i|
 			index=arr[i];
@@ -274,13 +274,10 @@ CaosBox {
 						'slow',{~autopopr.valueAction_(2);"Reverb slow speed".postln},
 						'slowest',{~autopopr.valueAction_(3);"Reverb slowest speed".postln}
 					);
-
 					~autoreverbmix=argArr1.asArray;
 					~autoreverbroom=argArr2.asArray;
 					~autoreverbdamp=argArr3.asArray;
-
 					(~url +/+ "CB/CaosBox-auto.scd").load;//reload
-
 					if(Tdef(\autor).isPlaying,{
 						^"Reverb Automation already running";
 					},{
@@ -291,7 +288,6 @@ CaosBox {
 					~autobotr.valueAction_(0);
 					^"Reverb Automation stopped";
 				});
-
 			},
 			'delay',{
 				if(play == true, {
@@ -301,12 +297,9 @@ CaosBox {
 						'slow',{~autopopd.valueAction_(2);"Delay slow speed".postln},
 						'slowest',{~autopopd.valueAction_(3);"Delay slowest speed".postln}
 					);
-
 					~autodelaytime=argArr1.asArray;
 					~autodelayfeed=argArr2.asArray;
-
 					(~url +/+ "CB/CaosBox-auto.scd").load;
-
 					if(Tdef(\autod).isPlaying,{
 						^"Delay Automation already running";
 					},{
@@ -326,13 +319,10 @@ CaosBox {
 						'slow',{~autopopp.valueAction_(2);"Pitch slow speed".postln},
 						'slowest',{~autopopp.valueAction_(3);"Pitch slowest speed".postln}
 					);
-
 					~autopitchrate=argArr1.asArray;
 					~autopitchdispersion=argArr2.asArray;
 					~autotimedispersion=argArr3.asArray;
-
 					(~url +/+ "CB/CaosBox-auto.scd").load;
-
 					if(Tdef(\autop).isPlaying,{
 						^"Pitch Automation already running";
 					},{
@@ -352,12 +342,9 @@ CaosBox {
 						'slow',{~autopopg.valueAction_(2);"Grains slow speed".postln},
 						'slowest',{~autopopg.valueAction_(3);"grains slowest speed".postln}
 					);
-
 					~autograintrig=argArr1.asArray;
 					~autograinsize=argArr2.asArray;
-
 					(~url +/+ "CB/CaosBox-auto.scd").load;
-
 					if(Tdef(\autog).isPlaying,{
 						^"Grains Automation already running";
 					},{
@@ -369,9 +356,7 @@ CaosBox {
 					^"Grains Automation stopped";
 				});
 			},
-
 			"Use only 'reverb','delay','pitch','grains' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
-
 	}
 
 	*fx {|fx = 'reverb', arg1 = 0, arg2 = 0, arg3 = 0, arg4 = 0, arg5 = 0|
@@ -461,7 +446,6 @@ CaosBox {
 			},
 			"Use only 'reverb','delay','pitch','grains' or 'master' keys for FX type argument";
 		);
-
 	}
-
+	//
 }

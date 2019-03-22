@@ -1,7 +1,11 @@
+(
 c = CaosBox;
-// c.browse;
 c.enviroment;
+);
 
+k = CaosGear.new;
+k.kick;
+k.toTrack(0);
 
 
 c.fx(\reverb,arg1:0.65,arg2:0.95,arg3:0.9);
@@ -12,3 +16,6 @@ c.fx(\master,arg1:1,arg2:1,arg3:0.45,arg4:0.425,arg5:0.95);
 
 c.openDefaults;
 ~degrees = LCNE.dupOctave(Scale.hungarianMinor.degrees,4)
+
+//
+ClassBrowser.initGUI;
