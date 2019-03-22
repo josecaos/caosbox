@@ -5,8 +5,13 @@ c.enviroment;
 
 k = CaosGear.new;
 k.kick;
-k.toTrack(0);
+k.toTrack([0,2,3,4,6,7,8,11,24]+4);
 
+x = CaosGear.new;
+x.bass;
+x.toTrack([0,2,3,4,6,7,8,11,24]+4);
+x.instance_id_("Kick");
+x.instance_id;
 
 c.fx(\reverb,arg1:0.65,arg2:0.95,arg3:0.9);
 c.fx(\delay,arg1:0.5,arg2:0.5);

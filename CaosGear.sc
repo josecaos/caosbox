@@ -1,6 +1,6 @@
 CaosGear : CaosBox {
 
-	var instance_id;
+	var <>instance_id;
 
 	*new {
 
@@ -30,39 +30,27 @@ CaosGear : CaosBox {
 			Out.ar(out,signal);
 		};
 
-		instance_id = "I'm a kick";
+		instance_id = "Kick";
 
 		^instance_id;
-	}
-
-	toTrack {|steps = 0, overrideSteps = false |
-
-		var track;
-
-		switch( instance_id,
-			"I'm a kick", {"hell yeah".inform;	track = \kick	},
-			"Default switch";
-		);
-
-		CaosBox.setSteps(track,steps, overrideSteps);
-
-		^"Instance added to sequencer";
 	}
 
 	kick2 {|out=50,att=0.01,rel=0.5,modFreq=2,modbw=0.5,bw=0.2,freq1=60,freq2=64,lowcutfreq=45,gate=1,amp=0.15|
 		var signal;
 		signal = CaosKick2.ar(att,rel,modFreq,modbw,bw,freq1,freq2,lowcutfreq,gate,amp);
-		Out.ar(out,signal)
+		Out.ar(out,signal);
+		instance_id = "Kick2";
+		^instance_id;
 	}
 
 	snare {|out=50,att=0.01,rel=0.25,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.1|
-
 		~t = {
 			var signal;
 			signal = CaosSnare.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
 		};
-
+		instance_id = "Snare";
+		^instance_id;
 	}
 
 	snare2 {|out=50,att=0.01,rel=0.25,iphase=0.03,bw=0.5,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.25|
@@ -71,31 +59,29 @@ CaosGear : CaosBox {
 			signal = CaosSnare2.ar(att,rel,iphase,bw,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
 		};
-
+		instance_id = "Snare2";
+		^instance_id;
 	}
 
 	hihats {|out=50,att=0.01,rel=0.1,highcutfreq=8330,rq=0.15,gate=1,amp1=0.9,amp2=0.9|
-
 		~h = {
-
 			var signal;
 			signal = CaosHats.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
-
 		};//
-
+		instance_id = "HiHats";
+		^instance_id;
 	}
 
 	hihats2 {|out=50,att=0.01,rel=0.1,highcutfreq=12330,rq=0.5,gate=1,amp1=0.9,amp2=0.9|
 
 		~h2 = {
-
 			var signal;
 			signal = CaosHats2.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
-
 		};//
-
+		instance_id = "HiHats2";
+		^instance_id;
 	}
 
 	//
@@ -164,9 +150,8 @@ CaosGear : CaosBox {
 				}
 			}).quant_(1);
 		);
-
-		^"Bass values changed";
-
+		instance_id = "Bass";
+		^instance_id;
 	}
 
 	bass2 {|
@@ -240,15 +225,37 @@ CaosGear : CaosBox {
 				}
 			}).quant_(1);
 		);
-
-		^"Bass2 values changed";
-
+		instance_id = "Bass2";
+		^instance_id;
 	}
 
 	lineIn {|out=64,inchan=0,gate=1,att=0.05,rel=0.25|
 
 		~entrada.set(\out,out,\inchan,inchan,\gate,gate,\att,att,\rel,rel);
 
-		^"LineIn".inform;
+		^"LineIn";
 	}
+
+		toTrack {|steps = 0, overrideSteps = false |
+
+		var track;
+
+		switch( instance_id,
+			"Kick", {track = \kick	},
+			"Kick2", {track = \kick2	},
+			"Snare", {track = \snare	},
+			"Snare2", {track = \snare2	},
+			"HiHats", {track = \hihats	},
+			"HiHats2", {track = \hihats2},
+			"Bass", {track = \bass},
+			"Bass2 ", {track = \bass2	},
+			"Line In", {track = \in	},
+			"Default switch";
+		);
+
+		CaosBox.setSteps(track,steps, overrideSteps);
+
+		^"CaossGear Instance added to sequencer";
+	}
+
 }

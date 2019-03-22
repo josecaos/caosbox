@@ -223,7 +223,7 @@ CaosBox {
 
 		});
 
-		^"Manually cleared step pattern".inform;
+		^"Cleared steps".inform;
 
 	}
 
@@ -240,7 +240,7 @@ CaosBox {
 			dir[track][0][index].valueAction_(true);
 		});
 
-		^"Manually added step pattern".inform;
+		^"Added steps".inform;
 	}
 
 	*randSteps {|track,steps_num = 1|
