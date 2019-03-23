@@ -45,18 +45,10 @@ CaosBox {
 				signal = PinkNoise;
 				"Use 'white', 'pink' or 'brown' keys only".inform;}
 		);
+
 		play{signal.ar(SinOsc.ar(2,0,0.01,1))*EnvGen.ar(Env.perc(0.5,8),1,doneAction:2)!2};
 
 		^"Soundcheck running with" + signal.asString + " noise"
-
-	}
-
-
-	*openDefaults {
-
-		(~url +/+ "CB/CaosBox-defaults.scd").openOS;
-
-		^"Defaults file opened";
 
 	}
 
@@ -66,7 +58,7 @@ CaosBox {
 			^"CaosBox already running";
 		},{
 			~bot.valueAction_(1);
-			^"";
+			^"Machine is running";
 		});
 
 	}
@@ -450,7 +442,5 @@ CaosBox {
 			"Use only 'reverb','delay','pitch','grains' or 'master' keys for FX type argument";
 		);
 	}
-
-
 	//
 }

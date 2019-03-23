@@ -91,7 +91,7 @@
 ~mainmelody = CaosGear.new;
 ~degrees = Scale.minor.degrees;
 // Optionals
-"// \n Optional Dependencies".inform;
+"// Read Optional Dependencies".inform;
 // soporte para lcne-lib
 ~lcne = 'LCNE'.asClass;
 switch(~lcne,

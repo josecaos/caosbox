@@ -99,7 +99,7 @@ CaosGear : CaosBox {
 		amp1=0.5,
 		amp2=0.5|
 		// var bassmel;
-		var note = semitoneArray;
+		var note = semitoneArray.asArray;
 		var attk = attack;
 		var rel = release;
 		var filt1 = filtMinFreq;
@@ -109,7 +109,7 @@ CaosGear : CaosBox {
 		var waveiphase = iphase;
 		var ampx = amp1;
 		var ampy = amp2;
-		var outbus = out;
+		var outbus = out.asArray;
 		(//bass 1
 			Tdef(\bass,{
 
@@ -120,11 +120,11 @@ CaosGear : CaosBox {
 					switch(seqType,
 						'rand', {
 							bassmel=Prand(note,inf).asStream;
-							outbus=Prand(out.asArray,inf).asStream;
+							outbus=Prand(out,inf).asStream;
 						},
 						'seq', {
 							bassmel=Pseq(note,inf).asStream;
-							outbus=Pseq(out.asArray,inf).asStream;
+							outbus=Pseq(out,inf).asStream;
 						},
 						("Bass Melodic secuence type is" + seqType).inform;
 					);
@@ -170,7 +170,7 @@ CaosGear : CaosBox {
 		amp1=0.5,
 		amp2=0.5|
 		// var bassmel;
-		var note = semitoneArray;
+		var note = semitoneArray.asArray;
 		var attk = attack;
 		var rel = release;
 		var trigger = filtTrig;
@@ -182,7 +182,7 @@ CaosGear : CaosBox {
 		var waveiphase = iphase;
 		var ampx = amp1;
 		var ampy = amp2;
-		var outbus = out;
+		var outbus = out.asArray;
 		(
 			Tdef(\bass2,{
 
@@ -193,11 +193,11 @@ CaosGear : CaosBox {
 					switch(seqType,
 						'rand', {
 							bassmel=Prand(note,inf).asStream;
-							outbus=Prand(out.asArray,inf).asStream;
+							outbus=Prand(out,inf).asStream;
 						},
 						'seq', {
 							bassmel=Pseq(note,inf).asStream;
-							outbus=Pseq(out.asArray,inf).asStream;
+							outbus=Pseq(out,inf).asStream;
 						},
 						("Bass Melodic secuence type is" + seqType).inform;
 					);
@@ -235,8 +235,8 @@ CaosGear : CaosBox {
 		chordsArray = #['Mmaj7'],	attack = 0.05, release = 1, iphase = 0.025,
 		width = 0.1, cutf = 1200, rq = 0.5, pan = #[0.98,-1], amp = 0.5|
 		//
-		var note = semitoneArray;
-		var chords = chordsArray;
+		var note = semitoneArray.asArray;
+		var chords = chordsArray.asArray;
 		var attk = attack;
 		var rel = release;
 		var iph = iphase;
@@ -245,7 +245,7 @@ CaosGear : CaosBox {
 		var	bandwidth = rq;
 		var space = pan;
 		var vol = amp;
-		var outbus = out;
+		var outbus = out.asArray;
 		(
 			Tdef(\acordes,{
 
@@ -256,12 +256,12 @@ CaosGear : CaosBox {
 					switch(seqType,
 						'rand', {
 							mel=Prand(note,inf).asStream;
-							outbus=Prand(out.asArray,inf).asStream;
+							outbus=Prand(out,inf).asStream;
 							chord=Prand(chords,inf).asStream;
 						},
 						'seq', {
 							mel=Pseq(note,inf).asStream;
-							outbus=Pseq(out.asArray,inf).asStream;
+							outbus=Pseq(out,inf).asStream;
 							chord=Pseq(chords,inf).asStream;
 						},
 						("Chord Melodic secuence type is" + seqType).inform;
@@ -274,6 +274,8 @@ CaosGear : CaosBox {
 					~chord.set(
 						\chord,chord.next,
 						\note,mel.next,
+						\att, attk,
+						\rel, rel,
 						\iphase,iph,
 						\width,iwidth,
 						\cutf,cutfreq,
@@ -289,6 +291,67 @@ CaosGear : CaosBox {
 		instance_id = "Chords";
 		^instance_id;
 	}
+	// chords2 {|
+	// 	out = #[50],	semitoneArray = #[ 0, 2, 4, 5, 7, 9, 11 ],		seqType = 'seq',
+	// 	chordsArray = #['Mmaj7'],	attack = 0.05, release = 1, iphase = 0.025,
+	// 	width = 0.1, cutf = 1200, rq = 0.5, pan = #[0.98,-1], amp = 0.5|
+	// 	//
+	// 	var note = semitoneArray.asArray;
+	// 	var chords = chordsArray.asArray;
+	// 	var attk = attack;
+	// 	var rel = release;
+	// 	var iph = iphase;
+	// 	var iwidth = width;
+	// 	var cutfreq = cutf;
+	// 	var	bandwidth = rq;
+	// 	var space = pan;
+	// 	var vol = amp;
+	// 	var outbus = out.asArray;
+	// 	(
+	// 		Tdef(\acordes,{
+	//
+	// 			var mel, chord, outbus;
+	//
+	// 			if(seqType == 'rand' or: {seqType == 'seq'}, {
+	//
+	// 				switch(seqType,
+	// 					'rand', {
+	// 						mel=Prand(note,inf).asStream;
+	// 						outbus=Prand(out,inf).asStream;
+	// 						chord=Prand(chords,inf).asStream;
+	// 					},
+	// 					'seq', {
+	// 						mel=Pseq(note,inf).asStream;
+	// 						outbus=Pseq(out,inf).asStream;
+	// 						chord=Pseq(chords,inf).asStream;
+	// 					},
+	// 					("Chord Melodic secuence type is" + seqType).inform;
+	// 				);
+	// 				}, {
+	// 					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+	// 			});
+	// 			//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
+	// 			loop{
+	// 				~chord.set(
+	// 					\chord,chord.next,
+	// 					\note,mel.next,
+	// 					\att, attk,
+	// 					\rel, rel,
+	// 					\iphase,iph,
+	// 					\width,iwidth,
+	// 					\cutf,cutfreq,
+	// 					\rq,bandwidth,
+	// 					\pan,space,
+	// 					\amp,vol,
+	// 					\out,outbus.next
+	// 				);
+	// 				~tiempos.wait;
+	// 			}
+	// 		}).quant_(1);
+	// 	);
+	// 	instance_id = "Chords";
+	// 	^instance_id;
+	// }
 
 	lineIn {|out=64,inchan=0,gate=1,att=0.05,rel=0.25|
 
