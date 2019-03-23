@@ -169,12 +169,12 @@ CaosBox {
 	// seq methods
 	*randStream {|seq,array|
 
-		var out;
+		var out, return;
 
-		if(seq != \rand2 and:( seq != \rand1),
+		if(seq != \rand2 and:{ seq != \rand1},
 			{
 
-				"Use 'seq' or 'rand' keys to choose output sequence style \n".inform;
+				"Use 'rand1' or 'rand2' keys to choose output sequence style \n".inform;
 
 			},{
 
@@ -183,7 +183,10 @@ CaosBox {
 					\rand2,{out=Pshuf(array,inf).asStream},
 				);
 
-				^out.next;
+				return = out.next;
+				return.postcln;
+
+				^return;
 		});
 	}
 
@@ -447,5 +450,7 @@ CaosBox {
 			"Use only 'reverb','delay','pitch','grains' or 'master' keys for FX type argument";
 		);
 	}
+
+
 	//
 }

@@ -1,6 +1,6 @@
 CaosGear : CaosBox {
 
-	var <>instance_id;
+	var <instance_id;
 
 	*new {
 
@@ -184,7 +184,7 @@ CaosGear : CaosBox {
 		var ampy = amp2;
 		var outbus = out;
 		(
-		Tdef(\bass2,{
+			Tdef(\bass2,{
 
 				var	bassmel,outbus;
 
@@ -211,21 +211,82 @@ CaosGear : CaosBox {
 						\att,attk,
 						\rel,rel,
 						\note,bassmel.next,
-						\trig,trigger,//
+						\trig,trigger,
 						\filtminf,filt1,
 						\filtmaxf,filt2,
 						\filtime,filt3,
 						\rq,bandwidth,
-						\bandw,band,//
+						\bandw,band,
 						\iphase,waveiphase,
 						\amp1,ampx,
 						\amp2,ampy,
-						\out,outbus);
+						\out,outbus
+					);
 					~tiempos.wait;
 				}
 			}).quant_(1);
 		);
 		instance_id = "Bass2";
+		^instance_id;
+	}
+
+	chords {|
+		out = #[50],	semitoneArray = #[ 0, 2, 4, 5, 7, 9, 11 ],		seqType = 'seq',
+		chordsArray = #['Mmaj7'],	attack = 0.05, release = 1, iphase = 0.025,
+		width = 0.1, cutf = 1200, rq = 0.5, pan = #[0.98,-1], amp = 0.5|
+		//
+		var note = semitoneArray;
+		var chords = chordsArray;
+		var attk = attack;
+		var rel = release;
+		var iph = iphase;
+		var iwidth = width;
+		var cutfreq = cutf;
+		var	bandwidth = rq;
+		var space = pan;
+		var vol = amp;
+		var outbus = out;
+		(
+			Tdef(\acordes,{
+
+				var mel, chord, outbus;
+
+				if(seqType == 'rand' or: {seqType == 'seq'}, {
+
+					switch(seqType,
+						'rand', {
+							mel=Prand(note,inf).asStream;
+							outbus=Prand(out.asArray,inf).asStream;
+							chord=Prand(chords,inf).asStream;
+						},
+						'seq', {
+							mel=Pseq(note,inf).asStream;
+							outbus=Pseq(out.asArray,inf).asStream;
+							chord=Pseq(chords,inf).asStream;
+						},
+						("Chord Melodic secuence type is" + seqType).inform;
+					);
+				}, {
+					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+				});
+				//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
+				loop{
+					~chord.set(
+						\chord,chord.next,
+						\note,mel.next,
+						\iphase,iph,
+						\width,iwidth,
+						\cutf,cutfreq,
+						\rq,bandwidth,
+						\pan,space,
+						\amp,vol,
+						\out,outbus.next
+					);
+						~tiempos.wait;
+					}
+			}).quant_(1);
+			);
+		instance_id = "Chords";
 		^instance_id;
 	}
 
@@ -236,7 +297,7 @@ CaosGear : CaosBox {
 		^"LineIn";
 	}
 
-		toTrack {|steps = 0, overrideSteps = false |
+	toTrack {|steps = 0, overrideSteps = false |
 
 		var track;
 
@@ -249,13 +310,13 @@ CaosGear : CaosBox {
 			"HiHats2", {track = \hihats2},
 			"Bass", {track = \bass},
 			"Bass2 ", {track = \bass2	},
-			"Line In", {track = \in	},
-			"Default switch";
+			"Chords", {track = \chords	},
+			"Line In", {track = \in	}
 		);
 
 		CaosBox.setSteps(track,steps, overrideSteps);
 
-		^"CaossGear Instance added to sequencer";
+		^"CaosGear Instance added to sequencer";
 	}
 
 }

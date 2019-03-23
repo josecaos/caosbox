@@ -42,7 +42,6 @@ Tdef(\bass2,{
 			\amp1,0.25,
 			\amp2,0.1,
 			\out,50);
-		// \out,~rand_stream.value('rand1',[52,54,58,64]));
 		~tiempos.wait;
 	}
 }).quant_(1);
@@ -82,7 +81,7 @@ Tdef(\pad2,{
 		~amb2.set(\out,50);
 		~tiempos.wait;
 	}
-}).quant_(4);
+}).quant_(1);
 );
 //Chord Synths
 (
@@ -102,7 +101,7 @@ Tdef(\acordes,{
 		~chord.set(\out,50);
 		~tiempos.wait;
 	}
-}).quant_(4);
+}).quant_(1);
 );
 (
 Tdef(\acordes2,{
