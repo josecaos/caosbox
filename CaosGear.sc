@@ -349,7 +349,7 @@ CaosGear : CaosBox {
 	// 			}
 	// 		}).quant_(1);
 	// 	);
-	// 	instance_id = "Chords";
+	// 	instance_id = "Chords2";
 	// 	^instance_id;
 	// }
 

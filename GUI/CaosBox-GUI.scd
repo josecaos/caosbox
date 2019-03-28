@@ -276,9 +276,10 @@ StaticText(~w,Rect(275,635,515,15)).string_("PLAY/STOP:").font_(Font("Dejavu San
 ~bot.action={|val|
 	var  bool = true;
 	if(val.value == 0,{
-		bool = false;		Tdef(\secuencias).pause;Tdef(\autor).pause;Tdef(\autod).pause;Tdef(\autop).pause;Tdef(\autog).pause;
-	Tdef(\bass).pause;Tdef(\bass2).pause;Tdef(\pad).pause;Tdef(\pad2).pause;Tdef(\acordes).pause;Tdef(\acordes2).pause;
-	/*~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~botm.value=0;~hbutt.value=0;*/
+		bool = false;
+		Tdef(\secuencias).pause;Tdef(\autor).pause;Tdef(\autod).pause;Tdef(\autop).pause;Tdef(\autog).pause;
+Tdef(\bass).pause;Tdef(\bass2).pause;Tdef(\pad).pause;Tdef(\pad2).pause;Tdef(\acordes).pause;Tdef(\acordes2).pause;
+	~autobotr.value=0;~autobotd.value=0;~autobotp.value=0;~autobotg.value=0;~botm.value=0;~hbutt.value=0;
 	"->You just Stopped CaosBox<-".inform;},
 {
 	if(bool  != true, {

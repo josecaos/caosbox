@@ -379,15 +379,15 @@ CaosBox {
 					^"Delay Automation is running, use .autoFx Method to stop it";
 				},{
 					if(arg1 < 0 or: {arg1 > 4} or: {arg2 < 0} or: {arg2 > 10}, {
-							^"Delay Time Parameter between 0 and 6, feedback parameter between 0 or 10";
+						^"Delay Time Parameter between 0 and 6, feedback parameter between 0 or 10";
 					},
-						{
-							~numt.value=arg1;
-							~auxtfader.value=arg1;
-							~numf.value=arg2;
-							~auxffader.value=arg2;
-							^"Delay Parameters, Seted";
-						});
+					{
+						~numt.value=arg1;
+						~auxtfader.value=arg1;
+						~numf.value=arg2;
+						~auxffader.value=arg2;
+						^"Delay Parameters, Seted";
+					});
 				});
 			},
 			'pitch',{
@@ -412,13 +412,13 @@ CaosBox {
 					^"Grains Automation is running, use .autoFx Method to stop it";
 				},{
 					if(arg1 < 0 or: {arg1 > 1} or: {arg2 < 0} or: {arg2 > 1},{
-							^"Granulator FX Parameters only between 0 and 1";
+						^"Granulator FX Parameters only between 0 and 1";
 					},
-						{
-							~grains.set(\trigger,~gfaders.x_(arg1));
-							~grains.set(\size,~gfaders.y_(arg2));
-							^"Granulator Parameters, Seted";
-						});
+					{
+						~grains.set(\trigger,~gfaders.x_(arg1));
+						~grains.set(\size,~gfaders.y_(arg2));
+						^"Granulator Parameters, Seted";
+					});
 				});
 			},
 			'master',{
@@ -441,6 +441,14 @@ CaosBox {
 			},
 			"Use only 'reverb','delay','pitch','grains' or 'master' keys for FX type argument";
 		);
+	}
+
+	*openDefaults {
+
+		(~url +/+ "CB/CaosBox-defaults.scd").openOS;
+
+		^"Defaults file opened";
+
 	}
 	//
 }
