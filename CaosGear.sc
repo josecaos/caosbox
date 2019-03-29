@@ -88,6 +88,7 @@ CaosGear : CaosBox {
 	bass {|
 		out=50,
 		semitoneArray=#[ 48, 50, 52, 53, 55, 57, 59 ],
+		// semitoneArray = ~mainmelody.melody(~degrees,48),
 		seqType='seq',
 		attack=0.01,
 		release=0.25,
@@ -98,7 +99,7 @@ CaosGear : CaosBox {
 		iphase=0.5,
 		amp1=0.5,
 		amp2=0.5|
-		// var bassmel;
+		//
 		var note = semitoneArray;
 		var attk = attack;
 		var rel = release;
@@ -145,10 +146,11 @@ CaosGear : CaosBox {
 						\iphase,waveiphase,
 						\amp1,ampx,
 						\amp2,ampy,
-						\out,outbus);
+						\out,outbus
+					);
 					~tiempos.wait;
 				}
-			}).quant_(1);
+			}).quant_(0);
 		);
 		instance_id = "Bass";
 		^instance_id;
@@ -169,7 +171,7 @@ CaosGear : CaosBox {
 		iphase=0.5,
 		amp1=0.5,
 		amp2=0.5|
-		// var bassmel;
+		//
 		var note = semitoneArray;
 		var attk = attack;
 		var rel = release;
@@ -224,7 +226,7 @@ CaosGear : CaosBox {
 					);
 					~tiempos.wait;
 				}
-			}).quant_(1);
+			}).quant_(0);
 		);
 		instance_id = "Bass2";
 		^instance_id;
@@ -286,7 +288,7 @@ CaosGear : CaosBox {
 					);
 						~tiempos.wait;
 					}
-			}).quant_(1);
+			}).quant_(0);
 			);
 		instance_id = "Chords";
 		^instance_id;
