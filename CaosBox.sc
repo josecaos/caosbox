@@ -35,20 +35,26 @@ CaosBox {
 
 	*soundcheck {|noiseType = 'white'|
 
-		var signal;
+		var signal, check;
 
 		switch(noiseType,
-			\white,{signal = WhiteNoise },
-			\pink,{signal =  PinkNoise},
-			\brown,{signal = BrownNoise},
+			\white,{signal = WhiteNoise; check = 1 },
+			\pink,{signal =  PinkNoise; check = 1 },
+			\brown,{signal = BrownNoise;  check = 1 },
 			{
 				signal = PinkNoise;
-				"Use 'white', 'pink' or 'brown' keys only".inform;}
+				 check  = nil;
+				^"Use 'white', 'pink' or 'brown' keys only".inform;
+			}
 		);
 
-		play{signal.ar(SinOsc.ar(2,0,0.01,1))*EnvGen.ar(Env.perc(0.5,8),1,doneAction:2)!2};
+		if(check != nil,{
 
-		^"Soundcheck running with" + signal.asString + " noise"
+			play{signal.ar(SinOsc.ar(2,0,0.01,1))*EnvGen.ar(Env.perc(0.5,8),1,doneAction:2)!2};
+
+			^"Soundcheck running with" + signal.asString + " UGen";
+
+		});
 
 	}
 
