@@ -90,10 +90,11 @@
 //mainmelody
 ~mainmelody = CaosGear.new;
 ~degrees = Scale.minor.degrees;
+//
 // Optionals
-"// Read Optional Dependencies".inform;
+"// Reading Optional Dependencies".inform;
 // soporte para lcne-lib
-~lcne = 'LCNE'.asClass;
+~lcne = \LCNE.asClass;
 switch(~lcne,
 	nil, {
 		"lcne-lib: Not Installed.".inform;
@@ -104,4 +105,3 @@ switch(~lcne,
 	}
 );
 "// End optionals".inform;
-// 

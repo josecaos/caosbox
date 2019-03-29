@@ -86,8 +86,8 @@ CaosGear : CaosBox {
 
 	//
 	bass {|
-		out=#[50],
-		semitoneArray=#[ 0, 2, 4, 5, 7, 9, 11 ],
+		out=50,
+		semitoneArray=#[ 48, 50, 52, 53, 55, 57, 59 ],
 		seqType='seq',
 		attack=0.01,
 		release=0.25,
@@ -99,7 +99,7 @@ CaosGear : CaosBox {
 		amp1=0.5,
 		amp2=0.5|
 		// var bassmel;
-		var note = semitoneArray.asArray;
+		var note = semitoneArray;
 		var attk = attack;
 		var rel = release;
 		var filt1 = filtMinFreq;
@@ -109,7 +109,7 @@ CaosGear : CaosBox {
 		var waveiphase = iphase;
 		var ampx = amp1;
 		var ampy = amp2;
-		var outbus = out.asArray;
+		var outbus = out;
 		(//bass 1
 			Tdef(\bass,{
 
@@ -119,12 +119,12 @@ CaosGear : CaosBox {
 
 					switch(seqType,
 						'rand', {
-							bassmel=Prand(note,inf).asStream;
-							outbus=Prand(out,inf).asStream;
+							bassmel=Prand(note.asArray,inf).asStream;
+							// outbus=Prand(out.asArray,inf).asStream;
 						},
 						'seq', {
-							bassmel=Pseq(note,inf).asStream;
-							outbus=Pseq(out,inf).asStream;
+							bassmel=Pseq(note.asArray,inf).asStream;
+							// outbus=Pseq(out.asArray,inf).asStream;
 						},
 						("Bass Melodic secuence type is" + seqType).inform;
 					);
@@ -145,7 +145,7 @@ CaosGear : CaosBox {
 						\iphase,waveiphase,
 						\amp1,ampx,
 						\amp2,ampy,
-						\out,outbus.next);
+						\out,outbus);
 					~tiempos.wait;
 				}
 			}).quant_(1);
@@ -155,8 +155,8 @@ CaosGear : CaosBox {
 	}
 
 	bass2 {|
-		out=#[50],
-		semitoneArray=#[ 0, 2, 4, 5, 7, 9, 11 ],
+		out=50,
+		semitoneArray=#[ 48, 50, 52, 53, 55, 57, 59 ],
 		seqType='seq',
 		attack=0.01,
 		release=0.25,
@@ -170,7 +170,7 @@ CaosGear : CaosBox {
 		amp1=0.5,
 		amp2=0.5|
 		// var bassmel;
-		var note = semitoneArray.asArray;
+		var note = semitoneArray;
 		var attk = attack;
 		var rel = release;
 		var trigger = filtTrig;
@@ -182,7 +182,7 @@ CaosGear : CaosBox {
 		var waveiphase = iphase;
 		var ampx = amp1;
 		var ampy = amp2;
-		var outbus = out.asArray;
+		var outbus = out;
 		(
 			Tdef(\bass2,{
 
@@ -192,12 +192,12 @@ CaosGear : CaosBox {
 
 					switch(seqType,
 						'rand', {
-							bassmel=Prand(note,inf).asStream;
-							outbus=Prand(out,inf).asStream;
+							bassmel=Prand(note.asArray,inf).asStream;
+							// outbus=Prand(out,inf).asStream;
 						},
 						'seq', {
-							bassmel=Pseq(note,inf).asStream;
-							outbus=Pseq(out,inf).asStream;
+							bassmel=Pseq(note.asArray,inf).asStream;
+							// outbus=Pseq(out,inf).asStream;
 						},
 						("Bass Melodic secuence type is" + seqType).inform;
 					);
@@ -231,12 +231,12 @@ CaosGear : CaosBox {
 	}
 
 	chords {|
-		out = #[50],	semitoneArray = #[ 0, 2, 4, 5, 7, 9, 11 ],		seqType = 'seq',
+		out = 50,	semitoneArray = #[ 48, 50, 52, 53, 55, 57, 59 ],		seqType = 'seq',
 		chordsArray = #['Mmaj7'],	attack = 0.05, release = 1, iphase = 0.025,
 		width = 0.1, cutf = 1200, rq = 0.5, pan = #[0.98,-1], amp = 0.5|
 		//
-		var note = semitoneArray.asArray;
-		var chords = chordsArray.asArray;
+		var note = semitoneArray;
+		var chords = chordsArray;
 		var attk = attack;
 		var rel = release;
 		var iph = iphase;
@@ -245,7 +245,7 @@ CaosGear : CaosBox {
 		var	bandwidth = rq;
 		var space = pan;
 		var vol = amp;
-		var outbus = out.asArray;
+		var outbus = out;
 		(
 			Tdef(\acordes,{
 
@@ -256,12 +256,12 @@ CaosGear : CaosBox {
 					switch(seqType,
 						'rand', {
 							mel=Prand(note,inf).asStream;
-							outbus=Prand(out,inf).asStream;
+							// outbus=Prand(out,inf).asStream;
 							chord=Prand(chords,inf).asStream;
 						},
 						'seq', {
 							mel=Pseq(note,inf).asStream;
-							outbus=Pseq(out,inf).asStream;
+							// outbus=Pseq(out,inf).asStream;
 							chord=Pseq(chords,inf).asStream;
 						},
 						("Chord Melodic secuence type is" + seqType).inform;
@@ -282,7 +282,7 @@ CaosGear : CaosBox {
 						\rq,bandwidth,
 						\pan,space,
 						\amp,vol,
-						\out,outbus.next
+						\out,outbus
 					);
 						~tiempos.wait;
 					}
