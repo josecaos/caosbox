@@ -17,11 +17,9 @@ Tdef(\secuencias,{
 	//granulador
 	~grains=Synth(\granulador);
 	//
-	// ~kickgear=Synth(\kickgear);
 	{
 		//guia led steps
 		if(~indice >= 32,{~indice=0},{nil});
-		// elimina el step anterior
 		if(~indice == 0,{reset = 31},{reset = ~indice-1});
 		{
 			switch(~indice,
@@ -29,7 +27,6 @@ Tdef(\secuencias,{
 			)
 		}.defer(0.01);
 		//
-		// if(~bombo[~indice] == nil,{nil},{~bombo[~indice].set(\gate,1);~bombo.put(~indice,~kickgear)});
 		~bombo[~indice].play;
 		~tarola[~indice].play;
 		~contras[~indice].play;
@@ -37,7 +34,6 @@ Tdef(\secuencias,{
 		~tarola2[~indice].play;
 		~contras2[~indice].play;
 		//
-		// if(~bajo[~indice].isNil,{nil},{~bajo.put(~indice,~bass=Synth(\bajouno));~bajo[~indice].set(\gate,1,\att,~bass1attknob.value,\rel,~bass1relknob.value)});
 		if(~bajo[~indice] == nil,{nil},{~bajo[~indice].set(\gate,1,\att,~bass1attknob.value,\rel,~bass1relknob.value);~bajo.put(~indice,~bass=Synth(\bajouno))});
 		if(~bajo2[~indice] == nil,{nil},
 			{~bajo2[~indice].set(\gate,1,\att,~bass2attknob.value,\rel,~bass2relknob.value);~bajo2.put(~indice,~bass2=Synth(\bajodos))});
@@ -56,7 +52,7 @@ Tdef(\secuencias,{
 		//
 		~indice = ~indice+1;
 	}.loop;
-}).quant_(0);
+}).quant_(1);
 //tiempo random
 Tdef(\randtime,{
 	{
@@ -64,7 +60,7 @@ Tdef(\randtime,{
 		TempoClock.tempo=timer.next/60;
 		~tiempos.wait;
 	}.loop;
-}).quant_(0);
+}).quant_(1);
 );
 //
 /*

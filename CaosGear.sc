@@ -149,7 +149,7 @@ CaosGear : CaosBox {
 					);
 					~tiempos.wait;
 				}
-			}).quant_(0);
+			}).quant_(1);
 		);
 		instance_id = "Bass";
 		^instance_id;
@@ -225,7 +225,7 @@ CaosGear : CaosBox {
 					);
 					~tiempos.wait;
 				}
-			}).quant_(0);
+			}).quant_(1);
 		);
 		instance_id = "Bass2";
 		^instance_id;
@@ -287,7 +287,7 @@ CaosGear : CaosBox {
 					);
 						~tiempos.wait;
 					}
-			}).quant_(0);
+			}).quant_(1);
 			);
 		instance_id = "Chords";
 		^instance_id;
@@ -348,7 +348,7 @@ CaosGear : CaosBox {
 	// 				);
 	// 				~tiempos.wait;
 	// 			}
-	// 		}).quant_(1);
+	// 		}).quant_(4);
 	// 	);
 	// 	instance_id = "Chords2";
 	// 	^instance_id;
@@ -373,9 +373,9 @@ CaosGear : CaosBox {
 			"HiHats", {track = \hihats	},
 			"HiHats2", {track = \hihats2},
 			"Bass", {track = \bass},
-			"Bass2 ", {track = \bass2	},
+			"Bass2", {track = \bass2	},
 			"Chords", {track = \chords	},
-			"Line In", {track = \in	}
+			"LineIn", {track = \in	}
 		);
 
 		CaosBox.setSteps(track,steps, overrideSteps);

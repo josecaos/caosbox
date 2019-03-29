@@ -458,8 +458,8 @@ CaosBox {
 	}
 
 	*close {
-
-		^server.freeAll.quit.reboot;
+		Tdef.removeAll;
+		^server.quit.freeAll.reboot;
 
 	}
 	//
