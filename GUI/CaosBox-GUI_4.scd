@@ -153,7 +153,7 @@ StaticText(~w,Rect(785,540,235,12)).string_("Auto/Speed").font_(Font("Dejavu San
 };
 //clock
 StaticText(~w,Rect(785,272,185,15)).string_("BPM:").font_(Font("Dejavu Sans",14,true)).align_(\center).background_(Color(1,0,0));
-~numclock=NumberBox(~w,Rect(970,272,50,15)).background_(Color(0,1,0)).align_(\ceneter);
+~numclock=NumberBox(~w,Rect(970,272,50,15)).background_(Color(0,1,0)).align_(\center);
 ~numclock.value=115;
 ~numclock.action={
 	~clock={TempoClock.tempo=~numclock.value/60};
@@ -161,5 +161,5 @@ StaticText(~w,Rect(785,272,185,15)).string_("BPM:").font_(Font("Dejavu Sans",14,
 	("+ BPM set to" + ~numclock.value).inform;
 };
 //
-~w.onClose={~url = nil; s.freeAll.quit.reboot};//ALV todo!
+~w.onClose={~url = nil; CaosBox.close};//ALV todo!
 );

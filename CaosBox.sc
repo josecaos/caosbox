@@ -456,5 +456,11 @@ CaosBox {
 		^"Defaults file opened";
 
 	}
+
+	*close {
+
+		^server.freeAll.quit.reboot;
+
+	}
 	//
 }

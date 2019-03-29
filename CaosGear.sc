@@ -88,7 +88,6 @@ CaosGear : CaosBox {
 	bass {|
 		out=50,
 		semitoneArray=#[ 48, 50, 52, 53, 55, 57, 59 ],
-		// semitoneArray = ~mainmelody.melody(~degrees,48),
 		seqType='seq',
 		attack=0.01,
 		release=0.25,
@@ -114,18 +113,18 @@ CaosGear : CaosBox {
 		(//bass 1
 			Tdef(\bass,{
 
-				var	bassmel,outbus;
+				var	bassmel,outstream;
 
 				if(seqType == 'rand' or: {seqType == 'seq'}, {
 
 					switch(seqType,
 						'rand', {
 							bassmel=Prand(note.asArray,inf).asStream;
-							// outbus=Prand(out.asArray,inf).asStream;
+							outstream=Prand(outbus.asArray,inf).asStream;
 						},
 						'seq', {
 							bassmel=Pseq(note.asArray,inf).asStream;
-							// outbus=Pseq(out.asArray,inf).asStream;
+							outstream=Pseq(outbus.asArray,inf).asStream;
 						},
 						("Bass Melodic secuence type is" + seqType).inform;
 					);
@@ -146,7 +145,7 @@ CaosGear : CaosBox {
 						\iphase,waveiphase,
 						\amp1,ampx,
 						\amp2,ampy,
-						\out,outbus
+						\out,outstream.next
 					);
 					~tiempos.wait;
 				}
@@ -188,18 +187,18 @@ CaosGear : CaosBox {
 		(
 			Tdef(\bass2,{
 
-				var	bassmel,outbus;
+				var	bassmel, outstream;
 
 				if(seqType == 'rand' or: {seqType == 'seq'}, {
 
 					switch(seqType,
 						'rand', {
 							bassmel=Prand(note.asArray,inf).asStream;
-							// outbus=Prand(out,inf).asStream;
+							// outstream=Prand(outbus.asArray,inf).asStream;
 						},
 						'seq', {
 							bassmel=Pseq(note.asArray,inf).asStream;
-							// outbus=Pseq(out,inf).asStream;
+							outstream=Pseq(outbus.asArray,inf).asStream;
 						},
 						("Bass Melodic secuence type is" + seqType).inform;
 					);
@@ -234,7 +233,7 @@ CaosGear : CaosBox {
 
 	chords {|
 		out = 50,	semitoneArray = #[ 48, 50, 52, 53, 55, 57, 59 ],		seqType = 'seq',
-		chordsArray = #['Mmaj7'],	attack = 0.05, release = 1, iphase = 0.025,
+		chordsArray = #['Mmaj7','M', 'm'],	attack = 0.05, release = 1, iphase = 0.025,
 		width = 0.1, cutf = 1200, rq = 0.5, pan = #[0.98,-1], amp = 0.5|
 		//
 		var note = semitoneArray;
@@ -251,19 +250,19 @@ CaosGear : CaosBox {
 		(
 			Tdef(\acordes,{
 
-				var mel, chord, outbus;
+				var mel, chord, outstream;
 
 				if(seqType == 'rand' or: {seqType == 'seq'}, {
 
 					switch(seqType,
 						'rand', {
 							mel=Prand(note,inf).asStream;
-							// outbus=Prand(out,inf).asStream;
+							outstream=Prand(outbus.asArray,inf).asStream;
 							chord=Prand(chords,inf).asStream;
 						},
 						'seq', {
 							mel=Pseq(note,inf).asStream;
-							// outbus=Pseq(out,inf).asStream;
+							outstream=Pseq(outbus.asArray,inf).asStream;
 							chord=Pseq(chords,inf).asStream;
 						},
 						("Chord Melodic secuence type is" + seqType).inform;
