@@ -1,4 +1,4 @@
-(//CaosBox GUI file 3 - v1.1 - In, steps, aux
+(//CaosBox GUI file 3 - v1.2 - In, steps, aux
 //In
 StaticText(~w,Rect(5,252,53,15)).string_("LineIn:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
 

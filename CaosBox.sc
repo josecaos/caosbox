@@ -182,14 +182,12 @@ CaosBox {
 				);
 
 				return = out.next;
-				return.postcln;
-
-				^return;
+				^("randStream: " + return).inform;
 		});
 	}
 
 	//Regresa un array de 32 elementos
-	//valor 'default' en todos los slots del array + 'in' valor secundario en: 'steps' especificos
+	//parametro 'default' en todos los slots del array + 'in'; Parametro secundario: 'steps' especificos
 	*stepsArray {|default=50,in=52,steps=#[0,16]|
 
 		var arr = Array.fill(32,nil);

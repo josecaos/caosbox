@@ -31,7 +31,6 @@ CaosGear : CaosBox {
 		};
 
 		instance_id = "Kick";
-
 		^instance_id;
 	}
 
@@ -381,6 +380,28 @@ CaosGear : CaosBox {
 		CaosBox.setSteps(track,steps, overrideSteps);
 
 		^"CaosGear Instance added to sequencer";
+	}
+
+	offTrack {|steps = 0 |
+
+		var track;
+
+		switch( instance_id,
+			"Kick", {track = \kick	},
+			"Kick2", {track = \kick2	},
+			"Snare", {track = \snare	},
+			"Snare2", {track = \snare2	},
+			"HiHats", {track = \hihats	},
+			"HiHats2", {track = \hihats2},
+			"Bass", {track = \bass},
+			"Bass2", {track = \bass2	},
+			"Chords", {track = \chords	},
+			"LineIn", {track = \in	}
+		);
+
+		CaosBox.clearSteps(track,steps);
+
+		^"CaosGear Instance deleted from sequencer";
 	}
 
 }
