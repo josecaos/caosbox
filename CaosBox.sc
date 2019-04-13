@@ -21,7 +21,7 @@ CaosBox {
 
 	}
 
-	init {|eval = true|
+	init {|window = true|
 
 		server = Server.local;
 
@@ -29,7 +29,8 @@ CaosBox {
 
 			(~url +/+ "CB/CaosBox-load.scd").load;
 
-			if(eval == true, {
+			// evaluate if the GUI wil be shown or not
+			if(window == true, {
 				~w.front;
 				"Sequencer GUI is ON".inform;
 			},{
@@ -40,18 +41,30 @@ CaosBox {
 
 	}
 
-	*guiSettings {|alpha = 1, visibility = true|
+	*guiAlpha {|alpha = 1|
 
 		~w.alpha_(alpha);
-		"GUI opacity set to " + alpha;
+		^("- GUI opacity set to " + alpha).inform;
 
-		if(~w.visible == true,{
-			"Ya esta abierto".postcln;
-		},{
-			"No esta abierto".postcln;
-		})
+	}
 
-		^"Debug";
+	*guiState {|open = true|
+
+		//open GUI at any time
+		if (open == true,{
+
+			if(~w.visible != true,{
+				~w.front;
+				^"- CaosBox Gui Opened".inform;
+			},{
+				^"- CaosBox GUI already Open".inform;
+			});
+
+		}, {
+
+			^"- GUI cannot be closed, if you do, all work will be lost";
+
+		});
 
 	}
 
@@ -65,7 +78,7 @@ CaosBox {
 			\brown,{signal = BrownNoise;  check = 1 },
 			{
 				signal = PinkNoise;
-				 check  = nil;
+				check  = nil;
 				^"Use 'white', 'pink' or 'brown' keys only".inform;
 			}
 		);
@@ -479,6 +492,7 @@ CaosBox {
 	}
 
 	*close {
+
 		Tdef.removeAll;
 		^server.quit.freeAll.reboot;
 
