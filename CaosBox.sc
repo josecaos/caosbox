@@ -61,8 +61,15 @@ CaosBox {
 			});
 
 		}, {
+			if(~w.visible == true,{
 
-			^"- GUI cannot be closed, if you do, all work will be lost";
+				^"- Once opened, GUI cannot be closed, if you do, all work will be lost";
+
+			},{
+
+				^"- GUI is already closed, use 'true' to open it";
+
+			});
 
 		});
 
