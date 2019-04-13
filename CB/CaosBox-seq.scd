@@ -52,7 +52,7 @@ Tdef(\secuencias,{
 		//
 		~indice = ~indice+1;
 	}.loop;
-}).quant_(1);
+}).quant_(4);
 //tiempo random
 Tdef(\randtime,{
 	{
@@ -60,7 +60,7 @@ Tdef(\randtime,{
 		TempoClock.tempo=timer.next/60;
 		~tiempos.wait;
 	}.loop;
-}).quant_(1);
+}).quant_(4);
 );
 //
 /*

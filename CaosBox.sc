@@ -3,7 +3,7 @@ CaosBox {
 
 	classvar server,url;
 
-	*enviroment {
+	*enviroment {|gui = true|
 
 		if(~url.notNil,{
 
@@ -15,13 +15,13 @@ CaosBox {
 
 			~url = this.filenameSymbol.asString.dirname;
 
-			^super.new.init;
+			^super.new.init(gui);
 
 		});
 
 	}
 
-	init {
+	init {|eval = true|
 
 		server = Server.local;
 
@@ -29,7 +29,29 @@ CaosBox {
 
 			(~url +/+ "CB/CaosBox-load.scd").load;
 
+			if(eval == true, {
+				~w.front;
+				"Sequencer GUI is ON".inform;
+			},{
+				"Sequencer GUI is OFF, you are running without a Visual Interface".inform;
+			});
+
 		};
+
+	}
+
+	*guiSettings {|alpha = 1, visibility = true|
+
+		~w.alpha_(alpha);
+		"GUI opacity set to " + alpha;
+
+		if(~w.visible == true,{
+			"Ya esta abierto".postcln;
+		},{
+			"No esta abierto".postcln;
+		})
+
+		^"Debug";
 
 	}
 
@@ -182,7 +204,8 @@ CaosBox {
 				);
 
 				return = out.next;
-				^("randStream: " + return).inform;
+				("randStream: " + return).inform
+				^return;
 		});
 	}
 

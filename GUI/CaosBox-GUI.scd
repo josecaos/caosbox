@@ -1,5 +1,5 @@
 (//CaosBox GUI file 1 - v1.2 - percusiones, botones de control, bienvenida
-~w=Window.new("CaosBox v1.2 live Coding Machine for Algorave music ~" + "today is " + ~fecha,Rect.aboutPoint(Window.screenBounds.center,512,340),false).front.background=Color(0,0,0);//
+~w=Window.new("CaosBox v1.2 live Coding Machine for Algorave music ~ " + "Today is " + ~fecha,Rect.aboutPoint(Window.screenBounds.center,512,340),false).background=Color(0,0,0);//
 //
 // leds
 StaticText(~w,Rect(5,272,53,15)).string_("Steps:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0,0.9,0));
@@ -64,7 +64,6 @@ for (0, 31, { |i|
 
 })};
 //
-
 
 //tarola steps
 StaticText(~w,Rect(5,32,53,15)).string_("Snare:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
