@@ -28,8 +28,8 @@ Task({|i|
 }).play;
 );
 // Complementary files
-for(0,~urls.size-1,{|i|
+for(0,~cbox_urls.size-1,{|i|
 
-	(~url +/+ ~urls[i]).load;
+	(~cbox_url +/+ ~cbox_urls[i]).load;
 
 });

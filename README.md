@@ -1,4 +1,4 @@
-CaosBox v1.2
+CaosBox v1.2.1
 =======
 It's a not-so-common LiveCoding/AlgoRave music GUI secuencer/processor for the CaosPercLib Pseudo-Class library, written in SuperCollider.
 
@@ -11,10 +11,12 @@ Unzip and place the  'caosperclib' + 'caosbox' folders here:  ##### **Platform.u
     //instance sequencer
     c = CaosBox;
     c.enviroment;
+    //c.enviroment(false);//start without GUI(optional)
 
     c.play;
     c.bpm(194);
     c.freqAnalyzer(true);
+    c.guiAlpha(0.5);//set GUI opacity if wanted
 
     // instance an instrument
     k = CaosGear.new;

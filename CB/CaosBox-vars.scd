@@ -2,106 +2,107 @@
 //Global variables for CaosBox v1.1
 ///////////////////////////////////////////
 // General
-~bombo=Array.fill(32,nil);
-~tarola=Array.fill(32,nil);
-~contras=Array.fill(32,nil);
-~bombo2=Array.fill(32,nil);
-~tarola2=Array.fill(32,nil);
-~contras2=Array.fill(32,nil);
-~bajo=Array.fill(32,nil);
-~bajo2=Array.fill(32,nil);
-~ambiente=Array.fill(32,nil);
-~ambiente2=Array.fill(32,nil);
-~sinte=Array.fill(32,nil);
-~sinte2=Array.fill(32,nil);
-~in=Array.fill(32,nil);
+~cbox_bombo=Array.fill(32,nil);
+~cbox_tarola=Array.fill(32,nil);
+~cbox_contras=Array.fill(32,nil);
+~cbox_bombo2=Array.fill(32,nil);
+~cbox_tarola2=Array.fill(32,nil);
+~cbox_contras2=Array.fill(32,nil);
+~cbox_bajo=Array.fill(32,nil);
+~cbox_bajo2=Array.fill(32,nil);
+~cbox_ambiente=Array.fill(32,nil);
+~cbox_ambiente2=Array.fill(32,nil);
+~cbox_sinte=Array.fill(32,nil);
+~cbox_sinte2=Array.fill(32,nil);
+~cbox_in=Array.fill(32,nil);
 //
-~indice=0;
-~clock=TempoClock.tempo=126/60;
-~tiempos=0.25;
+~cbox_indice=0;
+~cbox_clock=TempoClock.tempo=126/60;
+~cbox_tiempos=0.25;
 // Fx automation values
-~autoreverbmix=Array.series(4,0.01,0.24);
-~autoreverbroom=[0];
-~autoreverbdamp=[0];
+~cbox_autoreverbmix=Array.series(4,0.01,0.24);
+~cbox_autoreverbroom=[0];
+~cbox_autoreverbdamp=[0];
 //
-~autodelaytime=Array.series(10,0.01,0.01);
-~autodelayfeed=[0.1];
+~cbox_autodelaytime=Array.series(10,0.01,0.01);
+~cbox_autodelayfeed=[0.1];
 //
-~autopitchrate=Array.series(8,0.5,0.5);
-~autopitchdispersion=[0.01];
-~autotimedispersion=[0];
+~cbox_autopitchrate=Array.series(8,0.5,0.5);
+~cbox_autopitchdispersion=[0.01];
+~cbox_autotimedispersion=[0];
 //
-~autograintrig=[0.04,0.08,0.16,0.32,0.64,1.28]*4;
-~autograinsize=Array.series(100,0.01,0.005);
+~cbox_autograintrig=[0.04,0.08,0.16,0.32,0.64,1.28]*4;
+~cbox_autograinsize=Array.series(100,0.01,0.005);
 // bpm
-~randtimes=[47,62,94,141,188];
+~cbox_randtimes=[47,62,94,141,188];
 // GUI steps
-~checksteps = [20,20,20,30];
-~checkbox = 60;
-~checkbombo=Array.fill(32,nil);
-~checktarola=Array.fill(32,nil);
-~checkcontras=Array.fill(32,nil);
-~checkbombo2=Array.fill(32,nil);
-~checktarola2=Array.fill(32,nil);
-~checkcontras2=Array.fill(32,nil);
-~checkbajo=Array.fill(32,nil);
-~checkbajo2=Array.fill(32,nil);
-~checkambiente=Array.fill(32,nil);
-~checkambiente2=Array.fill(32,nil);
-~checksinte=Array.fill(32,nil);
-~checksinte2=Array.fill(32,nil);
-~checkin=Array.fill(32,nil);
-~lightsteps=Array.fill(32,nil);
-~lightpos = 61;
+~cbox_checksteps = [20,20,20,30];
+~cbox_checkbox = 60;
+~cbox_checkbombo=Array.fill(32,nil);
+~cbox_checktarola=Array.fill(32,nil);
+~cbox_checkcontras=Array.fill(32,nil);
+~cbox_checkbombo2=Array.fill(32,nil);
+~cbox_checktarola2=Array.fill(32,nil);
+~cbox_checkcontras2=Array.fill(32,nil);
+~cbox_checkbajo=Array.fill(32,nil);
+~cbox_checkbajo2=Array.fill(32,nil);
+~cbox_checkambiente=Array.fill(32,nil);
+~cbox_checkambiente2=Array.fill(32,nil);
+~cbox_checksinte=Array.fill(32,nil);
+~cbox_checksinte2=Array.fill(32,nil);
+~cbox_checkin=Array.fill(32,nil);
+~cbox_lightsteps=Array.fill(32,nil);
+~cbox_lightpos = 61;
 // Automation divisors "Dont use 0 on these"
-~divrev=1;
-~divdel=1;
-~divpitch=1;
-~divgrain=1;
+~cbox_divrev=1;
+~cbox_divdel=1;
+~cbox_divpitch=1;
+~cbox_divgrain=1;
 // Instuments
-~b=nil;//kick
-~t=nil;//snare
-~h=nil;//hat
-~b2=nil;//kick2
-~t2=nil;//snare2
-~h2=nil;//hat2
+~cbox_b=nil;//kick
+~cbox_t=nil;//snare
+~cbox_h=nil;//hat
+~cbox_b2=nil;//kick2
+~cbox_t2=nil;//snare2
+~cbox_h2=nil;//hat2
 // Array for core functions.
-~steps = Dictionary[
-	\kick -> [~checkbombo,~bombo,~b],
-	\snare -> [~checktarola,~tarola,~t],
-	\hihats -> [~checkcontras,~contras,~h],
-	\kick2 -> [~checkbombo2,~bombo2,~b2],
-	\snare2 -> [~checktarola2,~tarola2,~t2],
-	\hihats2 -> [~checkcontras2,~contras2,~h2],
-	\bass -> [~checkbajo,~bajo,~bass],
-	\bass2 -> [~checkbajo2,~bajo2,~bass2],
-	\amb -> [~checkambiente,~ambiente,~amb],
-	\amb2 -> [~checkambiente2,~ambiente2,~amb2],
-	\chords -> [~checksinte,~sinte,~chord],
-	\chords2 -> [~checksinte2,~sinte2,~chord2],
-	\in -> [~checkin,~in,~entrada]
+~cbox_steps = Dictionary[
+	\kick -> [~cbox_checkbombo,~cbox_bombo,~cbox_b],
+	\snare -> [~cbox_checktarola,~cbox_tarola,~cbox_t],
+	\hihats -> [~cbox_checkcontras,~cbox_contras,~cbox_h],
+	\kick2 -> [~cbox_checkbombo2,~cbox_bombo2,~cbox_b2],
+	\snare2 -> [~cbox_checktarola2,~cbox_tarola2,~cbox_t2],
+	\hihats2 -> [~cbox_checkcontras2,~cbox_contras2,~cbox_h2],
+	\bass -> [~cbox_checkbajo,~cbox_bajo,~cbox_bass],
+	\bass2 -> [~cbox_checkbajo2,~cbox_bajo2,~cbox_bass2],
+	\amb -> [~cbox_checkambiente,~cbox_ambiente,~cbox_amb],
+	\amb2 -> [~cbox_checkambiente2,~cbox_ambiente2,~cbox_amb2],
+	\chords -> [~cbox_checksinte,~cbox_sinte,~cbox_chord],
+	\chords2 -> [~cbox_checksinte2,~cbox_sinte2,~cbox_chord2],
+	\in -> [~cbox_checkin,~cbox_in,~cbox_entrada]
 ];
 // Files
-~fecha=Date.getDate;
-~filename=["c","a","o","s","b","o","x","_"];
-~ftype=["loop-","hist-"];
-~l=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"];
-~n=["1","2","3","4","5","6","7","8","9","0"];
+~cbox_fecha=Date.getDate;
+~cbox_filename=["c","a","o","s","b","o","x","_"];
+~cbox_ftype=["loop-","hist-"];
+~cbox_l=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","v","w","x","y","z"];
+~cbox_n=["1","2","3","4","5","6","7","8","9","0"];
 //mainmelody
-~mainmelody = CaosGear.new;
-~degrees = Scale.minor.degrees;
+~cbox_mainmelody = CaosGear.new;
+~cbox_degrees = Scale.minor.degrees;
 //
 // Optionals
 "// Reading Optional Dependencies".inform;
 // soporte para lcne-lib
-~lcne = \LCNE.asClass;
-switch(~lcne,
+~cbox_lcne = \LCNE.asClass;
+switch(~cbox_lcne,
 	nil, {
 		"lcne-lib: Not Installed.".inform;
 	},
 	 {
 		"lcne-lib: OK.".inform;
-		(~url +/+ "opt/lcne-lib.scd").load;
+		(~cbox_url +/+ "opt/lcne-lib.scd").load;
 	}
 );
 "// End optionals".inform;
+// 

@@ -24,7 +24,7 @@ CaosGear : CaosBox {
 
 	kick {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=1,amp1=1,amp2=0.25,doneAction=2|
 
-		~b = {
+		~cbox_b = {
 			var signal;
 			signal = CaosKick.ar(att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction);
 			Out.ar(out,signal);
@@ -43,7 +43,7 @@ CaosGear : CaosBox {
 	}
 
 	snare {|out=50,att=0.01,rel=0.25,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.1|
-		~t = {
+		~cbox_t = {
 			var signal;
 			signal = CaosSnare.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
@@ -53,7 +53,7 @@ CaosGear : CaosBox {
 	}
 
 	snare2 {|out=50,att=0.01,rel=0.25,iphase=0.03,bw=0.5,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.25|
-		~t2 = {
+		~cbox_t2 = {
 			var signal;
 			signal = CaosSnare2.ar(att,rel,iphase,bw,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
@@ -63,7 +63,7 @@ CaosGear : CaosBox {
 	}
 
 	hihats {|out=50,att=0.01,rel=0.1,highcutfreq=8330,rq=0.15,gate=1,amp1=0.9,amp2=0.9|
-		~h = {
+		~cbox_h = {
 			var signal;
 			signal = CaosHats.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
@@ -74,7 +74,7 @@ CaosGear : CaosBox {
 
 	hihats2 {|out=50,att=0.01,rel=0.1,highcutfreq=12330,rq=0.5,gate=1,amp1=0.9,amp2=0.9|
 
-		~h2 = {
+		~cbox_h2 = {
 			var signal;
 			signal = CaosHats2.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
@@ -133,7 +133,7 @@ CaosGear : CaosBox {
 				});
 
 				loop{
-					~bass.set(
+					~cbox_bass.set(
 						\att,attk,
 						\rel,rel,
 						\note,bassmel.next,
@@ -146,7 +146,7 @@ CaosGear : CaosBox {
 						\amp2,ampy,
 						\out,outstream.next
 					);
-					~tiempos.wait;
+					~cbox_tiempos.wait;
 				}
 			}).quant_(1);
 		);
@@ -207,7 +207,7 @@ CaosGear : CaosBox {
 				});
 
 				loop{
-					~bass2.set(
+					~cbox_bass2.set(
 						\att,attk,
 						\rel,rel,
 						\note,bassmel.next,
@@ -222,7 +222,7 @@ CaosGear : CaosBox {
 						\amp2,ampy,
 						\out,outbus
 					);
-					~tiempos.wait;
+					~cbox_tiempos.wait;
 				}
 			}).quant_(1);
 		);
@@ -271,7 +271,7 @@ CaosGear : CaosBox {
 				});
 				//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
 				loop{
-					~chord.set(
+					~cbox_chord.set(
 						\chord,chord.next,
 						\note,mel.next,
 						\att, attk,
@@ -284,7 +284,7 @@ CaosGear : CaosBox {
 						\amp,vol,
 						\out,outbus
 					);
-						~tiempos.wait;
+						~cbox_tiempos.wait;
 					}
 			}).quant_(1);
 			);
@@ -332,7 +332,7 @@ CaosGear : CaosBox {
 	// 			});
 	// 			//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
 	// 			loop{
-	// 				~chord.set(
+	// 				~cbox_chord.set(
 	// 					\chord,chord.next,
 	// 					\note,mel.next,
 	// 					\att, attk,
@@ -345,7 +345,7 @@ CaosGear : CaosBox {
 	// 					\amp,vol,
 	// 					\out,outbus.next
 	// 				);
-	// 				~tiempos.wait;
+	// 				~cbox_tiempos.wait;
 	// 			}
 	// 		}).quant_(4);
 	// 	);
@@ -355,7 +355,7 @@ CaosGear : CaosBox {
 
 	lineIn {|out=64,inchan=0,gate=1,att=0.05,rel=0.25|
 
-		~entrada.set(\out,out,\inchan,inchan,\gate,gate,\att,att,\rel,rel);
+		~cbox_entrada.set(\out,out,\inchan,inchan,\gate,gate,\att,att,\rel,rel);
 
 		^"LineIn";
 	}

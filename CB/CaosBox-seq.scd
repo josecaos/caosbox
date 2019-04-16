@@ -5,60 +5,60 @@
 Tdef(\secuencias,{
 	var reset;
 	//master
-	~mast=Synth(\master);
+	~cbox_mast=Synth(\master);
 	// fx
-	~mastrev=Synth(\aux1);
-	~mastdel=Synth(\aux2);
-	~mastpit=Synth(\aux3);
+	~cbox_mastrev=Synth(\aux1);
+	~cbox_mastdel=Synth(\aux2);
+	~cbox_mastpit=Synth(\aux3);
 	//Filtros
-	~mastlowf=Synth(\lowfilt);
-	~masthighf=Synth(\highfilt);
-	~mastbandf=Synth(\bandfilt);
+	~cbox_mastlowf=Synth(\lowfilt);
+	~cbox_masthighf=Synth(\highfilt);
+	~cbox_mastbandf=Synth(\bandfilt);
 	//granulador
-	~grains=Synth(\granulador);
+	~cbox_grains=Synth(\granulador);
 	//
 	{
 		//guia led steps
-		if(~indice >= 32,{~indice=0},{nil});
-		if(~indice == 0,{reset = 31},{reset = ~indice-1});
+		if(~cbox_indice >= 32,{~cbox_indice=0},{nil});
+		if(~cbox_indice == 0,{reset = 31},{reset = ~cbox_indice-1});
 		{
-			switch(~indice,
-				~indice,{~lightsteps[~indice].value = 1;~lightsteps[reset].value = 0}
+			switch(~cbox_indice,
+				~cbox_indice,{~cbox_lightsteps[~cbox_indice].value = 1;~cbox_lightsteps[reset].value = 0}
 			)
 		}.defer(0.01);
 		//
-		~bombo[~indice].play;
-		~tarola[~indice].play;
-		~contras[~indice].play;
-		~bombo2[~indice].play;
-		~tarola2[~indice].play;
-		~contras2[~indice].play;
+		~cbox_bombo[~cbox_indice].play;
+		~cbox_tarola[~cbox_indice].play;
+		~cbox_contras[~cbox_indice].play;
+		~cbox_bombo2[~cbox_indice].play;
+		~cbox_tarola2[~cbox_indice].play;
+		~cbox_contras2[~cbox_indice].play;
 		//
-		if(~bajo[~indice] == nil,{nil},{~bajo[~indice].set(\gate,1,\att,~bass1attknob.value,\rel,~bass1relknob.value);~bajo.put(~indice,~bass=Synth(\bajouno))});
-		if(~bajo2[~indice] == nil,{nil},
-			{~bajo2[~indice].set(\gate,1,\att,~bass2attknob.value,\rel,~bass2relknob.value);~bajo2.put(~indice,~bass2=Synth(\bajodos))});
-		if(~ambiente[~indice] == nil,{nil},
-			{~ambiente[~indice].set(\gate,1,\att,~amb1attknob.value,\rel,~amb1relknob.value);~ambiente.put(~indice,~amb=Synth(\ambuno))});
-		if(~ambiente2[~indice] == nil,{nil},
-			{~ambiente2[~indice].set(\gate,1,\att,~amb2attknob.value,\rel,~amb2relknob.value);~ambiente2.put(~indice,~amb2=Synth(\ambdos))});
-		if(~sinte[~indice] == nil,{nil},
-			{~sinte[~indice].set(\gate,1,\att,~sinte1attknob.value,\rel,~sinte1relknob.value);~sinte.put(~indice,~chord=Synth(\acordesuno))});
-		if(~sinte2[~indice] == nil,{nil},
-			{~sinte2[~indice].set(\gate,1,\att,~sinte2attknob.value,\rel,~sinte2relknob.value);~sinte2.put(~indice,~chord2=Synth(\acordesdos))});
-		if(~in[~indice] == nil,{nil},
-			{~in[~indice].set(\gate,1,\att,~inattknob.value,\rel,~inrelknob.value);~in.put(~indice,~entrada=Synth(\ent))});
+		if(~cbox_bajo[~cbox_indice] == nil,{nil},{~cbox_bajo[~cbox_indice].set(\gate,1,\att,~cbox_bass1attknob.value,\rel,~cbox_bass1relknob.value);~cbox_bajo.put(~cbox_indice,~cbox_bass=Synth(\bajouno))});
+		if(~cbox_bajo2[~cbox_indice] == nil,{nil},
+			{~cbox_bajo2[~cbox_indice].set(\gate,1,\att,~cbox_bass2attknob.value,\rel,~cbox_bass2relknob.value);~cbox_bajo2.put(~cbox_indice,~cbox_bass2=Synth(\bajodos))});
+		if(~cbox_ambiente[~cbox_indice] == nil,{nil},
+			{~cbox_ambiente[~cbox_indice].set(\gate,1,\att,~cbox_amb1attknob.value,\rel,~cbox_amb1relknob.value);~cbox_ambiente.put(~cbox_indice,~cbox_amb=Synth(\ambuno))});
+		if(~cbox_ambiente2[~cbox_indice] == nil,{nil},
+			{~cbox_ambiente2[~cbox_indice].set(\gate,1,\att,~cbox_amb2attknob.value,\rel,~cbox_amb2relknob.value);~cbox_ambiente2.put(~cbox_indice,~cbox_amb2=Synth(\ambdos))});
+		if(~cbox_sinte[~cbox_indice] == nil,{nil},
+			{~cbox_sinte[~cbox_indice].set(\gate,1,\att,~cbox_sinte1attknob.value,\rel,~cbox_sinte1relknob.value);~cbox_sinte.put(~cbox_indice,~cbox_chord=Synth(\acordesuno))});
+		if(~cbox_sinte2[~cbox_indice] == nil,{nil},
+			{~cbox_sinte2[~cbox_indice].set(\gate,1,\att,~cbox_sinte2attknob.value,\rel,~cbox_sinte2relknob.value);~cbox_sinte2.put(~cbox_indice,~cbox_chord2=Synth(\acordesdos))});
+		if(~cbox_in[~cbox_indice] == nil,{nil},
+			{~cbox_in[~cbox_indice].set(\gate,1,\att,~cbox_inattknob.value,\rel,~cbox_inrelknob.value);~cbox_in.put(~cbox_indice,~cbox_entrada=Synth(\ent))});
 		////
-		~tiempos.wait;
+		~cbox_tiempos.wait;
 		//
-		~indice = ~indice+1;
+		~cbox_indice = ~cbox_indice+1;
 	}.loop;
 }).quant_(4);
 //tiempo random
 Tdef(\randtime,{
 	{
-		var timer=Prand(~randtimes,inf).asStream;
+		var timer=Prand(~cbox_randtimes,inf).asStream;
 		TempoClock.tempo=timer.next/60;
-		~tiempos.wait;
+		~cbox_tiempos.wait;
 	}.loop;
 }).quant_(4);
 );
@@ -66,22 +66,22 @@ Tdef(\randtime,{
 /*
 //s.queryAllNodes
 /*
-~gmast=Group.head;
-~gaux=Group.before(~gmast);
-~gfilt=Group.before(~gaux);
-~ginst=Group.before(~gfilt);
+~cbox_gmast=Group.head;
+~cbox_gaux=Group.before(~cbox_gmast);
+~cbox_gfilt=Group.before(~cbox_gaux);
+~cbox_ginst=Group.before(~cbox_gfilt);
 */
 //nodos
 //master var
-~mast=Synth.head(~gmast,\master);
+~cbox_mast=Synth.head(~cbox_gmast,\master);
 // fx
-~mastrev=Synth.head(~gaux,\aux1);
-~mastdel=Synth.before(~mastrev,\aux2);
-~mastpit=Synth.before(~mastdel,\aux3);
+~cbox_mastrev=Synth.head(~cbox_gaux,\aux1);
+~cbox_mastdel=Synth.before(~cbox_mastrev,\aux2);
+~cbox_mastpit=Synth.before(~cbox_mastdel,\aux3);
 //Filtros
-~mastlowf=Synth.head(~gfilt,\lowfilt);
-~masthighf=Synth.before(~mastlowf,\highfilt);
-~mastbandf=Synth.before(~masthighf,\bandfilt);
+~cbox_mastlowf=Synth.head(~cbox_gfilt,\lowfilt);
+~cbox_masthighf=Synth.before(~cbox_mastlowf,\highfilt);
+~cbox_mastbandf=Synth.before(~cbox_masthighf,\bandfilt);
 //granulador
-~grains=Synth.before(~mastbandf,\granulador);
+~cbox_grains=Synth.before(~cbox_mastbandf,\granulador);
 */
