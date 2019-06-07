@@ -10,25 +10,25 @@
 /////////////////////////////////
 (
 Tdef(\bass,{
-	var bassmel=Prand(~cbox_mainmelody.melody(~cbox_degrees,48),inf).asStream;
+	var bassmel=Prand(~cbox_mainmelody.melody(~cbox_degrees-12,48),inf).asStream;
 	loop{
 		~cbox_bass.set(\note,bassmel.next,
 			\filtminf,50,
-			\filtmaxf,8420,
-			\filtime,0.0125,
-			\rq,0.5,
-			\iphase,0.5,
-			\amp1,0.5,
-			\amp2,0.5,
-			\out,50);
-		~cbox_tiempos.wait;
+			\filtmaxf,12420,
+			\filtime,0.125,
+			\rq,0.35,
+			\iphase,0.15,
+			\amp1,0.45,
+			\amp2,0.35,
+			\out,58);
+		~cbox_tiempos/2.wait;
 	}
 }).quant_(1);
 );
 //bass 2
 (
 Tdef(\bass2,{
-	var bass2mel=Pseq(~cbox_mainmelody.melody(~cbox_degrees,48).mirror2,inf).asStream;
+	var bass2mel=Pseq(~cbox_mainmelody.melody(~cbox_degrees,24).mirror2,inf).asStream;
 
 	loop{
 		~cbox_bass2.set(\note,bass2mel.next,
@@ -39,9 +39,9 @@ Tdef(\bass2,{
 			\rq,0.5,
 			\bandw,0.5,
 			\iphase,0.05,
-			\amp1,0.25,
-			\amp2,0.1,
-			\out,50);
+			\amp1,0.5,
+			\amp2,0.71,
+			\out,56);
 		~cbox_tiempos.wait;
 	}
 }).quant_(1);
@@ -86,7 +86,7 @@ Tdef(\pad2,{
 //Chord Synths
 (
 Tdef(\acordes,{
-	var acmel=Pseq(~cbox_mainmelody.melody(~cbox_degrees,48),inf).asStream;
+	var acmel=Prand(~cbox_mainmelody.melody(~cbox_degrees,48),inf).asStream;
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
 	var cambia=Prand(['m','m7','mmaj7'],inf).asStream;
 	loop{
@@ -98,24 +98,24 @@ Tdef(\acordes,{
 		~cbox_chord.set(\rq,0.5);
 		~cbox_chord.set(\pan,0);
 		~cbox_chord.set(\amp,0.1);
-		~cbox_chord.set(\out,50);
+		~cbox_chord.set(\out,[50,64]);
 		~cbox_tiempos.wait;
 	}
 }).quant_(1);
 );
 (
 Tdef(\acordes2,{
-	var ac2mel=Prand(~cbox_mainmelody.melody(~cbox_degrees,48),inf).asStream;
+	var ac2mel=Prand(~cbox_mainmelody.melody(~cbox_degrees,36),inf).asStream;
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', 'M9',  'M9m', 'm9' or 'm9m' keys only
-	var cambia2=Prand(['m','M','M9','mmaj7','m9m'],inf).asStream;
+	var cambia2=Prand(['m','M','mmaj7','M9'],inf).asStream;
 	loop{
 		~cbox_chord2.set(\chord,cambia2.next);
 		~cbox_chord2.set(\note,ac2mel.next);
 		~cbox_chord2.set(\cutf,12220);
-		~cbox_chord2.set(\rq,0.25);
+		~cbox_chord2.set(\rq,0.05);
 		~cbox_chord2.set(\pan,[0,-0.97]);
-		~cbox_chord2.set(\amp,0.1);
-		~cbox_chord2.set(\out,50);
+		~cbox_chord2.set(\amp,0.025);
+		~cbox_chord2.set(\out,[54,56,64,65]);
 		~cbox_tiempos.wait;
 	}
 }).quant_(1);

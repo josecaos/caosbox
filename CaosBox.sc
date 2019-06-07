@@ -13,9 +13,21 @@ CaosBox {
 			// System files
 			~cbox_urls = ["CB/CaosBox-midi.scd","CB/CaosBox-vars.scd","CB/CaosBox-signal.scd","CB/CaosBox-synths.scd",	"CB/CaosBox-auto.scd","CB/CaosBox-defaults.scd","GUI/CaosBox-GUI.scd",	"GUI/CaosBox-GUI_2.scd","GUI/CaosBox-GUI_3.scd","GUI/CaosBox-GUI_4.scd","CB/CaosBox-seq.scd","CB/CaosBox-funcs.scd"];
 
-			~cbox_url = this.filenameSymbol.asString.dirname;
 
-			^super.new.init(gui);
+			// revisa dependencia obligatoria
+			if(\CaosKick.asClass != nil,{
+
+				~cbox_url = this.filenameSymbol.asString.dirname;
+
+				^super.new.init(gui);
+
+			}, {
+
+				"CaosPercLib not installed, without this CaosBox won't work".error;
+				"You can download the library here: https://github.com/josecaos/caosperclib/releases \nDownload and Unzip into: Platform.userExtensionDir;".inform;
+				^"Dependency problem detected";
+
+			});
 
 		});
 
@@ -25,19 +37,19 @@ CaosBox {
 
 		server = Server.local;
 
-		server.waitForBoot {
+			server.waitForBoot {
 
-			(~cbox_url +/+ "CB/CaosBox-load.scd").load;
+				(~cbox_url +/+ "CB/CaosBox-load.scd").load;
 
-			// evaluate if the GUI wil be shown or not
-			if(window == true, {
-				~cbox_w.front;
-				"Sequencer GUI is ON".inform;
-			},{
-				"Sequencer GUI is OFF, you are running without a Visual Interface".inform;
-			});
+				//evalua si se muestra el GUI
+				if(window == true, {
+					~cbox_w.front;
+					"Sequencer GUI is ON".inform;
+				},{
+					"Sequencer GUI is OFF, you are running without a Visual Interface".inform;
+				});
 
-		};
+			};
 
 	}
 
