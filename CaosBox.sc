@@ -13,7 +13,6 @@ CaosBox {
 			// System files
 			~cbox_urls = ["CB/CaosBox-midi.scd","CB/CaosBox-vars.scd","CB/CaosBox-signal.scd","CB/CaosBox-synths.scd",	"CB/CaosBox-auto.scd","CB/CaosBox-defaults.scd","GUI/CaosBox-GUI.scd",	"GUI/CaosBox-GUI_2.scd","GUI/CaosBox-GUI_3.scd","GUI/CaosBox-GUI_4.scd","CB/CaosBox-seq.scd","CB/CaosBox-funcs.scd"];
 
-
 			// revisa dependencia obligatoria
 			if(\CaosKick.asClass != nil,{
 
@@ -516,5 +515,5 @@ CaosBox {
 		^server.quit.freeAll.reboot;
 
 	}
-	//
+
 }

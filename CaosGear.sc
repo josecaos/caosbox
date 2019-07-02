@@ -22,11 +22,23 @@ CaosGear : CaosBox {
 
 	}
 
-	kick {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=1,amp1=1,amp2=0.25,doneAction=2|
+	kick {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=1,amp1=1,amp2=0.25|
 
 		~cbox_b = {
 			var signal;
-			signal = CaosKick.ar(att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction);
+			signal = CaosKick.ar(att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2);
+			Out.ar(out,signal);
+		};
+
+		instance_id = "Kick";
+		^instance_id;
+	}
+
+	kickCustom {|func=nil,out=50,att=0.01,rel=0.25|
+
+		~cbox_b = {
+			var signal;
+			signal = CaosKick.customSignal(func,att,rel);
 			Out.ar(out,signal);
 		};
 
