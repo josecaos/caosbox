@@ -22,11 +22,11 @@ CaosGear : CaosBox {
 
 	}
 
-	kick {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=1,amp1=1,amp2=0.25|
+	kick {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=1,amp1=1,amp2=0.25,pan=#[-1,1]|
 
 		~cbox_b = {
 			var signal;
-			signal = CaosKick.ar(att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2);
+			signal = CaosKick.ar(att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,pan);
 			Out.ar(out,signal);
 		};
 
@@ -55,12 +55,12 @@ CaosGear : CaosBox {
 
 	}
 
-	kick2 {|out=50,att=0.01,rel=0.5,modFreq=2,modbw=0.5,bw=0.2,freq1=60,freq2=64,lowcutfreq=45,gate=1,amp=0.15|
+	kick2 {|out=50,att=0.01,rel=0.5,modFreq=2,modbw=0.5,bw=0.2,freq1=60,freq2=64,lowcutfreq=45,gate=1,amp=0.15,pan=#[-1,1]|
 
 		~cbox_b2 = {
 
 			var signal;
-			signal = CaosKick2.ar(att,rel,modFreq,modbw,bw,freq1,freq2,lowcutfreq,gate,amp);
+			signal = CaosKick2.ar(att,rel,modFreq,modbw,bw,freq1,freq2,lowcutfreq,gate,amp,pan);
 			Out.ar(out,signal);
 
 		};
@@ -86,11 +86,11 @@ CaosGear : CaosBox {
 
 	}
 
-	snare {|out=50,att=0.01,rel=0.25,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.1|
+	snare {|out=50,att=0.01,rel=0.25,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.1,pan=#[1,-1]|
 
 		~cbox_t = {
 			var signal;
-			signal = CaosSnare.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
+			signal = CaosSnare.ar(att,rel,highcutfreq,rq,gate,amp1,amp2,pan);
 			Out.ar(out,signal);
 		};
 
@@ -120,10 +120,10 @@ CaosGear : CaosBox {
 
 	}
 
-	snare2 {|out=50,att=0.01,rel=0.25,iphase=0.03,bw=0.5,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.25|
+	snare2 {|out=50,att=0.01,rel=0.25,iphase=0.03,bw=0.5,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.25,pan=#[1,-1]|
 		~cbox_t2 = {
 			var signal;
-			signal = CaosSnare2.ar(att,rel,iphase,bw,highcutfreq,rq,gate,amp1,amp2);
+			signal = CaosSnare2.ar(att,rel,iphase,bw,highcutfreq,rq,gate,amp1,amp2,pan);
 			Out.ar(out,signal);
 		};
 		instance_id = "Snare2";
