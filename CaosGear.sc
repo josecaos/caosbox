@@ -34,34 +34,90 @@ CaosGear : CaosBox {
 		^instance_id;
 	}
 
-	kickCustom {|func=nil,out=50,att=0.01,rel=0.25|
+	kickCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=#[-0.9,0.91]|
 
-		~cbox_b = {
-			var signal;
-			signal = CaosKick.customSignal(func,att,rel);
-			Out.ar(out,signal);
-		};
+		if(ugenFunc != nil,{
 
-		instance_id = "Kick";
-		^instance_id;
+			~cbox_b = {
+				var signal;
+				signal = CaosKick.customSignal(ugenFunc,att,rel,pan);
+				Out.ar(out,signal);
+			};
+
+			instance_id = "Kick";
+			^instance_id;
+
+		},{
+
+			^"'func' argument is required";
+
+		});
+
 	}
 
 	kick2 {|out=50,att=0.01,rel=0.5,modFreq=2,modbw=0.5,bw=0.2,freq1=60,freq2=64,lowcutfreq=45,gate=1,amp=0.15|
-		var signal;
-		signal = CaosKick2.ar(att,rel,modFreq,modbw,bw,freq1,freq2,lowcutfreq,gate,amp);
-		Out.ar(out,signal);
+
+		~cbox_b2 = {
+
+			var signal;
+			signal = CaosKick2.ar(att,rel,modFreq,modbw,bw,freq1,freq2,lowcutfreq,gate,amp);
+			Out.ar(out,signal);
+
+		};
+
 		instance_id = "Kick2";
 		^instance_id;
+
+	}
+
+	kick2Custom {|ugenFunc,out=50,att=0.01,rel=0.2,pan=#[-0.9,0.92]|
+
+		if(ugenFunc != nil,{
+			~cbox_b2 = {
+				var signal;
+				signal = CaosKick2.customSignal(ugenFunc,att,rel,pan);
+				Out.ar(out,signal);
+
+			};
+
+			instance_id = "Kick2";
+			^instance_id;
+		});
+
 	}
 
 	snare {|out=50,att=0.01,rel=0.25,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.1|
+
 		~cbox_t = {
 			var signal;
 			signal = CaosSnare.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
 		};
+
 		instance_id = "Snare";
 		^instance_id;
+
+	}
+
+	snareCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=#[-0.9,0.91]|
+
+		if(ugenFunc != nil,{
+
+			~cbox_t = {
+				var signal;
+				signal = CaosSnare.customSignal(ugenFunc,att,rel,pan);
+				Out.ar(out,signal);
+			};
+
+			instance_id = "Snare";
+			^instance_id;
+
+		},{
+
+			^"'func' argument is required";
+
+		});
+
 	}
 
 	snare2 {|out=50,att=0.01,rel=0.25,iphase=0.03,bw=0.5,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.25|
@@ -72,6 +128,20 @@ CaosGear : CaosBox {
 		};
 		instance_id = "Snare2";
 		^instance_id;
+
+	}
+
+	snare2Custom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=#[-0.9,0.91]|
+
+		~cbox_t2 = {
+			var signal;
+			signal = CaosSnare2.customSignal(ugenFunc,att,rel,pan);
+			Out.ar(out,signal);
+		};
+
+		instance_id = "Snare2";
+		^instance_id;
+
 	}
 
 	hihats {|out=50,att=0.01,rel=0.1,highcutfreq=8330,rq=0.15,gate=1,amp1=0.9,amp2=0.9|
@@ -296,10 +366,10 @@ CaosGear : CaosBox {
 						\amp,vol,
 						\out,outbus
 					);
-						~cbox_tiempos.wait;
-					}
+					~cbox_tiempos.wait;
+				}
 			}).quant_(1);
-			);
+		);
 		instance_id = "Chords";
 		^instance_id;
 	}

@@ -22,7 +22,7 @@ Task({|i|
 	1.yield;
 	1.do{"Bienvenido/Welcome.".inform};
 	1.yield;
-	1.do{" + CaosBox  es una Máquina no tan común, para hacer Algorave/Livecoding con CaosPercLib. \n + CaosBox  is a not so common Algoraving/Livecoding Machine for CaosPercLib. \n + Escrito/Written: @Ill_Slide  [at]: http://www.josecaos.xyz".inform;
+	1.do{" + CaosBox  es una secuenciador no tan común, para hacer Algorave/Livecoding. \n + CaosBox  is a not so common Algorave/Livecoding sequencer. \n + Escrito/Written: @Ill_Slide  [at]: http://www.josecaos.xyz".inform;
 	};
 	//
 }).play;
