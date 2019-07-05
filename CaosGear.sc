@@ -154,11 +154,35 @@ CaosGear : CaosBox {
 		^instance_id;
 	}
 
+	hihatsCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=#[-0.9,0.91]|
+
+		~cbox_h = {
+			var signal;
+			signal = CaosHats.customSignal(ugenFunc,out,att,rel,pan);
+			Out.ar(out,signal);
+		};//
+
+		instance_id = "HiHats";
+		^instance_id;
+
+	}
+
 	hihats2 {|out=50,att=0.01,rel=0.1,highcutfreq=12330,rq=0.5,gate=1,amp1=0.9,amp2=0.9|
 
 		~cbox_h2 = {
 			var signal;
 			signal = CaosHats2.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
+			Out.ar(out,signal);
+		};//
+		instance_id = "HiHats2";
+		^instance_id;
+	}
+
+	hihats2Custom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=#[-0.9,0.91]|
+
+		~cbox_h2 = {
+			var signal;
+			signal = CaosHats2.customSignal(ugenFunc,out,att,rel,pan);
 			Out.ar(out,signal);
 		};//
 		instance_id = "HiHats2";
