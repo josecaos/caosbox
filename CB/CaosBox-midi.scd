@@ -15,7 +15,7 @@ MIDIIn.control={|src,chan,num,val|
 		29,{~cbox_mastrev.set(\mix,val.linlin(0,127,0.01,1));{~cbox_auxrfader.value_(val/127);~cbox_numr.value_(val/127)}.defer},
 		28,{~cbox_mastrev.set(\room,val.linlin(0,127,0.01,1.3));{~cbox_auxroomfader.value_(val/127);~cbox_numroom.value_(val/127)}.defer},
 		27,{~cbox_mastrev.set(\damp,val.linlin(0,127,1,0.01));{~cbox_auxdfader.value_(val/127);~cbox_numd.value_(val/127)}.defer},
-		11,{~cbox_mastdel.set(\delaytime,val.linexp(0,127,0,1));{~cbox_auxtfader.value_(val/127);~cbox_numt.value_(val/127)}.defer},
+		11,{~cbox_mastdel.set(\delaytime,val.linlin(0,127,0,1));{~cbox_auxtfader.value_(val/127);~cbox_numt.value_(val/127)}.defer},
 		14,{~cbox_mastdel.set(\delfeed,val.linlin(0,127,0,1));{~cbox_auxffader.value_(val/127);~cbox_numf.value_(val/127)}.defer},
 		36,{~cbox_mastpit.set(\pitch,val.linlin(0,127,0.01,4));{~cbox_auxpfader.value_(val/127);~cbox_nump.value_(val/127)}.defer},
 		35,{~cbox_mastpit.set(\pitchDispersion,val.linlin(0,127,0.01,1));{~cbox_auxpdfader.value_(val/127);~cbox_numpd.value_(val/127)}.defer},

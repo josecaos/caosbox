@@ -1,6 +1,7 @@
 CaosGear : CaosBox {
 
 	var <instance_id;
+	classvar <>custom_bass,<>custom_bass2,<>custom_pad,<>custom_pad2,<>custom_chords,<>custom_guitchords;
 
 	*new {
 
@@ -215,6 +216,11 @@ CaosGear : CaosBox {
 		var ampx = amp1;
 		var ampy = amp2;
 		var outbus = out;
+
+		~cbox_custom = false;
+
+		(~cbox_url +/+ "CB/CaosBox-synths.scd").load;
+
 		(//bass 1
 			Tdef(\bass,{
 
@@ -258,6 +264,69 @@ CaosGear : CaosBox {
 		);
 		instance_id = "Bass";
 		^instance_id;
+	}
+
+	bassCustom {|
+		ugenFunc=nil,
+		out=50,
+		semitoneArray=#[ 48, 50, 52, 53, 55, 57, 59 ],
+		seqType='seq',
+		att=0.01,
+		rel=0.5,
+		pan=#[-0.9,0.92]|
+		//
+		var func = ugenFunc;
+		var outbus = out;
+		var note = semitoneArray;
+		var attk = att;
+		var release = rel;
+		var panner = pan;
+
+		~cbox_custom = true;
+
+		(~cbox_url +/+ "CB/CaosBox-synths.scd").load;
+
+		(//bass 1
+			Tdef(\bass,{
+
+				var	bassmel,outstream;
+
+				if(seqType == 'rand' or: {seqType == 'seq'}, {
+
+					switch(seqType,
+						'rand', {
+							bassmel=Prand(note.asArray,inf).asStream;
+							outstream=Prand(outbus.asArray,inf).asStream;
+						},
+						'seq', {
+							bassmel=Pseq(note.asArray,inf).asStream;
+							outstream=Pseq(outbus.asArray,inf).asStream;
+						},
+						("Bass Melodic secuence type is" + seqType).inform;
+					);
+
+				}, {
+					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+				});
+
+				loop{
+					~cbox_bass.set(
+						\ugenFunc, func,
+						\att,attk,
+						\rel,release,
+						\note,bassmel.next,
+						\pan, panner,
+						\out,outstream.next
+					);
+					~cbox_tiempos.wait;
+				}
+			}).quant_(1);
+		);
+
+		instance_id = "Bass";
+		^instance_id;
+
+
 	}
 
 	bass2 {|
@@ -508,6 +577,12 @@ CaosGear : CaosBox {
 		CaosBox.clearSteps(track,steps);
 
 		^"CaosGear Instance deleted from sequencer";
+
 	}
 
+	*customOn {|on=false|
+
+		^~cbox_custom  = true;
+
+	}
 }

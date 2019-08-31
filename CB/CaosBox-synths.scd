@@ -4,16 +4,18 @@
 //Classes for the instrumental section
 ///////////////////////////////////////////
 (
-//Dynamic kick
-// debug
-/*SynthDef(\kickgear,{|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=0,amp1=1,amp2=0.25,doneAction=2|
-	var sig;
-	sig = CaosKick.ar(att,rel,modFreq,modbw,freq1,freq2,lowcutfreq,gate,amp1,amp2,doneAction);
-	Out.ar(out,sig)}).add;*/
-//
 //bass
-SynthDef(\bajouno,{|att=0.05,rel=1,note=38,filtminf=45,filtmaxf=750,filtime=0.25,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25,out=50|
-	Out.ar(out,CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2))}).add;
+if(~cbox_custom != true,{
+
+	"Bajo libreria".postcln;
+		SynthDef(\bajouno,{|att=0.05,rel=1,note=38,filtminf=45,filtmaxf=750,filtime=0.25,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25,out=50|
+			Out.ar(out,CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2))}).add;
+},{
+	"Bajo custom".postcln;
+	SynthDef(\bajouno,{|ugenFunc,att,rel,note=38,pan=#[0.95,0.96],out=50|
+		Out.ar(out,CaosBass.customSignal(ugenFunc,att,rel,pan))}).add;
+});
+
 SynthDef(\bajodos,{|att=0.2,rel=8,note=36,trig=4,filtminf=45,filtmaxf=1266,filtime=0.5,rq=0.25,bandw=0.25,iphase=0.05,gate=0,
 	amp1=0.5,amp2=0.5,out=50|
 	Out.ar(out,CaosBass2.ar(att,rel,note,trig,filtminf,filtmaxf,filtime,rq,bandw,iphase,gate,amp1,amp2))}).add;
@@ -36,7 +38,6 @@ SynthDef(\ent,{|out=50,inchan=#[0,1],gate=0,att=0.1,rel=0.25|
 );
 //
 (
-~cbox_kickgear=nil;
 ~cbox_bass=nil;
 ~cbox_bass2=nil;
 ~cbox_amb=nil;
