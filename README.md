@@ -1,6 +1,6 @@
 CaosBox v1.2.1
 =======
-It's a not-so-common LiveCoding/AlgoRave music GUI secuencer/processor for the CaosPercLib Pseudo-Class library, written in SuperCollider.
+It's a not-so-common LiveCoding/AlgoRave music GUI secuencer/processor for the CaosPercLib Class library, written in SuperCollider.
 
 #### You can download library here: https://github.com/josecaos/caosperclib/releases
 Unzip and place the  'caosperclib' + 'caosbox' folders here:  ##### **Platform.userExtensionDir;**
