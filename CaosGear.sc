@@ -405,8 +405,7 @@ CaosGear : CaosBox {
 		^instance_id;
 	}
 
-	chords {|
-		out = 50,	semitoneArray = #[ 48, 50, 52, 53, 55, 57, 59 ],		seqType = 'seq',
+	chords {|out = 50,semitoneArray = #[ 48, 50, 52, 53, 55, 57, 59 ],seqType = 'seq',
 		chordsArray = #['Mmaj7','M', 'm'],	attack = 0.05, release = 1, iphase = 0.025,
 		width = 0.1, cutf = 1200, rq = 0.5, pan = #[0.98,-1], amp = 0.5|
 		//
@@ -466,67 +465,69 @@ CaosGear : CaosBox {
 		instance_id = "Chords";
 		^instance_id;
 	}
-	// chords2 {|
-	// 	out = #[50],	semitoneArray = #[ 0, 2, 4, 5, 7, 9, 11 ],		seqType = 'seq',
-	// 	chordsArray = #['Mmaj7'],	attack = 0.05, release = 1, iphase = 0.025,
-	// 	width = 0.1, cutf = 1200, rq = 0.5, pan = #[0.98,-1], amp = 0.5|
-	// 	//
-	// 	var note = semitoneArray.asArray;
-	// 	var chords = chordsArray.asArray;
-	// 	var attk = attack;
-	// 	var rel = release;
-	// 	var iph = iphase;
-	// 	var iwidth = width;
-	// 	var cutfreq = cutf;
-	// 	var	bandwidth = rq;
-	// 	var space = pan;
-	// 	var vol = amp;
-	// 	var outbus = out.asArray;
-	// 	(
-	// 		Tdef(\acordes,{
-	//
-	// 			var mel, chord, outbus;
-	//
-	// 			if(seqType == 'rand' or: {seqType == 'seq'}, {
-	//
-	// 				switch(seqType,
-	// 					'rand', {
-	// 						mel=Prand(note,inf).asStream;
-	// 						outbus=Prand(out,inf).asStream;
-	// 						chord=Prand(chords,inf).asStream;
-	// 					},
-	// 					'seq', {
-	// 						mel=Pseq(note,inf).asStream;
-	// 						outbus=Pseq(out,inf).asStream;
-	// 						chord=Pseq(chords,inf).asStream;
-	// 					},
-	// 					("Chord Melodic secuence type is" + seqType).inform;
-	// 				);
-	// 				}, {
-	// 					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-	// 			});
-	// 			//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
-	// 			loop{
-	// 				~cbox_chord.set(
-	// 					\chord,chord.next,
-	// 					\note,mel.next,
-	// 					\att, attk,
-	// 					\rel, rel,
-	// 					\iphase,iph,
-	// 					\width,iwidth,
-	// 					\cutf,cutfreq,
-	// 					\rq,bandwidth,
-	// 					\pan,space,
-	// 					\amp,vol,
-	// 					\out,outbus.next
-	// 				);
-	// 				~cbox_tiempos.wait;
-	// 			}
-	// 		}).quant_(4);
-	// 	);
-	// 	instance_id = "Chords2";
-	// 	^instance_id;
-	// }
+
+	chords2 {|out = #[50],semitoneArray = #[ 0, 2, 4, 5, 7, 9, 11 ],seqType = 'seq',
+		chordsArray = #['Mmaj7'],attack = 0.05, release = 1, iphase = 0.025,
+		width = 0.1, cutf = 1200, rq = 0.5, pan = #[0.98,-1], amp = 0.5|
+		//
+		var note = semitoneArray.asArray;
+		var chords = chordsArray.asArray;
+		var attk = attack;
+		var rel = release;
+		var iph = iphase;
+		var iwidth = width;
+		var cutfreq = cutf;
+		var	bandwidth = rq;
+		var space = pan;
+		var vol = amp;
+		var outbus = out;
+		(
+			Tdef(\acordes,{
+
+				var mel, chord, outbus;
+
+				if(seqType == 'rand' or: {seqType == 'seq'}, {
+
+					switch(seqType,
+						'rand', {
+							mel=Prand(note,inf).asStream;
+							outbus=Prand(out.asArray,inf).asStream;
+							chord=Prand(chords,inf).asStream;
+						},
+						'seq', {
+							mel=Pseq(note,inf).asStream;
+							outbus=Pseq(out.asArray,inf).asStream;
+							chord=Pseq(chords,inf).asStream;
+						},
+						("Chord Melodic secuence type is" + seqType).inform;
+					);
+					}, {
+						"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+				});
+				//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
+				loop{
+					~cbox_chord.set(
+						\chord,chord.next,
+						\note,mel.next,
+						\att, attk,
+						\rel, rel,
+						\iphase,iph,
+						\width,iwidth,
+						\cutf,cutfreq,
+						\rq,bandwidth,
+						\pan,space,
+						\amp,vol,
+						\out,outbus.next
+					);
+					~cbox_tiempos.wait;
+				}
+			}).quant_(4);
+		);
+
+		instance_id = "Chords2";
+
+		^instance_id;
+	}
 
 	lineIn {|out=64,inchan=0,gate=1,att=0.05,rel=0.25|
 
@@ -540,16 +541,16 @@ CaosGear : CaosBox {
 		var track;
 
 		switch( instance_id,
-			"Kick", {track = \kick	},
-			"Kick2", {track = \kick2	},
-			"Snare", {track = \snare	},
-			"Snare2", {track = \snare2	},
-			"HiHats", {track = \hihats	},
+			"Kick", {track = \kick},
+			"Kick2", {track = \kick2},
+			"Snare", {track = \snare},
+			"Snare2", {track = \snare2},
+			"HiHats", {track = \hihats},
 			"HiHats2", {track = \hihats2},
 			"Bass", {track = \bass},
-			"Bass2", {track = \bass2	},
-			"Chords", {track = \chords	},
-			"LineIn", {track = \in	}
+			"Bass2", {track = \bass2},
+			"Chords", {track = \chords},
+			"LineIn", {track = \in}
 		);
 
 		CaosBox.setSteps(track,steps, overrideSteps);
@@ -563,15 +564,15 @@ CaosGear : CaosBox {
 
 		switch( instance_id,
 			"Kick", {track = \kick	},
-			"Kick2", {track = \kick2	},
-			"Snare", {track = \snare	},
-			"Snare2", {track = \snare2	},
-			"HiHats", {track = \hihats	},
+			"Kick2", {track = \kick2},
+			"Snare", {track = \snare},
+			"Snare2", {track = \snare2},
+			"HiHats", {track = \hihats},
 			"HiHats2", {track = \hihats2},
 			"Bass", {track = \bass},
-			"Bass2", {track = \bass2	},
-			"Chords", {track = \chords	},
-			"LineIn", {track = \in	}
+			"Bass2", {track = \bass2},
+			"Chords", {track = \chords},
+			"LineIn", {track = \in}
 		);
 
 		CaosBox.clearSteps(track,steps);
