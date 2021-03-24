@@ -23,7 +23,7 @@ CaosGear : CaosBox {
 
 	}
 
-	kick {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=1,amp1=1,amp2=0.25,pan=#[-1,1]|
+	kick {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=1,amp1=1,amp2=0.25,pan=0|
 
 		~cbox_b = {
 			var signal;
@@ -35,7 +35,7 @@ CaosGear : CaosBox {
 		^instance_id;
 	}
 
-	kickCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=#[-0.9,0.91]|
+	kickCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
 
 		if(ugenFunc != nil,{
 
@@ -56,7 +56,7 @@ CaosGear : CaosBox {
 
 	}
 
-	kick2 {|out=50,att=0.01,rel=0.5,modFreq=2,modbw=0.5,bw=0.2,freq1=60,freq2=64,lowcutfreq=45,gate=1,amp=0.15,pan=#[-1,1]|
+	kick2 {|out=50,att=0.01,rel=0.5,modFreq=2,modbw=0.5,bw=0.2,freq1=60,freq2=64,lowcutfreq=45,gate=1,amp=0.15,pan=0|
 
 		~cbox_b2 = {
 
@@ -71,7 +71,7 @@ CaosGear : CaosBox {
 
 	}
 
-	kick2Custom {|ugenFunc,out=50,att=0.01,rel=0.2,pan=#[-0.9,0.92]|
+	kick2Custom {|ugenFunc,out=50,att=0.01,rel=0.2,pan=0|
 
 		if(ugenFunc != nil,{
 			~cbox_b2 = {
@@ -87,7 +87,7 @@ CaosGear : CaosBox {
 
 	}
 
-	snare {|out=50,att=0.01,rel=0.25,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.1,pan=#[1,-1]|
+	snare {|out=50,att=0.01,rel=0.25,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.1,pan=0|
 
 		~cbox_t = {
 			var signal;
@@ -100,7 +100,7 @@ CaosGear : CaosBox {
 
 	}
 
-	snareCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=#[-0.9,0.91]|
+	snareCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
 
 		if(ugenFunc != nil,{
 
@@ -121,7 +121,7 @@ CaosGear : CaosBox {
 
 	}
 
-	snare2 {|out=50,att=0.01,rel=0.25,iphase=0.03,bw=0.5,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.25,pan=#[1,-1]|
+	snare2 {|out=50,att=0.01,rel=0.25,iphase=0.03,bw=0.5,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.25,pan=0|
 		~cbox_t2 = {
 			var signal;
 			signal = CaosSnare2.ar(att,rel,iphase,bw,highcutfreq,rq,gate,amp1,amp2,pan);
@@ -132,7 +132,7 @@ CaosGear : CaosBox {
 
 	}
 
-	snare2Custom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=#[-0.9,0.91]|
+	snare2Custom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
 
 		~cbox_t2 = {
 			var signal;
@@ -145,7 +145,7 @@ CaosGear : CaosBox {
 
 	}
 
-	hihats {|out=50,att=0.01,rel=0.1,highcutfreq=8330,rq=0.15,gate=1,amp1=0.9,amp2=0.9|
+	hihats {|out=50,att=0.01,rel=0.1,highcutfreq=8330,rq=0.15,gate=1,amp1=0.9,amp2=0.9,pan=0|
 		~cbox_h = {
 			var signal;
 			signal = CaosHats.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
@@ -155,7 +155,7 @@ CaosGear : CaosBox {
 		^instance_id;
 	}
 
-	hihatsCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=#[-0.9,0.91]|
+	hihatsCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
 
 		~cbox_h = {
 			var signal;
@@ -168,7 +168,7 @@ CaosGear : CaosBox {
 
 	}
 
-	hihats2 {|out=50,att=0.01,rel=0.1,highcutfreq=12330,rq=0.5,gate=1,amp1=0.9,amp2=0.9|
+	hihats2 {|out=50,att=0.01,rel=0.1,highcutfreq=12330,rq=0.5,gate=1,amp1=0.9,amp2=0.9,pan=0|
 
 		~cbox_h2 = {
 			var signal;
@@ -179,7 +179,7 @@ CaosGear : CaosBox {
 		^instance_id;
 	}
 
-	hihats2Custom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=#[-0.9,0.91]|
+	hihats2Custom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
 
 		~cbox_h2 = {
 			var signal;
@@ -203,7 +203,8 @@ CaosGear : CaosBox {
 		rq=0.25,
 		iphase=0.5,
 		amp1=0.5,
-		amp2=0.5|
+		amp2=0.5
+		pan=0|
 		//
 		var note = semitoneArray;
 		var attk = attack;
@@ -215,6 +216,7 @@ CaosGear : CaosBox {
 		var waveiphase = iphase;
 		var ampx = amp1;
 		var ampy = amp2;
+		var panner = pan;
 		var outbus = out;
 
 		~cbox_custom = false;
@@ -256,6 +258,7 @@ CaosGear : CaosBox {
 						\iphase,waveiphase,
 						\amp1,ampx,
 						\amp2,ampy,
+						\pan,panner,
 						\out,outstream.next
 					);
 					~cbox_tiempos.wait;
@@ -273,7 +276,7 @@ CaosGear : CaosBox {
 		seqType='seq',
 		att=0.01,
 		rel=0.5,
-		pan=#[-0.9,0.92]|
+		pan=0|
 		//
 		var func = ugenFunc;
 		var outbus = out;
@@ -343,7 +346,8 @@ CaosGear : CaosBox {
 		bw=0.5,
 		iphase=0.5,
 		amp1=0.5,
-		amp2=0.5|
+		amp2=0.5
+		pan=0|
 		//
 		var note = semitoneArray;
 		var attk = attack;
@@ -357,6 +361,7 @@ CaosGear : CaosBox {
 		var waveiphase = iphase;
 		var ampx = amp1;
 		var ampy = amp2;
+		var panner = pan;
 		var outbus = out;
 		(
 			Tdef(\bass2,{
@@ -395,6 +400,7 @@ CaosGear : CaosBox {
 						\iphase,waveiphase,
 						\amp1,ampx,
 						\amp2,ampy,
+						\pan,panner,
 						\out,outbus
 					);
 					~cbox_tiempos.wait;
@@ -407,7 +413,7 @@ CaosGear : CaosBox {
 
 	chords {|out = 50,semitoneArray = #[ 48, 50, 52, 53, 55, 57, 59 ],seqType = 'seq',
 		chordsArray = #['Mmaj7','M', 'm'],	attack = 0.05, release = 1, iphase = 0.025,
-		width = 0.1, cutf = 1200, rq = 0.5, pan = #[0.98,-1], amp = 0.5|
+		width = 0.1, cutf = 1200, rq = 0.5, pan = 0, amp = 0.5|
 		//
 		var note = semitoneArray;
 		var chords = chordsArray;
@@ -417,7 +423,7 @@ CaosGear : CaosBox {
 		var iwidth = width;
 		var cutfreq = cutf;
 		var	bandwidth = rq;
-		var space = pan;
+		var panner = pan;
 		var vol = amp;
 		var outbus = out;
 		(
@@ -454,7 +460,7 @@ CaosGear : CaosBox {
 						\width,iwidth,
 						\cutf,cutfreq,
 						\rq,bandwidth,
-						\pan,space,
+						\pan,panner,
 						\amp,vol,
 						\out,outbus
 					);
@@ -468,7 +474,7 @@ CaosGear : CaosBox {
 
 	chords2 {|out = #[50],semitoneArray = #[ 0, 2, 4, 5, 7, 9, 11 ],seqType = 'seq',
 		chordsArray = #['Mmaj7'],attack = 0.05, release = 1, iphase = 0.025,
-		width = 0.1, cutf = 1200, rq = 0.5, pan = #[0.98,-1], amp = 0.5|
+		width = 0.1, cutf = 1200, rq = 0.5, pan = 0, amp = 0.5|
 		//
 		var note = semitoneArray.asArray;
 		var chords = chordsArray.asArray;
@@ -478,7 +484,7 @@ CaosGear : CaosBox {
 		var iwidth = width;
 		var cutfreq = cutf;
 		var	bandwidth = rq;
-		var space = pan;
+		var panner = pan;
 		var vol = amp;
 		var outbus = out;
 		(
@@ -507,17 +513,17 @@ CaosGear : CaosBox {
 				//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
 				loop{
 					~cbox_chord.set(
-						\chord,chord.next,
-						\note,mel.next,
+						\chord, chord.next,
+						\note, mel.next,
 						\att, attk,
 						\rel, rel,
-						\iphase,iph,
-						\width,iwidth,
-						\cutf,cutfreq,
-						\rq,bandwidth,
-						\pan,space,
-						\amp,vol,
-						\out,outbus.next
+						\iphase, iph,
+						\width, iwidth,
+						\cutf, cutfreq,
+						\rq, bandwidth,
+						\pan, panner,
+						\amp, vol,
+						\out, outbus.next
 					);
 					~cbox_tiempos.wait;
 				}
@@ -550,6 +556,7 @@ CaosGear : CaosBox {
 			"Bass", {track = \bass},
 			"Bass2", {track = \bass2},
 			"Chords", {track = \chords},
+			"Chords2", {track = \chords2},
 			"LineIn", {track = \in}
 		);
 
@@ -572,6 +579,7 @@ CaosGear : CaosBox {
 			"Bass", {track = \bass},
 			"Bass2", {track = \bass2},
 			"Chords", {track = \chords},
+			"Chords2", {track = \chords2},
 			"LineIn", {track = \in}
 		);
 
