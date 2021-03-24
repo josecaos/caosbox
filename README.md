@@ -1,11 +1,14 @@
-CaosBox v1.2.1
+CaosBox v1.2.2
 ------
 **It's a not-so-common LiveCoding/AlgoRave music Secuencer/Processor for the CaosPercLib Class library, with a programming Interface and a GUI written in SuperCollider.**
 
 #### You can download library here: https://github.com/josecaos/caosperclib
-Unzip and place the  'caosperclib' + 'caosbox' folders here:  ``` Platform.userExtensionDir;```
+Unzip and place the  'caosperclib' + 'caosbox' folders here:  
+```
+ Platform.userExtensionDir;
+ ```
 
-### Use
+### Basic Use
 - Moving towards v2.0 a programming interface has been created to control the GUI, still in progress, example to start CaosBox:
 ```
     //instance sequencer
@@ -30,9 +33,9 @@ Unzip and place the  'caosperclib' + 'caosbox' folders here:  ``` Platform.userE
 
     c.stop;
 ```
-```
-    Improvise, have fun and algorave a lot.
-```
+
+#### Improvise, have fun and algorave a lot.
+
 ------
 
 ##### Notes:
