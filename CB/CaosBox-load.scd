@@ -2,7 +2,8 @@
 (
 Task({|i|
 	var texto = "CaosBox v1.1";
-	var display = texto.size*6;
+	var display = 1;
+	// var display = texto.size*6;
 	var crece=Array.new(display);
 	var creseq=Pseq([0,1],31).asStream;
 	i=0;

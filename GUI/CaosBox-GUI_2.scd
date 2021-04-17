@@ -1,6 +1,6 @@
 (//CaosBox GUI file 2 - v1.2 - bass, ambientes, acordes
 //bajo
-StaticText(~cbox_w,Rect(5,132,53,15)).string_("Bass:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~cbox_w,Rect(5,132,53,15)).string_("Bass:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
 ~cbox_checkbox = 60;
 for (0, 31, { |i|
 
@@ -39,7 +39,7 @@ for (0, 31, { |i|
 
 
 //bajo2
-StaticText(~cbox_w,Rect(5,152,53,15)).string_("Bass2:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~cbox_w,Rect(5,152,53,15)).string_("Bass2:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
 
 ~cbox_checkbox = 60;
 
@@ -78,7 +78,7 @@ for (0, 31, { |i|
 ~cbox_bass2relknob=EZKnob(~cbox_w,Rect(870,151,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
 //ambiente
-StaticText(~cbox_w,Rect(5,172,53,15)).string_("Pad:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~cbox_w,Rect(5,172,53,15)).string_("Pad:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
 
 ~cbox_checkbox = 60;
 
@@ -118,7 +118,7 @@ for (0, 31, { |i|
 ~cbox_amb1relknob=EZKnob(~cbox_w,Rect(870,171,81,17),nil,ControlSpec(0.25,12,\lin,0.001,2,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
 //ambiente2
-StaticText(~cbox_w,Rect(5,192,53,15)).string_("pad2:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~cbox_w,Rect(5,192,53,15)).string_("pad2:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
 
 ~cbox_checkbox = 60;
 
@@ -158,7 +158,7 @@ for (0, 31, { |i|
 ~cbox_amb2relknob=EZKnob(~cbox_w,Rect(870,191,81,17),nil,ControlSpec(0.25,12,\lin,0.001,4,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
 //acordes
-StaticText(~cbox_w,Rect(5,212,53,15)).string_("Chords:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~cbox_w,Rect(5,212,53,15)).string_("Chords:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
 
 ~cbox_checkbox = 60;
 
@@ -198,7 +198,7 @@ for (0, 31, { |i|
 
 
 //Acordes2
-StaticText(~cbox_w,Rect(5,232,53,15)).string_("Chords2:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.85,0.85,0.85));
+StaticText(~cbox_w,Rect(5,232,53,15)).string_("Chords2:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
 
 ~cbox_checkbox = 60;
 
