@@ -33,20 +33,55 @@ Tdef(\secuencias,{
 		~cbox_bombo2[~cbox_indice].play;
 		~cbox_tarola2[~cbox_indice].play;
 		~cbox_contras2[~cbox_indice].play;
-		//
-		if(~cbox_bajo[~cbox_indice] == nil,{nil},{~cbox_bajo[~cbox_indice].set(\gate,1,\att,~cbox_bass1attknob.value,\rel,~cbox_bass1relknob.value);~cbox_bajo.put(~cbox_indice,~cbox_bass=Synth(\bajouno))});
+		//bass
+		if(~cbox_bajo[~cbox_indice] == nil,{nil},
+			{~cbox_bajo[~cbox_indice].set(
+				\gate,1,
+				\att,~cbox_bass1attknob.value,
+				\rel,~cbox_bass1relknob.value);
+			~cbox_bajo.put(~cbox_indice,~cbox_bass=Synth(\bajouno))});
+		// bass2
 		if(~cbox_bajo2[~cbox_indice] == nil,{nil},
-			{~cbox_bajo2[~cbox_indice].set(\gate,1,\att,~cbox_bass2attknob.value,\rel,~cbox_bass2relknob.value);~cbox_bajo2.put(~cbox_indice,~cbox_bass2=Synth(\bajodos))});
+			{~cbox_bajo2[~cbox_indice].set(
+				\gate,1,
+				\att,~cbox_bass2attknob.value,
+				\rel,~cbox_bass2relknob.value);
+			~cbox_bajo2.put(~cbox_indice,~cbox_bass2=Synth(\bajodos))});
+		// amb
 		if(~cbox_ambiente[~cbox_indice] == nil,{nil},
-			{~cbox_ambiente[~cbox_indice].set(\gate,1,\att,~cbox_amb1attknob.value,\rel,~cbox_amb1relknob.value);~cbox_ambiente.put(~cbox_indice,~cbox_amb=Synth(\ambuno))});
+			{~cbox_ambiente[~cbox_indice].set(
+				\gate,1,
+				\att,~cbox_amb1attknob.value,
+				\rel,~cbox_amb1relknob.value);
+			~cbox_ambiente.put(~cbox_indice,~cbox_amb=Synth(\ambuno))});
+		// amb2
 		if(~cbox_ambiente2[~cbox_indice] == nil,{nil},
-			{~cbox_ambiente2[~cbox_indice].set(\gate,1,\att,~cbox_amb2attknob.value,\rel,~cbox_amb2relknob.value);~cbox_ambiente2.put(~cbox_indice,~cbox_amb2=Synth(\ambdos))});
+			{~cbox_ambiente2[~cbox_indice].set(
+				\gate,1,
+				\att,~cbox_amb2attknob.value,
+				\rel,~cbox_amb2relknob.value);
+			~cbox_ambiente2.put(~cbox_indice,~cbox_amb2=Synth(\ambdos))});
+		// chords
 		if(~cbox_sinte[~cbox_indice] == nil,{nil},
-			{~cbox_sinte[~cbox_indice].set(\gate,1,\att,~cbox_sinte1attknob.value,\rel,~cbox_sinte1relknob.value);~cbox_sinte.put(~cbox_indice,~cbox_chord=Synth(\acordesuno))});
+			{~cbox_sinte[~cbox_indice].set(
+				\gate,1,
+				\att,~cbox_sinte1attknob.value,
+				\rel,~cbox_sinte1relknob.value);
+			~cbox_sinte.put(~cbox_indice,~cbox_chord=Synth(\acordesuno))});
+		// chords2
 		if(~cbox_sinte2[~cbox_indice] == nil,{nil},
-			{~cbox_sinte2[~cbox_indice].set(\gate,1,\att,~cbox_sinte2attknob.value,\rel,~cbox_sinte2relknob.value);~cbox_sinte2.put(~cbox_indice,~cbox_chord2=Synth(\acordesdos))});
+			{~cbox_sinte2[~cbox_indice].set(
+				\gate,1,
+				\att,~cbox_sinte2attknob.value,
+				\rel,~cbox_sinte2relknob.value);
+			~cbox_sinte2.put(~cbox_indice,~cbox_chord2=Synth(\acordesdos))});
+		// in
 		if(~cbox_in[~cbox_indice] == nil,{nil},
-			{~cbox_in[~cbox_indice].set(\gate,1,\att,~cbox_inattknob.value,\rel,~cbox_inrelknob.value);~cbox_in.put(~cbox_indice,~cbox_entrada=Synth(\ent))});
+			{~cbox_in[~cbox_indice].set(
+				\gate,1,
+				\att,~cbox_inattknob.value,
+				\rel,~cbox_inrelknob.value);
+			~cbox_in.put(~cbox_indice,~cbox_entrada=Synth(\ent))});
 		////
 		~cbox_tiempos.wait;
 		//

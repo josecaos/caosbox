@@ -52,14 +52,14 @@ Tdef(\pad,{
 	var padmel=Pxrand(~cbox_mainmelody.melody(~cbox_degrees,48),inf).asStream;
 	~cbox_amb.set(\waveform, 'pulse' );//use 'sin' or 'tri' or 'pulse' only
 	loop{
-		~cbox_amb.set(\note,padmel.next);
-		~cbox_amb.set(\trem,8);
-		~cbox_amb.set(\vrel,2);
-		~cbox_amb.set(\iphase,0.25);
-		~cbox_amb.set(\cutf,12420);
-		~cbox_amb.set(\rq,0.5);
-		~cbox_amb.set(\amp,0.05);
-		~cbox_amb.set(\out,50);
+		~cbox_amb.set(\note,padmel.next,
+			\trem,8,
+			\vrel,2,
+			\iphase,0.25,
+			\cutf,12420,
+			\rq,0.5,
+			\amp,0.05,
+			\out,50);
 		~cbox_tiempos.wait;
 	}
 }).quant_(1);
@@ -69,16 +69,16 @@ Tdef(\pad,{
 Tdef(\pad2,{
 	var pad2mel=Pseq(~cbox_mainmelody.melody(~cbox_degrees,48),inf).asStream;
 	loop{
-		~cbox_amb2.set(\note,pad2mel.next);
-		~cbox_amb2.set(\fmax,[16,32,64,128,8].choose);
-		~cbox_amb2.set(\fm,[2,4,8].choose);
-		~cbox_amb2.set(\harm,120);
-		~cbox_amb2.set(\rmix,0.79);
-		~cbox_amb2.set(\rroom,0.15);
-		~cbox_amb2.set(\rfilt,0.5);
-		~cbox_amb2.set(\amp1,0.09);
-		~cbox_amb2.set(\amp2,0.05);
-		~cbox_amb2.set(\out,50);
+		~cbox_amb2.set(\note,pad2mel.next,
+			\fmax,[16,32,64,128,8].choose,
+			\fm,[2,4,8].choose,
+			\harm,120,
+			\rmix,0.79,
+			\rroom,0.15,
+			\rfilt,0.5,
+			\amp1,0.09,
+			\amp2,0.05,
+			\out,50);
 		~cbox_tiempos.wait;
 	}
 }).quant_(1);
@@ -90,15 +90,15 @@ Tdef(\acordes,{
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
 	var cambia=Prand(['m','m7','mmaj7'],inf).asStream;
 	loop{
-		~cbox_chord.set(\chord,cambia.next);
-		~cbox_chord.set(\note,acmel.next);
-		~cbox_chord.set(\iphase,0.2);
-		~cbox_chord.set(\width,0.5);
-		~cbox_chord.set(\cutf,10220);
-		~cbox_chord.set(\rq,0.5);
-		~cbox_chord.set(\pan,0);
-		~cbox_chord.set(\amp,0.1);
-		~cbox_chord.set(\out,[50,64]);
+		~cbox_chord.set(\chord,cambia.next,
+			\note,acmel.next,
+			\iphase,0.2,
+			\width,0.5,
+			\cutf,10220,
+			\rq,0.5,
+			\pan,0,
+			\amp,0.1,
+			\out,[50,64]);
 		~cbox_tiempos.wait;
 	}
 }).quant_(1);
@@ -109,13 +109,13 @@ Tdef(\acordes2,{
 	//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', 'M9',  'M9m', 'm9' or 'm9m' keys only
 	var cambia2=Prand(['m','M','mmaj7','M9'],inf).asStream;
 	loop{
-		~cbox_chord2.set(\chord,cambia2.next);
-		~cbox_chord2.set(\note,ac2mel.next);
-		~cbox_chord2.set(\cutf,12220);
-		~cbox_chord2.set(\rq,0.05);
-		~cbox_chord2.set(\pan,[0,-0.97]);
-		~cbox_chord2.set(\amp,0.025);
-		~cbox_chord2.set(\out,[54,56,64,65]);
+		~cbox_chord2.set(\chord,cambia2.next,
+			\note,ac2mel.next,
+			\cutf,12220,
+			\rq,0.05,
+			\pan,[0,-0.97],
+			\amp,0.025,
+			\out,[54,56,64,65]);
 		~cbox_tiempos.wait;
 	}
 }).quant_(1);

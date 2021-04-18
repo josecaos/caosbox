@@ -1,16 +1,4 @@
 ////FX fader Automation
-/*
-//Automation values
-/*Re-evaluate the sequence containing the updated array*/
-132/4
-~cbox_autoreverbmix=[0.1,0.5];
-~cbox_autodelaytime=[0.02,0.04,0.06,0.08,0.1];
-~cbox_autopitchrate=[0.5,1,1.5,2];
-~cbox_autopitchdispersion=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
-~cbox_autograintrig=[0.04,0.08,0.16,0.32,0.64,1.28]*4;
-~cbox_autograinsize=Array.series(100,0.01,0.02);
-
-*/
 //automation seqs
 (
 Tdef(\autor,{
