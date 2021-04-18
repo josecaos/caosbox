@@ -1,17 +1,17 @@
 (//CaosBox GUI file 4 - v1.2 - filtros, freqscope, bpm, granulador, Close
-//filter min max values
+//Lowpass filter min max values
 ~cbox_fmaxmin=ControlSpec(20,20000,\exponential,1,1000);
 ~cbox_rqmaxmin=ControlSpec(0.01,1,\lin,0.01,0.5);
 //Filter Aux tag
 ~cbox_filttag=StaticText(~cbox_w,Rect(575,290,205,12));
-~cbox_filttag.string_("Filters-> code out to channel:").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
+~cbox_filttag.string_("Filters").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 //Lowpass tag
 ~cbox_lowfiltag=StaticText(~cbox_w,Rect(575,305,205,12));
 ~cbox_lowfiltag.string_("LowPassFilter: 58").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 //Lowpass out
 ~cbox_lowoutpop=PopUpMenu(~cbox_w,Rect(575,320,205,15)).items=["LPF Out to Master","LPF Out to Reverb",
 	"LPF Out to Delay","LPF Out to Pitch"];
-~cbox_lowoutpop.background_(Color(0.05,0.05,0.25,1)).stringColor_(Color.gray(0.5));
+~cbox_lowoutpop.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
 ~cbox_lowoutpop.action={|menu|
 	switch(menu.value,
 		0,{~cbox_mastlowf.set(\out,50);"+ LPF Out to Master".inform;},
@@ -23,7 +23,7 @@
 //Lowpass cutfreq
 StaticText(~cbox_w,Rect(575,338,125,14)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf1=NumberBox(~cbox_w,Rect(700,337,80,16)).background_(Color(0,1,0));
-~cbox_lowcfader=Slider(~cbox_w,Rect(575,355,205,20)).background_(Color(0.05,0.05,0.25,0.1));
+~cbox_lowcfader=Slider(~cbox_w,Rect(575,355,205,20)).background_(Color(alpha:0));
 ~cbox_lowcfader.action={~cbox_mastlowf.set(\cutfreq,~cbox_fmaxmin.map(~cbox_lowcfader.value));~cbox_numf1.value_(~cbox_fmaxmin.map(~cbox_lowcfader.value))};
 ~cbox_numf1.action={~cbox_mastlowf.set(\cutfreq,~cbox_fmaxmin.map(~cbox_numf1.value));~cbox_lowcfader.value=~cbox_numf1.value/19980};//el cambio de numbox a fader, se vuelve lineal
 ~cbox_lowcfader.value=20000;
@@ -31,7 +31,7 @@ StaticText(~cbox_w,Rect(575,338,125,14)).string_("Cut Frequency").font_(Font("De
 //rq
 StaticText(~cbox_w,Rect(575,380,125,14)).string_("Bandwidth").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf2=NumberBox(~cbox_w,Rect(700,379,80,16)).background_(Color(0,1,0));
-~cbox_lowrqfader=Slider(~cbox_w,Rect(575,400,205,10)).background_(Color(0.05,0.05,0.25,0.1));
+~cbox_lowrqfader=Slider(~cbox_w,Rect(575,400,205,10)).background_(Color(alpha:0));
 ~cbox_lowrqfader.action={~cbox_mastlowf.set(\rq,~cbox_rqmaxmin.map(~cbox_lowrqfader.value));~cbox_numf2.value_(~cbox_rqmaxmin.map(~cbox_lowrqfader.value))};
 ~cbox_numf2.action={~cbox_mastlowf.set(\rq,~cbox_rqmaxmin.map(~cbox_numf2.value));~cbox_lowrqfader.value_(~cbox_rqmaxmin.map(~cbox_numf2.value))};
 ~cbox_lowrqfader.value=0.5;
@@ -42,7 +42,7 @@ StaticText(~cbox_w,Rect(575,380,125,14)).string_("Bandwidth").font_(Font("Dejavu
 //Highpass out
 ~cbox_highoutpop=PopUpMenu(~cbox_w,Rect(575,435,205,15)).items=["HPF Out to Master","HPF Out to Reverb",
 	"HPF Out to Delay","HPF Out to Pitch"];
-~cbox_highoutpop.background_(Color(0.05,0.05,0.25,1)).stringColor_(Color.gray(0.5));
+~cbox_highoutpop.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
 ~cbox_highoutpop.action={|menu|
 	switch(menu.value,
 		0,{~cbox_masthighf.set(\out,50);"+ HPF Out to Master".inform;},
@@ -54,7 +54,7 @@ StaticText(~cbox_w,Rect(575,380,125,14)).string_("Bandwidth").font_(Font("Dejavu
 //Highpass cutfreq
 StaticText(~cbox_w,Rect(575,453,125,14)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf3=NumberBox(~cbox_w,Rect(700,452,80,16)).background_(Color(0,1,0));
-~cbox_highcfader=Slider(~cbox_w,Rect(575,470,205,20)).background_(Color(0.05,0.05,0.25,0.1));
+~cbox_highcfader=Slider(~cbox_w,Rect(575,470,205,20)).background_(Color(alpha:0));
 ~cbox_highcfader.action={~cbox_masthighf.set(\cutfreq,~cbox_fmaxmin.map(~cbox_highcfader.value));~cbox_numf3.value_(~cbox_fmaxmin.map(~cbox_highcfader.value))};
 ~cbox_numf3.action={~cbox_masthighf.set(\cutfreq,~cbox_fmaxmin.map(~cbox_numf3.value));~cbox_highcfader.value=~cbox_numf3.value/19980};
 ~cbox_highcfader.value=0.15;
@@ -62,7 +62,7 @@ StaticText(~cbox_w,Rect(575,453,125,14)).string_("Cut Frequency").font_(Font("De
 //rq
 StaticText(~cbox_w,Rect(575,493,125,14)).string_("Bandwidth").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf4=NumberBox(~cbox_w,Rect(700,492,80,16)).background_(Color(0,1,0));
-~cbox_highrqfader=Slider(~cbox_w,Rect(575,510,205,10)).background_(Color(0.05,0.05,0.25,0.1));
+~cbox_highrqfader=Slider(~cbox_w,Rect(575,510,205,10)).background_(Color(alpha:0));
 ~cbox_highrqfader.action={~cbox_masthighf.set(\rq,~cbox_rqmaxmin.map(~cbox_highrqfader.value));~cbox_numf4.value_(~cbox_rqmaxmin.map(~cbox_highrqfader.value))};
 ~cbox_numf4.action={~cbox_masthighf.set(\rq,~cbox_rqmaxmin.map(~cbox_numf4.value));~cbox_highrqfader.value_(~cbox_rqmaxmin.map(~cbox_numf4.value))};
 ~cbox_highrqfader.value=0.5;
@@ -73,7 +73,7 @@ StaticText(~cbox_w,Rect(575,493,125,14)).string_("Bandwidth").font_(Font("Dejavu
 //Bandpass out
 ~cbox_bandoutpop=PopUpMenu(~cbox_w,Rect(575,545,205,15)).items=["BPF Out to Master","BPF Out to Reverb",
 	"BPF Out to Delay","BPF Out to Pitch"];
-~cbox_bandoutpop.background_(Color(0.05,0.05,0.25,1)).stringColor_(Color.gray(0.5));
+~cbox_bandoutpop.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
 ~cbox_bandoutpop.action={|menu|
 	switch(menu.value,
 		0,{~cbox_mastbandf.set(\out,50);"+ BPF Out to Master".inform;},
@@ -86,7 +86,7 @@ StaticText(~cbox_w,Rect(575,493,125,14)).string_("Bandwidth").font_(Font("Dejavu
 //Bandpass cutfreq
 StaticText(~cbox_w,Rect(575,563,125,14)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf5=NumberBox(~cbox_w,Rect(700,562,80,16)).background_(Color(0,1,0));
-~cbox_bandcfader=Slider(~cbox_w,Rect(575,580,205,20)).background_(Color(0.05,0.05,0.25,0.1));
+~cbox_bandcfader=Slider(~cbox_w,Rect(575,580,205,20)).background_(Color(alpha:0));
 ~cbox_numf5.action={~cbox_mastbandf.set(\cutfreq,~cbox_fmaxmin.map(~cbox_numf5.value));~cbox_bandcfader.value=~cbox_numf5.value/19980};//el cambio de numbox al fader es lineal
 ~cbox_bandcfader.action={~cbox_mastbandf.set(\cutfreq,~cbox_fmaxmin.map(~cbox_bandcfader.value));~cbox_numf5.value_(~cbox_fmaxmin.map(~cbox_bandcfader.value))};
 ~cbox_bandcfader.value=20000;
@@ -94,7 +94,7 @@ StaticText(~cbox_w,Rect(575,563,125,14)).string_("Cut Frequency").font_(Font("De
 //rq
 StaticText(~cbox_w,Rect(575,603,125,14)).string_("Bandwidth").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf6=NumberBox(~cbox_w,Rect(700,602,80,16)).background_(Color(0,1,0));
-~cbox_bandrqfader=Slider(~cbox_w,Rect(575,620,205,10)).background_(Color(0.05,0.05,0.25,0.1));
+~cbox_bandrqfader=Slider(~cbox_w,Rect(575,620,205,10)).background_(Color(alpha:0));
 ~cbox_bandrqfader.action={~cbox_mastbandf.set(\rq,~cbox_rqmaxmin.map(~cbox_bandrqfader.value));~cbox_numf6.value_(~cbox_rqmaxmin.map(~cbox_bandrqfader.value))};
 ~cbox_numf6.action={~cbox_mastbandf.set(\rq,~cbox_rqmaxmin.map(~cbox_numf6.value));~cbox_bandrqfader.value_(~cbox_rqmaxmin.map(~cbox_numf6.value))};
 ~cbox_bandrqfader.value=0.5;
@@ -110,8 +110,8 @@ StaticText(~cbox_w,Rect(785,12,155,15)).string_("Frequency Analyzer:").font_(Fon
 ~cbox_f.background_(Color(0.1,0.1,0.1));
 ~cbox_f.active_(false);
 //granulator
-~cbox_grandcolor=Color(0,rrand(0.01,rrand(0.25,0.75)),rrand(0.01,rrand(0.25,0.75)));//color aleatorio para el pad del granulador
-StaticText(~cbox_w,Rect(785,290,235,12)).string_("Granulator-> code out to" ).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
+~cbox_grandcolor=Color(alpha:0);//color aleatorio para el pad del granulador
+StaticText(~cbox_w,Rect(785,290,235,12)).string_("Granulator" ).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 StaticText(~cbox_w,Rect(785,305,235,12)).string_(" channel: 64").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 //granulator out
 ~cbox_grainpop=PopUpMenu(~cbox_w,Rect(785,320,235,15)).items=["Granulator Out to Master","Granulator Out to Reverb",

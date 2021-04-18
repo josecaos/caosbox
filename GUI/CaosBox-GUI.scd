@@ -256,14 +256,14 @@ for (0, 31, { |i|
 // tempo
 StaticText(~cbox_w,Rect(5,635,270,15)).string_("Beat:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.65,0.65,0.65));
 ~cbox_botm=Button(~cbox_w,Rect(5,650,135,25));
-~cbox_botm.states=[["Thirds",Color.white,Color.green(0.35)],
-	["Fourths",Color.black,Color.green(0.35)]];
+~cbox_botm.states=[["Thirds",Color.white,Color(alpha:0.25)],
+	["Fourths",Color.white,Color(alpha:0)]];
 ~cbox_botm.action={|val|if(val.value==0,{~cbox_tiempos=0.25;"->Fourths<-".inform},
 	{~cbox_tiempos=0.3333333333333333333;"->Thirds<-".inform})};
 //tempo aleatorio
 ~cbox_botr=Button(~cbox_w,Rect(140,650,135,25));
-~cbox_botr.states=[["Random Time",Color.black,Color.green(0.35)],
-	["Regular Time",Color.white,Color.green(0.35)]];
+~cbox_botr.states=[["Random Time",Color.white,Color(alpha:0.25)],
+	["Regular Time",Color.white,Color(alpha:0.25)]];
 ~cbox_botr.action={|val|if(val.value==0,{Tdef(\randtime).stop;~cbox_clock.value;"->Main BPM <-".inform},
 	{Tdef(\randtime).play;"->Random Clock Values<-".inform})};
 //
@@ -296,7 +296,7 @@ Tdef(\bass).pause;Tdef(\bass2).pause;Tdef(\pad).pause;Tdef(\pad2).pause;Tdef(\ac
 //
 StaticText(~cbox_w,Rect(790,635,130,15)).string_("Recording").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.65,0.65,0.65));
 ~cbox_recbot=Button(~cbox_w,Rect(790,650,130,25));
-~cbox_recbot.states=[["Record",Color.black,Color.green(0.35)],
+~cbox_recbot.states=[["Record",Color.green,Color(alpha:0.25)],
 	["Stop Recording",Color.white,Color.red]];
 ~cbox_recbot.action={|val|if(val.value==0,{s.stopRecording;
 	"->Stoped Recording<-".inform;
@@ -308,7 +308,7 @@ StaticText(~cbox_w,Rect(790,635,130,15)).string_("Recording").font_(Font("Dejavu
 //Historial
 StaticText(~cbox_w,Rect(920,635,99,15)).string_("History:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 ~cbox_hbutt=Button(~cbox_w,Rect(920,650,99,25));
-~cbox_hbutt.states=[[" Save File ",Color.green,Color.black]];
+~cbox_hbutt.states=[[" Save File ",Color.green,Color(alpha:0.25)]];
 ~cbox_hbutt.action={|val| var h=History; if(val.value==0,{"->History saved @ caosbox/Histories folder<-".inform;
 	h.saveStory(~cbox_url +/+ "Histories" +/+ ~cbox_ftype[1] ++ ~cbox_filename.value.join ++ ~cbox_fecha.dayStamp ++ ".scd");
 	h.stop; h.clear})};
