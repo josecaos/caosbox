@@ -1,3 +1,4 @@
+//THIS FILE IS DEPRECATED
 //////////////////////////////////////////////////////////////////////
 //CaosBox v1.1
 // Note: This file will be deprecated in the next release
