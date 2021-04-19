@@ -591,7 +591,7 @@ CaosGear : CaosBox {
 
 	*customOn {|on=false|
 
-		^~cbox_custom  = true;
+		^~cbox_custom  = on;
 
 	}
 }

@@ -45,5 +45,4 @@ SynthDef(\ent,{|out=50,inchan=#[0,1],gate=0,att=0.1,rel=0.25|
 ~cbox_chord=nil;
 ~cbox_chord2=nil;
 ~cbox_entrada=nil;
-//percs
 );
