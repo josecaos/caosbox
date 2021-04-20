@@ -190,7 +190,7 @@ CaosGear : CaosBox {
 		^instance_id;
 	}
 
-	//
+	// Synhts
 	bass {|
 		out=50,
 		semitoneArray=#[ 48, 50, 52, 53, 55, 57, 59 ],
@@ -222,49 +222,46 @@ CaosGear : CaosBox {
 		~cbox_custom = false;
 
 		(~cbox_url +/+ "CB/CaosBox-synths.scd").load;
+		Tdef(\bass,{
 
-		(//bass 1
-			Tdef(\bass,{
+			var	bassmel,outstream;
 
-				var	bassmel,outstream;
+			if(seqType == 'rand' or: {seqType == 'seq'}, {
 
-				if(seqType == 'rand' or: {seqType == 'seq'}, {
+				switch(seqType,
+					'rand', {
+						bassmel=Prand(note.asArray,inf).asStream;
+						outstream=Prand(outbus.asArray,inf).asStream;
+					},
+					'seq', {
+						bassmel=Pseq(note.asArray,inf).asStream;
+						outstream=Pseq(outbus.asArray,inf).asStream;
+					},
+					("Bass Melodic secuence type is" + seqType).inform;
+				);
 
-					switch(seqType,
-						'rand', {
-							bassmel=Prand(note.asArray,inf).asStream;
-							outstream=Prand(outbus.asArray,inf).asStream;
-						},
-						'seq', {
-							bassmel=Pseq(note.asArray,inf).asStream;
-							outstream=Pseq(outbus.asArray,inf).asStream;
-						},
-						("Bass Melodic secuence type is" + seqType).inform;
-					);
+			}, {
+				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+			});
 
-				}, {
-					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-				});
-
-				loop{
-					~cbox_bass.set(
-						\att,attk,
-						\rel,rel,
-						\note,bassmel.next,
-						\filtminf,filt1,
-						\filtmaxf,filt2,
-						\filtime,filt3,
-						\rq,bandwidth,
-						\iphase,waveiphase,
-						\amp1,ampx,
-						\amp2,ampy,
-						\pan,panner,
-						\out,outstream.next
-					);
-					~cbox_tiempos.wait;
-				}
-			}).quant_(1);
-		);
+			loop{
+				~cbox_bass.set(
+					\att,attk,
+					\rel,rel,
+					\note,bassmel.next,
+					\filtminf,filt1,
+					\filtmaxf,filt2,
+					\filtime,filt3,
+					\rq,bandwidth,
+					\iphase,waveiphase,
+					\amp1,ampx,
+					\amp2,ampy,
+					\pan,panner,
+					\out,outstream.next
+				);
+				~cbox_tiempos.wait;
+			}
+		}).quant_(1);
 		instance_id = "Bass";
 		^instance_id;
 	}
@@ -426,48 +423,46 @@ CaosGear : CaosBox {
 		var panner = pan;
 		var vol = amp;
 		var outbus = out;
-		(
-			Tdef(\acordes,{
+		Tdef(\acordes,{
 
-				var mel, chord, outstream;
+			var mel, chord, outstream;
 
-				if(seqType == 'rand' or: {seqType == 'seq'}, {
+			if(seqType == 'rand' or: {seqType == 'seq'}, {
 
-					switch(seqType,
-						'rand', {
-							mel=Prand(note,inf).asStream;
-							outstream=Prand(outbus.asArray,inf).asStream;
-							chord=Prand(chords,inf).asStream;
-						},
-						'seq', {
-							mel=Pseq(note,inf).asStream;
-							outstream=Pseq(outbus.asArray,inf).asStream;
-							chord=Pseq(chords,inf).asStream;
-						},
-						("Chord Melodic secuence type is" + seqType).inform;
-					);
-				}, {
-					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-				});
-				//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
-				loop{
-					~cbox_chord.set(
-						\chord,chord.next,
-						\note,mel.next,
-						\att, attk,
-						\rel, rel,
-						\iphase,iph,
-						\width,iwidth,
-						\cutf,cutfreq,
-						\rq,bandwidth,
-						\pan,panner,
-						\amp,vol,
-						\out,outbus
-					);
-					~cbox_tiempos.wait;
-				}
-			}).quant_(1);
-		);
+				switch(seqType,
+					'rand', {
+						mel=Prand(note.asArray,inf).asStream;
+						outstream=Prand(outbus.asArray,inf).asStream;
+						chord=Prand(chords.asArray,inf).asStream;
+					},
+					'seq', {
+						mel=Pseq(note.asArray,inf).asStream;
+						outstream=Pseq(outbus.asArray,inf).asStream;
+						chord=Pseq(chords.asArray,inf).asStream;
+					},
+					("Chord Melodic secuence type is" + seqType).inform;
+				);
+			}, {
+				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+			});
+			//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
+			loop{
+				~cbox_chord.set(
+					\chord,chord.next,
+					\note,mel.next,
+					\att, attk,
+					\rel, rel,
+					\iphase,iph,
+					\width,iwidth,
+					\cutf,cutfreq,
+					\rq,bandwidth,
+					\pan,panner,
+					\amp,vol,
+					\out,outbus
+				);
+				~cbox_tiempos.wait;
+			}
+		}).quant_(1);
 		instance_id = "Chords";
 		^instance_id;
 	}
@@ -496,14 +491,14 @@ CaosGear : CaosBox {
 
 					switch(seqType,
 						'rand', {
-							mel=Prand(note,inf).asStream;
+							mel=Prand(note.asArray,inf).asStream;
 							outbus=Prand(out.asArray,inf).asStream;
-							chord=Prand(chords,inf).asStream;
+							chord=Prand(chords.asArray,inf).asStream;
 						},
 						'seq', {
-							mel=Pseq(note,inf).asStream;
+							mel=Pseq(note.asArray,inf).asStream;
 							outbus=Pseq(out.asArray,inf).asStream;
-							chord=Pseq(chords,inf).asStream;
+							chord=Pseq(chords.asArray,inf).asStream;
 						},
 						("Chord Melodic secuence type is" + seqType).inform;
 					);
@@ -527,7 +522,7 @@ CaosGear : CaosBox {
 					);
 					~cbox_tiempos.wait;
 				}
-			}).quant_(4);
+			}).quant_(1);
 		);
 
 		instance_id = "Chords2";

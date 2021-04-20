@@ -26,13 +26,14 @@ Tdef(\secuencias,{
 				~cbox_indice,{~cbox_lightsteps[~cbox_indice].value = 1;~cbox_lightsteps[reset].value = 0}
 			)
 		}.defer(0.01);
-		//
+		// percussion runs as functions
 		~cbox_bombo[~cbox_indice].play;
 		~cbox_tarola[~cbox_indice].play;
 		~cbox_contras[~cbox_indice].play;
 		~cbox_bombo2[~cbox_indice].play;
 		~cbox_tarola2[~cbox_indice].play;
 		~cbox_contras2[~cbox_indice].play;
+		// synths run as Synth
 		//bass
 		if(~cbox_bajo[~cbox_indice] == nil,{nil},
 			{~cbox_bajo[~cbox_indice].set(
@@ -87,7 +88,7 @@ Tdef(\secuencias,{
 		//
 		~cbox_indice = ~cbox_indice+1;
 	}.loop;
-}).quant_(4);
+}).quant_(1);
 //tiempo random
 Tdef(\randtime,{
 	{
@@ -95,7 +96,7 @@ Tdef(\randtime,{
 		TempoClock.tempo=timer.next/60;
 		~cbox_tiempos.wait;
 	}.loop;
-}).quant_(4);
+}).quant_(1);
 );
 //
 /*
