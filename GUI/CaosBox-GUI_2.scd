@@ -4,21 +4,18 @@ StaticText(~cbox_w,Rect(5,132,53,15)).string_("Bass:").stringColor_(Color(0.9,0.
 ~cbox_checkbox = 60;
 for (0, 31, { |i|
 
-	var check, a = ~cbox_checksteps[i%~cbox_checksteps.size];
+	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
-	check = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 130, 20, 20));
-
-	check.action = {|val|
-		if(val.value,{
-			~cbox_sintetizadores.value(\bass);
-			~cbox_bajo_seq.put(i,~cbox_bass);
-			},
-			{
-				~cbox_bajo_seq.put(i,nil)
-			});
-	};
-
-	~cbox_checkbajo.put(i, check);
+	~cbox_checkbajo.put(i,
+		CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 130, 20, 20)).action = {|val|
+			if(val.value,{
+				~cbox_sintetizadores.value(\bass);
+				~cbox_bajo_seq.put(i,~cbox_bass);
+				},
+				{
+					~cbox_bajo_seq.put(i,nil)})
+				};
+		);
 
 	~cbox_checkbox = ~cbox_checkbox + a;// pinta secuenciador para bajo
 

@@ -19,7 +19,7 @@ switch(sinth,
 		~cbox_bass=Synth(\bajouno);
 		});
 };
-~cbox_sintetizadores.value(\bass);
+// ~cbox_sintetizadores.value(\bass);
 //
 CaosGear.new.bass(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),36),\seq);
 CaosGear.new.bass2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),36),\seq);

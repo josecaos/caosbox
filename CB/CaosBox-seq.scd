@@ -36,19 +36,18 @@ Tdef(\secuencias,{
 		// synths run as realtime
 		//bass
 		{
-		if(~cbox_bajo_seq[~cbox_indice] != nil,//si el indice del array no es nil
-		// if(~cbox_checkbajo[~cbox_indice].value == true,//si el indice del array no es nil
+		if(~cbox_checkbajo[~cbox_indice].value == true,//si el checkbox esta encendico
 			{
-				~cbox_sintetizadores.value(\bass);//asigna synthdef a la variable del bajo
-				~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);// hace sonar el paso
+				~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);//sonido default
 				~cbox_bajo_seq[~cbox_indice].set(// aplica valores al indice del array
 					\gate,1,
 					\att,~cbox_bass1attknob.value,
 					\rel,~cbox_bass1relknob.value
 					);
-				"SECUENCIA:::".inform;
-				~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);// hace sonar el paso
+					~cbox_sintetizadores.value(\bass);//asigna synthdef a la variable del bajo
+					~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);// hace sonar el paso
 		},{
+			~cbox_checkbajo[~cbox_indice].value == false;
 			~cbox_bajo_seq.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
