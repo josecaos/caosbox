@@ -8,8 +8,8 @@
 ~cbox_bombo2=Array.fill(32,nil);
 ~cbox_tarola2=Array.fill(32,nil);
 ~cbox_contras2=Array.fill(32,nil);
-~cbox_bajo=Array.fill(32,nil);
-~cbox_bajo2=Array.fill(32,nil);
+~cbox_bajo_seq=Array.fill(32,nil);
+~cbox_bajo_seq2=Array.fill(32,nil);
 ~cbox_ambiente=Array.fill(32,nil);
 ~cbox_ambiente2=Array.fill(32,nil);
 ~cbox_sinte=Array.fill(32,nil);
@@ -65,7 +65,7 @@
 ~cbox_b2=nil;//kick2
 ~cbox_t2=nil;//snare2
 ~cbox_h2=nil;//hat2
-// Array for core functions.
+// Dictionary for core functions.
 ~cbox_steps = Dictionary[
 	\kick -> [~cbox_checkbombo,~cbox_bombo,~cbox_b],
 	\snare -> [~cbox_checktarola,~cbox_tarola,~cbox_t],
@@ -73,8 +73,8 @@
 	\kick2 -> [~cbox_checkbombo2,~cbox_bombo2,~cbox_b2],
 	\snare2 -> [~cbox_checktarola2,~cbox_tarola2,~cbox_t2],
 	\hihats2 -> [~cbox_checkcontras2,~cbox_contras2,~cbox_h2],
-	\bass -> [~cbox_checkbajo,~cbox_bajo,~cbox_bass],
-	\bass2 -> [~cbox_checkbajo2,~cbox_bajo2,~cbox_bass2],
+	\bass -> [~cbox_checkbajo,~cbox_bajo_seq,~cbox_bass],
+	\bass2 -> [~cbox_checkbajo2,~cbox_bajo_seq2,~cbox_bass2],
 	\amb -> [~cbox_checkambiente,~cbox_ambiente,~cbox_amb],
 	\amb2 -> [~cbox_checkambiente2,~cbox_ambiente2,~cbox_amb2],
 	\chords -> [~cbox_checksinte,~cbox_sinte,~cbox_chord],
@@ -105,4 +105,4 @@ switch(~cbox_lcne,
 	}
 );
 "// End optionals".inform;
-// 
+//

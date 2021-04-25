@@ -1,5 +1,5 @@
-(//CaosBox GUI file 1 - v1.2 - percusiones, botones de control, bienvenida
-~cbox_w=Window.new("CaosBox v1.2.1 Live Coding Machine for Algorave Music" + " Today is " + ~cbox_fecha,Rect.aboutPoint(Window.screenBounds.center,512,340),false).background=Color(0,0,0);//
+(//GUI file 1: percusiones, botones de control, bienvenida
+~cbox_w=Window.new("CaosBox v1.3.3 Live Coding Machine for Algorave Music" + " Today is " + ~cbox_fecha,Rect.aboutPoint(Window.screenBounds.center,512,340),false).background=Color(0,0,0);//
 //
 // leds
 StaticText(~cbox_w,Rect(5,272,53,15)).string_("Steps:").font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0,0.9,0));

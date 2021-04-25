@@ -33,28 +33,40 @@ Tdef(\secuencias,{
 		~cbox_bombo2[~cbox_indice].play;
 		~cbox_tarola2[~cbox_indice].play;
 		~cbox_contras2[~cbox_indice].play;
-		// synths run as Synth
+		// synths run as realtime
 		//bass
-		if(~cbox_bajo[~cbox_indice] == nil,{nil},
-			{~cbox_bajo[~cbox_indice].set(
-				\gate,1,
-				\att,~cbox_bass1attknob.value,
-				\rel,~cbox_bass1relknob.value);
-			~cbox_bajo.put(~cbox_indice,~cbox_bass=Synth(\bajouno))});
+		{
+		if(~cbox_bajo_seq[~cbox_indice] != nil,//si el indice del array no es nil
+		// if(~cbox_checkbajo[~cbox_indice].value == true,//si el indice del array no es nil
+			{
+				~cbox_sintetizadores.value(\bass);//asigna synthdef a la variable del bajo
+				~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);// hace sonar el paso
+				~cbox_bajo_seq[~cbox_indice].set(// aplica valores al indice del array
+					\gate,1,
+					\att,~cbox_bass1attknob.value,
+					\rel,~cbox_bass1relknob.value
+					);
+				"SECUENCIA:::".inform;
+				~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);// hace sonar el paso
+		},{
+			~cbox_bajo_seq.put(~cbox_indice, nil);
+			});
+		}.defer(0.01);
 		// bass2
-		if(~cbox_bajo2[~cbox_indice] == nil,{nil},
-			{~cbox_bajo2[~cbox_indice].set(
+		if(~cbox_bajo_seq2[~cbox_indice] == nil,{nil},
+			{~cbox_bajo_seq2[~cbox_indice].set(
 				\gate,1,
 				\att,~cbox_bass2attknob.value,
 				\rel,~cbox_bass2relknob.value);
-			~cbox_bajo2.put(~cbox_indice,~cbox_bass2=Synth(\bajodos))});
+			~cbox_bajo_seq2.put(~cbox_indice,~cbox_bass2=Synth(\bajodos))});
 		// amb
 		if(~cbox_ambiente[~cbox_indice] == nil,{nil},
 			{~cbox_ambiente[~cbox_indice].set(
 				\gate,1,
 				\att,~cbox_amb1attknob.value,
 				\rel,~cbox_amb1relknob.value);
-			~cbox_ambiente.put(~cbox_indice,~cbox_amb=Synth(\ambuno))});
+			~cbox_ambiente.put(~cbox_indice,~cbox_amb=Synth(\ambuno))
+		});
 		// amb2
 		if(~cbox_ambiente2[~cbox_indice] == nil,{nil},
 			{~cbox_ambiente2[~cbox_indice].set(
@@ -88,7 +100,7 @@ Tdef(\secuencias,{
 		//
 		~cbox_indice = ~cbox_indice+1;
 	}.loop;
-}).quant_(1);
+});
 //tiempo random
 Tdef(\randtime,{
 	{
@@ -96,7 +108,7 @@ Tdef(\randtime,{
 		TempoClock.tempo=timer.next/60;
 		~cbox_tiempos.wait;
 	}.loop;
-}).quant_(1);
+});
 );
 //
 /*

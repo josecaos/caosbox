@@ -4,18 +4,23 @@ StaticText(~cbox_w,Rect(5,132,53,15)).string_("Bass:").stringColor_(Color(0.9,0.
 ~cbox_checkbox = 60;
 for (0, 31, { |i|
 
-	var checkvar = "~cbox_bassteps";
+	var check, a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
-	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
+	check = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 130, 20, 20));
 
-	var variable = checkvar ++ i;
+	check.action = {|val|
+		if(val.value,{
+			~cbox_sintetizadores.value(\bass);
+			~cbox_bajo_seq.put(i,~cbox_bass);
+			},
+			{
+				~cbox_bajo_seq.put(i,nil)
+			});
+	};
 
-	~cbox_checkbajo.put(i,variable);
+	~cbox_checkbajo.put(i, check);
 
-	~cbox_checkbajo[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 130, 20, 20)).action = {|val|
-		if(val.value,{~cbox_bajo.put(i,~cbox_bass=Synth(\bajouno))},{~cbox_bajo.put(i,nil)})};
-
-	~cbox_checkbox = ~cbox_checkbox + a;
+	~cbox_checkbox = ~cbox_checkbox + a;// pinta secuenciador para bajo
 
 });
 ~cbox_delbass=Button(~cbox_w,Rect(765,132,15,15));
@@ -24,7 +29,7 @@ for (0, 31, { |i|
 
 	"Cleared bass steps!".inform;
 
-	~cbox_bajo.put((0..31),nil);
+	~cbox_bajo_seq.put((0..31),nil);
 
 	for(0, 31, {|i|
 		~cbox_checkbajo[i].value = 0;
@@ -53,7 +58,7 @@ for (0, 31, { |i|
 
 	~cbox_checkbajo2.put(i,variable);
 
-	~cbox_checkbajo2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 150, 20, 20)).action={|val| if(val.value,{~cbox_bajo2.put(i,~cbox_bass2=Synth(\bajodos);)},{~cbox_bajo2.put(i,nil)})};
+	~cbox_checkbajo2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 150, 20, 20)).action={|val| if(val.value,{~cbox_bajo_seq2.put(i,~cbox_bass2=Synth(\bajodos);)},{~cbox_bajo_seq2.put(i,nil)})};
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -65,7 +70,7 @@ for (0, 31, { |i|
 
 	"Cleared bass 2 steps!".inform;
 
-	~cbox_bajo2.put((0..31),nil);
+	~cbox_bajo_seq2.put((0..31),nil);
 
 	for(0, 31, {|i|
 		~cbox_checkbajo2[i].value = 0;

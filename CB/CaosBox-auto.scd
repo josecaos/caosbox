@@ -18,7 +18,7 @@ Tdef(\autor,{
 		}.defer(0.1);
 		~cbox_tiempos/~cbox_divrev.wait;
 	}.loop;
-}).quant_(4)
+});
 );
 (
 Tdef(\autod,{
@@ -35,7 +35,7 @@ Tdef(\autod,{
 		}.defer(0.1);
 		~cbox_tiempos/~cbox_divdel.wait;
 	}.loop;
-}).quant_(4)
+});
 );
 (
 Tdef(\autop,{
@@ -55,7 +55,7 @@ Tdef(\autop,{
 		}.defer(0.1);
 		~cbox_tiempos/~cbox_divpitch.wait;
 	}.loop;
-}).quant_(4)
+});
 );
 //grains
 (

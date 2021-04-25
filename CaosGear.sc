@@ -190,13 +190,13 @@ CaosGear : CaosBox {
 		^instance_id;
 	}
 
-	// Synhts
+	// Synths
 	bass {|
 		out=50,
-		semitoneArray=#[ 48, 50, 52, 53, 55, 57, 59 ],
+		semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],
 		seqType='seq',
 		attack=0.01,
-		release=0.25,
+		release=0.5,
 		filtMinFreq=45,
 		filtMaxFreq=12420,
 		filtTime=0.125
@@ -221,7 +221,71 @@ CaosGear : CaosBox {
 
 		~cbox_custom = false;
 
-		(~cbox_url +/+ "CB/CaosBox-synths.scd").load;
+		Tdef(\bass,{|i = 0|
+
+			var	bassmel,outstream;
+
+			if(seqType == 'rand' or: {seqType == 'seq'}, {
+
+				switch(seqType,
+					'rand', {
+						bassmel=Prand(note.asArray,inf).asStream;
+						outstream=Prand(outbus.asArray,inf).asStream;
+					},
+					'seq', {
+						bassmel=Pseq(note.asArray,inf).asStream;
+						outstream=Pseq(outbus.asArray,inf).asStream;
+					},
+					("Bass Melodic secuence type is" + seqType).inform;
+				);
+
+			}, {
+				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+			});
+
+			loop {
+				i=i+1;
+				~cbox_bass.set(
+					\att,attk,
+					\rel,rel,
+					\note,bassmel.next,
+					\filtminf,filt1,
+					\filtmaxf,filt2,
+					\filtime,filt3,
+					\rq,bandwidth,
+					\iphase,waveiphase,
+					\amp1,ampx,
+					\amp2,ampy,
+					\pan,panner,
+					\out,outstream.next
+				);
+				~cbox_tiempos.wait;
+			}
+		});
+		instance_id = "Bass";
+		^instance_id;
+	}
+
+	bassCustom {|
+		ugenFunc=nil,
+		out=50,
+		semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],
+		seqType='seq',
+		att=0.01,
+		rel=0.5,
+		pan=0|
+		//
+		var func = ugenFunc;
+		var outbus = out;
+		var note = semitoneArray;
+		var attk = att;
+		var release = rel;
+		var panner = pan;
+
+		~cbox_custom = true;
+
+		// (~cbox_url +/+ "CB/CaosBox-synths.scd").load;
+
 		Tdef(\bass,{
 
 			var	bassmel,outstream;
@@ -246,82 +310,16 @@ CaosGear : CaosBox {
 
 			loop{
 				~cbox_bass.set(
+					\ugenFunc, func,
 					\att,attk,
-					\rel,rel,
+					\rel,release,
 					\note,bassmel.next,
-					\filtminf,filt1,
-					\filtmaxf,filt2,
-					\filtime,filt3,
-					\rq,bandwidth,
-					\iphase,waveiphase,
-					\amp1,ampx,
-					\amp2,ampy,
-					\pan,panner,
+					\pan, panner,
 					\out,outstream.next
 				);
 				~cbox_tiempos.wait;
 			}
-		}).quant_(1);
-		instance_id = "Bass";
-		^instance_id;
-	}
-
-	bassCustom {|
-		ugenFunc=nil,
-		out=50,
-		semitoneArray=#[ 48, 50, 52, 53, 55, 57, 59 ],
-		seqType='seq',
-		att=0.01,
-		rel=0.5,
-		pan=0|
-		//
-		var func = ugenFunc;
-		var outbus = out;
-		var note = semitoneArray;
-		var attk = att;
-		var release = rel;
-		var panner = pan;
-
-		~cbox_custom = true;
-
-		(~cbox_url +/+ "CB/CaosBox-synths.scd").load;
-
-		(//bass 1
-			Tdef(\bass,{
-
-				var	bassmel,outstream;
-
-				if(seqType == 'rand' or: {seqType == 'seq'}, {
-
-					switch(seqType,
-						'rand', {
-							bassmel=Prand(note.asArray,inf).asStream;
-							outstream=Prand(outbus.asArray,inf).asStream;
-						},
-						'seq', {
-							bassmel=Pseq(note.asArray,inf).asStream;
-							outstream=Pseq(outbus.asArray,inf).asStream;
-						},
-						("Bass Melodic secuence type is" + seqType).inform;
-					);
-
-				}, {
-					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-				});
-
-				loop{
-					~cbox_bass.set(
-						\ugenFunc, func,
-						\att,attk,
-						\rel,release,
-						\note,bassmel.next,
-						\pan, panner,
-						\out,outstream.next
-					);
-					~cbox_tiempos.wait;
-				}
-			}).quant_(1);
-		);
+		});
 
 		instance_id = "Bass";
 		^instance_id;
@@ -331,15 +329,15 @@ CaosGear : CaosBox {
 
 	bass2 {|
 		out=50,
-		semitoneArray=#[ 48, 50, 52, 53, 55, 57, 59 ],
+		semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],
 		seqType='seq',
 		attack=0.01,
-		release=0.25,
-		filtTrig=1,
+		release=0.5,
+		filtTrig=4,
 		filtMinFreq=45,
 		filtMaxFreq=12420,
-		filtTime=0.125
-		rq=0.25,
+		filtTime=0.25
+		rq=0.5,
 		bw=0.5,
 		iphase=0.5,
 		amp1=0.5,
@@ -360,50 +358,48 @@ CaosGear : CaosBox {
 		var ampy = amp2;
 		var panner = pan;
 		var outbus = out;
-		(
-			Tdef(\bass2,{
+		Tdef(\bass2,{
 
-				var	bassmel, outstream;
+			var	bassmel, outstream;
 
-				if(seqType == 'rand' or: {seqType == 'seq'}, {
+			if(seqType == 'rand' or: {seqType == 'seq'}, {
 
-					switch(seqType,
-						'rand', {
-							bassmel=Prand(note.asArray,inf).asStream;
-							// outstream=Prand(outbus.asArray,inf).asStream;
-						},
-						'seq', {
-							bassmel=Pseq(note.asArray,inf).asStream;
-							outstream=Pseq(outbus.asArray,inf).asStream;
-						},
-						("Bass Melodic secuence type is" + seqType).inform;
-					);
+				switch(seqType,
+					'rand', {
+						bassmel=Prand(note.asArray,inf).asStream;
+						// outstream=Prand(outbus.asArray,inf).asStream;
+					},
+					'seq', {
+						bassmel=Pseq(note.asArray,inf).asStream;
+						outstream=Pseq(outbus.asArray,inf).asStream;
+					},
+					("Bass Melodic secuence type is" + seqType).inform;
+				);
 
-				}, {
-					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-				});
+			}, {
+				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+			});
 
-				loop{
-					~cbox_bass2.set(
-						\att,attk,
-						\rel,rel,
-						\note,bassmel.next,
-						\trig,trigger,
-						\filtminf,filt1,
-						\filtmaxf,filt2,
-						\filtime,filt3,
-						\rq,bandwidth,
-						\bandw,band,
-						\iphase,waveiphase,
-						\amp1,ampx,
-						\amp2,ampy,
-						\pan,panner,
-						\out,outbus
-					);
-					~cbox_tiempos.wait;
-				}
-			}).quant_(1);
-		);
+			loop{
+				~cbox_bass2.set(
+					\att,attk,
+					\rel,rel,
+					\note,bassmel.next,
+					\trig,trigger,
+					\filtminf,filt1,
+					\filtmaxf,filt2,
+					\filtime,filt3,
+					\rq,bandwidth,
+					\bandw,band,
+					\iphase,waveiphase,
+					\amp1,ampx,
+					\amp2,ampy,
+					\pan,panner,
+					\out,outbus
+				);
+				~cbox_tiempos.wait;
+			}
+		});
 		instance_id = "Bass2";
 		^instance_id;
 	}
@@ -462,7 +458,7 @@ CaosGear : CaosBox {
 				);
 				~cbox_tiempos.wait;
 			}
-		}).quant_(1);
+		});
 		instance_id = "Chords";
 		^instance_id;
 	}
@@ -522,7 +518,7 @@ CaosGear : CaosBox {
 					);
 					~cbox_tiempos.wait;
 				}
-			}).quant_(1);
+			});
 		);
 
 		instance_id = "Chords2";
@@ -557,7 +553,7 @@ CaosGear : CaosBox {
 
 		CaosBox.setSteps(track,steps, overrideSteps);
 
-		^"CaosGear Instance added to sequencer";
+		^"CaosGear: " + instance_id + " instance added to sequencer";
 	}
 
 	offTrack {|steps = 0 |
