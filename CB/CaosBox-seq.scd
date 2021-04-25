@@ -36,7 +36,7 @@ Tdef(\secuencias,{
 		// synths run as realtime
 		//bass
 		{
-		if(~cbox_checkbajo[~cbox_indice].value == true,//si el checkbox esta encendico
+		if(~cbox_checkbajo[~cbox_indice].value == true,//si el checkbox esta encendido
 			{
 				~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);//sonido default
 				~cbox_bajo_seq[~cbox_indice].set(// aplica valores al indice del array
@@ -44,7 +44,7 @@ Tdef(\secuencias,{
 					\att,~cbox_bass1attknob.value,
 					\rel,~cbox_bass1relknob.value
 					);
-					~cbox_sintetizadores.value(\bass);//asigna synthdef a la variable del bajo
+					~cbox_sintetizadores.value(\bass);//reasigna synthdef a la variable
 					~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);// hace sonar el paso
 		},{
 			~cbox_checkbajo[~cbox_indice].value == false;
@@ -52,12 +52,29 @@ Tdef(\secuencias,{
 			});
 		}.defer(0.01);
 		// bass2
-		if(~cbox_bajo_seq2[~cbox_indice] == nil,{nil},
-			{~cbox_bajo_seq2[~cbox_indice].set(
-				\gate,1,
-				\att,~cbox_bass2attknob.value,
-				\rel,~cbox_bass2relknob.value);
-			~cbox_bajo_seq2.put(~cbox_indice,~cbox_bass2=Synth(\bajodos))});
+		{
+		if(~cbox_checkbajo2[~cbox_indice].value == true,
+			{
+				~cbox_bajo_seq2.put(~cbox_indice,~cbox_bass2);
+				~cbox_bajo_seq2[~cbox_indice].set(
+					\gate,1,
+					\att,~cbox_bass2attknob.value,
+					\rel,~cbox_bass2relknob.value
+					);
+					~cbox_sintetizadores.value(\bass2);
+					~cbox_bajo_seq2.put(~cbox_indice,~cbox_bass2);
+		},{
+			~cbox_checkbajo2[~cbox_indice].value == false;
+			~cbox_bajo_seq2.put(~cbox_indice, nil);
+			});
+		}.defer(0.01);
+		//
+		// if(~cbox_bajo_seq2[~cbox_indice] == nil,{nil},
+		// 	{~cbox_bajo_seq2[~cbox_indice].set(
+		// 		\gate,1,
+		// 		\att,~cbox_bass2attknob.value,
+		// 		\rel,~cbox_bass2relknob.value);
+		// 	~cbox_bajo_seq2.put(~cbox_indice,~cbox_bass2=Synth(\bajodos))});
 		// amb
 		if(~cbox_ambiente[~cbox_indice] == nil,{nil},
 			{~cbox_ambiente[~cbox_indice].set(

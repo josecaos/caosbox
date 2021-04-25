@@ -17,9 +17,11 @@ Tdef.defaultQuant = 1;
 switch(sinth,
 	\bass,{
 		~cbox_bass=Synth(\bajouno);
+		},
+	\bass2,{
+		~cbox_bass2=Synth(\bajodos);
 		});
 };
-// ~cbox_sintetizadores.value(\bass);
 //
 CaosGear.new.bass(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),36),\seq);
 CaosGear.new.bass2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),36),\seq);

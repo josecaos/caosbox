@@ -47,15 +47,15 @@ StaticText(~cbox_w,Rect(5,152,53,15)).string_("Bass2:").stringColor_(Color(0.9,0
 
 for (0, 31, { |i|
 
-	var checkvar = "~cbox_bass2teps";
-
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
-	var variable = checkvar ++ i;
-
-	~cbox_checkbajo2.put(i,variable);
-
-	~cbox_checkbajo2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 150, 20, 20)).action={|val| if(val.value,{~cbox_bajo_seq2.put(i,~cbox_bass2=Synth(\bajodos);)},{~cbox_bajo_seq2.put(i,nil)})};
+	~cbox_checkbajo2.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 150, 20, 20)).action={|val|
+		if(val.value,{
+				~cbox_sintetizadores.value(\bass);
+				~cbox_bajo_seq2.put(i,~cbox_bass2)
+			},
+			{~cbox_bajo_seq2.put(i,nil)});
+		});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
