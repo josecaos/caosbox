@@ -10,8 +10,8 @@
 ~cbox_contras2=Array.fill(32,nil);
 ~cbox_bajo_seq=Array.fill(32,nil);
 ~cbox_bajo_seq2=Array.fill(32,nil);
-~cbox_ambiente=Array.fill(32,nil);
-~cbox_ambiente2=Array.fill(32,nil);
+~cbox_ambiente_seq=Array.fill(32,nil);
+~cbox_ambiente_seq2=Array.fill(32,nil);
 ~cbox_sinte=Array.fill(32,nil);
 ~cbox_sinte2=Array.fill(32,nil);
 ~cbox_in=Array.fill(32,nil);
@@ -75,8 +75,8 @@
 	\hihats2 -> [~cbox_checkcontras2,~cbox_contras2,~cbox_h2],
 	\bass -> [~cbox_checkbajo,~cbox_bajo_seq,~cbox_bass],
 	\bass2 -> [~cbox_checkbajo2,~cbox_bajo_seq2,~cbox_bass2],
-	\amb -> [~cbox_checkambiente,~cbox_ambiente,~cbox_amb],
-	\amb2 -> [~cbox_checkambiente2,~cbox_ambiente2,~cbox_amb2],
+	\amb -> [~cbox_checkambiente,~cbox_ambiente_seq,~cbox_amb],
+	\amb2 -> [~cbox_checkambiente2,~cbox_ambiente_seq2,~cbox_amb2],
 	\chords -> [~cbox_checksinte,~cbox_sinte,~cbox_chord],
 	\chords2 -> [~cbox_checksinte2,~cbox_sinte2,~cbox_chord2],
 	\in -> [~cbox_checkin,~cbox_in,~cbox_entrada]

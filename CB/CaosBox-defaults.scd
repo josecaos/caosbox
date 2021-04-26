@@ -14,39 +14,25 @@ Tdef.defaultQuant = 1;
 ~cbox_h2={var out=50;Out.ar(out,CaosHats2.ar(0.025,0.25,6950,rq:0.45,amp1:0.5,amp2:0.3,pan:0))};
 /////////////////////////////////
 ~cbox_sintetizadores = {|sinth|
-switch(sinth,
-	\bass,{
-		~cbox_bass=Synth(\bajouno);
+	switch(sinth,
+		\bass,{
+			~cbox_bass=Synth(\bajouno);
 		},
-	\bass2,{
-		~cbox_bass2=Synth(\bajodos);
-		});
+		\bass2,{
+			~cbox_bass2=Synth(\bajodos);
+		};
+		\amb,{
+			~cbox_amb=Synth(\ambuno);
+			});
 };
 //
-CaosGear.new.bass(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),36),\seq);
-CaosGear.new.bass2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),36),\seq);
+CaosGear.new.bass(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,3),36),\seq);
+CaosGear.new.bass2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,3),48),\seq);
+CaosGear.new.pad(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),24),\seq);
+// CaosGear.new.pad2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),36),\seq);
 // CaosGear.new.chords;
 // CaosGear.new.chords2;
 // CaosGear.new.lineIn;
-//ambient pad
-// CaosGear.new.pad();
-// (
-// Tdef(\pad,{
-// 	var padmel=Pxrand(~cbox_mainmelody.melody(~cbox_degrees,48),inf).asStream;
-// 	~cbox_amb.set(\waveform, 'pulse' );//use 'sin' or 'tri' or 'pulse' only
-// 	loop{
-// 		~cbox_amb.set(\note,padmel.next,
-// 			\trem,8,
-// 			\vrel,2,
-// 			\iphase,0.25,
-// 			\cutf,12420,
-// 			\rq,0.5,
-// 			\amp,0.05,
-// 			\out,50);
-// 		~cbox_tiempos.wait;
-// 	}
-// }).quant_(1);
-// );
 //ambiente pad 2
 // CaosGear.new.pad2();
 // (

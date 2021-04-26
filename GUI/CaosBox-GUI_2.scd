@@ -52,7 +52,7 @@ for (0, 31, { |i|
 	~cbox_checkbajo2.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 150, 20, 20)).action={|val|
 		if(val.value,{
 				~cbox_sintetizadores.value(\bass);
-				~cbox_bajo_seq2.put(i,~cbox_bass2)
+				~cbox_bajo_seq2.put(i,~cbox_bass2);
 			},
 			{~cbox_bajo_seq2.put(i,nil)});
 		});
@@ -86,18 +86,16 @@ StaticText(~cbox_w,Rect(5,172,53,15)).string_("Pad:").stringColor_(Color(0.9,0.9
 
 for (0, 31, { |i|
 
-	var checkvar = "~cbox_ambsteps";
-
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
-	var variable = checkvar ++ i;
-
-	~cbox_checkambiente.put(i,variable);
-
-	~cbox_checkambiente[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 170, 20, 20)).action={|val| if(val.value,{~cbox_ambiente.put(i,~cbox_amb=Synth(\ambuno);)},{~cbox_ambiente.put(i,nil)})};
+	~cbox_checkambiente.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 170, 20, 20)).action={|val|
+		if(val.value,{
+			~cbox_sintetizadores.value(\amb);
+			~cbox_ambiente_seq.put(i,~cbox_amb);
+			},{~cbox_ambiente_seq.put(i,nil)}
+	)});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
-
 
 });
 // borra steps
@@ -107,7 +105,7 @@ for (0, 31, { |i|
 
 	"Cleared pad steps!".inform;
 
-	~cbox_ambiente.put((0..31),nil);
+	~cbox_ambiente_seq.put((0..31),nil);
 
 	for(0, 31, {|i|
 		~cbox_checkambiente[i].value = 0;
@@ -134,7 +132,7 @@ for (0, 31, { |i|
 
 	~cbox_checkambiente2.put(i,variable);
 
-	~cbox_checkambiente2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 190, 20, 20)).action={|val| if(val.value,{~cbox_ambiente2.put(i,~cbox_amb2=Synth(\ambdos);)},{~cbox_ambiente2.put(i,nil)})};
+	~cbox_checkambiente2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 190, 20, 20)).action={|val| if(val.value,{~cbox_ambiente_seq2.put(i,~cbox_amb2=Synth(\ambdos);)},{~cbox_ambiente_seq2.put(i,nil)})};
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -146,7 +144,7 @@ for (0, 31, { |i|
 
 	"Cleared pad 2 steps!".inform;
 
-	~cbox_ambiente2.put((0..31),nil);
+	~cbox_ambiente_seq2.put((0..31),nil);
 
 	for(0, 31, {|i|
 		~cbox_checkambiente2[i].value = 0;

@@ -34,7 +34,6 @@ Tdef(\secuencias,{
 		~cbox_tarola2[~cbox_indice].play;
 		~cbox_contras2[~cbox_indice].play;
 		// synths run as realtime
-		//bass
 		{
 		if(~cbox_checkbajo[~cbox_indice].value == true,//si el checkbox esta encendido
 			{
@@ -51,7 +50,7 @@ Tdef(\secuencias,{
 			~cbox_bajo_seq.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
-		// bass2
+		//
 		{
 		if(~cbox_checkbajo2[~cbox_indice].value == true,
 			{
@@ -69,27 +68,29 @@ Tdef(\secuencias,{
 			});
 		}.defer(0.01);
 		//
-		// if(~cbox_bajo_seq2[~cbox_indice] == nil,{nil},
-		// 	{~cbox_bajo_seq2[~cbox_indice].set(
-		// 		\gate,1,
-		// 		\att,~cbox_bass2attknob.value,
-		// 		\rel,~cbox_bass2relknob.value);
-		// 	~cbox_bajo_seq2.put(~cbox_indice,~cbox_bass2=Synth(\bajodos))});
-		// amb
-		if(~cbox_ambiente[~cbox_indice] == nil,{nil},
-			{~cbox_ambiente[~cbox_indice].set(
-				\gate,1,
-				\att,~cbox_amb1attknob.value,
-				\rel,~cbox_amb1relknob.value);
-			~cbox_ambiente.put(~cbox_indice,~cbox_amb=Synth(\ambuno))
-		});
+		{
+		if(~cbox_checkambiente[~cbox_indice].value == true,
+			{
+				~cbox_ambiente_seq.put(~cbox_indice,~cbox_amb);
+				~cbox_ambiente_seq[~cbox_indice].set(
+					\gate,1,
+					\att,~cbox_amb1attknob.value,
+					\rel,~cbox_amb1relknob.value
+					);
+					~cbox_sintetizadores.value(\amb);
+					~cbox_ambiente_seq.put(~cbox_indice,~cbox_amb);
+		},{
+			~cbox_checkambiente[~cbox_indice].value == false;
+			~cbox_ambiente_seq.put(~cbox_indice, nil);
+			});
+		}.defer(0.01);
 		// amb2
-		if(~cbox_ambiente2[~cbox_indice] == nil,{nil},
-			{~cbox_ambiente2[~cbox_indice].set(
+		if(~cbox_ambiente_seq2[~cbox_indice] == nil,{nil},
+			{~cbox_ambiente_seq2[~cbox_indice].set(
 				\gate,1,
 				\att,~cbox_amb2attknob.value,
 				\rel,~cbox_amb2relknob.value);
-			~cbox_ambiente2.put(~cbox_indice,~cbox_amb2=Synth(\ambdos))});
+			~cbox_ambiente_seq2.put(~cbox_indice,~cbox_amb2=Synth(\ambdos))});
 		// chords
 		if(~cbox_sinte[~cbox_indice] == nil,{nil},
 			{~cbox_sinte[~cbox_indice].set(

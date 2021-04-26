@@ -284,8 +284,6 @@ CaosGear : CaosBox {
 
 		~cbox_custom = true;
 
-		// (~cbox_url +/+ "CB/CaosBox-synths.scd").load;
-
 		Tdef(\bass,{
 
 			var	bassmel,outstream;
@@ -367,7 +365,7 @@ CaosGear : CaosBox {
 				switch(seqType,
 					'rand', {
 						bassmel=Prand(note.asArray,inf).asStream;
-						// outstream=Prand(outbus.asArray,inf).asStream;
+						outstream=Prand(outbus.asArray,inf).asStream;
 					},
 					'seq', {
 						bassmel=Pseq(note.asArray,inf).asStream;
@@ -395,12 +393,82 @@ CaosGear : CaosBox {
 					\amp1,ampx,
 					\amp2,ampy,
 					\pan,panner,
-					\out,outbus
+					\out,outstream.next,
 				);
 				~cbox_tiempos.wait;
 			}
 		});
 		instance_id = "Bass2";
+		^instance_id;
+	}
+
+	pad {|
+		out=50,
+		semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],
+		seqType='seq',
+		waveform='sin',
+		att=0.25,
+		rel=1,
+		semi=0,
+		iphase=0,
+		cutf=8920,
+		rq=0.85,
+		gate=0,
+		amp=0.75,
+		pan=0|
+		//
+		var wave = waveform;
+		var nota = semitoneArray;
+		var attack = att;
+		var release = rel;
+		var semitones = semi;
+		var phase = iphase;
+		var cutFreq = cutf;
+		var band = rq;
+		var vol = amp;
+		var panner = pan;
+		var outbus = out;
+		Tdef(\pad,{
+
+			var	mel, outstream;
+
+			if(seqType == 'rand' or: {seqType == 'seq'}, {
+
+				switch(seqType,
+					'rand', {
+						mel=Prand(nota.asArray,inf).asStream;
+						outstream=Prand(outbus.asArray,inf).asStream;
+					},
+					'seq', {
+						mel=Pseq(nota.asArray,inf).asStream;
+						outstream=Pseq(outbus.asArray,inf).asStream;
+					},
+					("Pad Melodic secuence type is" + seqType).inform;
+				);
+
+			}, {
+				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+			});
+
+			loop{
+				mel.next.postcln;
+				~cbox_amb.set(
+					\note, mel.next,
+					\waveform, wave,
+					\att, attack,
+					\rel, release,
+					\semi, semitones,
+					\iphase, phase,
+					\cutf, cutFreq,
+					\rq, band,
+					\amp, vol,
+					\pan,panner,
+					\out,outstream.next,
+				);
+				~cbox_tiempos.wait;
+			}
+		});
+		instance_id = "Amb";
 		^instance_id;
 	}
 
@@ -546,6 +614,8 @@ CaosGear : CaosBox {
 			"HiHats2", {track = \hihats2},
 			"Bass", {track = \bass},
 			"Bass2", {track = \bass2},
+			"Amb", {track = \amb},
+			// "Amb2", {track = \amb2},
 			"Chords", {track = \chords},
 			"Chords2", {track = \chords2},
 			"LineIn", {track = \in}
@@ -569,6 +639,8 @@ CaosGear : CaosBox {
 			"HiHats2", {track = \hihats2},
 			"Bass", {track = \bass},
 			"Bass2", {track = \bass2},
+			"Amb", {track = \amb},
+			// "Amb2", {track = \amb2},
 			"Chords", {track = \chords},
 			"Chords2", {track = \chords2},
 			"LineIn", {track = \in}
