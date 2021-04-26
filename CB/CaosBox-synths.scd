@@ -21,11 +21,11 @@ SynthDef(\bajodos,{|att=0.2,rel=8,note=36,trig=4,filtminf=105,filtmaxf=12066,fil
 	Out.ar(out,CaosBass2.ar(att,rel,note,trig,filtminf,filtmaxf,filtime,rq,bandw,iphase,gate,amp1,amp2))}).add;
 //ambiences
 SynthDef(\ambuno,{|waveform='sin',att=0.5,rel=1,note=57,semi=0,iphase=0,cutf=8920,rq=0.7,gate=0,amp=0.5,pan=0,out=50|
-	var onda='sin';
+	var onda = 'sin';
 	Out.ar(out,CaosPad.ar(onda,att,rel,note,semi,iphase,cutf,rq,gate,amp,pan))}).add;
 
-SynthDef(\ambdos,{|att=0.5,rel=1,note=220,fmax=1,fm=0.001,harm=1,rmix=0.5,rroom=0.5,rfilt=0.1,gate=0,amp1=0.5,amp2=0.5,out=50|
-	Out.ar(out,CaosPad2.ar(att,rel,note,fmax,fm,harm,rmix,rroom,rfilt,gate,amp1,amp2))}).add;
+SynthDef(\ambdos,{|att=0.5,rel=1,note=220,maxNote=1,fm=0.001,harm=1,rmix=0.5,rroom=0.5,rfilt=0.1,gate=0,amp1=0.5,amp2=0.5,pan=0,out=50|
+	Out.ar(out,CaosPad2.ar(att,rel,note,maxNote,fm,harm,rmix,rroom,rfilt,gate,amp1,amp2,pan))}).add;
 //Chords
 SynthDef(\acordesuno,{|chord,att=0.1,rel=1,note=57,iphase=0.025,width=0.1,cutf=620,rq=0.5,pan=0,gate=0,amp=0.5,out=50|
 	var tipo= 'M';

@@ -85,12 +85,22 @@ Tdef(\secuencias,{
 			});
 		}.defer(0.01);
 		// amb2
-		if(~cbox_ambiente_seq2[~cbox_indice] == nil,{nil},
-			{~cbox_ambiente_seq2[~cbox_indice].set(
-				\gate,1,
-				\att,~cbox_amb2attknob.value,
-				\rel,~cbox_amb2relknob.value);
-			~cbox_ambiente_seq2.put(~cbox_indice,~cbox_amb2=Synth(\ambdos))});
+		{
+		if(~cbox_checkambiente2[~cbox_indice].value == true,
+			{
+				~cbox_ambiente_seq2.put(~cbox_indice,~cbox_amb2);
+				~cbox_ambiente_seq2[~cbox_indice].set(
+					\gate,1,
+					\att,~cbox_amb2attknob.value,
+					\rel,~cbox_amb2relknob.value
+					);
+				~cbox_sintetizadores.value(\amb2);
+				~cbox_ambiente_seq2.put(~cbox_indice,~cbox_amb2);
+		},{
+			~cbox_checkambiente2[~cbox_indice].value == false;
+			~cbox_ambiente_seq2.put(~cbox_indice, nil);
+			});
+		}.defer(0.01);
 		// chords
 		if(~cbox_sinte[~cbox_indice] == nil,{nil},
 			{~cbox_sinte[~cbox_indice].set(

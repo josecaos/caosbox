@@ -9,13 +9,12 @@ for (0, 31, { |i|
 	~cbox_checkbajo.put(i,
 		CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 130, 20, 20)).action = {|val|
 			if(val.value,{
-				~cbox_sintetizadores.value(\bass);
-				~cbox_bajo_seq.put(i,~cbox_bass);
+					~cbox_sintetizadores.value(\bass);
+					~cbox_bajo_seq.put(i,~cbox_bass);
 				},
 				{
-					~cbox_bajo_seq.put(i,nil)})
-				};
-		);
+					~cbox_bajo_seq.put(i,nil);
+				})});
 
 	~cbox_checkbox = ~cbox_checkbox + a;// pinta secuenciador para bajo
 
@@ -45,7 +44,7 @@ StaticText(~cbox_w,Rect(5,152,53,15)).string_("Bass2:").stringColor_(Color(0.9,0
 
 ~cbox_checkbox = 60;
 
-for (0, 31, { |i|
+for (0, 31, {|i|
 
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
@@ -54,8 +53,9 @@ for (0, 31, { |i|
 				~cbox_sintetizadores.value(\bass);
 				~cbox_bajo_seq2.put(i,~cbox_bass2);
 			},
-			{~cbox_bajo_seq2.put(i,nil)});
-		});
+			{
+				~cbox_bajo_seq2.put(i,nil)
+			})});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -89,11 +89,13 @@ for (0, 31, { |i|
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
 	~cbox_checkambiente.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 170, 20, 20)).action={|val|
-		if(val.value,{
-			~cbox_sintetizadores.value(\amb);
-			~cbox_ambiente_seq.put(i,~cbox_amb);
-			},{~cbox_ambiente_seq.put(i,nil)}
-	)});
+		if(val.value,
+			{
+				~cbox_sintetizadores.value(\amb);
+				~cbox_ambiente_seq.put(i,~cbox_amb)},
+			{
+				~cbox_ambiente_seq.put(i,nil)
+			})});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -124,15 +126,16 @@ StaticText(~cbox_w,Rect(5,192,53,15)).string_("pad2:").stringColor_(Color(0.9,0.
 
 for (0, 31, { |i|
 
-	var checkvar = "~cbox_ambsteps2";
-
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
-	var variable = checkvar ++ i;
-
-	~cbox_checkambiente2.put(i,variable);
-
-	~cbox_checkambiente2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 190, 20, 20)).action={|val| if(val.value,{~cbox_ambiente_seq2.put(i,~cbox_amb2=Synth(\ambdos);)},{~cbox_ambiente_seq2.put(i,nil)})};
+	~cbox_checkambiente2.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 190, 20, 20)).action={|val|
+		if(val.value, {
+				~cbox_sintetizadores.value(\amb2);
+				~cbox_ambiente_seq2.put(i,~cbox_amb2);
+			},
+			{
+				~cbox_ambiente_seq2.put(i,nil);
+			})});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 

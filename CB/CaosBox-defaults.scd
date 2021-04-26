@@ -20,39 +20,22 @@ Tdef.defaultQuant = 1;
 		},
 		\bass2,{
 			~cbox_bass2=Synth(\bajodos);
-		};
+		},
 		\amb,{
 			~cbox_amb=Synth(\ambuno);
-			});
+		},
+		\amb2,{
+			~cbox_amb2=Synth(\ambdos);
+		});
 };
 //
 CaosGear.new.bass(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,3),36),\seq);
 CaosGear.new.bass2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,3),48),\seq);
 CaosGear.new.pad(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),24),\seq);
-// CaosGear.new.pad2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),36),\seq);
+CaosGear.new.pad2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),24),\seq);
 // CaosGear.new.chords;
 // CaosGear.new.chords2;
 // CaosGear.new.lineIn;
-//ambiente pad 2
-// CaosGear.new.pad2();
-// (
-// Tdef(\pad2,{
-// 	var pad2mel=Pseq(~cbox_mainmelody.melody(~cbox_degrees,48),inf).asStream;
-// 	loop{
-// 		~cbox_amb2.set(\note,pad2mel.next,
-// 			\fmax,[16,32,64,128,8].choose,
-// 			\fm,[2,4,8].choose,
-// 			\harm,120,
-// 			\rmix,0.79,
-// 			\rroom,0.15,
-// 			\rfilt,0.5,
-// 			\amp1,0.09,
-// 			\amp2,0.05,
-// 			\out,50);
-// 		~cbox_tiempos.wait;
-// 	}
-// }).quant_(1);
-// );
 //LineIn
 // (
 // SynthDef(\ent,{|out=50,gate,att,rel|

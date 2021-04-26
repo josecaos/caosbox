@@ -451,7 +451,6 @@ CaosGear : CaosBox {
 			});
 
 			loop{
-				mel.next.postcln;
 				~cbox_amb.set(
 					\note, mel.next,
 					\waveform, wave,
@@ -469,6 +468,61 @@ CaosGear : CaosBox {
 			}
 		});
 		instance_id = "Amb";
+		^instance_id;
+	}
+	
+	pad2 {|out=50,semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],seqType='seq',
+		att=0.25,rel=1,maxNote=1,fm=0.125,harm=1,amp1=0.5,amp2=0.5,pan=0|
+		//
+		var nota = semitoneArray;
+		var attack = att;
+		var release = rel;
+		var max = maxNote;
+		var mod = fm;
+		var harmonics = harm;
+		var vol1 = amp1;
+		var vol2 = amp2;
+		var panner = pan;
+		var outbus = out;
+		Tdef(\pad2,{
+
+			var	mel, outstream;
+
+			if(seqType == 'rand' or: {seqType == 'seq'}, {
+
+				switch(seqType,
+					'rand', {
+						mel=Prand(nota.asArray,inf).asStream;
+						outstream=Prand(outbus.asArray,inf).asStream;
+					},
+					'seq', {
+						mel=Pseq(nota.asArray,inf).asStream;
+						outstream=Pseq(outbus.asArray,inf).asStream;
+					},
+					("Pad2 Melodic secuence type is" + seqType).inform;
+				);
+
+			}, {
+				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
+			});
+
+			loop{
+				~cbox_amb2.set(
+					\note, mel.next,
+					\att, attack,
+					\rel, release,
+					\maxNote, max,
+					\fm, mod,
+					\harm, harmonics,
+					\amp1, vol1,
+					\amp2, vol2,
+					\pan,panner,
+					\out,outstream.next,
+				);
+				~cbox_tiempos.wait;
+			}
+		});
+		instance_id = "Amb2";
 		^instance_id;
 	}
 
@@ -615,7 +669,7 @@ CaosGear : CaosBox {
 			"Bass", {track = \bass},
 			"Bass2", {track = \bass2},
 			"Amb", {track = \amb},
-			// "Amb2", {track = \amb2},
+			"Amb2", {track = \amb2},
 			"Chords", {track = \chords},
 			"Chords2", {track = \chords2},
 			"LineIn", {track = \in}
@@ -640,7 +694,7 @@ CaosGear : CaosBox {
 			"Bass", {track = \bass},
 			"Bass2", {track = \bass2},
 			"Amb", {track = \amb},
-			// "Amb2", {track = \amb2},
+			"Amb2", {track = \amb2},
 			"Chords", {track = \chords},
 			"Chords2", {track = \chords2},
 			"LineIn", {track = \in}
