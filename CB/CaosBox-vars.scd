@@ -14,7 +14,7 @@
 ~cbox_ambiente_seq2=Array.fill(32,nil);
 ~cbox_sinte_seq=Array.fill(32,nil);
 ~cbox_sinte_seq2=Array.fill(32,nil);
-~cbox_in=Array.fill(32,nil);
+~cbox_in_seq=Array.fill(32,nil);
 //
 ~cbox_indice=0;
 ~cbox_clock=TempoClock.tempo=126/60;
@@ -79,7 +79,7 @@
 	\amb2 -> [~cbox_checkambiente2,~cbox_ambiente_seq2,~cbox_amb2],
 	\chords -> [~cbox_checksinte,~cbox_sinte_seq,~cbox_chord],
 	\chords2 -> [~cbox_checksinte2,~cbox_sinte_seq2,~cbox_chord2],
-	\in -> [~cbox_checkin,~cbox_in,~cbox_entrada]
+	\in -> [~cbox_checkin,~cbox_in_seq,~cbox_entrada]
 ];
 // Files
 ~cbox_fecha=Date.getDate;

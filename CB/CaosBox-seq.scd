@@ -46,7 +46,7 @@ Tdef(\secuencias,{
 				~cbox_sintetizadores.value(\bass);//reasigna synthdef a la variable
 				~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);// hace sonar el paso
 		},{
-			~cbox_checkbajo[~cbox_indice].value == false;
+			~cbox_checkbajo[~cbox_indice].value = false;
 			~cbox_bajo_seq.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
@@ -63,7 +63,7 @@ Tdef(\secuencias,{
 					~cbox_sintetizadores.value(\bass2);
 					~cbox_bajo_seq2.put(~cbox_indice,~cbox_bass2);
 		},{
-			~cbox_checkbajo2[~cbox_indice].value == false;
+			~cbox_checkbajo2[~cbox_indice].value = false;
 			~cbox_bajo_seq2.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
@@ -80,7 +80,7 @@ Tdef(\secuencias,{
 					~cbox_sintetizadores.value(\amb);
 					~cbox_ambiente_seq.put(~cbox_indice,~cbox_amb);
 		},{
-			~cbox_checkambiente[~cbox_indice].value == false;
+			~cbox_checkambiente[~cbox_indice].value = false;
 			~cbox_ambiente_seq.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
@@ -97,7 +97,7 @@ Tdef(\secuencias,{
 				~cbox_sintetizadores.value(\amb2);
 				~cbox_ambiente_seq2.put(~cbox_indice,~cbox_amb2);
 		},{
-			~cbox_checkambiente2[~cbox_indice].value == false;
+			~cbox_checkambiente2[~cbox_indice].value = false;
 			~cbox_ambiente_seq2.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
@@ -114,7 +114,7 @@ Tdef(\secuencias,{
 				~cbox_sintetizadores.value(\chords);
 				~cbox_sinte_seq.put(~cbox_indice,~cbox_chord);
 		},{
-			~cbox_checksinte[~cbox_indice].value == false;
+			~cbox_checksinte[~cbox_indice].value = false;
 			~cbox_sinte_seq.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
@@ -131,24 +131,35 @@ Tdef(\secuencias,{
 				~cbox_sintetizadores.value(\chords2);
 				~cbox_sinte_seq2.put(~cbox_indice,~cbox_chord2);
 		},{
-			~cbox_checksinte2[~cbox_indice].value == false;
+			~cbox_checksinte2[~cbox_indice].value = false;
 			~cbox_sinte_seq2.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
 		// in
-		if(~cbox_in[~cbox_indice] == nil,{nil},
-			{~cbox_in[~cbox_indice].set(
-				\gate,1,
-				\att,~cbox_inattknob.value,
-				\rel,~cbox_inrelknob.value);
-			~cbox_in.put(~cbox_indice,~cbox_entrada=Synth(\ent))});
-		////
+		{
+		if(~cbox_checkin[~cbox_indice].value == true,
+			{
+				~cbox_in_seq.put(~cbox_indice,~cbox_entrada);//default primera frase
+				~cbox_in_seq[~cbox_indice].set(
+					\gate,1,
+					\att,~cbox_inattknob.value,
+					\rel,~cbox_inrelknob.value
+					);
+				~cbox_sintetizadores.value(\in);
+				// ~cbox_in_seq.put(~cbox_indice,~cbox_entrada);//siguiente
+		},{
+			~cbox_checkin[~cbox_indice].value = false;
+			~cbox_in_seq.put(~cbox_indice, nil);
+			});
+		}.defer(0.01);
+		//// end instruments
 		~cbox_tiempos.wait;
-		//
+
 		~cbox_indice = ~cbox_indice+1;
+
 	}.loop;
 });
-//tiempo random
+//random time
 Tdef(\randtime,{
 	{
 		var timer=Prand(~cbox_randtimes,inf).asStream;

@@ -38,6 +38,6 @@ SynthDef(\acordesdos,{|chord,att=0.1,rel=1,note=57,cutf=420,rq=0.5,gate=0,amp=0.
 	Out.ar(out,CaosGuitChords.ar(type,att,rel,note,cutf,rq,gate,amp,pan))}).add;
 
 //LineIn
-SynthDef(\ent,{|out=50,inchan=#[0,1],gate=0,att=0.1,rel=0.25|
+SynthDef(\entrada,{|inchan=0,gate=0,att=0.1,rel=0.25,out=64|
 	Out.ar(out,Pan2.ar(SoundIn.ar(inchan)*EnvGen.ar(Env.perc(att,rel),gate,doneAction:2)))}).add;
 );

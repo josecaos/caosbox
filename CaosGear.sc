@@ -646,11 +646,28 @@ CaosGear : CaosBox {
 		^instance_id;
 	}
 
-	lineIn {|out=64,inchan=0,gate=1,att=0.05,rel=0.25|
+	lineIn {|out=50,inchan=0,att=0.05,rel=0.5|
 
-		~cbox_entrada.set(\out,out,\inchan,inchan,\gate,gate,\att,att,\rel,rel);
+		var outbus, inChannel=inchan, attack=att, release=rel;
 
-		^"LineIn";
+		Tdef(\entrada, {
+
+			var outbus = Prand(out.asArray,inf).asStream;
+
+			loop {
+				~cbox_entrada.set(
+					\out,outbus.next,
+					\inchan,inChannel,
+					\att,attack,
+					\rel,release
+					);
+				~cbox_tiempos.wait;
+			}
+
+		});
+		instance_id = "LineIn";
+
+		^instance_id;
 	}
 
 	toTrack {|steps = 0, overrideSteps = false |

@@ -32,6 +32,9 @@ Tdef.defaultQuant = 1;
 		},
 		\chords2,{
 			~cbox_chord2=Synth(\acordesdos);
+		},
+		\in,{
+			~cbox_entrada=Synth(\entrada);
 		}
 	);
 };
@@ -41,11 +44,5 @@ CaosGear.new.bass2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees
 CaosGear.new.pad(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),24),\seq);
 CaosGear.new.pad2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),24),\seq);
 CaosGear.new.chords(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),24),\seq);
-// CaosGear.new.chords2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),24),\seq);
-// CaosGear.new.chords2;
-// CaosGear.new.lineIn;
-//LineIn
-// (
-// SynthDef(\ent,{|out=50,gate,att,rel|
-// 	Out.ar(out,Pan2.ar(SoundIn.ar(0)*EnvGen.ar(Env.perc(att,rel),gate,doneAction:2)))}).add;
-// );
+CaosGear.new.chords2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),24),\seq);
+CaosGear.new.lineIn(50);

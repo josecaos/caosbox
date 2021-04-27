@@ -277,16 +277,16 @@ StaticText(~cbox_w,Rect(275,635,515,15)).string_("PLAY/STOP:").font_(Font("Dejav
 	if(val.value == 0,{
 		bool = false;
 		Tdef(\secuencias).pause;Tdef(\autor).pause;Tdef(\autod).pause;Tdef(\autop).pause;Tdef(\autog).pause;
-Tdef(\bass).pause;Tdef(\bass2).pause;Tdef(\pad).pause;Tdef(\pad2).pause;Tdef(\acordes).pause;Tdef(\acordes2).pause;
+Tdef(\bass).pause;Tdef(\bass2).pause;Tdef(\pad).pause;Tdef(\pad2).pause;Tdef(\acordes).pause;Tdef(\acordes2).pause;Tdef(\entrada).pause;
 	~cbox_autobotr.value=0;~cbox_autobotd.value=0;~cbox_autobotp.value=0;~cbox_autobotg.value=0;~cbox_botm.value=0;~cbox_hbutt.value=0;
 	"->You just Stopped CaosBox<-".inform;},
 {
 	if(bool  != true, {
 		Tdef(\secuencias).resume;Tdef(\pad).resume;Tdef(\bass).resume;Tdef(\bass2).resume;
-		Tdef(\pad2).resume;Tdef(\acordes).resume;Tdef(\acordes2).resume;"\n -> Now playing, please start algoraving <-".inform;
+		Tdef(\pad2).resume;Tdef(\acordes).resume;Tdef(\acordes2).resume;Tdef(\entrada).resume;"\n -> Now playing, please start algoraving <-".inform;
 	},{
 		Tdef(\secuencias).play;Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
-		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;"\n -> Now playing, please start algoraving <-".inform;
+		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;Tdef(\entrada).play;"\n -> Now playing, please start algoraving <-".inform;
 	});
 });
 };

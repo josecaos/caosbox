@@ -1,21 +1,21 @@
 (//CaosBox GUI file 3 - v1.2 - In, steps, aux
-//In
 StaticText(~cbox_w,Rect(5,252,53,15)).string_("LineIn:").stringColor_(Color(0.85,0.85,0.85)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.5,0.5,0.5));
 
 ~cbox_checkbox = 60;
 
-for (0, 31, { |i|
-
-	var checkvar = "~cbox_insteps";
+for (0, 31, {|i|
 
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
-	var variable = checkvar ++ i;
-
-	~cbox_checkin.put(i,variable);
-
-	~cbox_checkin[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 250, 20, 20)).action={|val|
-		if(val.value,{~cbox_in.put(i,~cbox_entrada=Synth(\ent))},{~cbox_in.put(i,nil)})};
+	~cbox_checkin.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 250, 20, 20)).action={|val|
+		if(val.value,{
+			~cbox_sintetizadores.value(\in);
+			~cbox_in_seq.put(i,~cbox_entrada)
+			},
+			{
+			~cbox_in_seq.put(i,nil)
+		}
+		)});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -27,7 +27,7 @@ for (0, 31, { |i|
 
 	if(val.value==0,{
 
-		~cbox_in.put((0..31),nil);
+		~cbox_in_seq.put((0..31),nil);
 
 		for(0, 31, {|i|
 			~cbox_checkin[i].value = 0;
@@ -39,7 +39,6 @@ for (0, 31, { |i|
 
 //line In attack and release knobs
 ~cbox_inattknob=EZKnob(~cbox_w,Rect(785,251,81,17),nil,ControlSpec(0.01,0.25,\lin,0.001,0.1,\att),{|a| a.value;~cbox_entrada.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
-
 ~cbox_inrelknob=EZKnob(~cbox_w,Rect(870,251,81,17),nil,ControlSpec(0.05,0.75,\lin,0.001,0.1,\rel),{|a| a.value;~cbox_entrada.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
 
 //master sliders
