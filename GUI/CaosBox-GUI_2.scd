@@ -6,17 +6,20 @@ for (0, 31, { |i|
 
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
-	~cbox_checkbajo.put(i,
-		CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 130, 20, 20)).action = {|val|
-			if(val.value,{
-					~cbox_sintetizadores.value(\bass);
-					~cbox_bajo_seq.put(i,~cbox_bass);
-				},
-				{
-					~cbox_bajo_seq.put(i,nil);
-				})});
+	var check = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 130, 20, 20));
 
-	~cbox_checkbox = ~cbox_checkbox + a;// pinta secuenciador para bajo
+	~cbox_checkbajo.put(i,check);
+
+	check.action = {|val|
+		if(val.value,{
+				~cbox_sintetizadores.value(\bass);
+				~cbox_bajo_seq.put(i,~cbox_bass);
+			},
+			{
+				~cbox_bajo_seq.put(i,nil);
+			})};
+
+	~cbox_checkbox = ~cbox_checkbox + a;// pinta secuenciador para instrumento
 
 });
 ~cbox_delbass=Button(~cbox_w,Rect(765,132,15,15));
@@ -167,15 +170,18 @@ StaticText(~cbox_w,Rect(5,212,53,15)).string_("Chords:").stringColor_(Color(0.9,
 
 for (0, 31, { |i|
 
-	var checkvar = "~cbox_sintesteps";
-
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
-	var variable = checkvar ++ i;
-
-	~cbox_checksinte.put(i,variable);
-
-	~cbox_checksinte[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 210, 20, 20)).action={|val| if(val.value,{~cbox_sinte.put(i,~cbox_chord=Synth(\acordesuno);)},{~cbox_sinte.put(i,nil)})};
+	~cbox_checksinte.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 210, 20, 20)).action={|val|
+		if(val.value,
+			{
+				~cbox_sintetizadores.value(\chords);
+				~cbox_sinte_seq.put(i,~cbox_chord);
+			},{
+				~cbox_sinte_seq.put(i,nil);
+			}
+		)
+	});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -187,7 +193,7 @@ for (0, 31, { |i|
 
 	"Cleared chord steps!".inform;
 
-	~cbox_sinte.put((0..31),nil);
+	~cbox_sinte_seq.put((0..31),nil);
 
 	for(0, 31, {|i|
 		~cbox_checksinte[i].value = 0;
@@ -196,8 +202,8 @@ for (0, 31, { |i|
 
 })};
 //acordes attack and release knobs
-~cbox_sinte1attknob=EZKnob(~cbox_w,Rect(785,211,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.01,\att),{|a| a.value;~cbox_synth.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_sinte1relknob=EZKnob(~cbox_w,Rect(870,211,81,17),nil,ControlSpec(0.05,8,\lin,0.001,1,\rel),{|a| a.value;~cbox_synth.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_sinte_seq1attknob=EZKnob(~cbox_w,Rect(785,211,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.01,\att),{|a| a.value;~cbox_synth.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_sinte_seq1relknob=EZKnob(~cbox_w,Rect(870,211,81,17),nil,ControlSpec(0.05,8,\lin,0.001,1,\rel),{|a| a.value;~cbox_synth.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
 
 //Acordes2
@@ -207,7 +213,7 @@ StaticText(~cbox_w,Rect(5,232,53,15)).string_("Chords2:").stringColor_(Color(0.9
 
 for (0, 31, { |i|
 
-	var checkvar = "~cbox_sinte2steps";
+	var checkvar = "~cbox_sinte_seq2steps";
 
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
@@ -215,7 +221,7 @@ for (0, 31, { |i|
 
 	~cbox_checksinte2.put(i,variable);
 
-	~cbox_checksinte2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 230, 20, 20)).action={|val| if(val.value,{~cbox_sinte2.put(i,~cbox_chord2=Synth(\acordesdos);)},{~cbox_sinte2.put(i,nil)})};
+	~cbox_checksinte2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 230, 20, 20)).action={|val| if(val.value,{~cbox_sinte_seq2.put(i,~cbox_chord2=Synth(\acordesdos);)},{~cbox_sinte_seq2.put(i,nil)})};
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -227,7 +233,7 @@ for (0, 31, { |i|
 
 	"Cleared guitChord steps!".inform;
 
-	~cbox_sinte2.put((0..31),nil);
+	~cbox_sinte_seq2.put((0..31),nil);
 
 	for(0, 31, {|i|
 		~cbox_checksinte2[i].value = 0;
@@ -236,6 +242,6 @@ for (0, 31, { |i|
 
 })};
 //acordes 2 attack and release knobs
-~cbox_sinte2attknob=EZKnob(~cbox_w,Rect(785,231,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.1,\att),{|a| a.value;~cbox_synth2.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_sinte2relknob=EZKnob(~cbox_w,Rect(870,231,81,17),nil,ControlSpec(0.05,8,\lin,0.001,0.5,\rel),{|a| a.value;~cbox_synth2.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_sinte_seq2attknob=EZKnob(~cbox_w,Rect(785,231,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.1,\att),{|a| a.value;~cbox_synth2.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_sinte_seq2relknob=EZKnob(~cbox_w,Rect(870,231,81,17),nil,ControlSpec(0.05,8,\lin,0.001,0.5,\rel),{|a| a.value;~cbox_synth2.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 );

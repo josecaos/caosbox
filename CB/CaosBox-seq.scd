@@ -43,8 +43,8 @@ Tdef(\secuencias,{
 					\att,~cbox_bass1attknob.value,
 					\rel,~cbox_bass1relknob.value
 					);
-					~cbox_sintetizadores.value(\bass);//reasigna synthdef a la variable
-					~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);// hace sonar el paso
+				~cbox_sintetizadores.value(\bass);//reasigna synthdef a la variable
+				~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);// hace sonar el paso
 		},{
 			~cbox_checkbajo[~cbox_indice].value == false;
 			~cbox_bajo_seq.put(~cbox_indice, nil);
@@ -101,20 +101,30 @@ Tdef(\secuencias,{
 			~cbox_ambiente_seq2.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
-		// chords
-		if(~cbox_sinte[~cbox_indice] == nil,{nil},
-			{~cbox_sinte[~cbox_indice].set(
-				\gate,1,
-				\att,~cbox_sinte1attknob.value,
-				\rel,~cbox_sinte1relknob.value);
-			~cbox_sinte.put(~cbox_indice,~cbox_chord=Synth(\acordesuno))});
+		//
+		{
+		if(~cbox_checksinte[~cbox_indice].value == true,
+			{
+				~cbox_sinte_seq.put(~cbox_indice,~cbox_chord);
+				~cbox_sinte_seq[~cbox_indice].set(
+					\gate,1,
+					\att,~cbox_sinte_seq1attknob.value,
+					\rel,~cbox_sinte_seq1relknob.value
+					);
+				~cbox_sintetizadores.value(\chords);
+				~cbox_sinte_seq.put(~cbox_indice,~cbox_chord);
+		},{
+			~cbox_checksinte[~cbox_indice].value == false;
+			~cbox_sinte_seq.put(~cbox_indice, nil);
+			});
+		}.defer(0.01);
 		// chords2
-		if(~cbox_sinte2[~cbox_indice] == nil,{nil},
-			{~cbox_sinte2[~cbox_indice].set(
+		if(~cbox_sinte_seq2[~cbox_indice] == nil,{nil},
+			{~cbox_sinte_seq2[~cbox_indice].set(
 				\gate,1,
-				\att,~cbox_sinte2attknob.value,
-				\rel,~cbox_sinte2relknob.value);
-			~cbox_sinte2.put(~cbox_indice,~cbox_chord2=Synth(\acordesdos))});
+				\att,~cbox_sinte_seq2attknob.value,
+				\rel,~cbox_sinte_seq2relknob.value);
+			~cbox_sinte_seq2.put(~cbox_indice,~cbox_chord2=Synth(\acordesdos))});
 		// in
 		if(~cbox_in[~cbox_indice] == nil,{nil},
 			{~cbox_in[~cbox_indice].set(

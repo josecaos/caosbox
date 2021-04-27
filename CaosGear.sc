@@ -470,9 +470,9 @@ CaosGear : CaosBox {
 		instance_id = "Amb";
 		^instance_id;
 	}
-	
+
 	pad2 {|out=50,semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],seqType='seq',
-		att=0.25,rel=1,maxNote=1,fm=0.125,harm=1,amp1=0.5,amp2=0.5,pan=0|
+		att=0.25,rel=1,maxNote=60,fm=0.125,harm=1,amp1=0.5,amp2=0.5,pan=0|
 		//
 		var nota = semitoneArray;
 		var attack = att;
@@ -516,8 +516,8 @@ CaosGear : CaosBox {
 					\harm, harmonics,
 					\amp1, vol1,
 					\amp2, vol2,
-					\pan,panner,
-					\out,outstream.next,
+					\pan, panner,
+					\out, outstream.next,
 				);
 				~cbox_tiempos.wait;
 			}
@@ -685,7 +685,7 @@ CaosGear : CaosBox {
 		var track;
 
 		switch( instance_id,
-			"Kick", {track = \kick	},
+			"Kick", {track = \kick},
 			"Kick2", {track = \kick2},
 			"Snare", {track = \snare},
 			"Snare2", {track = \snare2},
