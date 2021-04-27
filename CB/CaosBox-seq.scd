@@ -119,12 +119,22 @@ Tdef(\secuencias,{
 			});
 		}.defer(0.01);
 		// chords2
-		if(~cbox_sinte_seq2[~cbox_indice] == nil,{nil},
-			{~cbox_sinte_seq2[~cbox_indice].set(
-				\gate,1,
-				\att,~cbox_sinte_seq2attknob.value,
-				\rel,~cbox_sinte_seq2relknob.value);
-			~cbox_sinte_seq2.put(~cbox_indice,~cbox_chord2=Synth(\acordesdos))});
+		{
+		if(~cbox_checksinte2[~cbox_indice].value == true,
+			{
+				~cbox_sinte_seq2.put(~cbox_indice,~cbox_chord2);
+				~cbox_sinte_seq2[~cbox_indice].set(
+					\gate,1,
+					\att,~cbox_sinte_seq2attknob.value,
+					\rel,~cbox_sinte_seq2relknob.value
+					);
+				~cbox_sintetizadores.value(\chords2);
+				~cbox_sinte_seq2.put(~cbox_indice,~cbox_chord2);
+		},{
+			~cbox_checksinte2[~cbox_indice].value == false;
+			~cbox_sinte_seq2.put(~cbox_indice, nil);
+			});
+		}.defer(0.01);
 		// in
 		if(~cbox_in[~cbox_indice] == nil,{nil},
 			{~cbox_in[~cbox_indice].set(

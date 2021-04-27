@@ -600,48 +600,46 @@ CaosGear : CaosBox {
 		var panner = pan;
 		var vol = amp;
 		var outbus = out;
-		(
-			Tdef(\acordes,{
+		Tdef(\acordes,{
 
-				var mel, chord, outbus;
+			var mel, chord, outbus;
 
-				if(seqType == 'rand' or: {seqType == 'seq'}, {
+			if(seqType == 'rand' or: {seqType == 'seq'}, {
 
-					switch(seqType,
-						'rand', {
-							mel=Prand(note.asArray,inf).asStream;
-							outbus=Prand(out.asArray,inf).asStream;
-							chord=Prand(chords.asArray,inf).asStream;
-						},
-						'seq', {
-							mel=Pseq(note.asArray,inf).asStream;
-							outbus=Pseq(out.asArray,inf).asStream;
-							chord=Pseq(chords.asArray,inf).asStream;
-						},
-						("Chord Melodic secuence type is" + seqType).inform;
-					);
-					}, {
-						"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-				});
-				//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
-				loop{
-					~cbox_chord.set(
-						\chord, chord.next,
-						\note, mel.next,
-						\att, attk,
-						\rel, rel,
-						\iphase, iph,
-						\width, iwidth,
-						\cutf, cutfreq,
-						\rq, bandwidth,
-						\pan, panner,
-						\amp, vol,
-						\out, outbus.next
-					);
-					~cbox_tiempos.wait;
-				}
+				switch(seqType,
+					'rand', {
+						mel=Prand(note.asArray,inf).asStream;
+						outbus=Prand(out.asArray,inf).asStream;
+						chord=Prand(chords.asArray,inf).asStream;
+					},
+					'seq', {
+						mel=Pseq(note.asArray,inf).asStream;
+						outbus=Pseq(out.asArray,inf).asStream;
+						chord=Pseq(chords.asArray,inf).asStream;
+					},
+					("Chord Melodic secuence type is" + seqType).inform;
+				);
+				}, {
+					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
 			});
-		);
+			//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
+			loop{
+				~cbox_chord2.set(
+					\chord, chord.next,
+					\note, mel.next,
+					\att, attk,
+					\rel, rel,
+					\iphase, iph,
+					\width, iwidth,
+					\cutf, cutfreq,
+					\rq, bandwidth,
+					\pan, panner,
+					\amp, vol,
+					\out, outbus.next
+				);
+				~cbox_tiempos.wait;
+			}
+		});
 
 		instance_id = "Chords2";
 

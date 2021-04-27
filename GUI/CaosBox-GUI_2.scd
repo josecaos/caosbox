@@ -213,15 +213,17 @@ StaticText(~cbox_w,Rect(5,232,53,15)).string_("Chords2:").stringColor_(Color(0.9
 
 for (0, 31, { |i|
 
-	var checkvar = "~cbox_sinte_seq2steps";
-
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
-	var variable = checkvar ++ i;
-
-	~cbox_checksinte2.put(i,variable);
-
-	~cbox_checksinte2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 230, 20, 20)).action={|val| if(val.value,{~cbox_sinte_seq2.put(i,~cbox_chord2=Synth(\acordesdos);)},{~cbox_sinte_seq2.put(i,nil)})};
+	~cbox_checksinte2.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 230, 20, 20)).action={|val|
+		if(val.value,{
+			~cbox_sintetizadores.value(\chords2);
+			~cbox_sinte_seq2.put(i,~cbox_chord2)
+		},
+		{
+			~cbox_sinte_seq2.put(i,nil)
+		}
+	)});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
