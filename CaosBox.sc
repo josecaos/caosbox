@@ -425,10 +425,10 @@ CaosBox {
 			'lpf',{
 				if(play == true, {
 					switch(speed,
-						'normal',{"velocidad 'normal'".postcln;/*~cbox_autopopg.valueAction_(0);"Grains normal speed".postln*/},
-						'fast',{"velocidad 'fast'".postcln;/*~cbox_autopopg.valueAction_(1);"Grains fast speed".postln*/},
-						'slow',{"velocidad 'slow'".postcln;/*~cbox_autopopg.valueAction_(2);"Grains slow speed".postln*/},
-						'slowest',{"velocidad 'slowest'".postcln;/*~cbox_autopopg.valueAction_(3);"grains slowest speed".postln*/}
+						'normal',{"velocidad 'normal'".postcln;~cbox_divlpf = 1;"LPF normal speed".postln},
+						'fast',{"velocidad 'fast'".postcln;~cbox_divlpf = 0.5; "LPF normal speed".postln},
+						'slow',{"velocidad 'slow'".postcln;~cbox_divlpf = 2; "LPF normal speed".postln},
+						'slowest',{"velocidad 'slowest'".postcln;~cbox_divlpf = 4; "LPF normal speed".postln}
 					);
 					~cbox_autolpffreq=argArr1.asArray;
 					~cbox_autolpfband=argArr2.asArray;
@@ -444,7 +444,29 @@ CaosBox {
 					^"Low pass fiter Automation stopped";
 				});
 			},
-			"Use only 'reverb','delay','pitch','grains','lpf','hpf(soon)','bpf(soon)' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
+			'hpf',{
+				if(play == true, {
+					switch(speed,
+						'normal',{"velocidad 'normal'".postcln;~cbox_divhpf = 1;"HPF normal speed".postln},
+						'fast',{"velocidad 'fast'".postcln;~cbox_divhpf = 0.5; "HPF normal speed".postln},
+						'slow',{"velocidad 'slow'".postcln;~cbox_divhpf = 2; "HPF normal speed".postln},
+						'slowest',{"velocidad 'slowest'".postcln;~cbox_divhpf = 4; "HPF normal speed".postln}
+					);
+					~cbox_autohpffreq=argArr1.asArray;
+					~cbox_autohpfband=argArr2.asArray;
+					(~cbox_url +/+ "CB/CaosBox-auto.scd").load;
+					if(Tdef(\autohpf).isPlaying,{
+						^"High pass filter Automation already running";
+					},{
+			 			Tdef(\autohpf).play;
+						^"High pass filter Automation running";
+					});
+				}, {
+					Tdef(\autohpf).pause;
+					^"High pass fiter Automation stopped";
+				});
+			},
+			"Use only 'reverb','delay','pitch','grains','lpf','hpf','bpf(soon)' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
 	}
 
 	*fx {|fx = 'reverb', arg1 = 0, arg2 = 0, arg3 = 0, arg4 = 0, arg5 = 0|

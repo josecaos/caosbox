@@ -76,7 +76,7 @@ Tdef(\autog,{
 );
 //  filters
 (
-Tdef(\autolpf,{
+Tdef(\autolpf, {
 	var frq,band,univar;
 	frq=Prand(~cbox_autolpffreq,inf).asStream;
 	band=Prand(~cbox_autolpfband,inf).asStream;
@@ -84,11 +84,26 @@ Tdef(\autolpf,{
 		univar=[frq.next,band.next];
 		~cbox_mastlowf.set(\cutfreq,univar[0],\rq,univar[1]);
 		{
-			(~cbox_numf1.value + " + " + ~cbox_lowcfader.value).postcln;
 			~cbox_numf1.value=univar[0];~cbox_lowcfader.value=univar[0]/19980;
 			~cbox_numf2.value=univar[1];~cbox_lowrqfader.value=univar[1];
 		}.defer(0.1);
-		~cbox_tiempos/~cbox_divrev.wait;
+		~cbox_tiempos/~cbox_divlpf.wait;
+	}.loop;
+});
+);
+(
+Tdef(\autohpf, {
+	var frq,band,univar;
+	frq=Prand(~cbox_autohpffreq,inf).asStream;
+	band=Prand(~cbox_autohpfband,inf).asStream;
+	{
+		univar=[frq.next,band.next];
+		~cbox_masthighf.set(\cutfreq,univar[0],\rq,univar[1]);
+		{
+			~cbox_numf3.value=univar[0];~cbox_highcfader.value=univar[0]/19980;
+			~cbox_numf4.value=univar[1];~cbox_highrqfader.value=univar[1];
+		}.defer(0.1);
+		~cbox_tiempos/~cbox_divhpf.wait;
 	}.loop;
 });
 );
