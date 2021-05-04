@@ -466,7 +466,29 @@ CaosBox {
 					^"High pass fiter Automation stopped";
 				});
 			},
-			"Use only 'reverb','delay','pitch','grains','lpf','hpf','bpf(soon)' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
+			'bpf',{
+				if(play == true, {
+					switch(speed,
+						'normal',{"velocidad 'normal'".postcln;~cbox_divbpf = 1;"BPF normal speed".postln},
+						'fast',{"velocidad 'fast'".postcln;~cbox_divbpf = 0.5; "BPF normal speed".postln},
+						'slow',{"velocidad 'slow'".postcln;~cbox_divbpf = 2; "BPF normal speed".postln},
+						'slowest',{"velocidad 'slowest'".postcln;~cbox_divbpf = 4; "BPF normal speed".postln}
+					);
+					~cbox_autobpffreq=argArr1.asArray;
+					~cbox_autobpfband=argArr2.asArray;
+					(~cbox_url +/+ "CB/CaosBox-auto.scd").load;
+					if(Tdef(\autobpf).isPlaying,{
+						^"Band pass filter Automation already running";
+					},{
+			 			Tdef(\autobpf).play;
+						^"Band pass filter Automation running";
+					});
+				}, {
+					Tdef(\autobpf).pause;
+					^"Band pass fiter Automation stopped";
+				});
+			},
+			"Use only 'reverb','delay','pitch','grains','lpf','hpf','bpf' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
 	}
 
 	*fx {|fx = 'reverb', arg1 = 0, arg2 = 0, arg3 = 0, arg4 = 0, arg5 = 0|

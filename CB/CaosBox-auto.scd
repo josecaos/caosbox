@@ -107,3 +107,19 @@ Tdef(\autohpf, {
 	}.loop;
 });
 );
+(
+Tdef(\autobpf, {
+	var frq,band,univar;
+	frq=Prand(~cbox_autobpffreq,inf).asStream;
+	band=Prand(~cbox_autobpfband,inf).asStream;
+	{
+		univar=[frq.next,band.next];
+		~cbox_mastbandf.set(\cutfreq,univar[0],\rq,univar[1]);
+		{
+			~cbox_numf5.value=univar[0];~cbox_bandcfader.value=univar[0]/19980;
+			~cbox_numf6.value=univar[1];~cbox_bandrqfader.value=univar[1];
+		}.defer(0.1);
+		~cbox_tiempos/~cbox_divbpf.wait;
+	}.loop;
+});
+);
