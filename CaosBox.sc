@@ -422,7 +422,29 @@ CaosBox {
 					^"Grains Automation stopped";
 				});
 			},
-			"Use only 'reverb','delay','pitch','grains' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
+			'lpf',{
+				if(play == true, {
+					switch(speed,
+						'normal',{"velocidad 'normal'".postcln;/*~cbox_autopopg.valueAction_(0);"Grains normal speed".postln*/},
+						'fast',{"velocidad 'fast'".postcln;/*~cbox_autopopg.valueAction_(1);"Grains fast speed".postln*/},
+						'slow',{"velocidad 'slow'".postcln;/*~cbox_autopopg.valueAction_(2);"Grains slow speed".postln*/},
+						'slowest',{"velocidad 'slowest'".postcln;/*~cbox_autopopg.valueAction_(3);"grains slowest speed".postln*/}
+					);
+					~cbox_autolpffreq=argArr1.asArray;
+					~cbox_autolpfband=argArr2.asArray;
+					(~cbox_url +/+ "CB/CaosBox-auto.scd").load;
+					if(Tdef(\autolpf).isPlaying,{
+						^"Low pass filter Automation already running";
+					},{
+			 			Tdef(\autolpf).play;
+						^"Low pass filter Automation running";
+					});
+				}, {
+					Tdef(\autolpf).pause;
+					^"Low pass fiter Automation stopped";
+				});
+			},
+			"Use only 'reverb','delay','pitch','grains','lpf','hpf(soon)','bpf(soon)' keys for FX type argument, and 'normal','fast','slow','slowest' keys for FX speed argument";);
 	}
 
 	*fx {|fx = 'reverb', arg1 = 0, arg2 = 0, arg3 = 0, arg4 = 0, arg5 = 0|

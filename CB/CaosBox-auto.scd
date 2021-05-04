@@ -74,3 +74,21 @@ Tdef(\autog,{
 	}.loop;
 })
 );
+//  filters
+(
+Tdef(\autolpf,{
+	var frq,band,univar;
+	frq=Prand(~cbox_autolpffreq,inf).asStream;
+	band=Prand(~cbox_autolpfband,inf).asStream;
+	{
+		univar=[frq.next,band.next];
+		~cbox_mastlowf.set(\cutfreq,univar[0],\rq,univar[1]);
+		{
+			(~cbox_numf1.value + " + " + ~cbox_lowcfader.value).postcln;
+			~cbox_numf1.value=univar[0];~cbox_lowcfader.value=univar[0]/19980;
+			~cbox_numf2.value=univar[1];~cbox_lowrqfader.value=univar[1];
+		}.defer(0.1);
+		~cbox_tiempos/~cbox_divrev.wait;
+	}.loop;
+});
+);

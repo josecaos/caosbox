@@ -172,6 +172,7 @@ Tdef(\randtime,{
 /*
 //s.queryAllNodes
 /*
+// TODO:  terminar bien el orden de ejecucion por grupos
 ~cbox_gmast=Group.head;
 ~cbox_gaux=Group.before(~cbox_gmast);
 ~cbox_gfilt=Group.before(~cbox_gaux);
@@ -179,15 +180,14 @@ Tdef(\randtime,{
 */
 //nodos
 //master var
-~cbox_mast=Synth.head(~cbox_gmast,\master);
-// fx
-~cbox_mastrev=Synth.head(~cbox_gaux,\aux1);
-~cbox_mastdel=Synth.before(~cbox_mastrev,\aux2);
-~cbox_mastpit=Synth.before(~cbox_mastdel,\aux3);
-//Filtros
-~cbox_mastlowf=Synth.head(~cbox_gfilt,\lowfilt);
-~cbox_masthighf=Synth.before(~cbox_mastlowf,\highfilt);
-~cbox_mastbandf=Synth.before(~cbox_masthighf,\bandfilt);
-//granulador
-~cbox_grains=Synth.before(~cbox_mastbandf,\granulador);
-*/
+//~cbox_mast=Synth.head(~cbox_gmast,\master);
+//// fx
+//~cbox_mastrev=Synth.head(~cbox_gaux,\aux1);
+//~cbox_mastdel=Synth.before(~cbox_mastrev,\aux2);
+//~cbox_mastpit=Synth.before(~cbox_mastdel,\aux3);
+////Filtros
+//~cbox_mastlowf=Synth.head(~cbox_gfilt,\lowfilt);
+//~cbox_masthighf=Synth.before(~cbox_mastlowf,\highfilt);
+//~cbox_mastbandf=Synth.before(~cbox_masthighf,\bandfilt);
+////granulador
+//~cbox_grains=Synth.before(~cbox_mastbandf,\granulador);

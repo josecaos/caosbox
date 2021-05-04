@@ -33,6 +33,12 @@
 //
 ~cbox_autograintrig=[0.04,0.08,0.16,0.32,0.64,1.28]*4;
 ~cbox_autograinsize=Array.series(100,0.01,0.005);
+//
+~cbox_autolpffreq=Array.exprand(10,20,20000);
+~cbox_autolpfband=Array.exprand(10,0.1,1);
+// gui filter controls
+// ~cbox_fmaxmin=ControlSpec(20,20000,\exponential,1,20000);
+// ~cbox_rqmaxmin=ControlSpec(0.01,1,\lin,0.01,1);
 // bpm
 ~cbox_randtimes=[47,62,94,141,188];
 // GUI steps
@@ -58,6 +64,9 @@
 ~cbox_divdel=1;
 ~cbox_divpitch=1;
 ~cbox_divgrain=1;
+~cbox_divlpf=1;
+~cbox_divhpf=1;
+~cbox_divbpf=1;
 // Instuments
 ~cbox_b=nil;//kick
 ~cbox_t=nil;//snare

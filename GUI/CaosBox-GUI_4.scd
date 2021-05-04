@@ -1,7 +1,7 @@
 (//CaosBox GUI file 4 - v1.2 - filtros, freqscope, bpm, granulador, Close
 //Lowpass filter min max values
-~cbox_fmaxmin=ControlSpec(20,20000,\exponential,1,1000);
-~cbox_rqmaxmin=ControlSpec(0.01,1,\lin,0.01,0.5);
+~cbox_fmaxmin=ControlSpec(20,20000,\exponential,1,20000);
+~cbox_rqmaxmin=ControlSpec(0.01,1,\lin,0.01,1);
 //Filter Aux tag
 ~cbox_filttag=StaticText(~cbox_w,Rect(575,290,205,12));
 ~cbox_filttag.string_("Filters").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
@@ -24,7 +24,11 @@
 StaticText(~cbox_w,Rect(575,338,125,14)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf1=NumberBox(~cbox_w,Rect(700,337,80,16)).background_(Color(0,1,0));
 ~cbox_lowcfader=Slider(~cbox_w,Rect(575,355,205,20)).background_(Color(alpha:0));
-~cbox_lowcfader.action={~cbox_mastlowf.set(\cutfreq,~cbox_fmaxmin.map(~cbox_lowcfader.value));~cbox_numf1.value_(~cbox_fmaxmin.map(~cbox_lowcfader.value))};
+~cbox_lowcfader.action={
+	~cbox_mastlowf.set(
+		\cutfreq,~cbox_fmaxmin.map(~cbox_lowcfader.value));
+		~cbox_numf1.value_(~cbox_fmaxmin.map(~cbox_lowcfader.value))
+	};
 ~cbox_numf1.action={~cbox_mastlowf.set(\cutfreq,~cbox_fmaxmin.map(~cbox_numf1.value));~cbox_lowcfader.value=~cbox_numf1.value/19980};//el cambio de numbox a fader, se vuelve lineal
 ~cbox_lowcfader.value=20000;
 ~cbox_numf1.value=20000;
