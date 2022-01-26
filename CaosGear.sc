@@ -9,7 +9,7 @@ CaosGear : CaosBox {
 
 	}
 
-	melody {|scaleArray=#[0,3,7,11,12], index=60|
+	melody {|scaleArray=#[0,3,7,11], index=60|
 
 		if(scaleArray.isArray, {
 

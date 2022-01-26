@@ -98,7 +98,7 @@
 ~cbox_n=["1","2","3","4","5","6","7","8","9","0"];
 //mainmelody
 ~cbox_mainmelody = CaosGear.new;
-~cbox_degrees = Scale.minor.degrees;
+// ~cbox_degrees = Scale.minor.degrees;
 //
 // Optionals
 "// Reading Optional Dependencies".inform;
