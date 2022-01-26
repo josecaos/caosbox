@@ -5,6 +5,7 @@ CaosBox {
 
 	*enviroment {|gui = true|
 
+
 		if(~cbox_url.notNil,{
 
 			^"CaosBox.enviroment is already running"
@@ -23,10 +24,9 @@ CaosBox {
 				"GUI/CaosBox-GUI_3.scd",
 				"GUI/CaosBox-GUI_4.scd",
 				"CB/CaosBox-seq.scd",
-				// "CB/CaosBox-funcs.scd"// deprecated
 			];
 
-			// revisa dependencia obligatoria
+			// revisa dependencias obligatorias
 			if(\CaosKick.asClass != nil,{
 
 				~cbox_url = this.filenameSymbol.asString.dirname;
@@ -36,7 +36,7 @@ CaosBox {
 			}, {
 
 				"CaosPercLib not installed, without this CaosBox won't work".error;
-				"You can download the library here: https://github.com/josecaos/caosperclib/releases \nDownload and Unzip into: Platform.userExtensionDir;".inform;
+				"You can download the library here: https://github.com/josecaos/caosperclib \nDownload and Unzip into: Platform.userExtensionDir;".inform;
 				^"Dependency problem detected";
 
 			});

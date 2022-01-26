@@ -15,9 +15,9 @@ Task({|i|
 	};
 	1.do{crece.join.inform; texto.inform};
 	1.yield;
-	1.do{"To perform soundcheck, write: \nCaosBox.soundcheck('white')".inform};
+	1.do{"To perform soundcheck, write: ' CaosBox.soundcheck('white') '".inform};
 	1.yield;
-	1.do{"CaosBox  es una secuenciador no tan común, para hacer Algorave/Livecoding. \nCaosBox  is a not so common Algorave/Livecoding sequencer. \n + Escrito/Written [at]: http://www.josecaos.xyz".inform};
+	1.do{"+ CaosBox  is a not so common Algorave/Livecoding sequencer. \n + Written by: http://www.mixfuckedup.net".inform};
 	//
 }).play;
 );
