@@ -8,7 +8,7 @@ CaosBox {
 
 		if(~cbox_url.notNil,{
 
-			^"CaosBox.enviroment is already running"
+			^"CaosBox.enviroment is already running";
 
 		},{
 			// System files

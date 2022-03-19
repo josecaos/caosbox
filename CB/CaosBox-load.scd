@@ -2,8 +2,8 @@
 (
 Task({|i|
 	var texto = "CaosBox v1.3";
-	var display = 666;
-	// var display = texto.size*6;
+	// var display = 666;
+	var display = texto.size*6;
 	var crece=Array.new(display);
 	var creseq=Pseq([0,1],31).asStream;
 	i=0;
@@ -18,7 +18,6 @@ Task({|i|
 	1.do{"To perform soundcheck, write: ' CaosBox.soundcheck('white') '".inform};
 	1.yield;
 	1.do{"+ CaosBox  is a not so common Algorave/Livecoding sequencer. \n + Written by: http://www.mixfuckedup.net".inform};
-	//
 }).play;
 );
 
