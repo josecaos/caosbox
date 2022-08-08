@@ -36,12 +36,12 @@ StaticText(~cbox_w,Rect(5,12,53,15)).string_("Kick:").font_(Font("Dejavu Sans",1
 
 ~cbox_checkbox = 60;
 
-for (0, 31, { |i|
+for (0, 31, {|i|
 
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
 	~cbox_checkbombo[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 10, 20, 20)).action={|val|
-		if(val.value,{~cbox_bombo.put(i,~cbox_b/*~cbox_kickgear=Synth(\kickgear)*/)},{~cbox_bombo.put(i,nil)});
+		if(val.value,{ ~cbox_bombo.put(i,~cbox_b/*~cbox_kickgear=Synth(\kickgear)*/)},{~cbox_bombo.put(i,nil)});
 	};
 
 	~cbox_checkbox = ~cbox_checkbox + a;

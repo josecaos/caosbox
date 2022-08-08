@@ -297,7 +297,13 @@ CaosBox {
 
 		var index,arr,dictionary = ~cbox_steps;
 
-		arr = steps.asArray;//en caso de no usar array como parametro
+		if(arr.isArray.not,{
+			arr = steps.asArray;//en caso de no usar array como parametro
+			}, {
+			" DEBUG: YES IS AN ARRAY".postcln;
+		});
+		// DEBUG:
+		if(arr.size > 32, {arr = arr.clipAt(32)});
 
 		if(overrideSteps == true,{this.clearSteps(track)},{this.clearSteps(track,arr)});
 
