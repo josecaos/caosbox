@@ -295,15 +295,23 @@ CaosBox {
 
 	*setSteps {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31], overrideSteps = false|
 
-		var index,arr,dictionary = ~cbox_steps;
+		var index,arr,leftover,dictionary = ~cbox_steps;
 
-		if(arr.isArray.not,{
-			arr = steps.asArray;//en caso de no usar array como parametro
-			}, {
-			" DEBUG: YES IS AN ARRAY".postcln;
+		if(steps.isArray,{
+			leftover = steps.indexOfGreaterThan(31);
+
+			if(leftover != nil, {//Normalize steps array size to avoid errors
+				(steps.size - leftover).do({
+					steps.removeAt(leftover);
+				});
+			});
+
+			arr = steps;
+		}, {
+			arr = steps.asArray;//In case a non array is given
 		});
-		// DEBUG:
-		if(arr.size > 32, {arr = arr.clipAt(32)});
+//
+
 
 		if(overrideSteps == true,{this.clearSteps(track)},{this.clearSteps(track,arr)});
 

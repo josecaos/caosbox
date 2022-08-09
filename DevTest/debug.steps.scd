@@ -22,12 +22,11 @@ q.kick2(56)
 
 h = ~inst.new
 h.hihats
-h.hihats(64)
 h.toTrack(Array.series(8,0,4))
 
 m = ~inst.new
-m.hihats2(amp:0.5);
-m.hihats(64)
+m.hihats2(amp1:0.5,amp2:0.125);
+m.hihats(64);
 // Posible nuevo metodo
 (
 Tdef(\rand,{
@@ -46,7 +45,7 @@ Tdef(\rand,{
 		1.wait;
 	}
 });
-)
+);
 Tdef(\rand).play;
 Tdef(\rand).stop;
 
