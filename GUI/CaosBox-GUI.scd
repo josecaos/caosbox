@@ -1,4 +1,5 @@
-(//GUI file 1: percusiones, botones de control, bienvenida
+//CaosBox GUI file 1 - v1.3 - leds, percusiones, botones de control, bienvenida
+(
 ~cbox_w=Window.new("CaosBox v1.3.3 Live Coding Machine for Algorave Music" + " Today is " + ~cbox_fecha,Rect.aboutPoint(Window.screenBounds.center,512,340),false).background=Color(0,0,0);//
 //
 // leds

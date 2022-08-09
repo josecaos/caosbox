@@ -13,10 +13,16 @@ Tdef.defaultQuant = 1;
 ~cbox_h={var out=50;Out.ar(out,CaosHats.ar(0.01,0.5,8330,rq:0.25,amp1:0.35,amp2:0.01,pan:0))};
 ~cbox_h2={var out=50;Out.ar(out,CaosHats2.ar(0.025,0.25,6950,rq:0.45,amp1:0.5,amp2:0.3,pan:0))};
 /////////////////////////////////
-~cbox_sintetizadores = {|sinth|
+~cbox_sintetizadores = {|sinth,node,indice|
 	switch(sinth,
 		\bass,{
-			~cbox_bass=Synth(\bajouno);
+			~cbox_bass.free;
+			~cbox_bass=Synth.basicNew(\bajouno,CaosBox.server,node);
+			~cbox_bajo_seq.put(~cbox_indice,CaosBox.server.sendBundle(nil,~cbox_bass.newMsg(args:[\att,~cbox_bass1attknob.value,\rel,~cbox_bass1relknob.value,\gate,1,\doneAction,1])));// trig
+			// ~cbox_bass=Synth(\bajouno);
+			// DEBUG:::
+			~cbox_bass.nodeID.postcln;
+			// ("Nodo #" + node).postcln;
 		},
 		\bass2,{
 			~cbox_bass2=Synth(\bajodos);

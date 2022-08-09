@@ -1,4 +1,4 @@
-(//CaosBox GUI file 4 - v1.2 - filtros, freqscope, bpm, granulador, Close
+(//CaosBox GUI file 4 - v1.3 - filtros, freqscope, bpm, granulador, Close
 //Lowpass filter min max values
 ~cbox_fmaxmin=ControlSpec(20,20000,\exponential,1,20000);
 ~cbox_rqmaxmin=ControlSpec(0.01,1,\lin,0.01,1);

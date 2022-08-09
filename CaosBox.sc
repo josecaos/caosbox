@@ -1,7 +1,7 @@
 //Main Enviroment init
 CaosBox {
 
-	classvar server,url;
+	classvar <server,url;
 
 	*enviroment {|gui = true|
 
@@ -27,8 +27,7 @@ CaosBox {
 			];
 
 			// revisa dependencias obligatorias
-			if(\CaosKick.asClass != nil,{
-
+			if(\CaosEnv.asClass != nil,{
 				~cbox_url = this.filenameSymbol.asString.dirname;
 
 				^super.new.init(gui);
@@ -48,6 +47,8 @@ CaosBox {
 	init {|window = true|
 
 		server = Server.local;
+		// TODO: testear aumento de memoria al iniciar la aplicación
+		// server.options.memSize = 165536;
 
 			server.waitForBoot {
 

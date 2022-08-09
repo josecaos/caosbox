@@ -5,11 +5,11 @@
 ///////////////////////////////////////////
 (
 //bass
+// TODO: aplicar a todos los SynthDef
 if(~cbox_custom != true,{
 
-	// "Bajo libreria".postcln;
-	SynthDef(\bajouno,{|att=0.05,rel=1,note=38,filtminf=45,filtmaxf=8950,filtime=0.125,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25,out=50|
-		Out.ar(out,CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2))}).add;
+	SynthDef(\bajouno,{|out=50,att=0.05,rel=1,note=38,filtminf=45,filtmaxf=8950,filtime=0.125,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25,pan=0,doneAction=2|
+		Out.ar(out,CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2,pan,doneAction))}).add;
 },{
 	// "Bajo custom".postcln;
 	SynthDef(\bajouno,{|ugenFunc,att,rel,note=38,pan=#[0.95,0.96],out=50|
