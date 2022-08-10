@@ -10,15 +10,15 @@ for (0, 31, { |i|
 
 	~cbox_checkbajo.put(i,check);
 
-	check.action = {|val|
-		if(val.value,{
+	// check.action = {|val|
+	// 	if(val.value,{
 			// ~cbox_sintetizadores.value(\bass, 1100,i);
 			// ~cbox_bajo_seq.put(i,CaosBox.server.sendBundle(nil, ~cbox_bass.newMsg(args:[\gate,1])));
 			// ~cbox_bajo_seq.put(i,~cbox_bass);
-			},
-			{
-			~cbox_bajo_seq.put(i,nil);
-			})};
+	// },
+	// {
+	// ~cbox_bajo_seq.put(i,nil);
+	// })};
 
 	~cbox_checkbox = ~cbox_checkbox + a;// pinta secuenciador para instrumento
 

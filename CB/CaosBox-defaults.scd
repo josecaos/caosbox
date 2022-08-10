@@ -18,11 +18,9 @@ Tdef.defaultQuant = 1;
 		\bass,{
 			~cbox_bass.free;
 			~cbox_bass=Synth.basicNew(\bajouno,CaosBox.server,node);
-			~cbox_bajo_seq.put(~cbox_indice,CaosBox.server.sendBundle(nil,~cbox_bass.newMsg(args:[\att,~cbox_bass1attknob.value,\rel,~cbox_bass1relknob.value,\gate,1,\doneAction,1])));// trig
-			// ~cbox_bass=Synth(\bajouno);
+			~cbox_bajo_seq.put(~cbox_indice,CaosBox.server.sendBundle(nil,~cbox_bass.newMsg(args:[\att,~cbox_bass1attknob.value,\rel,~cbox_bass1relknob.value,\gate,1,\doneAction,1])));// trigger
 			// DEBUG:::
-			~cbox_bass.nodeID.postcln;
-			// ("Nodo #" + node).postcln;
+			("Bajo: " + ~cbox_bass.nodeID).postcln;
 		},
 		\bass2,{
 			~cbox_bass2=Synth(\bajodos);

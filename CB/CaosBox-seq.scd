@@ -37,9 +37,7 @@ Tdef(\secuencias,{
 		{
 		if(~cbox_checkbajo[~cbox_indice].value == true,//si el checkbox esta encendido
 			{
-					// ~cbox_bajo_seq.put(~cbox_indice,~cbox_bass);// hace sonar el paso
 				~cbox_sintetizadores.value(\bass,1100,~cbox_indice);//reasigna synthdef a la variable
-					// ~cbox_bajo_seq.put(~cbox_indice,CaosBox.server.sendBundle(nil,~cbox_bass.newMsg(args:[\gate,1])));// hace sonar el paso
 				/*~cbox_bajo_seq[~cbox_indice].set(// aplica valores al indice del array
 					\gate,1,
 					\att,~cbox_bass1attknob.value,
