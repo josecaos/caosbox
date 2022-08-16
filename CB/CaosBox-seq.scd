@@ -35,35 +35,13 @@ Tdef(\secuencias,{
 		~cbox_contras2[~cbox_indice].play;
 		// synths run as realtime
 		{
-		if(~cbox_checkbajo[~cbox_indice].value == true,//si el checkbox esta encendido
-			{
-				~cbox_sintetizadores.value(\bass,1100,~cbox_indice);//reasigna synthdef a la variable
-				/*~cbox_bajo_seq[~cbox_indice].set(// aplica valores al indice del array
-					\gate,1,
-					\att,~cbox_bass1attknob.value,
-					\rel,~cbox_bass1relknob.value
-					);*/
-		},{
-			~cbox_checkbajo[~cbox_indice].value = false;
-			~cbox_bajo_seq.put(~cbox_indice, nil);
-			});
+		if(~cbox_checkbajo[~cbox_indice].value == true,//checkbox esta encendido
+			{~cbox_sintetizadores.value(\bass,1100,~cbox_indice)});//trigger
 		}.defer(0.01);
 		//
 		{
 		if(~cbox_checkbajo2[~cbox_indice].value == true,
-			{
-				~cbox_bajo_seq2.put(~cbox_indice,~cbox_bass2);
-				~cbox_bajo_seq2[~cbox_indice].set(
-					\gate,1,
-					\att,~cbox_bass2attknob.value,
-					\rel,~cbox_bass2relknob.value
-					);
-					~cbox_sintetizadores.value(\bass2);
-					~cbox_bajo_seq2.put(~cbox_indice,~cbox_bass2);
-		},{
-			~cbox_checkbajo2[~cbox_indice].value = false;
-			~cbox_bajo_seq2.put(~cbox_indice, nil);
-			});
+			{~cbox_sintetizadores.value(\bass2,1101,~cbox_indice);});
 		}.defer(0.01);
 		//
 		{

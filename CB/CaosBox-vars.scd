@@ -1,6 +1,8 @@
 ////////////////////////////////////////////
 //Global variables for CaosBox v1.3
 ///////////////////////////////////////////
+// Flags
+~cbox_debug_mode = true;
 // General
 ~cbox_bombo=Array.fill(32,nil);
 ~cbox_tarola=Array.fill(32,nil);

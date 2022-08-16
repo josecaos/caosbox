@@ -2,7 +2,7 @@
 c = CaosBox;
 c.enviroment;
 );
-
+// c.server.scope;
 c.play;
 c.guiAlpha(0.35);
 ~bpm = 140;
@@ -11,11 +11,17 @@ c.bpm(~bpm);
 ~inst = CaosGear;
 
 b = ~inst.new;
-b.bass(64);
+b.bass(50);
 b.bass([56,60],seqType:\seq);
 b.bass([56,60],seqType:\rand);
+b.bass(64,seqType:\rand);
+b.bass([64,52],seqType:\rand);
 b.toTrack(0,true);
 b.offTrack([0,4,8,12,16,20,24,28]);
+
+q = ~inst.new;
+q.bass2(50);
+q.bass2(64,[48,52,56,68,62,73,74,75,80,82,85,86],\rand);
 
 k = ~inst.new
 k.kick(64)
@@ -23,9 +29,6 @@ k.toTrack(0,true)
 k.toTrack([0,16],true)
 k.toTrack(Array.series(8,0,4))
 k.toTrack(Array.series(8,0,16),true)
-
-q = ~inst.new
-q.kick2(56)
 
 h = ~inst.new
 h.hihats
@@ -53,8 +56,9 @@ Tdef(\rand,{
 		{
 			// if(i.odd,{k.kick(64)},{k.kick(52)});
 			// k.toTrack(Array.series(rrand(4,10),0,rrand(1,8)),true);
-			h.toTrack(Array.series(16,0,rrand(1,8)),true);
-			b.toTrack(Array.series(rrand(4,12),0,rrand(1,6)),true);
+			// h.toTrack(Array.series(16,0,rrand(1,8)),true);
+			// b.toTrack(Array.series(rrand(8,12),0,rrand(2,8)),true);
+			q.toTrack(Array.series(rrand(8,12),0,rrand(2,8)),true);
 		}.defer(0.1);
 		(~bpm/60).wait;
 	}
@@ -65,7 +69,7 @@ Tdef(\rand).stop;
 
 
 
-c.autoFx(\delay, true,\normal,Array.series(16,0.01,0.01),0.125)
+c.autoFx(\delay, true,\normal,[0.00225,0.026],0.125)
 c.autoFx(\grains, true,\normal,Array.series(5,0.75,0.05),Array.series(5,0.75,0.05))
 c.autoFx(\lpf, true,\normal,Array.series(220,100,80), Array.series(5,0.75,0.05))
 c.autoFx(\reverb, true,\normal,Array.series(10,0,0.09), Array.series(10,0.5,0.06),0)

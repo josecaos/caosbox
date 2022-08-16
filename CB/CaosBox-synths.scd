@@ -8,7 +8,7 @@
 // TODO: aplicar a todos los SynthDef
 if(~cbox_custom != true,{
 
-	SynthDef(\bajouno,{|out=50,att=0.05,rel=1,note=38,filtminf=45,filtmaxf=8950,filtime=0.125,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25,pan=0,doneAction=2|
+	SynthDef(\bajouno,{|out=50,att=0.05,rel=1,note=38,filtminf=45,filtmaxf=8950,filtime=0.125,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25,pan=0,doneAction=1|
 		Out.ar(out,CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2,pan,doneAction))}).add;
 },{
 	// "Bajo custom".postcln;
@@ -16,9 +16,9 @@ if(~cbox_custom != true,{
 		Out.ar(out,CaosBass.customSignal(ugenFunc,att,rel,pan))}).add;
 });
 
-SynthDef(\bajodos,{|att=0.2,rel=8,note=36,trig=4,filtminf=105,filtmaxf=12066,filtime=0.15,rq=0.125,bandw=0.5,iphase=0.25,gate=0,
-	amp1=0.5,amp2=0.5,out=50|
-	Out.ar(out,CaosBass2.ar(att,rel,note,trig,filtminf,filtmaxf,filtime,rq,bandw,iphase,gate,amp1,amp2))}).add;
+SynthDef(\bajodos,{|out=50,att=0.2,rel=8,note=36,trig=4,filtminf=105,filtmaxf=12066,filtime=0.15,rq=0.125,bandw=0.5,iphase=0.25,gate=0,
+	amp1=0.5,amp2=0.5,doneAction=1|
+	Out.ar(out,CaosBass2.ar(att,rel,note,trig,filtminf,filtmaxf,filtime,rq,bandw,iphase,gate,amp1,amp2,doneAction))}).add;
 
 //ambiences
 SynthDef(\ambuno,{|waveform='sin',att=0.5,rel=1,note=57,semi=0,iphase=0,cutf=8920,rq=0.7,gate=0,amp=0.5,pan=0,out=50|

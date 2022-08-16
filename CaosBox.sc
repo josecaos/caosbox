@@ -47,8 +47,9 @@ CaosBox {
 	init {|window = true|
 
 		server = Server.local;
-		// TODO: testear aumento de memoria al iniciar la aplicación
-		// server.options.memSize = 165536;
+		// TODO: pasar a metodo para acambiar valores
+		server.options.memSize = 66666;
+		server.options.maxNodes = 4096;
 
 			server.waitForBoot {
 
@@ -606,7 +607,9 @@ CaosBox {
 	*close {
 
 		Tdef.removeAll;
-		^server.quit.freeAll.reboot;
+		this.server.quit.freeAll.reboot;
+		this.server.recompile;
+		^"Terminando CaosBox";
 
 	}
 
