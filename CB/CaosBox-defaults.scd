@@ -16,7 +16,7 @@ Tdef.defaultQuant = 1;
 ~cbox_sintetizadores = {|sinth,node,indice|
 	switch(sinth,
 		\bass,{
-			~cbox_bass.free;
+			// ~cbox_bass.free;
 			~cbox_bass=Synth.basicNew(\bajouno,CaosBox.server,node);
 			~cbox_bajo_seq.put(~cbox_indice,CaosBox.server.sendBundle(nil,~cbox_bass.newMsg(args:[\att,~cbox_bass1attknob.value,\rel,~cbox_bass1relknob.value,\gate,1,\doneAction,1])));// trigger
 			if(~cbox_debug_mode,{
@@ -59,3 +59,16 @@ CaosGear.new.pad2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,
 CaosGear.new.chords(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),24),\seq);
 CaosGear.new.chords2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,4),24),\seq);
 CaosGear.new.lineIn(50);
+//
+//DEBUG: esto se declara en la secuencia principal, buscar un mejor lugar
+// ~cbox_mast=Synth(\master);
+// // fx
+// ~cbox_mastrev=Synth(\aux1);
+// ~cbox_mastdel=Synth(\aux2);
+// ~cbox_mastpit=Synth(\aux3);
+// //Filtros
+// ~cbox_mastlowf=Synth(\lowfilt);
+// ~cbox_masthighf=Synth(\highfilt);
+// ~cbox_mastbandf=Synth(\bandfilt);
+// //granulador
+//~cbox_grains=Synth(\granulador);
