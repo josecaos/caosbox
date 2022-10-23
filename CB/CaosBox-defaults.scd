@@ -16,9 +16,11 @@ Tdef.defaultQuant = 1;
 ~cbox_sintetizadores = {|sinth,node,indice|
 	switch(sinth,
 		\bass,{
-			// ~cbox_bass.free;
+			// ~cbox_bass.free;// sin esto hace que se duplique el nodo
 			~cbox_bass=Synth.basicNew(\bajouno,CaosBox.server,node);
-			~cbox_bajo_seq.put(~cbox_indice,CaosBox.server.sendBundle(nil,~cbox_bass.newMsg(args:[\att,~cbox_bass1attknob.value,\rel,~cbox_bass1relknob.value,\gate,1,\doneAction,1])));// trigger
+			~cbox_bajo_seq.put(
+				~cbox_indice,
+				CaosBox.server.sendBundle(nil,~cbox_bass.newMsg(args:[\att,~cbox_bass1attknob.value,\rel,~cbox_bass1relknob.value,\gate,1,\doneAction,1])));// trigger
 			if(~cbox_debug_mode,{
 				("Bajo: " + ~cbox_bass.nodeID).postcln;
 			});

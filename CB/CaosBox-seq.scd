@@ -26,7 +26,7 @@ Tdef(\secuencias,{
 				~cbox_indice,{~cbox_lightsteps[~cbox_indice].value = 1;~cbox_lightsteps[reset].value = 0}
 			)
 		}.defer(0.01);
-		// percussion runs as functions
+		// percussions run as functions
 		~cbox_bombo[~cbox_indice].play;
 		~cbox_tarola[~cbox_indice].play;
 		~cbox_contras[~cbox_indice].play;
