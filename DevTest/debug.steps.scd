@@ -20,6 +20,10 @@ b.bass([64,52],seqType:\rand);
 b.toTrack(0,true);
 b.offTrack([0,4,8,12,16,20,24,28]);
 
+p = ~inst.new;
+p.bass2(64);
+p.toTrack([0,4,8,12,16,20,24,28]);
+
 x = ~inst.new;
 x.chords([58,64],LCNE.dupOctave(Scale.minor.degrees,3)+24,\rand);
 x.toTrack([0,4,8,12,16,20,24,28])
