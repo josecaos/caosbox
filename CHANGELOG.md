@@ -1,6 +1,7 @@
 # CaosBox Changelog
 ###### Since August 12 2026 **Previous logging was not documentated** 
 
+---
 ### TODOs:
 - Revamp
 ┌─────────────────────────────────────────────┐
@@ -23,3 +24,30 @@
 4	GUI	GUI como observador, se borran los ~cbox_check*	no
 5	API + docs	fachada limpia, .schelp, README	sí
 La 1 es la mejor puerta de entrada: es invisible desde afuera, es 100% testeable sin GUI, te da el andamio de UnitTest, y desacopla el ruteo — que es precondición para que los instrumentos de la fase 2 puedan elegir su salida sin números mágicos.
+
+Los dos modos de secuencia
+## \snapshot (step)
+    - El step guarda una copia de los valores al momento de asignarlo. Cambiar el instrumento después no afecta los steps ya puestos. Es lo que tienes hoy en percusión.
+## \live (fluid)
+    - el step guarda una referencia al instrumento y lee sus valores al dispararse. Cambiar el instrumento afecta todo desde el siguiente step. Es lo que tienes hoy en bajos y sintes.
+
+**Como son ortogonales al modelo de voz, el modo puede ser por step, no por pista. Eso ya es más de lo que hay hoy: kick en \live en los steps 0/4/8 mientras el step 14 queda congelado como fill.**
+
+
+*sequences*
+\free (fluid) — avanza con el reloj. Lo de hoy. Deriva contra la rejilla.
+\trig (normal) — avanza al disparar. Deriva contra el conteo de steps activos.
+
+Add MIDI triggering optional
+
+---
+
+
+
+## Changelog
+
+
+### v2.0.0
+- Bugfix: Method name is mispelled
+- New architecture
+    -  

@@ -1,14 +1,14 @@
-//Main Enviroment init
+//Main Environment init
 CaosBox {
 
 	classvar <server,url;
 
-	*enviroment {|gui = true|
+	*environment {|gui = true|
 
 
 		if(~cbox_url.notNil,{
 
-			^"CaosBox.enviroment is already running";
+			^"CaosBox.environment is already running";
 
 		},{
 			// System files
