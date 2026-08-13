@@ -35,4 +35,8 @@ b.bass(50,~melody_extended);
 ~b2.bass2;
 ~b2.bass(50,~melody_extended);
 //
-// TODO: Continuar con los demas instrumentos
+// TODO: Continue base instruments
+// TODO: Continue Fx automation
+//// Routes
+//// Filters
+// TODO: Continue Tempo
