@@ -28,7 +28,7 @@ CaosTrack {
 	var <source;
 	var <>onChange;
 
-	*new { |name, mode = \live, size = defaultSize, source|
+	*new { |name, mode = \live, size, source|
 
 		^super.new.init(name, mode, size, source);
 
@@ -38,7 +38,7 @@ CaosTrack {
 
 		name = argName.asSymbol;
 		mode = argMode;
-		size = argSize.asInteger;
+		size = (argSize ? defaultSize).asInteger;
 		source = argSource;
 
 		if(modes.includes(mode).not, {
@@ -168,7 +168,7 @@ CaosTrack {
 
 	prStepValue {
 
-		^if(mode == \snapshot) { source.value } { true };
+		^if(mode == \snapshot, { source.value }, { true });
 
 	}
 

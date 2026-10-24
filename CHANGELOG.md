@@ -56,8 +56,13 @@ Add MIDI triggering optional
 # Changelog
 
 
-- ### v2.0.2
-    - 
+- ### v2.1.0
+    - New Calsses:
+        - CaosTrack
+            - Steps model
+        - TestCaosTrack
+            - Test Headless Sequencer
+    
 
 - ### v2.0.1
     - Bugfix: 
@@ -66,10 +71,12 @@ Add MIDI triggering optional
                 - Use correct control names in fx automation
                 - Make delay type selectable in aux2
                 - Check pitch automation Tdef by its real name
+                - HPF/BPF automation arrays
             - API validation
                 - Read limiter value from its own numberbox
                 - Keep clock restore as a function 
                 - Align BPM display
+                - randomTime
 
 - ### v2.0.0
     - Bugfix: Method name is mispelled

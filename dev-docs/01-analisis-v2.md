@@ -421,17 +421,42 @@ Plan de commits del Paso 1:
 ### 8.3 Comandos de verificación
 
 ```bash
-# compilación del class library (headless, sin server)
-printf 'Post << "OK" << Char.nl; 0.exit;\n' > /tmp/check.scd
+# 1) HOME aislado con symlink al repo (no toca la config real de SC)
+mkdir -p /tmp/sc_home/.local/share/SuperCollider/Extensions
+ln -sfn "$PWD" /tmp/sc_home/.local/share/SuperCollider/Extensions/caosbox
+ln -sfn ../caosperclib /tmp/sc_home/.local/share/SuperCollider/Extensions/caosperclib
+
+# 2) compilar el class library (valida las clases del repo)
+printf 'Post << "OK\n"; 0.exit;\n' > /tmp/check.scd
 HOME=/tmp/sc_home sclang /tmp/check.scd
 
-# tests headless (cuando existan)
-# sclang -e 'TestCaosTrack.run'  (o desde el IDE)
+# 3) correr los tests del modelo (sin server ni GUI)
+cat > /tmp/run_tests.scd <<'SCD'
+(
+var r;
+UnitTest.reportPasses = false;
+r = Routine {
+	TestCaosTrack.run;
+	("FAILURES: " ++ UnitTest.failures.size).postln;
+	("PASSES: " ++ UnitTest.passes.size).postln;
+	if(UnitTest.failures.size > 0) { 1.exit };
+	0.exit;
+};
+r.play(AppClock);
+)
+SCD
+HOME=/tmp/sc_home sclang /tmp/run_tests.scd
 ```
 
-Notas: la GUI necesita display (Qt); los tests del modelo deben correr sin GUI y sin server.
-`~/.local/share/SuperCollider/Extensions/caosbox` es symlink a este repo, así que las clases
-nuevas se compilan al iniciar sclang.
+Desde el IDE: `TestCaosTrack.run` (o `UnitTest.gui`).
+
+Notas:
+
+* La GUI necesita display (Qt); los tests del modelo corren sin GUI y sin server.
+* `~/.local/share/SuperCollider/Extensions/caosbox` es symlink a este repo, así que las
+  clases nuevas se compilan al iniciar sclang. Con `HOME` aislado hay que replicar el symlink.
+* Ojo: los valores por defecto de argumentos en SC no admiten classvars
+  (`size = defaultSize` no compila); se resuelven dentro de `init`.
 
 ---
 
@@ -442,3 +467,5 @@ nuevas se compilan al iniciar sclang.
 | 2026-08-14 | análisis | Lectura completa del repo; compilación OK; este documento. |
 | 2026-08-14 | verificación | B1 descartado (`postcln` es del core); ruteo estéreo de aux verificada (`Out` suma); B4/B5 movidos al Paso 2. |
 | 2026-08-14 | 0a | Parches B2, B3, B6, B7, B8, B9, B10, B11, B17 aplicados; class library compila. Pendiente: commit y validación de oído. |
+| 2026-08-14 | 0a | Commit `7fa2580` (josecaos). |
+| 2026-08-14 | 1.1 | `Classes/CaosTrack.sc` + `Tests/TestCaosTrack.sc`; 41 aserciones en verde, headless (sin server ni GUI). |
