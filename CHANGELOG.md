@@ -16,7 +16,7 @@
 │ 1. ENGINE       CaosEngine, CaosMixer       │  server, buses, grupos, SynthDefs
 └─────────────────────────────────────────────┘
 
-#	Fase	Qué toca	Rompe API
+#	|   Fase    |    Qué toca     |  Rompe API   |
 0	Higiene	rama v2, CHANGELOG, versión única, UnitTest base	no
 1	Engine	CaosEngine + CaosMixer: buses con Bus.audio, grupos ordenados	no
 2	Voice	CaosInstrument, CaosGear a instancias reales	sí (menor)
@@ -40,14 +40,36 @@ Los dos modos de secuencia
 
 Add MIDI triggering optional
 
+
+- ### General Nodes
+    - capas, 
+    - fases, 
+    - \snapshot/\live, 
+    - \free/\trig, 
+    - \dur, 
+    - CaosGear + subclases, r
+    - egistro con promoción, y ahora el 
+    - modelo de fallos.
+
 ---
 
+# Changelog
 
 
-## Changelog
+- ### v2.0.1
+    - Bugfix: 
+        - Silent bugs 
+            - FX automation 
+                - Use correct control names in fx automation
+                - Make delay type selectable in aux2
+                - Check pitch automation Tdef by its real name
+            - API validation
+                - Read limiter value from its own numberbox
+                - Keep clock restore as a function 
+                - Align BPM display
 
-
-### v2.0.0
-- Bugfix: Method name is mispelled
-- New architecture
-    -  
+- ### v2.0.0
+    - Bugfix: Method name is mispelled
+        - .enviroment -> .environment
+    - New architecture
+        -  Create CaosEngine Class

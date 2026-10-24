@@ -13,8 +13,8 @@ Unzip and place the  'caosperclib' + 'caosbox' folders here:
 ```
     //instance sequencer
     c = CaosBox;
-    c.enviroment;
-    //c.enviroment(false);//start without GUI(optional)
+    c.environment;
+    //c.environment(false);//start without GUI(optional)
 
     c.play;
     c.bpm(194);
@@ -25,7 +25,7 @@ Unzip and place the  'caosperclib' + 'caosbox' folders here:
     k = CaosGear.new;
     k.kick();
     // Populate sequencer
-    k.toTrack(Array.series(8,0,4);
+    k.toTrack(Array.series(8,0,4));
 
     // Get to know all methods and variables
     CaosBox.browse;

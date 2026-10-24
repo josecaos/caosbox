@@ -20,12 +20,11 @@ SynthDef(\aux1,{|vol=1,mix=0,room=0.1,damp=0.1|
 	Out.ar(50,Pan2.ar(aux1*env,[1,-1])*vol)
 }).add;
 //aux2 canal 54
-SynthDef(\aux2,{|vol=1,deltime=0,delfeed=0|
-	var deltype,delind,aux2,env;
-	deltype=[CombC,CombL];
-	delind=0;
+SynthDef(\aux2,{|vol=1,deltime=0,delfeed=0,delind=0|
+	var aux2,env,delays;
 	aux2=In.ar([54,55]);
-	aux2=deltype[delind].ar(aux2,1,deltime,delfeed);//delay
+	delays=[CombC.ar(aux2,1,deltime,delfeed),CombL.ar(aux2,1,deltime,delfeed)];
+	aux2=Select.ar(delind.clip(0,1),delays);//delay: 0 = CombC, 1 = CombL
 	env=EnvGen.ar(Env.asr(0.01,0.98,0.01),1);
 	Out.ar(50,Pan2.ar(aux2*env,[1,-1])*vol)
 }).add;

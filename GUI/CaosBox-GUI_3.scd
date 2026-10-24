@@ -87,7 +87,7 @@ for (0, 31, {|i|
 ~cbox_num4=NumberBox(~cbox_w,Rect(225,322,50,20)).background_(Color(0,1,0));
 ~cbox_mastfader4=Slider(~cbox_w,Rect(225,342,50,290)).background_(Color(alpha:0));
 ~cbox_mastfader4.action={~cbox_mast.set(\limit,~cbox_mastfader4.value);~cbox_num4.value_(~cbox_mastfader4.value)};
-~cbox_num4.action={~cbox_mast.set(\limit,~cbox_num.value);~cbox_mastfader4.value_(~cbox_num4.value)};
+~cbox_num4.action={~cbox_mast.set(\limit,~cbox_num4.value);~cbox_mastfader4.value_(~cbox_num4.value)};
 ~cbox_mastfader4.value=0.9;
 ~cbox_num4.value=0.9;
 //

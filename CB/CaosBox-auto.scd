@@ -28,7 +28,7 @@ Tdef(\autod,{
 	{
 		univar=[deltm.resume,delf.resume];
 		~cbox_mastdel.set(\deltime,univar[0]);
-		~cbox_mastdel.set(\feedback,univar[1]);
+		~cbox_mastdel.set(\delfeed,univar[1]);
 		{
 			~cbox_numt.value=univar[0];~cbox_auxtfader.value=univar[0];
 			~cbox_numf.value=univar[1];~cbox_auxffader.value=univar[1]
@@ -45,7 +45,7 @@ Tdef(\autop,{
 	pittdisp=Prand(~cbox_autotimedispersion,inf).asStream;
 	{
 		univar=[pitrat.resume,pitdisp.resume,pittdisp.resume];
-		~cbox_mastpit.set(\rate,univar[0]);
+		~cbox_mastpit.set(\pitch,univar[0]);
 		~cbox_mastpit.set(\pitchDispersion,univar[1]);
 		~cbox_mastpit.set(\timeDispersion,univar[2]);
 		{

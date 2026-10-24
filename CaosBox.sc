@@ -44,6 +44,14 @@ CaosBox {
 
 	}
 
+	// Deprecated alias: old misspelling kept for docs and saved histories
+	*enviroment {|gui = true|
+
+		"CaosBox.enviroment is deprecated, use CaosBox.environment".warn;
+		^this.environment(gui);
+
+	}
+
 	init {|window = true|
 
 		server = Server.local;
@@ -158,7 +166,7 @@ CaosBox {
 
 	*randomTime {|random = false, editBPM = false, bpmArray = #[47,62,94,141,188]|
 
-		if(random == true or:{ random == false} ,{
+		if(random.isKindOf(Boolean), {
 
 			if(editBPM == true,{
 				~cbox_randtimes = bpmArray;
@@ -544,7 +552,7 @@ CaosBox {
 				});
 			},
 			'pitch',{
-				if(Tdef(\autoz).isPlaying,{
+				if(Tdef(\autop).isPlaying,{
 					^"Pitch Automation is running, use .autoFx Method to stop it";
 				},{
 					if(arg1 < 0 or: {arg1 > 6} or: {arg2 < 0} or: {arg2 > 1} or: {arg3 < 0 }	or: {arg3 > 1},{

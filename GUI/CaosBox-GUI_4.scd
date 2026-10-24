@@ -158,7 +158,7 @@ StaticText(~cbox_w,Rect(785,540,235,12)).string_("Auto/Speed").font_(Font("Dejav
 //clock
 StaticText(~cbox_w,Rect(785,272,185,15)).string_("BPM:").font_(Font("Dejavu Sans",14,true)).align_(\center).background_(Color(1,0,0));
 ~cbox_numclock=NumberBox(~cbox_w,Rect(970,272,50,15)).background_(Color(0,1,0)).align_(\center);
-~cbox_numclock.value=115;
+~cbox_numclock.value=126;
 ~cbox_numclock.action={
 	~cbox_clock={TempoClock.tempo=~cbox_numclock.value/60};
 	~cbox_clock.value;

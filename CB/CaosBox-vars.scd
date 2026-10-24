@@ -19,7 +19,8 @@
 ~cbox_in_seq=Array.fill(32,nil);
 //
 ~cbox_indice=0;
-~cbox_clock=TempoClock.tempo=126/60;
+TempoClock.tempo = 126/60;
+~cbox_clock={ TempoClock.tempo = (if(~cbox_numclock.notNil,{~cbox_numclock.value},{126}))/60 };
 ~cbox_tiempos=0.25;
 // Fx automation values
 ~cbox_autoreverbmix=Array.series(4,0.01,0.24);
@@ -38,6 +39,10 @@
 //
 ~cbox_autolpffreq=Array.exprand(10,20,20000);
 ~cbox_autolpfband=Array.exprand(10,0.1,1);
+~cbox_autohpffreq=Array.exprand(10,20,20000);
+~cbox_autohpfband=Array.exprand(10,0.1,1);
+~cbox_autobpffreq=Array.exprand(10,20,20000);
+~cbox_autobpfband=Array.exprand(10,0.1,1);
 // gui filter controls
 // ~cbox_fmaxmin=ControlSpec(20,20000,\exponential,1,20000);
 // ~cbox_rqmaxmin=ControlSpec(0.01,1,\lin,0.01,1);
