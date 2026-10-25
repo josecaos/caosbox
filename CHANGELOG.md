@@ -56,6 +56,10 @@ Add MIDI triggering optional
 # Changelog
 
 
+- ### v2.1.2
+    - Bugfix:
+        - Discrepancy in \bass2 due to CaosPercLib update
+        - Fixed all Synths arguments by name not by position
 - ### v2.1.1
     - Add new test file api-session-default.scd
     - New Classes:
@@ -66,6 +70,7 @@ Add MIDI triggering optional
             - Bugfixes:
                 - 'TooManyaNodes' and 'SynthNotFound' errors
         - TestCaosInstrument
+    - Clean deprecated code and files
 
 - ### v2.1.0
     - New Classes:
