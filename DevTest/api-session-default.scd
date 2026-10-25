@@ -51,7 +51,7 @@ b.bass(62);
 b.bass(62,seqType:\rand);
 c.setSteps(\bass);
 b.bass(50,x,\seq);
-b.bass(60,x,\rand,0.1,2,40,12920,0.01);
+b.bass(60,x/2,\rand,0.1,2,40,12920,0.01);
 
 e = g.new;
 e.bass2(50);
@@ -69,7 +69,7 @@ r.toTrack(Array.series(8,2,4));
 r.offTrack([0,16]);
 
 v = g.new;
-v.chords(50,x,\rand,attack:0.25,release:3,amp:0.005);
+v.chords(50,x,\rand,att:0.25,rel:3,amp:0.005);
 v.toTrack(Array.series(8,0,4));
 v.offTrack([0,16]);
 
@@ -93,11 +93,11 @@ c.autoFx(\bpf,true,\normal, Array.series(15,1000,500), [0.15,0.25,0.35,0.5,0.75,
 // [ ] kick: pares con timbre de kick(60) por HPF, impares con kick(62) por BPF
 // [ ] hihats alimentando HPF y BPF (out [60,62] escribe dos pares)
 // [ ] snare sólo en 6 y 22 (el segundo toTrack reemplaza)
-// [ ] pad sonando en 0 y 16 — TODO: revisar la iteración de notas (paso 2)
+// [ ] pad sonando en 0 y 16: una voz nueva (nota siguiente) por trigger
 // [ ] lineIn en los steps encendidos (requiere entrada de audio)
 // [ ] autoFx(\hpf) y autoFx(\bpf) barriendo los buses 60-63
 //
 // Notas conocidas:
-// - i.offTrack sin argumentos sólo apaga el step 0 (offTrack steps=0).
+// - i.offTrack sin argumentos saca la pista completa (desde v2.1.1).
 // - k.kick(50,...) al final no toca ningún paso: sólo define ~cbox_b para
 //   los próximos toTrack.

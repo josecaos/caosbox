@@ -1,228 +1,167 @@
-// CaosBox v2.0.0 - Tests for Layer 1: ENGINE
-// Run headless:  TestCaosEngine.run(reset: true, report: true);
-// Run from GUI:  UnitTest.gui;
+// CaosBox v2.1.2 - Tests for the engine (Layer 1)
+//
+// Headless: no Server boot, no GUI. El engine habla contra un output inyectable,
+// asi que se verifican buses, ruteo por nombre y mensajes de grupos sin audio.
+//
+// Desde el IDE: TestCaosEngine.run
 
 TestCaosEngine : UnitTest {
 
-	var engine;
+	var <engine;
+	var <spy;
 
 	setUp {
 
-		engine = CaosEngine.new;
+		spy = CaosTestOutput.new(3000);
+		engine = CaosEngine.new(Server.default, spy);
 
 	}
 
 	tearDown {
 
-		engine.freeGroups;
+		engine = nil;
+		spy = nil;
 
 	}
 
 	// ------------------------------------------------------------------
-	// Server-less: these must pass without booting anything.
+	// construccion
 	// ------------------------------------------------------------------
 
-	test_defaultsToDefaultServer {
+	test_defaults {
 
-		this.assertEquals(engine.server, Server.default,
-			"a new engine adopts Server.default");
+		this.assertEquals(engine.server, Server.default);
+		this.assertEquals(engine.output, spy);
+		this.assertEquals(engine.memSize, 66666, "memSize default");
+		this.assertEquals(engine.maxNodes, 4096, "maxNodes default");
+		this.assert(engine.isReady.not, "not ready before boot");
 
 	}
 
 	test_acceptsAnExplicitServer {
 
 		var other = Server(\caosTestServer, NetAddr("127.0.0.1", 57123));
+		var custom = CaosEngine.new(other, spy);
 
-		this.assertEquals(CaosEngine.new(other).server, other,
-			"an explicit server overrides Server.default");
-
+		this.assertEquals(custom.server, other, "an explicit server is kept");
 		other.remove;
 
 	}
 
-	test_serverOptionDefaults {
+	// ------------------------------------------------------------------
+	// buses
+	// ------------------------------------------------------------------
 
-		this.assertEquals(engine.memSize, 66666, "memSize default");
-		this.assertEquals(engine.maxNodes, 4096, "maxNodes default");
+	test_defaultBusLayout {
+
+		this.assertEquals(engine.busNames.asArray,
+			[\master, \reverb, \delay, \pitch, \lpf, \hpf, \bpf, \grains],
+			"the named buses, in order");
+
+		this.assertEquals(engine.busNames.collect { |name| engine.busIndex(name) }.asArray,
+			[50, 52, 54, 56, 58, 60, 62, 64],
+			"historic indices are preserved");
+
+		this.assertEquals(engine.busNames.collect { |name| engine.bus(name).numChannels }.asArray,
+			[2, 2, 2, 2, 2, 2, 2, 1],
+			"stereo pairs plus a mono granulador input");
 
 	}
 
-	test_serverOptionsAreSettable {
+	test_busLookup {
 
-		engine.memSize = 131072;
-		engine.maxNodes = 8192;
+		this.assertEquals(engine.bus(\reverb).index, 52);
+		this.assertEquals(engine.bus(\grains).numChannels, 1);
 
-		this.assertEquals(engine.memSize, 131072, "memSize is settable");
-		this.assertEquals(engine.maxNodes, 8192, "maxNodes is settable");
+		this.assertException({ engine.bus(\nope) }, Error,
+			"an unknown bus must throw");
 
 	}
 
-	test_isNotReadyBeforeBoot {
+	test_customStartBus {
 
-		this.assert(engine.isReady.not,
-			"an engine with no groups is not ready");
+		engine = CaosEngine.new(Server.default, spy, 100);
+
+		this.assertEquals(engine.busIndex(\master), 100);
+		this.assertEquals(engine.busIndex(\reverb), 102);
+		this.assertEquals(engine.busIndex(\grains), 114);
 
 	}
 
 	// ------------------------------------------------------------------
-	// With a running server.
+	// ruteo por nombre
 	// ------------------------------------------------------------------
 
-	test_makeGroupsCreatesThreeDistinctGroups {
+	test_resolveOutAcceptsNamesNumbersAndBuses {
 
-		var ids;
-
-		this.prReadyServer;
-		engine.makeGroups;
-		engine.server.sync;
-
-		this.assert(engine.instruments.notNil, "instruments group exists");
-		this.assert(engine.fx.notNil, "fx group exists");
-		this.assert(engine.master.notNil, "master group exists");
-
-		ids = [engine.instruments, engine.fx, engine.master].collect(_.nodeID);
-
-		this.assertEquals(ids.asSet.size, 3, "the three groups are distinct nodes");
+		this.assertEquals(engine.resolveOut(\reverb), 52);
+		this.assertEquals(engine.resolveOut(\grains), 64);
+		this.assertEquals(engine.resolveOut(0), 0, "numbers pass through");
+		this.assertEquals(engine.resolveOut(engine.bus(\delay)), 54,
+			"a Bus resolves to its index");
 
 	}
 
-	// The point of Layer 1: signal flows instruments -> fx -> master.
-	// Node tree order is execution order, so this asserts the audio path.
-	test_executionOrderIsInstrumentsThenFxThenMaster {
+	test_resolveOutRejectsUnknown {
 
-		var children;
-
-		this.prReadyServer;
-		engine.makeGroups;
-		engine.server.sync;
-
-		children = this.prDirectChildrenOf(engine.server.defaultGroup);
-
-		this.assertEquals(
-			children,
-			[engine.instruments.nodeID, engine.fx.nodeID, engine.master.nodeID],
-			"groups execute in order: instruments, fx, master"
-		);
+		this.assertException({ engine.resolveOut(\nope) }, Error,
+			"an unknown name must throw");
+		this.assertException({ engine.resolveOut("reverb") }, Error,
+			"a String is not a bus name");
 
 	}
 
-	test_isReadyAfterBoot {
+	// ------------------------------------------------------------------
+	// grupos
+	// ------------------------------------------------------------------
 
-		this.prReadyServer;
+	test_makeGroupsAddsThemInExecutionOrder {
+
 		engine.makeGroups;
-		engine.server.sync;
 
-		this.assert(engine.isReady, "engine is ready once groups exist");
+		this.assertEquals(spy.messages.size, 3, "three /g_new");
+
+		spy.messages.do { |msg|
+			this.assertEquals(msg[0], '/g_new');
+			this.assertEquals(msg[2], 1, "addToTail");
+			this.assertEquals(msg[3], CaosEngine.defaultRoot, "inside the default group");
+		};
+
+		this.assert(engine.groupID(\instruments) < engine.groupID(\fx),
+			"instruments execute before fx");
+		this.assert(engine.groupID(\fx) < engine.groupID(\master),
+			"fx executes before master");
 
 	}
 
-	test_freeGroupsClearsStateAndNodes {
+	test_groupIDFallsBackToTheRootGroup {
 
-		this.prReadyServer;
-		engine.makeGroups;
-		engine.server.sync;
-
-		engine.freeGroups;
-		engine.server.sync;
-
-		this.assert(engine.instruments.isNil, "instruments reference cleared");
-		this.assert(engine.fx.isNil, "fx reference cleared");
-		this.assert(engine.master.isNil, "master reference cleared");
-		this.assert(engine.isReady.not, "engine is no longer ready");
-
-		this.assertEquals(
-			this.prDirectChildrenOf(engine.server.defaultGroup),
-			[],
-			"no group nodes left on the server"
-		);
+		this.assertEquals(engine.groupID(\nope), CaosEngine.defaultRoot);
 
 	}
 
-	test_freeGroupsIsSafeBeforeMakeGroups {
+	test_freeGroupsFreesThem {
+
+		engine.makeGroups;
+		spy.reset;
 
 		engine.freeGroups;
 
-		this.assert(engine.instruments.isNil,
-			"freeGroups on a fresh engine does not error");
+		this.assertEquals(spy.messages.size, 3, "three /n_free");
+		spy.messages.do { |msg| this.assertEquals(msg[0], '/n_free') };
+		this.assert(engine.groups.isNil, "the groups are forgotten");
+		this.assertEquals(engine.groupID(\master), CaosEngine.defaultRoot,
+			"after freeing, the root group is the fallback");
 
 	}
 
-	// ------------------------------------------------------------------
-	// Helpers: read the real node tree off the server.
-	// ------------------------------------------------------------------
+	test_makeGroupsTwiceFreesTheOldOnes {
 
-	// UnitTest:bootServer calls Server:freeAll on an already-running server,
-	// which destroys group 1 and recreates it through initTree — and initTree
-	// forks on AppClock, so it has not run yet when bootServer returns.
-	// Wait for the default group to actually exist before touching the tree.
-	prReadyServer {
+		engine.makeGroups;
+		spy.reset;
+		engine.makeGroups;
 
-		var server = engine.server, tries = 0;
-
-		this.bootServer(server);
-
-		while({
-			(this.prDirectChildrenOf(RootNode(server)) ? []).includes(1).not
-			and: { tries < 40 }
-		}, {
-			0.05.wait;
-			tries = tries + 1;
-		});
-
-		server.sync;
-
-	}
-
-	// Direct children node IDs of a group, in execution order.
-	prDirectChildrenOf {|group|
-
-		var reply, condition = Condition.new, responder;
-
-		responder = OSCFunc({|msg|
-			reply = msg;
-			condition.unhang;
-		}, '/g_queryTree.reply', group.server.addr).oneShot;
-
-		group.server.sendMsg("/g_queryTree", group.nodeID, 0);
-
-		// Do not let a lost reply hang the whole suite.
-		SystemClock.sched(3, { condition.unhang; nil });
-		condition.hang;
-		responder.free;
-
-		if(reply.isNil, { ^nil });
-
-		^this.prChildIDs(reply);
-
-	}
-
-	// Reply layout (flag 0): [cmd, flag, nodeID, numChildren, <subtrees...>]
-	prChildIDs {|msg|
-
-		var index = 4, ids = [];
-
-		msg[3].do({
-
-			ids = ids.add(msg[index]);
-			index = this.prSkipSubtree(msg, index);
-
-		});
-
-		^ids;
-
-	}
-
-	// A synth is [id, -1, defName]; a group is [id, n] followed by n subtrees.
-	prSkipSubtree {|msg, index|
-
-		var numChildren = msg[index + 1], next;
-
-		if(numChildren < 0, { ^index + 3 });
-
-		next = index + 2;
-		numChildren.do({ next = this.prSkipSubtree(msg, next) });
-
-		^next;
+		this.assertEquals(spy.messages.size, 6, "3 frees + 3 new groups");
 
 	}
 

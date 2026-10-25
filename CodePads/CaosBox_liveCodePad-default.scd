@@ -38,7 +38,7 @@ h.toTrack(Array.series(32, 1, 2), true);// impares
 
 // --- 4. melódicos (voz one-shot por trigger) ----------------------
 b = CaosGear.new;
-b.bass(50, ~escalaAncha, \seq, attack: 0.01, release: 0.4);
+b.bass(50, ~escalaAncha, \seq, att: 0.01, rel: 0.4);
 b.toTrack([0, 3, 6, 8, 11, 14]);
 
 p = CaosGear.new;

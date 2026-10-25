@@ -56,13 +56,19 @@ Add MIDI triggering optional
 # Changelog
 
 
+- ### v2.1.3
+    - Revamp CaosEngine
+        - Bus map
+            - Change bus patching from numbers to Keys
+            - Signal groups to buses
+
 - ### v2.1.2
     - Bugfix:
         - Discrepancy in \bass2 due to CaosPercLib update
         - Fixed all Synths arguments by name not by position
     - CaosGear:
         - Unified argument names for all instruments
-        
+
 - ### v2.1.1
     - Add new test file api-session-default.scd
     - New Classes:
