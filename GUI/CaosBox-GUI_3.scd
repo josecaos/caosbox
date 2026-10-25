@@ -33,7 +33,7 @@ for (0, 31, {|i|
 //master sliders
 //master tag
 ~cbox_mastertag=StaticText(~cbox_w,Rect(5,290,270,12));
-~cbox_mastertag.string_("Master Compressor/Limiter: 50").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
+~cbox_mastertag.string_("Master Compressor/Limiter: " ++ CaosBox.engine.busIndex(\master)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 //master Vol
 ~cbox_mastervol=StaticText(~cbox_w,Rect(5,305,50,15));//
 ~cbox_mastervol.string_("Amp:").font_(Font("Dejavu Sans",12,true)).align_(\left).background_(Color(0.5,0.5,0.5));
@@ -85,7 +85,7 @@ for (0, 31, {|i|
 ~cbox_auxtag.string_("Effects").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 //aux tag
 ~cbox_auxrtag=StaticText(~cbox_w,Rect(280,305,105,12));
-~cbox_auxrtag.string_("Reverb:52").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
+~cbox_auxrtag.string_("Reverb:" ++ CaosBox.engine.busIndex(\reverb)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 //reverb mix
 ~cbox_auxrmix=StaticText(~cbox_w,Rect(280,320,35,15));//
 ~cbox_auxrmix.string_("mix").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
@@ -129,7 +129,7 @@ StaticText(~cbox_w,Rect(280,540,105,12)).string_("Auto/Speed").font_(Font("Dejav
 };
 //aux2 tag
 ~cbox_auxdtag=StaticText(~cbox_w,Rect(390,305,70,12));
-~cbox_auxdtag.string_("Delay:54").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
+~cbox_auxdtag.string_("Delay:" ++ CaosBox.engine.busIndex(\delay)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 //tipo delay
 StaticText(~cbox_w,Rect(390,497,70,15)).string_("Cub/Lin").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~cbox_bott=Button(~cbox_w,Rect(390,515,70,22));
@@ -170,8 +170,8 @@ StaticText(~cbox_w,Rect(390,540,70,12)).string_("Auto/Speed").font_(Font("Dejavu
 
 };
 //aux3 tag
-~cbox_auxdtag=StaticText(~cbox_w,Rect(465,305,105,12));
-~cbox_auxdtag.string_("Pitch:56").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
+~cbox_auxptag=StaticText(~cbox_w,Rect(465,305,105,12));
+~cbox_auxptag.string_("Pitch:" ++ CaosBox.engine.busIndex(\pitch)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 //pitch rate
 ~cbox_auxp=StaticText(~cbox_w,Rect(465,320,35,15));//
 ~cbox_auxp.string_("rate").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));

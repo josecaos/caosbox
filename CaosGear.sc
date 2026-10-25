@@ -25,6 +25,7 @@ CaosGear : CaosBox {
 	}
 
 	kick {|out=50,att=0.01,rel=0.25,modFreq=2,modbw=0.25,freq1=60,freq2=52,lowcutfreq=45,gate=1,amp1=1,amp2=0.25,pan=0|
+		out = this.prResolveBus(out);
 
 		~cbox_b = {
 			var signal;
@@ -36,6 +37,7 @@ CaosGear : CaosBox {
 	}
 
 	kickCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
+		out = this.prResolveBus(out);
 
 		if(ugenFunc != nil,{
 
@@ -56,6 +58,7 @@ CaosGear : CaosBox {
 	}
 
 	kick2 {|out=50,att=0.01,rel=0.5,modFreq=2,modbw=0.5,bw=0.2,freq1=60,freq2=64,lowcutfreq=45,gate=1,amp=0.15,pan=0|
+		out = this.prResolveBus(out);
 
 		~cbox_b2 = {
 
@@ -70,6 +73,7 @@ CaosGear : CaosBox {
 	}
 
 	kick2Custom {|ugenFunc,out=50,att=0.01,rel=0.2,pan=0|
+		out = this.prResolveBus(out);
 
 		if(ugenFunc != nil,{
 			~cbox_b2 = {
@@ -85,6 +89,7 @@ CaosGear : CaosBox {
 	}
 
 	snare {|out=50,att=0.01,rel=0.25,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.1,pan=0|
+		out = this.prResolveBus(out);
 
 		~cbox_t = {
 			var signal;
@@ -97,6 +102,7 @@ CaosGear : CaosBox {
 	}
 
 	snareCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
+		out = this.prResolveBus(out);
 
 		if(ugenFunc != nil,{
 
@@ -117,6 +123,7 @@ CaosGear : CaosBox {
 	}
 
 	snare2 {|out=50,att=0.01,rel=0.25,iphase=0.03,bw=0.5,highcutfreq=360,rq=0.25,gate=1,amp1=0.35,amp2=0.25,pan=0|
+		out = this.prResolveBus(out);
 		~cbox_t2 = {
 			var signal;
 			signal = CaosSnare2.ar(att,rel,iphase,bw,highcutfreq,rq,gate,amp1,amp2,pan);
@@ -127,6 +134,7 @@ CaosGear : CaosBox {
 	}
 
 	snare2Custom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
+		out = this.prResolveBus(out);
 
 		~cbox_t2 = {
 			var signal;
@@ -139,6 +147,7 @@ CaosGear : CaosBox {
 	}
 
 	hihats {|out=50,att=0.01,rel=0.1,highcutfreq=8330,rq=0.15,gate=1,amp1=0.9,amp2=0.9,pan=0|
+		out = this.prResolveBus(out);
 		~cbox_h = {
 			var signal;
 			signal = CaosHats.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
@@ -148,6 +157,7 @@ CaosGear : CaosBox {
 	}
 
 	hihatsCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
+		out = this.prResolveBus(out);
 
 		~cbox_h = {
 			var signal;
@@ -160,6 +170,7 @@ CaosGear : CaosBox {
 	}
 
 	hihats2 {|out=50,att=0.01,rel=0.1,highcutfreq=12330,rq=0.5,gate=1,amp1=0.9,amp2=0.9,pan=0|
+		out = this.prResolveBus(out);
 
 		~cbox_h2 = {
 			var signal;
@@ -170,6 +181,7 @@ CaosGear : CaosBox {
 	}
 
 	hihats2Custom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
+		out = this.prResolveBus(out);
 
 		~cbox_h2 = {
 			var signal;
@@ -232,6 +244,16 @@ CaosGear : CaosBox {
 	prInstrumentGroup {
 
 		^CaosBox.engine !? { |eng| eng.groupID(\instruments) };
+
+	}
+
+	// numero, nombre o array de buses -> indice(s); la percusion captura el bus
+	// en su funcion, asi que se resuelve al definirla
+	prResolveBus {|out|
+
+		if(out.isArray, { ^out.collect { |one| CaosBox.resolveOut(one) } });
+
+		^CaosBox.resolveOut(out);
 
 	}
 

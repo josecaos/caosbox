@@ -109,10 +109,20 @@ Pendiente de validación de audio por josecaos (el comportamiento debe ser idén
 
 Total: **224 aserciones, 0 fallos**.
 
-## 8. Siguiente
+## 8. Pulido (en el árbol)
 
-1. **GUI**: etiquetas ("Reverb: 52", "LowPassFilter: 58", …) desde el engine.
-2. **Percusión**: aceptar nombres de bus en `out` (hoy números o arrays).
-3. **Paso 4**: reloj único (`CaosSequencer`): índice, duración, pausa/reanudar y
+* **Percusión con nombres**: `out` acepta nombre, número o array de cualquiera de los dos
+  (`k.kick(\hpf)`, `h.hihats([\hpf, \bpf])`). Se resuelve al definir la función, porque es
+  la función la que captura el bus (`Out.ar(out, …)`).
+* **Etiquetas del GUI**: “Master…”, “Reverb:”, “Delay:”, “Pitch:”, filtros y granulador se
+  construyen con `CaosBox.engine.busIndex(...)`; si cambia el layout, cambian solas.
+* **Bug de nombre duplicado corregido**: las etiquetas de Delay y Pitch compartían la
+  global `~cbox_auxdtag` (la segunda pisaba la primera). Ahora Pitch usa `~cbox_auxptag`.
+
+## 9. Siguiente
+
+1. **Paso 4**: reloj único (`CaosSequencer`): índice, duración, pausa/reanudar y
    `\randtime`; hoy pausa/stop desfasa el índice y `Tdef(\secuencias)` mezcla el boot del
    master con el reloj.
+2. **Paso 5**: GUI como vista (filas generadas desde el modelo).
+3. **Paso 6**: API/docs (`CaosInstrument.schelp`, README v2.1.3).

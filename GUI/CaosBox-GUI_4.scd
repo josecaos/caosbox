@@ -7,7 +7,7 @@
 ~cbox_filttag.string_("Filters").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 //Lowpass tag
 ~cbox_lowfiltag=StaticText(~cbox_w,Rect(575,305,205,12));
-~cbox_lowfiltag.string_("LowPassFilter: 58").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
+~cbox_lowfiltag.string_("LowPassFilter: " ++ CaosBox.engine.busIndex(\lpf)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 //Lowpass out
 ~cbox_lowoutpop=PopUpMenu(~cbox_w,Rect(575,320,205,15)).items=["LPF Out to Master","LPF Out to Reverb",
 	"LPF Out to Delay","LPF Out to Pitch"];
@@ -42,7 +42,7 @@ StaticText(~cbox_w,Rect(575,380,125,14)).string_("Bandwidth").font_(Font("Dejavu
 ~cbox_numf2.value=0.5;
 //Highpass tag
 ~cbox_highfiltag=StaticText(~cbox_w,Rect(575,420,205,12));
-~cbox_highfiltag.string_("HighPassFilter: 60").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
+~cbox_highfiltag.string_("HighPassFilter: " ++ CaosBox.engine.busIndex(\hpf)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 //Highpass out
 ~cbox_highoutpop=PopUpMenu(~cbox_w,Rect(575,435,205,15)).items=["HPF Out to Master","HPF Out to Reverb",
 	"HPF Out to Delay","HPF Out to Pitch"];
@@ -73,7 +73,7 @@ StaticText(~cbox_w,Rect(575,493,125,14)).string_("Bandwidth").font_(Font("Dejavu
 ~cbox_numf4.value=0.5;
 //Bandpass tag
 ~cbox_bandfiltag=StaticText(~cbox_w,Rect(575,530,205,12));
-~cbox_bandfiltag.string_("BandPassFilter: 62").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
+~cbox_bandfiltag.string_("BandPassFilter: " ++ CaosBox.engine.busIndex(\bpf)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 //Bandpass out
 ~cbox_bandoutpop=PopUpMenu(~cbox_w,Rect(575,545,205,15)).items=["BPF Out to Master","BPF Out to Reverb",
 	"BPF Out to Delay","BPF Out to Pitch"];
@@ -116,7 +116,7 @@ StaticText(~cbox_w,Rect(785,12,155,15)).string_("Frequency Analyzer:").font_(Fon
 //granulator
 ~cbox_grandcolor=Color(alpha:0);//color aleatorio para el pad del granulador
 StaticText(~cbox_w,Rect(785,290,235,12)).string_("Granulator" ).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
-StaticText(~cbox_w,Rect(785,305,235,12)).string_(" channel: 64").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
+StaticText(~cbox_w,Rect(785,305,235,12)).string_(" channel: " ++ CaosBox.engine.busIndex(\grains)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 //granulator out
 ~cbox_grainpop=PopUpMenu(~cbox_w,Rect(785,320,235,15)).items=["Granulator Out to Master","Granulator Out to Reverb",
 	"Granulator Out to Delay","Granulator Out to Pitch",
