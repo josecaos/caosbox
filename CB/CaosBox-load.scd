@@ -1,7 +1,7 @@
-//CaosBox v1.3 Soundcheck + Welcome + Complementary files
+//CaosBox v2.1.1 Soundcheck + Welcome + Complementary files
 (
 Task({|i|
-	var texto = "CaosBox v1.3";
+	var texto = "CaosBox v" ++ CaosBox.version;
 	// var display = 666;
 	var display = texto.size*6;
 	var crece=Array.new(display);

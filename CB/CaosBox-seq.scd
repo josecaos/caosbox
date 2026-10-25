@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////
-//CaosBox v1.1 Main Instrument sequencer and steps
+//CaosBox v2.1.1 Main Instrument sequencer and steps
 //////////////////////////////////////////////////
 (//orden de ejecucion
 Tdef(\secuencias,{
@@ -33,74 +33,14 @@ Tdef(\secuencias,{
 		~cbox_tracks[\kick2].at(~cbox_indice).play;
 		~cbox_tracks[\snare2].at(~cbox_indice).play;
 		~cbox_tracks[\hihats2].at(~cbox_indice).play;
-		// melodic lines: the step is a gate, the instrument is triggered here
-		// (Nil.set is a no-op, so an uninitialised synth is harmless)
-		{
-			if(~cbox_tracks[\bass].at(~cbox_indice).notNil, {
-				~cbox_sintetizadores.value(\bass,1100,~cbox_indice);//trigger
-			});
-		}.defer(0.01);
-		//
-		{
-			if(~cbox_tracks[\bass2].at(~cbox_indice).notNil, {
-				~cbox_sintetizadores.value(\bass2,1101,~cbox_indice);
-			});
-		}.defer(0.01);
-		//
-		{
-			if(~cbox_tracks[\amb].at(~cbox_indice).notNil, {
-				~cbox_amb.set(
-					\gate,1,
-					\att,~cbox_amb1attknob.value,
-					\rel,~cbox_amb1relknob.value
-				);
-				~cbox_sintetizadores.value(\amb);
-			});
-		}.defer(0.01);
-		// amb2
-		{
-			if(~cbox_tracks[\amb2].at(~cbox_indice).notNil, {
-				~cbox_amb2.set(
-					\gate,1,
-					\att,~cbox_amb2attknob.value,
-					\rel,~cbox_amb2relknob.value
-				);
-				~cbox_sintetizadores.value(\amb2);
-			});
-		}.defer(0.01);
-		//
-		{
-			if(~cbox_tracks[\chords].at(~cbox_indice).notNil, {
-				~cbox_chord.set(
-					\gate,1,
-					\att,~cbox_sinte_seq1attknob.value,
-					\rel,~cbox_sinte_seq1relknob.value
-				);
-				~cbox_sintetizadores.value(\chords);
-			});
-		}.defer(0.01);
-		// chords2
-		{
-			if(~cbox_tracks[\chords2].at(~cbox_indice).notNil, {
-				~cbox_chord2.set(
-					\gate,1,
-					\att,~cbox_sinte_seq2attknob.value,
-					\rel,~cbox_sinte_seq2relknob.value
-				);
-				~cbox_sintetizadores.value(\chords2);
-			});
-		}.defer(0.01);
-		// in
-		{
-			if(~cbox_tracks[\in].at(~cbox_indice).notNil, {
-				~cbox_entrada.set(
-					\gate,1,
-					\att,~cbox_inattknob.value,
-					\rel,~cbox_inrelknob.value
-				);
-				~cbox_sintetizadores.value(\in);
-			});
-		}.defer(0.01);
+		// melodic lines: each track advances its note stream and triggers its voice
+		~cbox_tracks[\bass].step(~cbox_indice);
+		~cbox_tracks[\bass2].step(~cbox_indice);
+		~cbox_tracks[\amb].step(~cbox_indice);
+		~cbox_tracks[\amb2].step(~cbox_indice);
+		~cbox_tracks[\chords].step(~cbox_indice);
+		~cbox_tracks[\chords2].step(~cbox_indice);
+		~cbox_tracks[\in].step(~cbox_indice);
 		//// end instruments
 		~cbox_tiempos.wait;
 

@@ -275,4 +275,104 @@ TestCaosTrack : UnitTest {
 
 	}
 
+	// ------------------------------------------------------------------
+	// voz de la pista
+	// ------------------------------------------------------------------
+
+	test_firstInstrumentIsActiveAtOnce {
+
+		var voice = CaosTestVoice.new(\first);
+
+		track = CaosTrack.new(\bass, \live);
+		track.setInstrument(voice);
+
+		this.assertEquals(track.instrument, voice, "the first instrument is active");
+		this.assert(track.pendingInstrument.isNil, "nothing is left pending");
+
+	}
+
+	test_replacementWaitsForTheNextTrigger {
+
+		var old = CaosTestVoice.new(\old);
+		var new = CaosTestVoice.new(\new);
+
+		track = CaosTrack.new(\bass, \live);
+		track.setInstrument(old);
+		track.setInstrument(new);
+
+		this.assertEquals(track.instrument, old, "the old voice keeps singing");
+		this.assertEquals(track.pendingInstrument, new, "the new one waits");
+
+		track.trigger;
+
+		this.assertEquals(old.releases, 1, "the old voice is released at the swap");
+		this.assertEquals(track.instrument, new, "the new voice takes over");
+		this.assert(track.pendingInstrument.isNil, "pending is cleared");
+
+	}
+
+	test_stepAdvancesAndTriggersOnlyOnActiveSteps {
+
+		var voice = CaosTestVoice.new(\voice);
+
+		track = CaosTrack.new(\bass, \live, 4);
+		track.setInstrument(voice);
+
+		track.step(1);// step apagado
+		this.assertEquals(voice.advances, 1, "advance happens every step");
+		this.assertEquals(voice.triggers, 0, "an off step does not trigger");
+
+		track.putStep(1, true);
+		track.step(1);
+		this.assertEquals(voice.advances, 2, "advance keeps running");
+		this.assertEquals(voice.triggers, 1, "an active step triggers the voice");
+
+	}
+
+	test_releaseInstrumentReleasesEverything {
+
+		var active = CaosTestVoice.new(\active);
+		var pending = CaosTestVoice.new(\pending);
+
+		track = CaosTrack.new(\bass, \live);
+		track.setInstrument(active);
+		track.setInstrument(pending);
+		track.releaseInstrument;
+
+		this.assertEquals(active.releases, 1, "the active voice is released");
+		this.assertEquals(pending.releases, 1, "the pending voice is released too");
+		this.assert(track.instrument.isNil, "the track is left without a voice");
+
+	}
+
+}
+
+// Voz falsa: permite probar la pista sin audio ni server
+CaosTestVoice {
+
+	var <name;
+	var <advances;
+	var <triggers;
+	var <releases;
+
+	*new { |name| ^super.new.init(name) }
+
+	init { |argName|
+
+		name = argName;
+		advances = 0;
+		triggers = 0;
+		releases = 0;
+		^this;
+
+	}
+
+	advance { advances = advances + 1; ^this }
+
+	trigger { triggers = triggers + 1; ^this }
+
+	release { releases = releases + 1; ^this }
+
+	free { ^this }
+
 }

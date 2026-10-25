@@ -2,6 +2,7 @@
 CaosBox {
 
 	classvar <server,url;
+	classvar <version = "2.1.1";// version unica: la usan el GUI y la bienvenida
 
 	*environment {|gui = true|
 

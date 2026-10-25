@@ -9,7 +9,6 @@ for (0, 31, {|i|
 
 	~cbox_checkin.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 250, 20, 20)).action={|val|
 		CaosBox.setStep(\in, i, val.value);
-		if(val.value, { ~cbox_sintetizadores.value(\in) });
 	});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
@@ -28,8 +27,8 @@ for (0, 31, {|i|
 })};
 
 //line In attack and release knobs
-~cbox_inattknob=EZKnob(~cbox_w,Rect(785,251,81,17),nil,ControlSpec(0.01,0.25,\lin,0.001,0.1,\att),{|a| a.value;~cbox_entrada.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
-~cbox_inrelknob=EZKnob(~cbox_w,Rect(870,251,81,17),nil,ControlSpec(0.05,0.75,\lin,0.001,0.1,\rel),{|a| a.value;~cbox_entrada.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
+~cbox_inattknob=EZKnob(~cbox_w,Rect(785,251,81,17),nil,ControlSpec(0.01,0.25,\lin,0.001,0.1,\att),{|a| ~cbox_param.value(\in, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
+~cbox_inrelknob=EZKnob(~cbox_w,Rect(870,251,81,17),nil,ControlSpec(0.05,0.75,\lin,0.001,0.1,\rel),{|a| ~cbox_param.value(\in, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
 
 //master sliders
 //master tag

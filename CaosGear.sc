@@ -1,6 +1,7 @@
 CaosGear : CaosBox {
 
 	var <instance_id;
+	var <instrument;
 	classvar <>custom_bass,<>custom_bass2,<>custom_pad,<>custom_pad2,<>custom_chords,<>custom_guitchords;
 
 	*new {
@@ -31,8 +32,7 @@ CaosGear : CaosBox {
 			Out.ar(out,signal);
 		};
 
-		instance_id = "Kick";
-		^instance_id;
+		^this.prPercussion(\kick, ~cbox_b, "Kick");
 	}
 
 	kickCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
@@ -45,8 +45,7 @@ CaosGear : CaosBox {
 				Out.ar(out,signal);
 			};
 
-			instance_id = "Kick";
-			^instance_id;
+		^this.prPercussion(\kick, ~cbox_b, "Kick");
 
 		},{
 
@@ -66,8 +65,7 @@ CaosGear : CaosBox {
 
 		};
 
-		instance_id = "Kick2";
-		^instance_id;
+		^this.prPercussion(\kick2, ~cbox_b2, "Kick2");
 
 	}
 
@@ -81,8 +79,7 @@ CaosGear : CaosBox {
 
 			};
 
-			instance_id = "Kick2";
-			^instance_id;
+		^this.prPercussion(\kick2, ~cbox_b2, "Kick2");
 		});
 
 	}
@@ -95,8 +92,7 @@ CaosGear : CaosBox {
 			Out.ar(out,signal);
 		};
 
-		instance_id = "Snare";
-		^instance_id;
+		^this.prPercussion(\snare, ~cbox_t, "Snare");
 
 	}
 
@@ -110,8 +106,7 @@ CaosGear : CaosBox {
 				Out.ar(out,signal);
 			};
 
-			instance_id = "Snare";
-			^instance_id;
+		^this.prPercussion(\snare, ~cbox_t, "Snare");
 
 		},{
 
@@ -127,8 +122,7 @@ CaosGear : CaosBox {
 			signal = CaosSnare2.ar(att,rel,iphase,bw,highcutfreq,rq,gate,amp1,amp2,pan);
 			Out.ar(out,signal);
 		};
-		instance_id = "Snare2";
-		^instance_id;
+		^this.prPercussion(\snare2, ~cbox_t2, "Snare2");
 
 	}
 
@@ -140,8 +134,7 @@ CaosGear : CaosBox {
 			Out.ar(out,signal);
 		};
 
-		instance_id = "Snare2";
-		^instance_id;
+		^this.prPercussion(\snare2, ~cbox_t2, "Snare2");
 
 	}
 
@@ -151,8 +144,7 @@ CaosGear : CaosBox {
 			signal = CaosHats.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
 		};//
-		instance_id = "HiHats";
-		^instance_id;
+		^this.prPercussion(\hihats, ~cbox_h, "HiHats");
 	}
 
 	hihatsCustom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
@@ -163,8 +155,7 @@ CaosGear : CaosBox {
 			Out.ar(out,signal);
 		};//
 
-		instance_id = "HiHats";
-		^instance_id;
+		^this.prPercussion(\hihats, ~cbox_h, "HiHats");
 
 	}
 
@@ -175,8 +166,7 @@ CaosGear : CaosBox {
 			signal = CaosHats2.ar(att,rel,highcutfreq,rq,gate,amp1,amp2);
 			Out.ar(out,signal);
 		};//
-		instance_id = "HiHats2";
-		^instance_id;
+		^this.prPercussion(\hihats2, ~cbox_h2, "HiHats2");
 	}
 
 	hihats2Custom {|ugenFunc=nil,out=50,att=0.01,rel=0.25,pan=0|
@@ -186,536 +176,210 @@ CaosGear : CaosBox {
 			signal = CaosHats2.customSignal(ugenFunc,out,att,rel,pan);
 			Out.ar(out,signal);
 		};//
-		instance_id = "HiHats2";
-		^instance_id;
+		^this.prPercussion(\hihats2, ~cbox_h2, "HiHats2");
 	}
 
 	// Synths
-	bass {|
-		out=50,
-		semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],
-		seqType='seq',
-		attack=0.01,
-		release=0.5,
-		filtMinFreq=45,
-		filtMaxFreq=12420,
-		filtTime=0.125
-		rq=0.25,
-		iphase=0.5,
-		amp1=0.5,
-		amp2=0.5
-		pan=0|
-		//
-		var note = semitoneArray;
-		var attk = attack;
-		var rel = release;
-		var filt1 = filtMinFreq;
-		var filt2 = filtMaxFreq;
-		var filt3 = filtTime;
-		var	bandwidth = rq;
-		var waveiphase = iphase;
-		var ampx = amp1;
-		var ampy = amp2;
-		var panner = pan;
-		var outbus = out;
+	// Melodic instruments: a CaosInstrument owns the voice, the params and the
+	// note stream. The sequencer only advances/triggers it; there are no Tdefs.
 
-		~cbox_custom = false;
+	prNoteOrder {|seqType|
 
-		Tdef(\bass,{|i = 0|
+		if(seqType == 'rand', { ^\rand });
+		if(seqType == 'seq', { ^\seq });
 
-			var	bassmel,outstream;
-
-			if(seqType == 'rand' or: {seqType == 'seq'}, {
-
-				switch(seqType,
-					'rand', {
-						bassmel=Prand(note.asArray,inf).asStream;
-						outstream=Prand(outbus.asArray,inf).asStream;
-					},
-					'seq', {
-						bassmel=Pseq(note.asArray,inf).asStream;
-						outstream=Pseq(outbus.asArray,inf).asStream;
-					},
-					("Bass Melodic secuence type is" + seqType).inform;
-				);
-
-			}, {
-				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-			});
-
-			loop {
-				i=i+1;
-				~cbox_bass.set(
-					\att,attk,
-					\rel,rel,
-					\note,bassmel.next,
-					\filtminf,filt1,
-					\filtmaxf,filt2,
-					\filtime,filt3,
-					\rq,bandwidth,
-					\iphase,waveiphase,
-					\amp1,ampx,
-					\amp2,ampy,
-					\pan,panner,
-					\out,outstream.next
-				);
-				~cbox_tiempos.wait;
-			}
-		});
-		instance_id = "Bass";
-		^instance_id;
-	}
-
-	bassCustom {|
-		ugenFunc=nil,
-		out=50,
-		semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],
-		seqType='seq',
-		att=0.01,
-		rel=0.5,
-		pan=0|
-		//
-		var func = ugenFunc;
-		var outbus = out;
-		var note = semitoneArray;
-		var attk = att;
-		var release = rel;
-		var panner = pan;
-
-		~cbox_custom = true;
-
-		Tdef(\bass,{
-
-			var	bassmel,outstream;
-
-			if(seqType == 'rand' or: {seqType == 'seq'}, {
-
-				switch(seqType,
-					'rand', {
-						bassmel=Prand(note.asArray,inf).asStream;
-						outstream=Prand(outbus.asArray,inf).asStream;
-					},
-					'seq', {
-						bassmel=Pseq(note.asArray,inf).asStream;
-						outstream=Pseq(outbus.asArray,inf).asStream;
-					},
-					("Bass Melodic secuence type is" + seqType).inform;
-				);
-
-			}, {
-				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-			});
-
-			loop{
-				~cbox_bass.set(
-					\ugenFunc, func,
-					\att,attk,
-					\rel,release,
-					\note,bassmel.next,
-					\pan, panner,
-					\out,outstream.next
-				);
-				~cbox_tiempos.wait;
-			}
-		});
-
-		instance_id = "Bass";
-		^instance_id;
-
+		("Unknown seqType" + seqType + ", using 'seq'").inform;
+		^\seq;
 
 	}
 
-	bass2 {|
-		out=50,
-		semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],
-		seqType='seq',
-		attack=0.01,
-		release=0.5,
-		filtTrig=4,
-		filtMinFreq=45,
-		filtMaxFreq=12420,
-		filtTime=0.25
-		rq=0.5,
-		bw=0.5,
-		iphase=0.5,
-		amp1=0.5,
-		amp2=0.5
-		pan=0|
-		//
-		var note = semitoneArray;
-		var attk = attack;
-		var rel = release;
-		var trigger = filtTrig;
-		var filt1 = filtMinFreq;
-		var filt2 = filtMaxFreq;
-		var filt3 = filtTime;
-		var	bandwidth = rq;
-		var band = bw;
-		var waveiphase = iphase;
-		var ampx = amp1;
-		var ampy = amp2;
-		var panner = pan;
-		var outbus = out;
-		Tdef(\bass2,{
+	prRegister {|track, voice, id|
 
-			var	bassmel, outstream;
+		if(~cbox_instruments.isNil, { ~cbox_instruments = Dictionary.new });
 
-			if(seqType == 'rand' or: {seqType == 'seq'}, {
+		~cbox_instruments.put(track, voice);
+		~cbox_tracks[track].setInstrument(voice);
+		instrument = voice;
+		instance_id = id;
 
-				switch(seqType,
-					'rand', {
-						bassmel=Prand(note.asArray,inf).asStream;
-						outstream=Prand(outbus.asArray,inf).asStream;
-					},
-					'seq', {
-						bassmel=Pseq(note.asArray,inf).asStream;
-						outstream=Pseq(outbus.asArray,inf).asStream;
-					},
-					("Bass Melodic secuence type is" + seqType).inform;
-				);
+		^voice;
 
-			}, {
-				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-			});
-
-			loop{
-				~cbox_bass2.set(
-					\att,attk,
-					\rel,rel,
-					\note,bassmel.next,
-					\trig,trigger,
-					\filtminf,filt1,
-					\filtmaxf,filt2,
-					\filtime,filt3,
-					\rq,bandwidth,
-					\bandw,band,
-					\iphase,waveiphase,
-					\amp1,ampx,
-					\amp2,ampy,
-					\pan,panner,
-					\out,outstream.next,
-				);
-				~cbox_tiempos.wait;
-			}
-		});
-		instance_id = "Bass2";
-		^instance_id;
 	}
 
-	pad {|
-		out=50,
-		semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],
-		seqType='seq',
-		waveform='sin',
-		att=0.25,
-		rel=1,
-		semi=0,
-		iphase=0,
-		cutf=8920,
-		rq=0.85,
-		gate=0,
-		amp=0.75,
-		pan=0|
-		//
-		var wave = waveform;
-		var nota = semitoneArray;
-		var attack = att;
-		var release = rel;
-		var semitones = semi;
-		var phase = iphase;
-		var cutFreq = cutf;
-		var band = rq;
-		var vol = amp;
-		var panner = pan;
-		var outbus = out;
-		Tdef(\pad,{
+	// percusion: los steps guardan la funcion (snapshot); el instrumento es el
+	// handle que sabe a que pista pertenece y con que funcion suena
+	prPercussion {|track, func, id|
 
-			var	mel, outstream;
+		var voice;
 
-			if(seqType == 'rand' or: {seqType == 'seq'}, {
+		if(func.isNil, { ^("CaosGear: nothing to track for" + id).inform });
 
-				switch(seqType,
-					'rand', {
-						mel=Prand(nota.asArray,inf).asStream;
-						outstream=Prand(outbus.asArray,inf).asStream;
-					},
-					'seq', {
-						mel=Pseq(nota.asArray,inf).asStream;
-						outstream=Pseq(outbus.asArray,inf).asStream;
-					},
-					("Pad Melodic secuence type is" + seqType).inform;
-				);
+		voice = CaosInstrument.percussion(id.asSymbol, track, func);
 
-			}, {
-				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-			});
+		if(~cbox_instruments.isNil, { ~cbox_instruments = Dictionary.new });
+		~cbox_instruments.put(track, voice);
 
-			loop{
-				~cbox_amb.set(
-					\note, mel.next,
-					\waveform, wave,
-					\att, attack,
-					\rel, release,
-					\semi, semitones,
-					\iphase, phase,
-					\cutf, cutFreq,
-					\rq, band,
-					\amp, vol,
-					\pan,panner,
-					\out,outstream.next,
-				);
-				~cbox_tiempos.wait;
-			}
-		});
-		instance_id = "Amb";
-		^instance_id;
+		instrument = voice;
+		instance_id = id;
+
+		^voice;
+
 	}
 
-	pad2 {|out=50,semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],seqType='seq',
-		att=0.25,rel=1,maxNote=60,fm=0.125,harm=1,amp1=0.5,amp2=0.5,pan=0|
-		//
-		var nota = semitoneArray;
-		var attack = att;
-		var release = rel;
-		var max = maxNote;
-		var mod = fm;
-		var harmonics = harm;
-		var vol1 = amp1;
-		var vol2 = amp2;
-		var panner = pan;
-		var outbus = out;
-		Tdef(\pad2,{
+	bass {|out=50, semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60], seqType='seq',
+		attack=0.01, release=0.5, filtMinFreq=45, filtMaxFreq=12420, filtTime=0.125,
+		rq=0.25, iphase=0.5, amp1=0.5, amp2=0.5, pan=0, retrigger=true|
 
-			var	mel, outstream;
+		var instrument;
 
-			if(seqType == 'rand' or: {seqType == 'seq'}, {
+		instrument = CaosInstrument.synth(\bass, \bass, \bajouno, out.asArray.first,
+			(
+				doneAction: 2,// free al soltar gate (1 = pause y deja el nodo colgado)
+				att: attack, rel: release,
+				filtminf: filtMinFreq, filtmaxf: filtMaxFreq, filtime: filtTime,
+				rq: rq, iphase: iphase, amp1: amp1, amp2: amp2, pan: pan
+			),
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
 
-				switch(seqType,
-					'rand', {
-						mel=Prand(nota.asArray,inf).asStream;
-						outstream=Prand(outbus.asArray,inf).asStream;
-					},
-					'seq', {
-						mel=Pseq(nota.asArray,inf).asStream;
-						outstream=Pseq(outbus.asArray,inf).asStream;
-					},
-					("Pad2 Melodic secuence type is" + seqType).inform;
-				);
+		^this.prRegister(\bass, instrument, "Bass");
 
-			}, {
-				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-			});
-
-			loop{
-				~cbox_amb2.set(
-					\note, mel.next,
-					\att, attack,
-					\rel, release,
-					\maxNote, max,
-					\fm, mod,
-					\harm, harmonics,
-					\amp1, vol1,
-					\amp2, vol2,
-					\pan, panner,
-					\out, outstream.next,
-				);
-				~cbox_tiempos.wait;
-			}
-		});
-		instance_id = "Amb2";
-		^instance_id;
 	}
 
-	chords {|out = 50,semitoneArray = #[ 48, 50, 52, 53, 55, 57, 59 ],seqType = 'seq',
-		chordsArray = #['Mmaj7','M', 'm'],	attack = 0.05, release = 1, iphase = 0.025,
-		width = 0.1, cutf = 1200, rq = 0.5, pan = 0, amp = 0.5|
-		//
-		var note = semitoneArray;
-		var chords = chordsArray;
-		var attk = attack;
-		var rel = release;
-		var iph = iphase;
-		var iwidth = width;
-		var cutfreq = cutf;
-		var	bandwidth = rq;
-		var panner = pan;
-		var vol = amp;
-		var outbus = out;
-		Tdef(\acordes,{
+	bassCustom {|ugenFunc=nil, out=50, semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60],
+		seqType='seq', att=0.01, rel=0.5, pan=0|
 
-			var mel, chord, outstream;
+		"bassCustom: custom UGen functions are not supported yet, using \bajouno".warn;
 
-			if(seqType == 'rand' or: {seqType == 'seq'}, {
+		^this.bass(out, semitoneArray, seqType, att, rel, 45, 12420, 0.125,
+			0.25, 0.5, 0.5, 0.5, pan);
 
-				switch(seqType,
-					'rand', {
-						mel=Prand(note.asArray,inf).asStream;
-						outstream=Prand(outbus.asArray,inf).asStream;
-						chord=Prand(chords.asArray,inf).asStream;
-					},
-					'seq', {
-						mel=Pseq(note.asArray,inf).asStream;
-						outstream=Pseq(outbus.asArray,inf).asStream;
-						chord=Pseq(chords.asArray,inf).asStream;
-					},
-					("Chord Melodic secuence type is" + seqType).inform;
-				);
-			}, {
-				"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-			});
-			//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
-			loop{
-				~cbox_chord.set(
-					\chord,chord.next,
-					\note,mel.next,
-					\att, attk,
-					\rel, rel,
-					\iphase,iph,
-					\width,iwidth,
-					\cutf,cutfreq,
-					\rq,bandwidth,
-					\pan,panner,
-					\amp,vol,
-					\out,outbus
-				);
-				~cbox_tiempos.wait;
-			}
-		});
-		instance_id = "Chords";
-		^instance_id;
 	}
 
-	chords2 {|out = #[50],semitoneArray = #[ 0, 2, 4, 5, 7, 9, 11 ],seqType = 'seq',
-		chordsArray = #['Mmaj7'],attack = 0.05, release = 1, iphase = 0.025,
-		width = 0.1, cutf = 1200, rq = 0.5, pan = 0, amp = 0.5|
-		//
-		var note = semitoneArray.asArray;
-		var chords = chordsArray.asArray;
-		var attk = attack;
-		var rel = release;
-		var iph = iphase;
-		var iwidth = width;
-		var cutfreq = cutf;
-		var	bandwidth = rq;
-		var panner = pan;
-		var vol = amp;
-		var outbus = out;
-		Tdef(\acordes,{
+	bass2 {|out=50, semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60], seqType='seq',
+		attack=0.01, release=0.5, filtTrig=4, filtMinFreq=45, filtMaxFreq=12420,
+		filtTime=0.25, rq=0.5, bw=0.5, iphase=0.5, amp1=0.5, amp2=0.5, pan=0, retrigger=true|
 
-			var mel, chord, outbus;
+		var instrument;
 
-			if(seqType == 'rand' or: {seqType == 'seq'}, {
+		instrument = CaosInstrument.synth(\bass2, \bass2, \bajodos, out.asArray.first,
+			(
+				doneAction: 2,// free al soltar gate (1 = pause y deja el nodo colgado)
+				att: attack, rel: release, trig: filtTrig,
+				filtminf: filtMinFreq, filtmaxf: filtMaxFreq, filtime: filtTime,
+				rq: rq, bandw: bw, iphase: iphase, amp1: amp1, amp2: amp2, pan: pan
+			),
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
 
-				switch(seqType,
-					'rand', {
-						mel=Prand(note.asArray,inf).asStream;
-						outbus=Prand(out.asArray,inf).asStream;
-						chord=Prand(chords.asArray,inf).asStream;
-					},
-					'seq', {
-						mel=Pseq(note.asArray,inf).asStream;
-						outbus=Pseq(out.asArray,inf).asStream;
-						chord=Pseq(chords.asArray,inf).asStream;
-					},
-					("Chord Melodic secuence type is" + seqType).inform;
-				);
-				}, {
-					"For seqType parameter, use only keys: 'rand' or 'seq'".inform;
-			});
-			//Use 'M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7' or '5aug7' keys only
-			loop{
-				~cbox_chord2.set(
-					\chord, chord.next,
-					\note, mel.next,
-					\att, attk,
-					\rel, rel,
-					\iphase, iph,
-					\width, iwidth,
-					\cutf, cutfreq,
-					\rq, bandwidth,
-					\pan, panner,
-					\amp, vol,
-					\out, outbus.next
-				);
-				~cbox_tiempos.wait;
-			}
-		});
+		^this.prRegister(\bass2, instrument, "Bass2");
 
-		instance_id = "Chords2";
-
-		^instance_id;
 	}
 
-	lineIn {|out=50,inchan=0,att=0.05,rel=0.5|
+	pad {|out=50, semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60], seqType='seq',
+		waveform='sin', att=0.25, rel=1, semi=0, iphase=0, cutf=8920, rq=0.85,
+		gate=0, amp=0.75, pan=0, retrigger=false|
 
-		var outbus, inChannel=inchan, attack=att, release=rel;
+		var instrument;
 
-		Tdef(\entrada, {
+		instrument = CaosInstrument.synth(\pad, \amb, \ambuno, out.asArray.first,
+			(
+				att: att, rel: rel, semi: semi, iphase: iphase,
+				cutf: cutf, rq: rq, amp: amp, pan: pan
+			),
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
 
-			var outbus = Prand(out.asArray,inf).asStream;
+		^this.prRegister(\amb, instrument, "Amb");
 
-			loop {
-				~cbox_entrada.set(
-					\out,outbus.next,
-					\inchan,inChannel,
-					\att,attack,
-					\rel,release
-					);
-				~cbox_tiempos.wait;
-			}
-
-		});
-		instance_id = "LineIn";
-
-		^instance_id;
 	}
 
-	toTrack {|steps = 0, overrideSteps = false |
+	pad2 {|out=50, semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60], seqType='seq',
+		att=0.25, rel=1, maxNote=60, fm=0.125, harm=1, amp1=0.5, amp2=0.5, pan=0,
+		retrigger=false|
+
+		var instrument;
+
+		instrument = CaosInstrument.synth(\pad2, \amb2, \ambdos, out.asArray.first,
+			(
+				att: att, rel: rel, maxNote: maxNote, fm: fm, harm: harm,
+				amp1: amp1, amp2: amp2, pan: pan
+			),
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
+
+		^this.prRegister(\amb2, instrument, "Amb2");
+
+	}
+
+	chords {|out=50, semitoneArray=#[48, 50, 52, 53, 55, 57, 59], seqType='seq',
+		chordsArray=#['Mmaj7', 'M', 'm'], attack=0.05, release=1, iphase=0.025,
+		width=0.1, cutf=1200, rq=0.5, pan=0, amp=0.5, retrigger=true|
+
+		var instrument;
+
+		instrument = CaosInstrument.synth(\chords, \chords, \acordesuno, out.asArray.first,
+			(
+				att: attack, rel: release, iphase: iphase, width: width,
+				cutf: cutf, rq: rq, pan: pan, amp: amp
+			),
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
+
+		^this.prRegister(\chords, instrument, "Chords");
+
+	}
+
+	chords2 {|out=#[50], semitoneArray=#[0, 2, 4, 5, 7, 9, 11], seqType='seq',
+		chordsArray=#['Mmaj7'], attack=0.05, release=1, iphase=0.025,
+		width=0.1, cutf=1200, rq=0.5, pan=0, amp=0.5, retrigger=true|
+
+		var instrument;
+
+		instrument = CaosInstrument.synth(\chords2, \chords2, \acordesdos, out.asArray.first,
+			(
+				att: attack, rel: release, iphase: iphase, width: width,
+				cutf: cutf, rq: rq, pan: pan, amp: amp
+			),
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
+
+		^this.prRegister(\chords2, instrument, "Chords2");
+
+	}
+
+	lineIn {|out=50, inchan=0, att=0.05, rel=0.5, retrigger=true|
+
+		var instrument;
+
+		instrument = CaosInstrument.synth(\lineIn, \in, \entrada, out.asArray.first,
+			(inchan: inchan, att: att, rel: rel),
+			nil, \free, nil, retrigger, \seq, oneShot: true);
+
+		^this.prRegister(\in, instrument, "LineIn");
+
+	}
+
+	toTrack {|steps = 0, overrideSteps = false|
 
 		var track;
 
-		switch( instance_id,
-			"Kick", {track = \kick},
-			"Kick2", {track = \kick2},
-			"Snare", {track = \snare},
-			"Snare2", {track = \snare2},
-			"HiHats", {track = \hihats},
-			"HiHats2", {track = \hihats2},
-			"Bass", {track = \bass},
-			"Bass2", {track = \bass2},
-			"Amb", {track = \amb},
-			"Amb2", {track = \amb2},
-			"Chords", {track = \chords},
-			"Chords2", {track = \chords2},
-			"LineIn", {track = \in}
-		);
+		if(instrument.isNil, {
+			^"CaosGear: create an instrument first (shot, pad, ...)".inform;
+		});
 
-		CaosBox.setSteps(track,steps, overrideSteps);
+		track = instrument.track;
+		CaosBox.setSteps(track, steps, overrideSteps);
 
 		^"CaosGear: " + instance_id + " instance added to sequencer";
+
 	}
 
-	offTrack {|steps = 0 |
+	// sin argumentos saca la pista completa
+	offTrack {|steps|
 
 		var track;
 
-		switch( instance_id,
-			"Kick", {track = \kick},
-			"Kick2", {track = \kick2},
-			"Snare", {track = \snare},
-			"Snare2", {track = \snare2},
-			"HiHats", {track = \hihats},
-			"HiHats2", {track = \hihats2},
-			"Bass", {track = \bass},
-			"Bass2", {track = \bass2},
-			"Amb", {track = \amb},
-			"Amb2", {track = \amb2},
-			"Chords", {track = \chords},
-			"Chords2", {track = \chords2},
-			"LineIn", {track = \in}
-		);
+		if(instrument.isNil, {
+			^"CaosGear: create an instrument first (shot, pad, ...)".inform;
+		});
 
-		CaosBox.clearSteps(track,steps);
+		track = instrument.track;
+		CaosBox.clearSteps(track, steps);
 
 		^"CaosGear Instance deleted from sequencer";
 

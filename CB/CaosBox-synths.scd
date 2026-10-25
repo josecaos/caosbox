@@ -8,7 +8,7 @@
 // TODO: aplicar a todos los SynthDef
 if(~cbox_custom != true,{
 
-	SynthDef(\bajouno,{|out=50,att=0.05,rel=1,note=38,filtminf=45,filtmaxf=8950,filtime=0.125,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25,pan=0,doneAction=1|
+	SynthDef(\bajouno,{|out=50,att=0.05,rel=1,note=38,filtminf=45,filtmaxf=8950,filtime=0.125,rq=0.5,iphase=0.1,gate=0,amp1=0.5,amp2=0.25,pan=0,doneAction=2|
 		Out.ar(out,CaosBass.ar(att,rel,note,filtminf,filtmaxf,filtime,rq,iphase,gate,amp1,amp2,pan,doneAction))}).add;
 },{
 	// "Bajo custom".postcln;
@@ -17,7 +17,7 @@ if(~cbox_custom != true,{
 });
 
 SynthDef(\bajodos,{|out=50,att=0.2,rel=8,note=36,trig=4,filtminf=105,filtmaxf=12066,filtime=0.15,rq=0.125,bandw=0.5,iphase=0.25,gate=0,
-	amp1=0.5,amp2=0.5,doneAction=1|
+	amp1=0.5,amp2=0.5,doneAction=2|
 	Out.ar(out,CaosBass2.ar(att,rel,note,trig,filtminf,filtmaxf,filtime,rq,bandw,iphase,gate,amp1,amp2,doneAction))}).add;
 
 //ambiences

@@ -25,8 +25,8 @@ for (0, 31, { |i|
 
 })};
 //bajo attack and release knobs
-~cbox_bass1attknob=EZKnob(~cbox_w,Rect(785,131,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_bass1relknob=EZKnob(~cbox_w,Rect(870,131,81,17),nil,ControlSpec(0.1,2,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_bass1attknob=EZKnob(~cbox_w,Rect(785,131,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| ~cbox_param.value(\bass, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_bass1relknob=EZKnob(~cbox_w,Rect(870,131,81,17),nil,ControlSpec(0.1,2,\lin,0.001,0.5,\rel),{|a| ~cbox_param.value(\bass, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
 
 
@@ -58,8 +58,8 @@ for (0, 31, {|i|
 
 })};
 //bass attack and release knobs
-~cbox_bass2attknob=EZKnob(~cbox_w,Rect(785,151,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_bass2relknob=EZKnob(~cbox_w,Rect(870,151,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.5,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_bass2attknob=EZKnob(~cbox_w,Rect(785,151,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| ~cbox_param.value(\bass2, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_bass2relknob=EZKnob(~cbox_w,Rect(870,151,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.5,\rel),{|a| ~cbox_param.value(\bass2, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
 //ambiente
 StaticText(~cbox_w,Rect(5,172,53,15)).string_("Pad:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
@@ -72,7 +72,6 @@ for (0, 31, { |i|
 
 	~cbox_checkambiente.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 170, 20, 20)).action={|val|
 		CaosBox.setStep(\amb, i, val.value);
-		if(val.value, { ~cbox_sintetizadores.value(\amb) });
 	});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
@@ -89,8 +88,8 @@ for (0, 31, { |i|
 
 })};
 //ambiente attack and release knobs
-~cbox_amb1attknob=EZKnob(~cbox_w,Rect(785,171,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.5,\att),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_amb1relknob=EZKnob(~cbox_w,Rect(870,171,81,17),nil,ControlSpec(0.25,12,\lin,0.001,2,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_amb1attknob=EZKnob(~cbox_w,Rect(785,171,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.5,\att),{|a| ~cbox_param.value(\amb, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_amb1relknob=EZKnob(~cbox_w,Rect(870,171,81,17),nil,ControlSpec(0.25,12,\lin,0.001,2,\rel),{|a| ~cbox_param.value(\amb, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
 //ambiente2
 StaticText(~cbox_w,Rect(5,192,53,15)).string_("pad2:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
@@ -103,7 +102,6 @@ for (0, 31, { |i|
 
 	~cbox_checkambiente2.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 190, 20, 20)).action={|val|
 		CaosBox.setStep(\amb2, i, val.value);
-		if(val.value, { ~cbox_sintetizadores.value(\amb2) });
 	});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
@@ -121,8 +119,8 @@ for (0, 31, { |i|
 })};
 
 //ambiente2 attack and release knobs
-~cbox_amb2attknob=EZKnob(~cbox_w,Rect(785,191,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.25,\att),{|a| a.value;},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_amb2relknob=EZKnob(~cbox_w,Rect(870,191,81,17),nil,ControlSpec(0.25,12,\lin,0.001,4,\rel),{|a| a.value},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_amb2attknob=EZKnob(~cbox_w,Rect(785,191,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.25,\att),{|a| ~cbox_param.value(\amb2, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_amb2relknob=EZKnob(~cbox_w,Rect(870,191,81,17),nil,ControlSpec(0.25,12,\lin,0.001,4,\rel),{|a| ~cbox_param.value(\amb2, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
 //acordes
 StaticText(~cbox_w,Rect(5,212,53,15)).string_("Chords:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
@@ -135,7 +133,6 @@ for (0, 31, { |i|
 
 	~cbox_checksinte.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 210, 20, 20)).action={|val|
 		CaosBox.setStep(\chords, i, val.value);
-		if(val.value, { ~cbox_sintetizadores.value(\chords) });
 	});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
@@ -152,8 +149,8 @@ for (0, 31, { |i|
 
 })};
 //acordes attack and release knobs
-~cbox_sinte_seq1attknob=EZKnob(~cbox_w,Rect(785,211,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.01,\att),{|a| a.value;~cbox_synth.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_sinte_seq1relknob=EZKnob(~cbox_w,Rect(870,211,81,17),nil,ControlSpec(0.05,8,\lin,0.001,1,\rel),{|a| a.value;~cbox_synth.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_sinte_seq1attknob=EZKnob(~cbox_w,Rect(785,211,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.01,\att),{|a| ~cbox_param.value(\chords, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_sinte_seq1relknob=EZKnob(~cbox_w,Rect(870,211,81,17),nil,ControlSpec(0.05,8,\lin,0.001,1,\rel),{|a| ~cbox_param.value(\chords, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 
 
 //Acordes2
@@ -167,7 +164,6 @@ for (0, 31, { |i|
 
 	~cbox_checksinte2.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 230, 20, 20)).action={|val|
 		CaosBox.setStep(\chords2, i, val.value);
-		if(val.value, { ~cbox_sintetizadores.value(\chords2) });
 	});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
@@ -191,6 +187,6 @@ for (0, 31, { |i|
 ~cbox_tracks[\chords].onChange = {|track, index, value| ~cbox_checksinte[index].value_(if(value.notNil, 1, 0)) };
 ~cbox_tracks[\chords2].onChange = {|track, index, value| ~cbox_checksinte2[index].value_(if(value.notNil, 1, 0)) };
 //acordes 2 attack and release knobs
-~cbox_sinte_seq2attknob=EZKnob(~cbox_w,Rect(785,231,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.1,\att),{|a| a.value;~cbox_synth2.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_sinte_seq2relknob=EZKnob(~cbox_w,Rect(870,231,81,17),nil,ControlSpec(0.05,8,\lin,0.001,0.5,\rel),{|a| a.value;~cbox_synth2.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_sinte_seq2attknob=EZKnob(~cbox_w,Rect(785,231,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.1,\att),{|a| ~cbox_param.value(\chords2, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
+~cbox_sinte_seq2relknob=EZKnob(~cbox_w,Rect(870,231,81,17),nil,ControlSpec(0.05,8,\lin,0.001,0.5,\rel),{|a| ~cbox_param.value(\chords2, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 );

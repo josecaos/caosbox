@@ -5,25 +5,18 @@
 // intérprete. Se guarda aquí como documentación y como prueba de regresión
 // después de cada paso de la refactorización.
 //
-// Cómo usarlo: pegarlo de arriba a abajo en el SCIDE (con el servidor y la
-// compilación ya listos). Ejercita:
-//   - percusión estática construida reevaluando instrumentos + toTrack(..., false)
-//   - el kit resultante: pasos pares por el bus 60 (HPF), impares por 62 (BPF)
-//   - pistas melódicas (pad) con gate por step
-//   - line in, y automatización de HPF y BPF
-//
-// Al agregar/cambiar cosas del API, actualizar este archivo también.
 ////////////////////////////////////////////////////////////
 
-c = CaosBox
-c.environment
-
+c = CaosBox;
+c.environment;
+// espera arranque y GUI:
 c.play;
 c.guiAlpha(0.5);
-c.bpm(145);
+c.bpm(60);
 
 g = CaosGear;
 
+//// Percussion synths
 k = g.new;
 k.kick();
 k.toTrack([0,4,8,12,16,20,24,28], true);
@@ -47,9 +40,43 @@ t.toTrack([0,8,16,24], true);
 t.snare(60);
 t.toTrack([6,22], true);
 
+/// melodic synths
+
+// melody degrees
+m = g.new;
+x = m.melody(LCNE.dupOctave(Scale.minor.degrees, 3), 48);
+
+b = g.new;
+b.bass(62);
+b.bass(62,seqType:\rand);
+c.setSteps(\bass);
+b.bass(50,x,\seq);
+b.bass(60,x,\rand,0.1,2,40,12920,0.01);
+
+e = g.new;
+e.bass2(50);
+e.bass2(58,x,\rand,0.5,1,0.5,40,12920,0.5);
+c.setSteps(\bass2);
+
 p = g.new;
-p.pad(50,amp:0.1);
-p.toTrack([0,16]);
+p.pad(52,x/2,\rand,\pulse,0.25,2,amp:0.01);
+p.toTrack(Array.series(8,0,4));
+p.offTrack([0,16]);
+
+r = g.new;
+r.pad2(52,x/3,\rand,0.5,4,amp1:0.001,amp2:0.001);
+r.toTrack(Array.series(8,2,4));
+r.offTrack([0,16]);
+
+v = g.new;
+v.chords(50,x,\rand,attack:0.25,release:3,amp:0.005);
+v.toTrack(Array.series(8,0,4));
+v.offTrack([0,16]);
+
+y = g.new;
+y.chords2(50,x/2,\rand,[\Mmaj7,\m,\M,\m],0.01,2,amp:0.05);
+y.toTrack(Array.series(8,2,4));
+y.offTrack([0,16]);
 
 i = g.new;
 i.lineIn(50);

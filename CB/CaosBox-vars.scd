@@ -1,8 +1,6 @@
 ////////////////////////////////////////////
-//Global variables for CaosBox v1.3
+//Global variables for CaosBox v2.1.1
 ///////////////////////////////////////////
-// Flags
-~cbox_debug_mode = true;
 // General
 ~cbox_indice=0;
 TempoClock.tempo = 126/60;
@@ -67,6 +65,8 @@ TempoClock.tempo = 126/60;
 ~cbox_b2=nil;//kick2
 ~cbox_t2=nil;//snare2
 ~cbox_h2=nil;//hat2
+// Instruments (voices) registry: track -> CaosInstrument
+~cbox_instruments = Dictionary.new;
 // Step patterns (model, see Classes/CaosTrack.sc):
 //   \snapshot stores the value resolved when the step is set (percussion)
 //   \live stores only the gate and resolves the instrument at trigger time

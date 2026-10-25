@@ -22,6 +22,8 @@ CaosTrack {
 	var <steps;
 	var <source;
 	var <>onChange;
+	var <>instrument;        // voz activa de la pista
+	var <>pendingInstrument; // reemplazo que entra en el siguiente trigger
 
 	*new { |name, mode = \live, size, source|
 
@@ -154,6 +156,71 @@ CaosTrack {
 	toggle { |index|
 
 		this.putStep(index, this.at(index).isNil);
+
+		^this;
+
+	}
+
+	// --- voz de la pista ---------------------------------------------
+
+	setInstrument { |newInstrument|
+
+		// la primera voz entra al instante; un reemplazo espera al trigger
+		if(instrument.isNil, {
+			instrument = newInstrument;
+		}, {
+			pendingInstrument = newInstrument;
+		});
+
+		^this;
+
+	}
+
+	advance {
+
+		if(instrument.notNil, { instrument.advance });
+
+		^this;
+
+	}
+
+	trigger {
+
+		this.activatePending;
+		if(instrument.notNil, { instrument.trigger });
+
+		^this;
+
+	}
+
+	// un step del secuenciador: avanza la linea y dispara si esta encendido
+	step { |index|
+
+		this.advance;
+		if(this.at(index).notNil, { this.trigger });
+
+		^this;
+
+	}
+
+	activatePending {
+
+		if(pendingInstrument.notNil, {
+			if(instrument.notNil, { instrument.release });
+			instrument = pendingInstrument;
+			pendingInstrument = nil;
+		});
+
+		^this;
+
+	}
+
+	releaseInstrument {
+
+		if(instrument.notNil, { instrument.release });
+		if(pendingInstrument.notNil, { pendingInstrument.release });
+		instrument = nil;
+		pendingInstrument = nil;
 
 		^this;
 

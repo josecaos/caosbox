@@ -1,5 +1,5 @@
 ///////////////////////////////////////////
-//CaosBox v1.3 Instruments  default parameters
+//CaosBox v2.1.1 Instruments  default parameters
 ///////////////////////////////////////////
 Tdef.defaultQuant = 1;
 //
@@ -13,42 +13,6 @@ Tdef.defaultQuant = 1;
 ~cbox_h={var out=50;Out.ar(out,CaosHats.ar(0.01,0.5,8330,rq:0.25,amp1:0.35,amp2:0.01,pan:0))};
 ~cbox_h2={var out=50;Out.ar(out,CaosHats2.ar(0.025,0.25,6950,rq:0.45,amp1:0.5,amp2:0.3,pan:0))};
 /////////////////////////////////
-~cbox_sintetizadores = {|sinth,node,indice|
-	switch(sinth,
-		\bass,{
-			~cbox_bass.free;// sin esto se duplica el nodo
-			~cbox_bass=Synth.basicNew(\bajouno,CaosBox.server,node);
-			CaosBox.server.sendBundle(nil,~cbox_bass.newMsg(args:[\gate,1,\doneAction,1]));// trigger
-			if(~cbox_debug_mode,{
-				("Bajo: " + ~cbox_bass.nodeID).postcln;
-			});
-		},
-		\bass2,{
-			~cbox_bass2.free;
-			~cbox_bass2=Synth(\bajodos);
-			// ~cbox_bass2=Synth.basicNew(\bajodos,CaosBox.server,node);
-			~cbox_bass2.set(\gate,1,\doneAction,1);
-			if(~cbox_debug_mode,{
-				("Bajo 2: " + ~cbox_bass2.nodeID).postcln;
-			});
-		},
-		\amb,{
-			~cbox_amb=Synth(\ambuno);
-		},
-		\amb2,{
-			~cbox_amb2=Synth(\ambdos);
-		},
-		\chords,{
-			~cbox_chord=Synth(\acordesuno);
-		},
-		\chords2,{
-			~cbox_chord2=Synth(\acordesdos);
-		},
-		\in,{
-			~cbox_entrada=Synth(\entrada);
-		}
-	);
-};
 //
 CaosGear.new.bass(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,3),36),\seq);
 CaosGear.new.bass2(50,~cbox_mainmelody.melody(LCNE.dupOctave(Scale.minor.degrees,3),48),\seq);

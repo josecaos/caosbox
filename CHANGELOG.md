@@ -57,6 +57,15 @@ Add MIDI triggering optional
 
 
 - ### v2.1.1
+    - Add new test file api-session-default.scd
+    - New Classes:
+        - CaosInstrument
+            - Creates functions for percussion and synths for melodies
+            - Iterates thru nnotes
+            - \trigger modes for melodic synths
+            - Bugfixes:
+                - 'TooManyaNodes' and 'SynthNotFound' errors
+        - TestCaosInstrument
 
 - ### v2.1.0
     - New Classes:
