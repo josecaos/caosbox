@@ -21,9 +21,11 @@ CaosSequencer {
 	var <randomTime = false;
 	var <randtimes;
 	var <running = false;
+	var <paused = false;
 	var <prepared = false;
 	var <tdef;
 	var stepFunc, prepareFunc;
+	var <>onTempoChange;// aviso a la vista (numbox de BPM)
 
 	*new { |step, prepare, size = 32, bpm = 126, stepDur = 0.25, randtimes, tdefName = \secuencias|
 
@@ -57,9 +59,11 @@ CaosSequencer {
 
 		if(tdef.isPlaying, { ^this });
 
+		this.prPrepareStart;// desde 0 si es arranque limpio, o donde iba
 		this.prepare;
 		tdef.play;
 		running = true;
+		paused = false;
 
 		^this;
 
@@ -70,6 +74,7 @@ CaosSequencer {
 
 		tdef.pause;
 		running = false;
+		paused = true;
 
 		^this;
 
@@ -80,7 +85,17 @@ CaosSequencer {
 
 		tdef.stop;
 		running = false;
+		paused = false;
 		index = 0;
+
+		^this;
+
+	}
+
+	// regla del transporte: reanudar conserva el paso, arrancar limpio no
+	prPrepareStart {
+
+		if(paused.not, { index = 0 });
 
 		^this;
 
@@ -148,12 +163,31 @@ CaosSequencer {
 
 	// --- internos -------------------------------------------------------
 
-	prApplyTempo { TempoClock.tempo = bpm / 60; ^this }
+	prApplyTempo {
+
+		TempoClock.tempo = bpm / 60;
+		this.prNotifyTempo(bpm);
+
+		^this;
+
+	}
+
+	prNotifyTempo {|value|
+
+		if(onTempoChange.notNil, { onTempoChange.value(value) });
+
+		^this;
+
+	}
 
 	prWait {
 
+		var randomBpm;
+
 		if(randomTime, {
-			TempoClock.tempo = randtimes.choose / 60;
+			randomBpm = randtimes.choose;
+			TempoClock.tempo = randomBpm / 60;
+			this.prNotifyTempo(randomBpm);
 		}, {
 			this.prApplyTempo;
 		});
@@ -166,12 +200,12 @@ CaosSequencer {
 
 	prRun {
 
-		index = 0;
-
+		// el indice avanza antes de esperar: si el Tdef se reinicia al
+		// reanudar, continua con el step siguiente en vez de repetir el actual
 		loop {
 			stepFunc.value(index);
-			this.prWait;
 			index = (index + 1) % size;
+			this.prWait;
 		}
 
 	}

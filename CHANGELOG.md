@@ -10,7 +10,12 @@
 # Changelog
 
 - ### v2.2.0
-    - Unified Clock
+    - New class:
+        - CaosSequencer
+            - Handles all sequencing and scheduling of events in one place
+            - .play, .stop, .pause distintions
+        - TestCaosSequencer
+            - 10 headless tests, 20 assertions
 
 - ### v2.1.4
     - Add bus patching for percussion instruments

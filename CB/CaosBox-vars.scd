@@ -1,11 +1,7 @@
 ////////////////////////////////////////////
 //Global variables for CaosBox v2.1.1
 ///////////////////////////////////////////
-// General
-~cbox_indice=0;
-TempoClock.tempo = 126/60;
-~cbox_clock={ TempoClock.tempo = (if(~cbox_numclock.notNil,{~cbox_numclock.value},{126}))/60 };
-~cbox_tiempos=0.25;
+// General: el tiempo (indice, bpm, duracion de step, random) vive en ~cbox_seq
 // Fx automation values
 ~cbox_autoreverbmix=Array.series(4,0.01,0.24);
 ~cbox_autoreverbroom=[0];
@@ -50,7 +46,9 @@ TempoClock.tempo = 126/60;
 ~cbox_checkin=Array.fill(32,nil);
 ~cbox_lightsteps=Array.fill(32,nil);
 ~cbox_lightpos = 61;
-// Automation divisors "Dont use 0 on these"
+// Automation speed multipliers: stepDur * divisor. 1 normal, 0.5 fast,
+// 2 slow, 4 slowest. Multiplican la espera, no la dividen.
+// "Dont use 0 on these"
 ~cbox_divrev=1;
 ~cbox_divdel=1;
 ~cbox_divpitch=1;

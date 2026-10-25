@@ -3,7 +3,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.1.1";// version unica: la usan el GUI y la bienvenida
+	classvar <version = "2.2.0";// version unica: la usan el GUI y la bienvenida
 
 	*environment {|gui = true|
 
@@ -147,62 +147,103 @@ CaosBox {
 
 	*play {
 
-		if(Tdef(\secuencias).isPlaying,{
+		if(~cbox_seq.notNil and: { ~cbox_seq.isPlaying }, {
 			^"CaosBox already running";
-		},{
-			~cbox_bot.valueAction_(1);
-			^"Machine is running";
 		});
+
+		~cbox_seq !? { |seq| seq.play };
+		~cbox_bot !? { |bot| bot.value_(1) };
+
+		^"Machine is running";
 
 	}
 
-	*stop {
+	// pausa: conserva el paso; play reanuda desde ahi
+	*pause {
 
-		~cbox_bot.valueAction_(0);
-		Tdef(\secuencias).pause;
+		~cbox_seq !? { |seq| seq.pause };
+		this.prPauseAutomations;
+		~cbox_bot !? { |bot| bot.value_(0) };
 
 		^"";
+
+	}
+
+	// stop: vuelve al paso 0 para el proximo play
+	*stop {
+
+		~cbox_seq !? { |seq| seq.stop };
+		this.prPauseAutomations;
+		~cbox_bot !? { |bot| bot.value_(0) };
+
+		^"";
+
+	}
+
+	*prPauseAutomations {
+
+		#[\autor, \autod, \autop, \autog].do { |name| Tdef(name).pause };
+
+		~cbox_autobotr !? { |bot| bot.value_(0) };
+		~cbox_autobotd !? { |bot| bot.value_(0) };
+		~cbox_autobotp !? { |bot| bot.value_(0) };
+		~cbox_autobotg !? { |bot| bot.value_(0) };
+
 	}
 
 	*bpm {|val|
 
-		~cbox_numclock.value = val;
+		~cbox_numclock !? { |num| num.value_(val) };
+		~cbox_seq !? { |seq| seq.bpm = val };
 
-		~cbox_clock  = {TempoClock.tempo=~cbox_numclock.value/60};
+		^("+ BPM set to" + val);
 
-		~cbox_clock.value;
+	}
 
-		^("+ BPM set to" + ~cbox_numclock.value);
+	*stepDur {|dur|
+
+		~cbox_seq !? { |seq| seq.stepDur = dur };
+
+		^"";
+
 	}
 
 	*randomTime {|random = false, editBPM = false, bpmArray = #[47,62,94,141,188]|
 
-		if(random.isKindOf(Boolean), {
+		var flag;
 
-			if(editBPM == true,{
-				~cbox_randtimes = bpmArray;
-			});
-
-			switch(random,
-				true,{~cbox_botr.valueAction_(1)},
-				false,{~cbox_botr.valueAction_(0)});
-
-			^"";
-
-		},{
-
+		if(random.isKindOf(Boolean).not, {
 			^"Use only 'true' or 'false'";
 		});
+
+		flag = random;
+
+		if(editBPM == true, {
+			~cbox_randtimes = bpmArray;
+			~cbox_seq !? { |seq| seq.randtimes = bpmArray };
+		});
+
+		~cbox_seq !? { |seq| seq.randomTime = flag };
+		// boton: la etiqueta muestra lo que hara al apretar; random encendido
+		// deja "Regular Time" (apretar lo apaga) y viceversa
+		~cbox_botr !? { |bot| bot.value_(if(flag, 1, 0)) };
+
+		^"";
 
 	}
 
 	*toggleMetric {
 
-		var v = ~cbox_botm;
+		var button = ~cbox_botm;
 
-		if(v.value == 0,{v.valueAction_(1);},{v.valueAction_(0);});
+		if(button.notNil, {
+			button.valueAction_(if(button.value == 0, 1, 0));
+		}, {
+			~cbox_seq !? { |seq| seq.stepDur = if(seq.stepDur == 0.25, 1/3, 0.25) };
+		});
 
 		^"";
+
 	}
 
 	*record {
@@ -618,6 +659,7 @@ CaosBox {
 
 	*close {
 
+		~cbox_seq !? { |seq| seq.stop };
 		engine !? { |eng| eng.free };
 		Tdef.removeAll;
 		this.server.quit.freeAll.reboot;

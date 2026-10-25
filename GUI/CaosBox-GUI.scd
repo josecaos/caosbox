@@ -226,39 +226,27 @@ for (0, 31, { |i|
 // tempo
 StaticText(~cbox_w,Rect(5,635,270,15)).string_("Beat:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.65,0.65,0.65));
 ~cbox_botm=Button(~cbox_w,Rect(5,650,135,25));
-~cbox_botm.states=[["Thirds",Color.white,Color(alpha:0.25)],
-	["Fourths",Color.white,Color(alpha:0)]];
-~cbox_botm.action={|val|if(val.value==0,{~cbox_tiempos=0.25;"->Fourths<-".inform},
-	{~cbox_tiempos=0.3333333333333333333;"->Thirds<-".inform})};
-//tempo aleatorio
+// la etiqueta dice el modo que se aplica al apretar (no el que corre ahora)
+~cbox_botm.states=[["Thirds",Color.white,Color.green(0.35)],
+	["Fourths",Color.black,Color.green(0.35)]];
+~cbox_botm.action={|val|
+	CaosBox.stepDur(if(val.value == 0, { 0.25 }, { 1/3 }));
+	("->" + if(val.value == 0, {"Fourths"}, {"Thirds"}) + "<-").inform;
+};
+//tempo aleatorio (mismo criterio: la etiqueta es lo que pasa al apretar)
 ~cbox_botr=Button(~cbox_w,Rect(140,650,135,25));
-~cbox_botr.states=[["Random Time",Color.white,Color(alpha:0.25)],
-	["Regular Time",Color.white,Color(alpha:0.25)]];
-~cbox_botr.action={|val|if(val.value==0,{Tdef(\randtime).stop;~cbox_clock.value;"->Main BPM <-".inform},
-	{Tdef(\randtime).play;"->Random Clock Values<-".inform})};
+~cbox_botr.states=[["Random Time",Color.black,Color.green(0.35)],
+	["Regular Time",Color.white,Color.green(0.35)]];
+~cbox_botr.action={|val| CaosBox.randomTime(val.value == 1) };
 //
 //play
-StaticText(~cbox_w,Rect(275,635,515,15)).string_("PLAY/STOP:").font_(Font("Dejavu Sans",14,true)).align_(\center).background_(Color(0.5,0.5,0.5));
+StaticText(~cbox_w,Rect(275,635,515,15)).string_("PLAY/PAUSE:").font_(Font("DejaVu Sans",14,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~cbox_bot=Button(~cbox_w,Rect(275,650,515,25));
 ~cbox_bot.states=[["=>",Color.black,Color.green],
-	["[_]",Color.white,Color.red]];
+	["Pause",Color.white,Color.red]];
 ~cbox_bot.action={|val|
-	var  bool = true;
-	if(val.value == 0,{
-		bool = false;
-		Tdef(\secuencias).pause;Tdef(\autor).pause;Tdef(\autod).pause;Tdef(\autop).pause;Tdef(\autog).pause;
-Tdef(\bass).pause;Tdef(\bass2).pause;Tdef(\pad).pause;Tdef(\pad2).pause;Tdef(\acordes).pause;Tdef(\acordes2).pause;Tdef(\entrada).pause;
-	~cbox_autobotr.value=0;~cbox_autobotd.value=0;~cbox_autobotp.value=0;~cbox_autobotg.value=0;~cbox_botm.value=0;~cbox_hbutt.value=0;
-	"->You just Stopped CaosBox<-".inform;},
-{
-	if(bool  != true, {
-		Tdef(\secuencias).resume;Tdef(\pad).resume;Tdef(\bass).resume;Tdef(\bass2).resume;
-		Tdef(\pad2).resume;Tdef(\acordes).resume;Tdef(\acordes2).resume;Tdef(\entrada).resume;"\n -> Now playing, please start algoraving <-".inform;
-	},{
-		Tdef(\secuencias).play;Tdef(\pad).play;Tdef(\bass).play;Tdef(\bass2).play;
-		Tdef(\pad2).play;Tdef(\acordes).play;Tdef(\acordes2).play;Tdef(\entrada).play;"\n -> Now playing, please start algoraving <-".inform;
-	});
-});
+	// el boton pausa (y play reanuda donde iba); el stop duro es CaosBox.stop
+	if(val.value == 0, { CaosBox.pause }, { CaosBox.play });
 };
 //record
 ~cbox_filea=[~cbox_n.choose,~cbox_l.choose,~cbox_n.choose,~cbox_l.choose];

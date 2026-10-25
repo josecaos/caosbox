@@ -59,26 +59,75 @@ Así la clase no conoce ni la GUI ni las pistas: se puede probar headless.
 
 ## 4. Tests
 
-`Tests/TestCaosSequencer.sc` — 9 tests, **23 aserciones**:
+`Tests/TestCaosSequencer.sc` — 13 tests, **28 aserciones**:
 
 * defaults y configuración (size/bpm/stepDur/randtimes);
 * `bpm_` fija `TempoClock.default.tempo` (90 → 1.5);
 * apagar `randomTime` restaura el tempo principal;
 * `nextIndex` envuelve y `jumpTo` normaliza el índice;
 * `stop` resetea el índice;
-* `prepare` corre una sola vez (y es seguro sin bloque).
+* `prepare` corre una sola vez (y es seguro sin bloque);
+* `onTempoChange` avisa cada cambio de tempo (BPM principal y sorteado en
+  random time).
 
-Total de la suite: **247 aserciones, 0 fallos**.
+Total de la suite: **252 aserciones, 0 fallos**.
 
-## 5. Cableado pendiente (2/2)
+## 5. Cableado aplicado (2/2)
 
-1. `CB/CaosBox-seq.scd`: crear `~cbox_seq = CaosSequencer.new(step: …, prepare: …)` con el
-   LED y `~cbox_tracks.do { |t| t.step(index) }` en `step`, y las 8 voces fijas en
-   `prepare`. Fuera `Tdef(\secuencias)` y `Tdef(\randtime)` del archivo.
-2. `GUI/CaosBox-GUI.scd`: “Thirds/Fourths” → `~cbox_seq.stepDur`; “Random/Regular Time” →
-   `~cbox_seq.randomTime`; play/stop → `play`/`pause` (y fuera los Tdef de melodías, que ya
-   no existen).
-3. `GUI_4`: el numbox de BPM → `~cbox_seq.bpm`.
-4. `CaosBox.*play/stop/bpm`: hablar con `~cbox_seq` (y mantener el GUI en sincronía).
-5. `CB/CaosBox-vars.scd`: retirar `~cbox_indice`, `~cbox_clock` y `~cbox_tiempos`; las
-   automatizaciones (`CB/CaosBox-auto.scd`) pasan a leer `~cbox_seq.stepDur`.
+* `CB/CaosBox-seq.scd`: solo crea `~cbox_seq = CaosSequencer.new(step: …, prepare: …)`.
+  El `step` hace el LED y `~cbox_tracks.do { |t| t.step(index) }`; el `prepare` crea
+  master/fx/filtros/granulador en los buses y grupos del engine (una sola vez). Fuera
+  `Tdef(\secuencias)` y `Tdef(\randtime)` del archivo.
+* `CaosBox`:
+  * `play` / `pause` / `stop` hablan con `~cbox_seq` (y sincronizan el botón).
+    `pause` conserva el paso; `stop` vuelve a 0.
+  * `bpm` fija el numbox y el sequencer; `stepDur` fija la duración; `randomTime`
+    actualiza `randtimes` y el modo; `toggleMetric` alterna el botón.
+  * `prPauseAutomations` pausa `autor/autod/autop/autog` y apaga sus botones.
+  * `close` detiene el sequencer antes de liberar el engine.
+* `GUI.scd`: play/pause (`CaosBox.pause/play`), “Regular/Random Time”
+  (`CaosBox.randomTime`), “Fourths/Thirds” (`CaosBox.stepDur`). Los dos botones de
+  modo muestran el modo que se aplica **al apretar** (no el que está corriendo) y
+  recuperan los colores por estado de v1.0 (verde, texto blanco/negro).
+* `GUI_4`: el numbox de BPM llama `CaosBox.bpm`.
+* `CB/CaosBox-vars.scd`: fuera `~cbox_indice`, `~cbox_tiempos` y `~cbox_clock`.
+* `CB/CaosBox-auto.scd`: las automatizaciones esperan `(~cbox_seq.stepDur * ~cbox_divX)`.
+  Los valores son multiplicadores de velocidad (1 normal, 0.5 fast, 2 slow, 4 slowest).
+
+## 6. Verificación
+
+* Class library compila; 14 `.scd` parsean.
+* Suite: **252 aserciones, 0 fallos**.
+* Smoke test headless del transporte: 13 steps en 0.3 s, `pause` no avanza, `play`
+  reanuda, `stop` deja `index = 0`.
+
+## 7. Siguiente
+
+1. **Paso 5**: GUI como vista (filas generadas del modelo, MIDI/automatización por registro).
+2. **Paso 6**: API/docs (`.schelp` de `CaosInstrument`/`CaosSequencer`, README v2.1.5).
+3. Detalles: `Tdef.defaultQuant` (arranque en la rejilla) y etiquetas del `PLAY/PAUSE`.
+
+## 8. Ajustes tras la primera prueba en la app (v2.2.0)
+
+Tres cosas que solo se ven con sonido y GUI:
+
+1. **randomTime no movía el numbox de BPM.** El tempo sorteado se aplicaba al reloj,
+   pero la vista no se enteraba. Se agregó `CaosSequencer.onTempoChange` (callback)
+   que se dispara en `prApplyTempo` y también en la rama aleatoria de `prWait`, con el
+   BPM efectivo. `CB/CaosBox-seq.scd` lo conecta al numbox con `.defer` (el aviso llega
+   desde el hilo del reloj) y `!?` para que la API funcione sin GUI.
+2. **Etiquetas de modo al revés y sin color.** En métrica y en random la etiqueta
+   vuelve a decir el modo que se aplica al apretar (el `action` recibe el valor nuevo):
+   métrica state 0 = “Thirds” / state 1 = “Fourths”; random state 0 = “Random Time” /
+   state 1 = “Regular Time”. Se restauran los colores de v1.0: fondo
+   `Color.green(0.35)` con texto blanco/negro. (El commit “New colors for interface”
+   los había dejado en `Color(alpha:)`, que además es casi invisible en Wayland.)
+   `CaosBox.randomTime` sigue sincronizando el botón: random encendido deja “Regular
+   Time” a la vista, listo para apagarlo.
+3. **Velocidad de automatizaciones de FX invertida.** La espera era `stepDur / div`;
+   con `fast = 0.5` eso *alargaba* la espera. Ahora es `stepDur * div`: normal 1,
+   fast 0.5, slow 2, slowest 4. Se documentó en `CB/CaosBox-vars.scd` y en la cabecera
+   de `CB/CaosBox-auto.scd`.
+
+Verificación final: compila, 14 `.scd` parsean, **252 aserciones, 0 fallos**, y smoke
+headless de `onTempoChange` (120 en modo normal; 60/90 sorteado; 120 al apagarlo).

@@ -1,5 +1,6 @@
 ////FX fader Automation
-//automation seqs
+//automation seqs: la espera es stepDur * multiplicador de velocidad
+//(~cbox_divX: 1 normal, 0.5 fast, 2 slow, 4 slowest)
 (
 Tdef(\autor,{
 	var revmix,revroom,revdamp,univar;
@@ -16,7 +17,7 @@ Tdef(\autor,{
 			~cbox_numroom.value=univar[1];~cbox_auxroomfader.value=univar[1];
 			~cbox_numd.value=univar[2];~cbox_auxdfader.value=univar[2]
 		}.defer(0.1);
-		~cbox_tiempos/~cbox_divrev.wait;
+		(~cbox_seq.stepDur * ~cbox_divrev).wait;
 	}.loop;
 });
 );
@@ -33,7 +34,7 @@ Tdef(\autod,{
 			~cbox_numt.value=univar[0];~cbox_auxtfader.value=univar[0];
 			~cbox_numf.value=univar[1];~cbox_auxffader.value=univar[1]
 		}.defer(0.1);
-		~cbox_tiempos/~cbox_divdel.wait;
+		(~cbox_seq.stepDur * ~cbox_divdel).wait;
 	}.loop;
 });
 );
@@ -53,7 +54,7 @@ Tdef(\autop,{
 			~cbox_numpd.value=univar[1];~cbox_auxpdfader.value=univar[1];
 			~cbox_numtd.value=univar[2];~cbox_auxtdfader.value=univar[2];
 		}.defer(0.1);
-		~cbox_tiempos/~cbox_divpitch.wait;
+		(~cbox_seq.stepDur * ~cbox_divpitch).wait;
 	}.loop;
 });
 );
@@ -70,7 +71,7 @@ Tdef(\autog,{
 		{
 			~cbox_grains.set(\trigger,~cbox_gfaders.x_(univar[0]));~cbox_grains.set(\size,~cbox_gfaders.y_(univar[1]))
 		}.defer(0.1);
-		~cbox_tiempos/~cbox_divgrain.wait;
+		(~cbox_seq.stepDur * ~cbox_divgrain).wait;
 	}.loop;
 })
 );
@@ -87,7 +88,7 @@ Tdef(\autolpf, {
 			~cbox_numf1.value=univar[0];~cbox_lowcfader.value=univar[0]/19980;
 			~cbox_numf2.value=univar[1];~cbox_lowrqfader.value=univar[1];
 		}.defer(0.1);
-		~cbox_tiempos/~cbox_divlpf.wait;
+		(~cbox_seq.stepDur * ~cbox_divlpf).wait;
 	}.loop;
 });
 );
@@ -103,7 +104,7 @@ Tdef(\autohpf, {
 			~cbox_numf3.value=univar[0];~cbox_highcfader.value=univar[0]/19980;
 			~cbox_numf4.value=univar[1];~cbox_highrqfader.value=univar[1];
 		}.defer(0.1);
-		~cbox_tiempos/~cbox_divhpf.wait;
+		(~cbox_seq.stepDur * ~cbox_divhpf).wait;
 	}.loop;
 });
 );
@@ -119,7 +120,7 @@ Tdef(\autobpf, {
 			~cbox_numf5.value=univar[0];~cbox_bandcfader.value=univar[0]/19980;
 			~cbox_numf6.value=univar[1];~cbox_bandrqfader.value=univar[1];
 		}.defer(0.1);
-		~cbox_tiempos/~cbox_divbpf.wait;
+		(~cbox_seq.stepDur * ~cbox_divbpf).wait;
 	}.loop;
 });
 );

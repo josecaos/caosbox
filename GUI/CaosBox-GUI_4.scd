@@ -160,9 +160,7 @@ StaticText(~cbox_w,Rect(785,272,185,15)).string_("BPM:").font_(Font("Dejavu Sans
 ~cbox_numclock=NumberBox(~cbox_w,Rect(970,272,50,15)).background_(Color(0,1,0)).align_(\center);
 ~cbox_numclock.value=126;
 ~cbox_numclock.action={
-	~cbox_clock={TempoClock.tempo=~cbox_numclock.value/60};
-	~cbox_clock.value;
-	("+ BPM set to" + ~cbox_numclock.value).inform;
+	CaosBox.bpm(~cbox_numclock.value);
 };
 //
 ~cbox_w.onClose={~cbox_url = nil; CaosBox.close; Main.recompile};//ALV todo!

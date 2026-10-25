@@ -79,6 +79,28 @@ TestCaosSequencer : UnitTest {
 
 	}
 
+	test_tempoChangeNotifiesTheView {
+
+		var seen = List.new;
+
+		seq.onTempoChange = {|value| seen.add(value) };
+
+		seq.bpm = 100;
+
+		this.assertEquals(seen.size, 1, "one notification per change");
+		this.assertEquals(seen.last, 100, "the view hears the new bpm");
+
+		// en random time el aviso lleva el bpm sorteado, no el principal
+		seen.clear;
+		seq.stepDur = 0.001;
+		seq.randomTime = true;
+		seq.prWait;
+
+		this.assert([40, 80].includes(seen.last),
+			"the view hears the random bpm");
+
+	}
+
 	test_randomTimeRestoresTheMainTempo {
 
 		seq.bpm = 120;
@@ -128,6 +150,28 @@ TestCaosSequencer : UnitTest {
 
 		this.assertEquals(seq.index, 0, "stop goes back to the top");
 		this.assert(seq.isRunning.not, "not running after stop");
+
+	}
+
+	test_resumeKeepsTheStep {
+
+		seq.jumpTo(5);
+		seq.pause;
+		seq.prPrepareStart;
+
+		this.assertEquals(seq.index, 5,
+			"resuming after pause does not restart the sequence");
+
+	}
+
+	test_cleanStartGoesBackToTheTop {
+
+		seq.jumpTo(5);
+		seq.stop;
+		seq.prPrepareStart;
+
+		this.assertEquals(seq.index, 0,
+			"a clean start (after stop) begins at the top");
 
 	}
 
