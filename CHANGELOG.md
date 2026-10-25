@@ -60,6 +60,9 @@ Add MIDI triggering optional
     - Bugfix:
         - Discrepancy in \bass2 due to CaosPercLib update
         - Fixed all Synths arguments by name not by position
+    - CaosGear:
+        - Unified argument names for all instruments
+        
 - ### v2.1.1
     - Add new test file api-session-default.scd
     - New Classes:

@@ -5,8 +5,7 @@
 //
 // Llamadas por nombre (kwargs) a proposito: CaosPercLib agrega/cambia
 // argumentos seguido y una llamada posicional se desalinea en silencio
-// (el caso real: "pan" quedo entre amp2 y doneAction en CaosBass2).
-// Si un nombre cambia, el SynthDef falla al construirse en vez de sonar mal.
+// Ahora, si un nombre de argumento cambia, el SynthDef falla al construirse en vez de sonar mal
 ///////////////////////////////////////////
 (
 //bass

@@ -227,7 +227,7 @@ CaosGear : CaosBox {
 	}
 
 	bass {|out=50, semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60], seqType='seq',
-		attack=0.01, release=0.5, filtMinFreq=45, filtMaxFreq=12420, filtTime=0.125,
+		att=0.01, rel=0.5, filtMinFreq=45, filtMaxFreq=12420, filtTime=0.125,
 		rq=0.25, iphase=0.5, amp1=0.5, amp2=0.5, pan=0, retrigger=true|
 
 		var instrument;
@@ -235,7 +235,7 @@ CaosGear : CaosBox {
 		instrument = CaosInstrument.synth(\bass, \bass, \bajouno, out.asArray.first,
 			(
 				doneAction: 2,// free al soltar gate (1 = pause y deja el nodo colgado)
-				att: attack, rel: release,
+				att: att, rel: rel,
 				filtminf: filtMinFreq, filtmaxf: filtMaxFreq, filtime: filtTime,
 				rq: rq, iphase: iphase, amp1: amp1, amp2: amp2, pan: pan
 			),
@@ -256,7 +256,7 @@ CaosGear : CaosBox {
 	}
 
 	bass2 {|out=50, semitoneArray=#[48, 50, 52, 53, 55, 57, 59, 60], seqType='seq',
-		attack=0.01, release=0.5, filtTrig=4, filtMinFreq=45, filtMaxFreq=12420,
+		att=0.01, rel=0.5, filtTrig=4, filtMinFreq=45, filtMaxFreq=12420,
 		filtTime=0.25, rq=0.5, bw=0.5, iphase=0.5, amp1=0.5, amp2=0.5, pan=0, retrigger=true|
 
 		var instrument;
@@ -264,7 +264,7 @@ CaosGear : CaosBox {
 		instrument = CaosInstrument.synth(\bass2, \bass2, \bajodos, out.asArray.first,
 			(
 				doneAction: 2,// free al soltar gate (1 = pause y deja el nodo colgado)
-				att: attack, rel: release, trig: filtTrig,
+				att: att, rel: rel, trig: filtTrig,
 				filtminf: filtMinFreq, filtmaxf: filtMaxFreq, filtime: filtTime,
 				rq: rq, bandw: bw, iphase: iphase, amp1: amp1, amp2: amp2, pan: pan
 			),
@@ -309,14 +309,14 @@ CaosGear : CaosBox {
 	}
 
 	chords {|out=50, semitoneArray=#[48, 50, 52, 53, 55, 57, 59], seqType='seq',
-		chordsArray=#['Mmaj7', 'M', 'm'], attack=0.05, release=1, iphase=0.025,
+		chordsArray=#['Mmaj7', 'M', 'm'], att=0.05, rel=1, iphase=0.025,
 		width=0.1, cutf=1200, rq=0.5, pan=0, amp=0.5, retrigger=true|
 
 		var instrument;
 
 		instrument = CaosInstrument.synth(\chords, \chords, \acordesuno, out.asArray.first,
 			(
-				att: attack, rel: release, iphase: iphase, width: width,
+				att: att, rel: rel, iphase: iphase, width: width,
 				cutf: cutf, rq: rq, pan: pan, amp: amp
 			),
 			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
@@ -326,14 +326,14 @@ CaosGear : CaosBox {
 	}
 
 	chords2 {|out=#[50], semitoneArray=#[0, 2, 4, 5, 7, 9, 11], seqType='seq',
-		chordsArray=#['Mmaj7'], attack=0.05, release=1, iphase=0.025,
+		chordsArray=#['Mmaj7'], att=0.05, rel=1, iphase=0.025,
 		width=0.1, cutf=1200, rq=0.5, pan=0, amp=0.5, retrigger=true|
 
 		var instrument;
 
 		instrument = CaosInstrument.synth(\chords2, \chords2, \acordesdos, out.asArray.first,
 			(
-				att: attack, rel: release, iphase: iphase, width: width,
+				att: att, rel: rel, iphase: iphase, width: width,
 				cutf: cutf, rq: rq, pan: pan, amp: amp
 			),
 			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
