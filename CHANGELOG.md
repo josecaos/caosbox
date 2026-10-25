@@ -13,7 +13,8 @@
     - New class:
         - CaosSequencer
             - Handles all sequencing and scheduling of events in one place
-            - .play, .stop, .pause distintions
+            - Fixed .play, .stop, .pause functionalities
+            - Updated .randomTime and .toggleMetric 
         - TestCaosSequencer
             - 10 headless tests, 20 assertions
 
