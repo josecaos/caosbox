@@ -24,6 +24,7 @@ CaosTrack {
 	var <>onChange;
 	var <>instrument;        // voz activa de la pista
 	var <>pendingInstrument; // reemplazo que entra en el siguiente trigger
+	var <>target;            // grupo destino de la percusion (funciones por step)
 
 	*new { |name, mode = \live, size, source|
 
@@ -193,11 +194,22 @@ CaosTrack {
 
 	}
 
-	// un step del secuenciador: avanza la linea y dispara si esta encendido
+	// un step del secuenciador:
+	//   con voz    -> avanza la linea y dispara (melodicos)
+	//   sin voz    -> toca la funcion guardada en el step (percusion)
 	step { |index|
 
+		var value = this.at(index);
+
 		this.advance;
-		if(this.at(index).notNil, { this.trigger });
+
+		if(instrument.notNil, {
+			if(value.notNil, { this.trigger });
+		}, {
+			if(value.notNil and: { value.respondsTo(\play) }, {
+				if(target.notNil, { value.play(target) }, { value.play });
+			});
+		});
 
 		^this;
 

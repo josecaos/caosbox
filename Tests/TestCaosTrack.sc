@@ -345,6 +345,23 @@ TestCaosTrack : UnitTest {
 
 	}
 
+	test_stepPlaysTheStoredFunctionWhenThereIsNoVoice {
+
+		var playable = CaosTestPlayable.new;
+
+		track = CaosTrack.new(\kick, \snapshot, 4, { playable });
+		track.target = 42;
+		track.putStep(0, true);
+
+		track.step(0);
+		this.assertEquals(playable.plays, 1, "the step plays the stored function");
+		this.assertEquals(playable.lastTarget, 42, "inside the track's target group");
+
+		track.step(1);
+		this.assertEquals(playable.plays, 1, "an off step plays nothing");
+
+	}
+
 }
 
 // Voz falsa: permite probar la pista sin audio ni server

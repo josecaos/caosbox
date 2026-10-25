@@ -410,6 +410,34 @@ TestCaosInstrument : UnitTest {
 
 	}
 
+	// ------------------------------------------------------------------
+	// grupo destino
+	// ------------------------------------------------------------------
+
+	test_targetIsUsedForTheVoice {
+
+		var msg;
+
+		instrument = CaosInstrument.synth(\pad, \amb, \ambuno, 50, nil, nil,
+			\free, spy, target: 42);
+		instrument.trigger;
+
+		msg = spy.lastMessage;
+
+		this.assertEquals(msg[4], 42, "the voice is created inside the given group");
+
+	}
+
+	test_functionTriggerPassesTheTarget {
+
+		instrument = CaosInstrument.percussion(\kick, \kick, playable, 42);
+		instrument.trigger;
+
+		this.assertEquals(playable.plays, 1, "the function is played");
+		this.assertEquals(playable.lastTarget, 42, "inside the given group");
+
+	}
+
 }
 
 // ----------------------------------------------------------------------
@@ -459,23 +487,26 @@ CaosTestOutput {
 
 }
 
-// Funcion jugable falsa: cuenta disparos
+// Funcion jugable falsa: cuenta disparos y guarda el grupo destino
 CaosTestPlayable {
 
 	var <plays;
+	var <lastTarget;
 
 	*new { ^super.new.init }
 
 	init {
 
 		plays = 0;
+		lastTarget = nil;
 		^this;
 
 	}
 
-	play {
+	play { |target|
 
 		plays = plays + 1;
+		lastTarget = target;
 		^this;
 
 	}

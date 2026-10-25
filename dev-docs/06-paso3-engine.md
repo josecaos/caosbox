@@ -75,11 +75,44 @@ Todo se prueba con un **output inyectable** (grabador de mensajes), sin server n
 (nombre/`Bus`/número/desconocido), `startBus` configurable, y los mensajes de grupos
 (orden, addToTail, target, liberación, doble `makeGroups`).
 
-## 6. Siguiente
+## 6. Commit 2 — SynthDefs y cableado (en el árbol)
 
-1. **SynthDefs**: que `\master`, `\aux1..3`, filtros y granulador reciban su bus de entrada
-   por parámetro (`In.ar(in)`) en vez de `In.ar([52,53])`.
-2. **Cableado**: `CaosBox.environment` crea el engine, y los Synths de master/fx/filtros se
-   crean en sus grupos.
-3. **GUI**: los popups de ruteo y las etiquetas ("Reverb: 52") se generan del mapa.
-4. **Despacho**: el `Tdef(\secuencias)` recorre `~cbox_tracks` en vez de 13 ramas.
+* `CB/CaosBox-signal.scd`: cada procesador recibe su bus de entrada por parámetro
+  (`inbus`) y su salida (`out`): `\master`, `\aux1..3`, `\lowfilt`, `\highfilt`,
+  `\bandfilt`, `\granulador`. Los defaults siguen siendo los índices históricos, así que
+  sin engine el sonido es el mismo de siempre.
+* `CaosBox`: classvar `engine`; `init` crea el `CaosEngine` y arranca con `engine.boot`
+  (opciones, grupos, y después carga los `.scd`). `CaosBox.resolveOut` resuelve nombres y,
+  si no hay engine, deja pasar el valor (compatibilidad y tests).
+* `Tdef(\secuencias)`: el master se crea dentro del grupo `master`; aux, filtros y
+  granulador dentro de `fx`; cada Synth recibe `\inbus` y `\out` resueltos del mapa.
+* `CaosGear`: los instrumentos melódicos resuelven su `out` con `CaosBox.resolveOut`, así
+  que `b.bass(\reverb, …)` y `p.pad(\lpf, …)` funcionan. La percusión sigue aceptando
+  números o arrays (su función captura el bus en `Out.ar`).
+* `GUI/CaosBox-GUI_4.scd`: los popups de ruteo usan `CaosBox.engine.busIndex(...)`.
+* `CaosBox.close` libera los grupos del engine.
+
+Pendiente de validación de audio por josecaos (el comportamiento debe ser idéntico).
+
+## 7. Commit 3 — despacho genérico y grupos de voces (en el árbol)
+
+* `CaosTrack:step(index)` es la única entrada para las 13 pistas:
+  * **con voz** (melódicos): `advance` de la línea y `trigger` si el step está encendido;
+  * **sin voz** (percusión): toca la función guardada en el step, dentro del grupo
+    `target` de la pista (CaosGear lo fija al grupo `instruments` del engine).
+* `Tdef(\secuencias)` quedó en una línea:
+  `~cbox_tracks.do { |track| track.step(~cbox_indice) }` — fuera las 13 ramas.
+* `CaosInstrument` gana `target`: las voces melódicas se crean con `/s_new` dentro del
+  grupo `instruments`; la percusión hace `func.play(target)`.
+* Tests nuevos: `step` despacha según haya voz o función, y el grupo destino viaja en los
+  mensajes (voz y `play`).
+
+Total: **224 aserciones, 0 fallos**.
+
+## 8. Siguiente
+
+1. **GUI**: etiquetas ("Reverb: 52", "LowPassFilter: 58", …) desde el engine.
+2. **Percusión**: aceptar nombres de bus en `out` (hoy números o arrays).
+3. **Paso 4**: reloj único (`CaosSequencer`): índice, duración, pausa/reanudar y
+   `\randtime`; hoy pausa/stop desfasa el índice y `Tdef(\secuencias)` mezcla el boot del
+   master con el reloj.

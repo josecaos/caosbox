@@ -14,10 +14,10 @@
 ~cbox_lowoutpop.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
 ~cbox_lowoutpop.action={|menu|
 	switch(menu.value,
-		0,{~cbox_mastlowf.set(\out,50);"+ LPF Out to Master".inform;},
-		1,{~cbox_mastlowf.set(\out,52);"+ LPF Out to Reverb".inform;},
-		2,{~cbox_mastlowf.set(\out,54);"+ LPF Out to Delay".inform;},
-		3,{~cbox_mastlowf.set(\out,56);"+ LPF Out to Pitch".inform;}
+		0,{~cbox_mastlowf.set(\out,CaosBox.engine.busIndex(\master));"+ LPF Out to Master".inform;},
+		1,{~cbox_mastlowf.set(\out,CaosBox.engine.busIndex(\reverb));"+ LPF Out to Reverb".inform;},
+		2,{~cbox_mastlowf.set(\out,CaosBox.engine.busIndex(\delay));"+ LPF Out to Delay".inform;},
+		3,{~cbox_mastlowf.set(\out,CaosBox.engine.busIndex(\pitch));"+ LPF Out to Pitch".inform;}
 	);
 };
 //Lowpass cutfreq
@@ -49,10 +49,10 @@ StaticText(~cbox_w,Rect(575,380,125,14)).string_("Bandwidth").font_(Font("Dejavu
 ~cbox_highoutpop.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
 ~cbox_highoutpop.action={|menu|
 	switch(menu.value,
-		0,{~cbox_masthighf.set(\out,50);"+ HPF Out to Master".inform;},
-		1,{~cbox_masthighf.set(\out,52);"+ HPF Out to Reverb".inform;},
-		2,{~cbox_masthighf.set(\out,54);"+ HPF Out to Delay".inform;},
-		3,{~cbox_masthighf.set(\out,56);"+ HPF Out to Pitch".inform;}
+		0,{~cbox_masthighf.set(\out,CaosBox.engine.busIndex(\master));"+ HPF Out to Master".inform;},
+		1,{~cbox_masthighf.set(\out,CaosBox.engine.busIndex(\reverb));"+ HPF Out to Reverb".inform;},
+		2,{~cbox_masthighf.set(\out,CaosBox.engine.busIndex(\delay));"+ HPF Out to Delay".inform;},
+		3,{~cbox_masthighf.set(\out,CaosBox.engine.busIndex(\pitch));"+ HPF Out to Pitch".inform;}
 	);
 };
 //Highpass cutfreq
@@ -80,10 +80,10 @@ StaticText(~cbox_w,Rect(575,493,125,14)).string_("Bandwidth").font_(Font("Dejavu
 ~cbox_bandoutpop.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
 ~cbox_bandoutpop.action={|menu|
 	switch(menu.value,
-		0,{~cbox_mastbandf.set(\out,50);"+ BPF Out to Master".inform;},
-		1,{~cbox_mastbandf.set(\out,52);"+ BPF Out to Reverb".inform;},
-		2,{~cbox_mastbandf.set(\out,54);"+ BPF Out to Delay".inform;},
-		3,{~cbox_mastbandf.set(\out,56);"+ BPF Out to Pitch".inform;}
+		0,{~cbox_mastbandf.set(\out,CaosBox.engine.busIndex(\master));"+ BPF Out to Master".inform;},
+		1,{~cbox_mastbandf.set(\out,CaosBox.engine.busIndex(\reverb));"+ BPF Out to Reverb".inform;},
+		2,{~cbox_mastbandf.set(\out,CaosBox.engine.busIndex(\delay));"+ BPF Out to Delay".inform;},
+		3,{~cbox_mastbandf.set(\out,CaosBox.engine.busIndex(\pitch));"+ BPF Out to Pitch".inform;}
 	);
 
 };
@@ -125,13 +125,13 @@ StaticText(~cbox_w,Rect(785,305,235,12)).string_(" channel: 64").font_(Font("Dej
 ~cbox_grainpop.background_(~cbox_grandcolor).stringColor_(Color.gray(0.5));
 ~cbox_grainpop.action={|menu|
 	switch(menu.value,
-		0,{~cbox_grains.set(\out,50);"+ Granulator Out to Master".inform;},
-		1,{~cbox_grains.set(\out,52);"+ Granulator Out to Reverb".inform;},
-		2,{~cbox_grains.set(\out,54);"+ Granulator Out to Delay".inform;},
-		3,{~cbox_grains.set(\out,56);"+ Granulator Out to Pitch".inform;},
-		4,{~cbox_grains.set(\out,58);"+ Granulator Out to LPF".inform;},
-		5,{~cbox_grains.set(\out,60);"+ Granulator Out to HPF".inform;},
-		6,{~cbox_grains.set(\out,62);"+ Granulator Out to BPF".inform;}
+		0,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\master));"+ Granulator Out to Master".inform;},
+		1,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\reverb));"+ Granulator Out to Reverb".inform;},
+		2,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\delay));"+ Granulator Out to Delay".inform;},
+		3,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\pitch));"+ Granulator Out to Pitch".inform;},
+		4,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\lpf));"+ Granulator Out to LPF".inform;},
+		5,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\hpf));"+ Granulator Out to HPF".inform;},
+		6,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\bpf));"+ Granulator Out to BPF".inform;}
 	);
 };
 //

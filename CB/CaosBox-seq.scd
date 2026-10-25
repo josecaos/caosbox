@@ -3,19 +3,36 @@
 //////////////////////////////////////////////////
 (//orden de ejecucion
 Tdef(\secuencias,{
-	var reset;
-	//master
-	~cbox_mast=Synth(\master);
-	// fx
-	~cbox_mastrev=Synth(\aux1);
-	~cbox_mastdel=Synth(\aux2);
-	~cbox_mastpit=Synth(\aux3);
+	var reset, eng;
+	eng = CaosBox.engine;
+	//master (dentro de su grupo; lee el bus \master)
+	~cbox_mast=Synth(\master,
+		[\inbus, eng.busIndex(\master), \out, 0],
+		eng.groupID(\master));
+	// fx (grupo fx; entran por su bus y salen al master)
+	~cbox_mastrev=Synth(\aux1,
+		[\inbus, eng.busIndex(\reverb), \out, eng.busIndex(\master)],
+		eng.groupID(\fx));
+	~cbox_mastdel=Synth(\aux2,
+		[\inbus, eng.busIndex(\delay), \out, eng.busIndex(\master)],
+		eng.groupID(\fx));
+	~cbox_mastpit=Synth(\aux3,
+		[\inbus, eng.busIndex(\pitch), \out, eng.busIndex(\master)],
+		eng.groupID(\fx));
 	//Filtros
-	~cbox_mastlowf=Synth(\lowfilt);
-	~cbox_masthighf=Synth(\highfilt);
-	~cbox_mastbandf=Synth(\bandfilt);
+	~cbox_mastlowf=Synth(\lowfilt,
+		[\inbus, eng.busIndex(\lpf), \out, eng.busIndex(\master)],
+		eng.groupID(\fx));
+	~cbox_masthighf=Synth(\highfilt,
+		[\inbus, eng.busIndex(\hpf), \out, eng.busIndex(\master)],
+		eng.groupID(\fx));
+	~cbox_mastbandf=Synth(\bandfilt,
+		[\inbus, eng.busIndex(\bpf), \out, eng.busIndex(\master)],
+		eng.groupID(\fx));
 	//granulador
-	~cbox_grains=Synth(\granulador);
+	~cbox_grains=Synth(\granulador,
+		[\inbus, eng.busIndex(\grains), \out, eng.busIndex(\master)],
+		eng.groupID(\fx));
 	//
 	{
 		//guia led steps
@@ -26,21 +43,9 @@ Tdef(\secuencias,{
 				~cbox_indice,{~cbox_lightsteps[~cbox_indice].value = 1;~cbox_lightsteps[reset].value = 0}
 			)
 		}.defer(0.01);
-		// percussions: the step holds the function captured when it was set
-		~cbox_tracks[\kick].at(~cbox_indice).play;
-		~cbox_tracks[\snare].at(~cbox_indice).play;
-		~cbox_tracks[\hihats].at(~cbox_indice).play;
-		~cbox_tracks[\kick2].at(~cbox_indice).play;
-		~cbox_tracks[\snare2].at(~cbox_indice).play;
-		~cbox_tracks[\hihats2].at(~cbox_indice).play;
-		// melodic lines: each track advances its note stream and triggers its voice
-		~cbox_tracks[\bass].step(~cbox_indice);
-		~cbox_tracks[\bass2].step(~cbox_indice);
-		~cbox_tracks[\amb].step(~cbox_indice);
-		~cbox_tracks[\amb2].step(~cbox_indice);
-		~cbox_tracks[\chords].step(~cbox_indice);
-		~cbox_tracks[\chords2].step(~cbox_indice);
-		~cbox_tracks[\in].step(~cbox_indice);
+		// cada pista despacha su step: percusion toca la funcion guardada,
+		// melodicos avanzan su linea y disparan la voz
+		~cbox_tracks.do { |track| track.step(~cbox_indice) };
 		//// end instruments
 		~cbox_tiempos.wait;
 

@@ -38,33 +38,34 @@ CaosInstrument {
 	var <oneShot;
 	var <notes;
 	var <output;
+	var <target;
 	var <nodeID;
 	var <note;
 	var stream;
 
-	*new { |name, track, kind = \synth, defName, func, out, params, notes, mode = \free, output, retrigger = false, noteOrder = \seq, oneShot = false|
+	*new { |name, track, kind = \synth, defName, func, out, params, notes, mode = \free, output, retrigger = false, noteOrder = \seq, oneShot = false, target|
 
-		^super.new.init(name, track, kind, defName, func, out, params, notes, mode, output, retrigger, noteOrder, oneShot);
+		^super.new.init(name, track, kind, defName, func, out, params, notes, mode, output, retrigger, noteOrder, oneShot, target);
 
 	}
 
 	// atajo: percusion (funcion jugable, sin sintesis persistente)
-	*percussion { |name, track, func|
+	*percussion { |name, track, func, target|
 
-		^this.new(name, track, \function, func: func);
+		^this.new(name, track, \function, func: func, target: target);
 
 	}
 
 	// atajo: melodico (SynthDef persistente con linea de notas)
-	*synth { |name, track, defName, out, params, notes, mode = \free, output, retrigger = false, noteOrder = \seq, oneShot = false|
+	*synth { |name, track, defName, out, params, notes, mode = \free, output, retrigger = false, noteOrder = \seq, oneShot = false, target|
 
 		^this.new(name, track, \synth, defName: defName, out: out,
 			params: params, notes: notes, mode: mode, output: output,
-			retrigger: retrigger, noteOrder: noteOrder, oneShot: oneShot);
+			retrigger: retrigger, noteOrder: noteOrder, oneShot: oneShot, target: target);
 
 	}
 
-	init { |argName, argTrack, argKind, argDefName, argFunc, argOut, argParams, argNotes, argMode, argOutput, argRetrigger, argNoteOrder, argOneShot|
+	init { |argName, argTrack, argKind, argDefName, argFunc, argOut, argParams, argNotes, argMode, argOutput, argRetrigger, argNoteOrder, argOneShot, argTarget|
 
 		name = argName.asSymbol;
 		track = argTrack.asSymbol;
@@ -77,6 +78,7 @@ CaosInstrument {
 		retrigger = argRetrigger;
 		noteOrder = argNoteOrder;
 		oneShot = argOneShot;
+		target = argTarget;
 		output = argOutput ? Server.default;
 
 		if(kinds.includes(kind).not, {
@@ -207,7 +209,8 @@ CaosInstrument {
 
 	prTriggerFunction {
 
-		func.play;
+		// dentro del grupo de instrumentos, si el engine lo dio
+		if(target.notNil, { func.play(target) }, { func.play });
 
 		^this;
 
@@ -266,7 +269,7 @@ CaosInstrument {
 
 		var pairs = [\out, out, \gate, 1] ++ this.prVoicePairs;
 
-		^(['/s_new', defName, nodeID, 0, 0] ++ pairs);
+		^(['/s_new', defName, nodeID, 0, target ? 0] ++ pairs);
 
 	}
 

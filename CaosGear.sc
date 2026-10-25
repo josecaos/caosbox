@@ -214,15 +214,24 @@ CaosGear : CaosBox {
 
 		if(func.isNil, { ^("CaosGear: nothing to track for" + id).inform });
 
-		voice = CaosInstrument.percussion(id.asSymbol, track, func);
+		voice = CaosInstrument.percussion(id.asSymbol, track, func, this.prInstrumentGroup);
 
 		if(~cbox_instruments.isNil, { ~cbox_instruments = Dictionary.new });
 		~cbox_instruments.put(track, voice);
+		// la percusion toca funciones guardadas en el step: el grupo va en la pista
+		~cbox_tracks[track].target = this.prInstrumentGroup;
 
 		instrument = voice;
 		instance_id = id;
 
 		^voice;
+
+	}
+
+	// grupo de instrumentos del engine (nil sin engine: tests)
+	prInstrumentGroup {
+
+		^CaosBox.engine !? { |eng| eng.groupID(\instruments) };
 
 	}
 
@@ -232,14 +241,14 @@ CaosGear : CaosBox {
 
 		var instrument;
 
-		instrument = CaosInstrument.synth(\bass, \bass, \bajouno, out.asArray.first,
+		instrument = CaosInstrument.synth(\bass, \bass, \bajouno, CaosBox.resolveOut(out.asArray.first),
 			(
 				doneAction: 2,// free al soltar gate (1 = pause y deja el nodo colgado)
 				att: att, rel: rel,
 				filtminf: filtMinFreq, filtmaxf: filtMaxFreq, filtime: filtTime,
 				rq: rq, iphase: iphase, amp1: amp1, amp2: amp2, pan: pan
 			),
-			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true, target: this.prInstrumentGroup);
 
 		^this.prRegister(\bass, instrument, "Bass");
 
@@ -261,14 +270,14 @@ CaosGear : CaosBox {
 
 		var instrument;
 
-		instrument = CaosInstrument.synth(\bass2, \bass2, \bajodos, out.asArray.first,
+		instrument = CaosInstrument.synth(\bass2, \bass2, \bajodos, CaosBox.resolveOut(out.asArray.first),
 			(
 				doneAction: 2,// free al soltar gate (1 = pause y deja el nodo colgado)
 				att: att, rel: rel, trig: filtTrig,
 				filtminf: filtMinFreq, filtmaxf: filtMaxFreq, filtime: filtTime,
 				rq: rq, bandw: bw, iphase: iphase, amp1: amp1, amp2: amp2, pan: pan
 			),
-			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true, target: this.prInstrumentGroup);
 
 		^this.prRegister(\bass2, instrument, "Bass2");
 
@@ -280,12 +289,12 @@ CaosGear : CaosBox {
 
 		var instrument;
 
-		instrument = CaosInstrument.synth(\pad, \amb, \ambuno, out.asArray.first,
+		instrument = CaosInstrument.synth(\pad, \amb, \ambuno, CaosBox.resolveOut(out.asArray.first),
 			(
 				att: att, rel: rel, semi: semi, iphase: iphase,
 				cutf: cutf, rq: rq, amp: amp, pan: pan
 			),
-			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true, target: this.prInstrumentGroup);
 
 		^this.prRegister(\amb, instrument, "Amb");
 
@@ -297,12 +306,12 @@ CaosGear : CaosBox {
 
 		var instrument;
 
-		instrument = CaosInstrument.synth(\pad2, \amb2, \ambdos, out.asArray.first,
+		instrument = CaosInstrument.synth(\pad2, \amb2, \ambdos, CaosBox.resolveOut(out.asArray.first),
 			(
 				att: att, rel: rel, maxNote: maxNote, fm: fm, harm: harm,
 				amp1: amp1, amp2: amp2, pan: pan
 			),
-			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true, target: this.prInstrumentGroup);
 
 		^this.prRegister(\amb2, instrument, "Amb2");
 
@@ -314,12 +323,12 @@ CaosGear : CaosBox {
 
 		var instrument;
 
-		instrument = CaosInstrument.synth(\chords, \chords, \acordesuno, out.asArray.first,
+		instrument = CaosInstrument.synth(\chords, \chords, \acordesuno, CaosBox.resolveOut(out.asArray.first),
 			(
 				att: att, rel: rel, iphase: iphase, width: width,
 				cutf: cutf, rq: rq, pan: pan, amp: amp
 			),
-			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true, target: this.prInstrumentGroup);
 
 		^this.prRegister(\chords, instrument, "Chords");
 
@@ -331,12 +340,12 @@ CaosGear : CaosBox {
 
 		var instrument;
 
-		instrument = CaosInstrument.synth(\chords2, \chords2, \acordesdos, out.asArray.first,
+		instrument = CaosInstrument.synth(\chords2, \chords2, \acordesdos, CaosBox.resolveOut(out.asArray.first),
 			(
 				att: att, rel: rel, iphase: iphase, width: width,
 				cutf: cutf, rq: rq, pan: pan, amp: amp
 			),
-			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true);
+			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true, target: this.prInstrumentGroup);
 
 		^this.prRegister(\chords2, instrument, "Chords2");
 
@@ -346,9 +355,9 @@ CaosGear : CaosBox {
 
 		var instrument;
 
-		instrument = CaosInstrument.synth(\lineIn, \in, \entrada, out.asArray.first,
+		instrument = CaosInstrument.synth(\lineIn, \in, \entrada, CaosBox.resolveOut(out.asArray.first),
 			(inchan: inchan, att: att, rel: rel),
-			nil, \free, nil, retrigger, \seq, oneShot: true);
+			nil, \free, nil, retrigger, \seq, oneShot: true, target: this.prInstrumentGroup);
 
 		^this.prRegister(\in, instrument, "LineIn");
 

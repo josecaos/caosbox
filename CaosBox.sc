@@ -2,6 +2,7 @@
 CaosBox {
 
 	classvar <server,url;
+	classvar <engine;
 	classvar <version = "2.1.1";// version unica: la usan el GUI y la bienvenida
 
 	*environment {|gui = true|
@@ -56,23 +57,32 @@ CaosBox {
 	init {|window = true|
 
 		server = Server.local;
-		// TODO: pasar a metodo para acambiar valores
-		server.options.memSize = 66666;
-		server.options.maxNodes = 4096;
+		engine = CaosEngine.new(server);// server, buses con nombre y grupos
 
-			server.waitForBoot {
+		engine.boot({|eng|
 
-				(~cbox_url +/+ "CB/CaosBox-load.scd").load;
+			(~cbox_url +/+ "CB/CaosBox-load.scd").load;
 
-				//evalua si se muestra el GUI
-				if(window == true, {
-					~cbox_w.front;
-					"Sequencer GUI is ON".inform;
-				},{
-					"Sequencer GUI is OFF, you are running without a Visual Interface".inform;
-				});
+			//evalua si se muestra el GUI
+			if(window == true, {
+				~cbox_w.front;
+				"Sequencer GUI is ON".inform;
+			},{
+				"Sequencer GUI is OFF, you are running without a Visual Interface".inform;
+			});
 
-			};
+		});
+
+		^this;
+
+	}
+
+	// nombre de bus -> indice; sin engine, el valor pasa tal cual (compat)
+	*resolveOut {|out|
+
+		if(engine.isNil, { ^out });
+
+		^engine.resolveOut(out);
 
 	}
 
@@ -608,6 +618,7 @@ CaosBox {
 
 	*close {
 
+		engine !? { |eng| eng.free };
 		Tdef.removeAll;
 		this.server.quit.freeAll.reboot;
 		this.server.recompile;
