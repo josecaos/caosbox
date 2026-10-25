@@ -56,13 +56,18 @@ Add MIDI triggering optional
 # Changelog
 
 
+- ### v2.1.1
+
 - ### v2.1.0
-    - New Calsses:
+    - New Classes:
         - CaosTrack
-            - Steps model
+            - Steps pattern model
+            - View notifications through `onChange` callback
         - TestCaosTrack
-            - Test Headless Sequencer
-    
+            - 18 headless tests, 41 assertions (no Server, no GUI)
+    - CaosBox.setSteps filters out-of-range steps instead of changing the input
+    - Steps now live in ~cbox_tracks; GUI draws through CaosBox.setStep
+    - Removed global variable ~cbox_steps and its 13 mirror step arrays
 
 - ### v2.0.1
     - Bugfix: 

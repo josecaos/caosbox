@@ -8,14 +8,9 @@ for (0, 31, {|i|
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
 	~cbox_checkin.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 250, 20, 20)).action={|val|
-		if(val.value,{
-			~cbox_sintetizadores.value(\in);
-			~cbox_in_seq.put(i,~cbox_entrada)
-			},
-			{
-			~cbox_in_seq.put(i,nil)
-		}
-		)});
+		CaosBox.setStep(\in, i, val.value);
+		if(val.value, { ~cbox_sintetizadores.value(\in) });
+	});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -27,12 +22,7 @@ for (0, 31, {|i|
 
 	if(val.value==0,{
 
-		~cbox_in_seq.put((0..31),nil);
-
-		for(0, 31, {|i|
-			~cbox_checkin[i].value = 0;
-
-		});
+		CaosBox.clearSteps(\in);
 
 		"Cleared line in steps!".inform;
 })};
@@ -249,5 +239,7 @@ StaticText(~cbox_w,Rect(785,585,235,15)).string_("Automation:").font_(Font("Deja
 ~cbox_autobotg.states=[[" Auto On ",Color.gray(0.85),Color(alpha:0.25)],
 	[" Auto Off ",Color.black,Color.green(0.5)]];
 ~cbox_autobotg.action={|val|if(val.value==1,{Tdef(\autog).play},{Tdef(\autog).stop})};
+// --- model -> view: the track announces changes, the checkbox follows
+~cbox_tracks[\in].onChange = {|track, index, value| ~cbox_checkin[index].value_(if(value.notNil, 1, 0)) };
 //
 );

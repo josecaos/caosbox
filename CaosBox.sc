@@ -287,67 +287,60 @@ CaosBox {
 
 	}
 
-	*clearSteps {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]|
+	// step patterns live in CaosTrack (~cbox_tracks). See Classes/CaosTrack.sc
+	*clearSteps {|track, steps|
 
-		var index,dictionary = ~cbox_steps;
+		var pattern = ~cbox_tracks[track];
 
-		for(0,steps.size-1,{|i|
+		if(pattern.isNil, { ^("Unknown track: " + track).inform });
 
-			index=steps[i];
-
-			dictionary[track][0][index].valueAction_(false);
-
-		});
+		pattern.clear(steps);
 
 		^"Cleared steps".inform;
 
 	}
 
-	*setSteps {|track,steps = #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31], overrideSteps = false|
+	*setSteps {|track, steps, overrideSteps = false|
 
-		var index,arr,leftover,dictionary = ~cbox_steps;
+		var pattern = ~cbox_tracks[track];
 
-		if(steps.isArray,{
-			leftover = steps.indexOfGreaterThan(31);
+		if(pattern.isNil, { ^("Unknown track: " + track).inform });
 
-			if(leftover != nil, {//Normalize steps array size to avoid errors
-				(steps.size - leftover).do({
-					steps.removeAt(leftover);
-				});
-			});
+		if(steps.isNil, { steps = (0 .. (pattern.size - 1)) });
 
-			arr = steps;
-		}, {
-			arr = steps.asArray;//In case a non array is given
-		});
-//
-
-
-		if(overrideSteps == true,{this.clearSteps(track)},{this.clearSteps(track,arr)});
-
-		for(0,arr.size-1,{|i|
-			index=arr[i];
-			dictionary[track][0][index].valueAction_(true);
-		});
+		pattern.setIndices(steps, overrideSteps);
 
 		^"Added steps".inform;
+
 	}
 
-	*randSteps {|track,steps_num = 1|
+	*setStep {|track, index, on = true|
 
-		var a,step;
+		var pattern = ~cbox_tracks[track];
 
-		a = Array.new(32);
+		if(pattern.isNil, { ^("Unknown track: " + track).inform });
 
-		step = Pxrand((0..31),inf).asStream;
+		pattern.putStep(index, on);
 
-		for(1,steps_num,{|i|
-			a = a.add(step.next);
-		});
+		^"";
 
-		this.clearSteps(track);
+	}
 
-		^this.setSteps(track,a);
+	*randSteps {|track, steps_num = 1|
+
+		var pattern = ~cbox_tracks[track];
+		var picks, randomStep;
+
+		if(pattern.isNil, { ^("Unknown track: " + track).inform });
+
+		picks = Array.new;
+		randomStep = Pxrand((0 .. (pattern.size - 1)), inf).asStream;
+
+		steps_num.do { |i| picks = picks.add(randomStep.next) };
+
+		pattern.setIndices(picks);
+
+		^"Added steps".inform;
 
 	}
 	//

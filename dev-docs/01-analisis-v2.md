@@ -469,3 +469,5 @@ Notas:
 | 2026-08-14 | 0a | Parches B2, B3, B6, B7, B8, B9, B10, B11, B17 aplicados; class library compila. Pendiente: commit y validación de oído. |
 | 2026-08-14 | 0a | Commit `7fa2580` (josecaos). |
 | 2026-08-14 | 1.1 | `Classes/CaosTrack.sc` + `Tests/TestCaosTrack.sc`; 41 aserciones en verde, headless (sin server ni GUI). |
+| 2026-08-14 | 1.1 | Commit `baea79a`; detalle en `dev-docs/02-fix-1-modelo-steps.md`. |
+| 2026-08-14 | 1.2 | Cableado: `~cbox_tracks` (13), API delegando, seq y GUI leyendo/escribiendo el modelo; se borran 13 arrays y `~cbox_steps`. 41 tests + smoke test verdes; 12/12 `.scd` parsean. Pendiente commit y prueba en la app. |

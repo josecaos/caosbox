@@ -4,20 +4,6 @@
 // Flags
 ~cbox_debug_mode = true;
 // General
-~cbox_bombo=Array.fill(32,nil);
-~cbox_tarola=Array.fill(32,nil);
-~cbox_contras=Array.fill(32,nil);
-~cbox_bombo2=Array.fill(32,nil);
-~cbox_tarola2=Array.fill(32,nil);
-~cbox_contras2=Array.fill(32,nil);
-~cbox_bajo_seq=Array.fill(32,nil);
-~cbox_bajo_seq2=Array.fill(32,nil);
-~cbox_ambiente_seq=Array.fill(32,nil);
-~cbox_ambiente_seq2=Array.fill(32,nil);
-~cbox_sinte_seq=Array.fill(32,nil);
-~cbox_sinte_seq2=Array.fill(32,nil);
-~cbox_in_seq=Array.fill(32,nil);
-//
 ~cbox_indice=0;
 TempoClock.tempo = 126/60;
 ~cbox_clock={ TempoClock.tempo = (if(~cbox_numclock.notNil,{~cbox_numclock.value},{126}))/60 };
@@ -81,21 +67,23 @@ TempoClock.tempo = 126/60;
 ~cbox_b2=nil;//kick2
 ~cbox_t2=nil;//snare2
 ~cbox_h2=nil;//hat2
-// Dictionary for core functions.
-~cbox_steps = Dictionary[
-	\kick -> [~cbox_checkbombo,~cbox_bombo,~cbox_b],
-	\snare -> [~cbox_checktarola,~cbox_tarola,~cbox_t],
-	\hihats -> [~cbox_checkcontras,~cbox_contras,~cbox_h],
-	\kick2 -> [~cbox_checkbombo2,~cbox_bombo2,~cbox_b2],
-	\snare2 -> [~cbox_checktarola2,~cbox_tarola2,~cbox_t2],
-	\hihats2 -> [~cbox_checkcontras2,~cbox_contras2,~cbox_h2],
-	\bass -> [~cbox_checkbajo,~cbox_bajo_seq,~cbox_bass],
-	\bass2 -> [~cbox_checkbajo2,~cbox_bajo_seq2,~cbox_bass2],
-	\amb -> [~cbox_checkambiente,~cbox_ambiente_seq,~cbox_amb],
-	\amb2 -> [~cbox_checkambiente2,~cbox_ambiente_seq2,~cbox_amb2],
-	\chords -> [~cbox_checksinte,~cbox_sinte_seq,~cbox_chord],
-	\chords2 -> [~cbox_checksinte2,~cbox_sinte_seq2,~cbox_chord2],
-	\in -> [~cbox_checkin,~cbox_in_seq,~cbox_entrada]
+// Step patterns (model, see Classes/CaosTrack.sc):
+//   \snapshot stores the value resolved when the step is set (percussion)
+//   \live stores only the gate and resolves the instrument at trigger time
+~cbox_tracks = Dictionary[
+	\kick -> CaosTrack.new(\kick, \snapshot, 32, { ~cbox_b }),
+	\snare -> CaosTrack.new(\snare, \snapshot, 32, { ~cbox_t }),
+	\hihats -> CaosTrack.new(\hihats, \snapshot, 32, { ~cbox_h }),
+	\kick2 -> CaosTrack.new(\kick2, \snapshot, 32, { ~cbox_b2 }),
+	\snare2 -> CaosTrack.new(\snare2, \snapshot, 32, { ~cbox_t2 }),
+	\hihats2 -> CaosTrack.new(\hihats2, \snapshot, 32, { ~cbox_h2 }),
+	\bass -> CaosTrack.new(\bass, \live, 32),
+	\bass2 -> CaosTrack.new(\bass2, \live, 32),
+	\amb -> CaosTrack.new(\amb, \live, 32),
+	\amb2 -> CaosTrack.new(\amb2, \live, 32),
+	\chords -> CaosTrack.new(\chords, \live, 32),
+	\chords2 -> CaosTrack.new(\chords2, \live, 32),
+	\in -> CaosTrack.new(\in, \live, 32)
 ];
 // Files
 ~cbox_fecha=Date.getDate;

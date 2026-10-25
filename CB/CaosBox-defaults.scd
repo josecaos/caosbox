@@ -18,9 +18,7 @@ Tdef.defaultQuant = 1;
 		\bass,{
 			~cbox_bass.free;// sin esto se duplica el nodo
 			~cbox_bass=Synth.basicNew(\bajouno,CaosBox.server,node);
-			~cbox_bajo_seq.put(
-				~cbox_indice,
-				CaosBox.server.sendBundle(nil,~cbox_bass.newMsg(args:[\gate,1,\doneAction,1])));// trigger
+			CaosBox.server.sendBundle(nil,~cbox_bass.newMsg(args:[\gate,1,\doneAction,1]));// trigger
 			if(~cbox_debug_mode,{
 				("Bajo: " + ~cbox_bass.nodeID).postcln;
 			});
@@ -29,9 +27,7 @@ Tdef.defaultQuant = 1;
 			~cbox_bass2.free;
 			~cbox_bass2=Synth(\bajodos);
 			// ~cbox_bass2=Synth.basicNew(\bajodos,CaosBox.server,node);
-			~cbox_bajo_seq2.put(~cbox_indice,~cbox_bass2);// trigger
 			~cbox_bass2.set(\gate,1,\doneAction,1);
-			// ~cbox_bajo_seq2.put(~cbox_indice,CaosBox.server.sendBundle(nil,~cbox_bass2.newMsg(args:[\att,~cbox_bass2attknob.value,\rel,~cbox_bass2relknob.value,\gate,1,\doneAction,1])));// trigger
 			if(~cbox_debug_mode,{
 				("Bajo 2: " + ~cbox_bass2.nodeID).postcln;
 			});

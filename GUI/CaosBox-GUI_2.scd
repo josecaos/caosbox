@@ -6,19 +6,11 @@ for (0, 31, { |i|
 
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
-	var check = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 130, 20, 20));
+	var check = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 130, 20, 20)).action={|val|
+		CaosBox.setStep(\bass, i, val.value);
+	};
 
 	~cbox_checkbajo.put(i,check);
-
-	// check.action = {|val|
-	// 	if(val.value,{
-			// ~cbox_sintetizadores.value(\bass, 1100,i);
-			// ~cbox_bajo_seq.put(i,CaosBox.server.sendBundle(nil, ~cbox_bass.newMsg(args:[\gate,1])));
-			// ~cbox_bajo_seq.put(i,~cbox_bass);
-	// },
-	// {
-	// ~cbox_bajo_seq.put(i,nil);
-	// })};
 
 	~cbox_checkbox = ~cbox_checkbox + a;// pinta secuenciador para instrumento
 
@@ -29,12 +21,7 @@ for (0, 31, { |i|
 
 	"Cleared bass steps!".inform;
 
-	~cbox_bajo_seq.put((0..31),nil);
-
-	for(0, 31, {|i|
-		~cbox_checkbajo[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\bass);
 
 })};
 //bajo attack and release knobs
@@ -51,7 +38,9 @@ StaticText(~cbox_w,Rect(5,152,53,15)).string_("Bass2:").stringColor_(Color(0.9,0
 for (0, 31, {|i|
 
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
-	var check = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 150, 20, 20));
+	var check = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 150, 20, 20)).action={|val|
+		CaosBox.setStep(\bass2, i, val.value);
+	};
 
 	~cbox_checkbajo2.put(i,check);
 
@@ -65,12 +54,7 @@ for (0, 31, {|i|
 
 	"Cleared bass 2 steps!".inform;
 
-	~cbox_bajo_seq2.put((0..31),nil);
-
-	for(0, 31, {|i|
-		~cbox_checkbajo2[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\bass2);
 
 })};
 //bass attack and release knobs
@@ -87,13 +71,9 @@ for (0, 31, { |i|
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
 	~cbox_checkambiente.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 170, 20, 20)).action={|val|
-		if(val.value,
-			{
-				~cbox_sintetizadores.value(\amb);
-				~cbox_ambiente_seq.put(i,~cbox_amb)},
-			{
-				~cbox_ambiente_seq.put(i,nil)
-			})});
+		CaosBox.setStep(\amb, i, val.value);
+		if(val.value, { ~cbox_sintetizadores.value(\amb) });
+	});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -105,12 +85,7 @@ for (0, 31, { |i|
 
 	"Cleared pad steps!".inform;
 
-	~cbox_ambiente_seq.put((0..31),nil);
-
-	for(0, 31, {|i|
-		~cbox_checkambiente[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\amb);
 
 })};
 //ambiente attack and release knobs
@@ -127,13 +102,9 @@ for (0, 31, { |i|
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
 	~cbox_checkambiente2.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 190, 20, 20)).action={|val|
-		if(val.value, {
-				~cbox_sintetizadores.value(\amb2);
-				~cbox_ambiente_seq2.put(i,~cbox_amb2);
-			},
-			{
-				~cbox_ambiente_seq2.put(i,nil);
-			})});
+		CaosBox.setStep(\amb2, i, val.value);
+		if(val.value, { ~cbox_sintetizadores.value(\amb2) });
+	});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -145,12 +116,7 @@ for (0, 31, { |i|
 
 	"Cleared pad 2 steps!".inform;
 
-	~cbox_ambiente_seq2.put((0..31),nil);
-
-	for(0, 31, {|i|
-		~cbox_checkambiente2[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\amb2);
 
 })};
 
@@ -168,14 +134,8 @@ for (0, 31, { |i|
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
 	~cbox_checksinte.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 210, 20, 20)).action={|val|
-		if(val.value,
-			{
-				~cbox_sintetizadores.value(\chords);
-				~cbox_sinte_seq.put(i,~cbox_chord);
-			},{
-				~cbox_sinte_seq.put(i,nil);
-			}
-		)
+		CaosBox.setStep(\chords, i, val.value);
+		if(val.value, { ~cbox_sintetizadores.value(\chords) });
 	});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
@@ -188,12 +148,7 @@ for (0, 31, { |i|
 
 	"Cleared chord steps!".inform;
 
-	~cbox_sinte_seq.put((0..31),nil);
-
-	for(0, 31, {|i|
-		~cbox_checksinte[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\chords);
 
 })};
 //acordes attack and release knobs
@@ -211,14 +166,9 @@ for (0, 31, { |i|
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
 	~cbox_checksinte2.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 230, 20, 20)).action={|val|
-		if(val.value,{
-			~cbox_sintetizadores.value(\chords2);
-			~cbox_sinte_seq2.put(i,~cbox_chord2)
-		},
-		{
-			~cbox_sinte_seq2.put(i,nil)
-		}
-	)});
+		CaosBox.setStep(\chords2, i, val.value);
+		if(val.value, { ~cbox_sintetizadores.value(\chords2) });
+	});
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -230,14 +180,16 @@ for (0, 31, { |i|
 
 	"Cleared guitChord steps!".inform;
 
-	~cbox_sinte_seq2.put((0..31),nil);
-
-	for(0, 31, {|i|
-		~cbox_checksinte2[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\chords2);
 
 })};
+// --- model -> view: the track announces changes, the checkbox follows
+~cbox_tracks[\bass].onChange = {|track, index, value| ~cbox_checkbajo[index].value_(if(value.notNil, 1, 0)) };
+~cbox_tracks[\bass2].onChange = {|track, index, value| ~cbox_checkbajo2[index].value_(if(value.notNil, 1, 0)) };
+~cbox_tracks[\amb].onChange = {|track, index, value| ~cbox_checkambiente[index].value_(if(value.notNil, 1, 0)) };
+~cbox_tracks[\amb2].onChange = {|track, index, value| ~cbox_checkambiente2[index].value_(if(value.notNil, 1, 0)) };
+~cbox_tracks[\chords].onChange = {|track, index, value| ~cbox_checksinte[index].value_(if(value.notNil, 1, 0)) };
+~cbox_tracks[\chords2].onChange = {|track, index, value| ~cbox_checksinte2[index].value_(if(value.notNil, 1, 0)) };
 //acordes 2 attack and release knobs
 ~cbox_sinte_seq2attknob=EZKnob(~cbox_w,Rect(785,231,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.1,\att),{|a| a.value;~cbox_synth2.set(\att,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
 ~cbox_sinte_seq2relknob=EZKnob(~cbox_w,Rect(870,231,81,17),nil,ControlSpec(0.05,8,\lin,0.001,0.5,\rel),{|a| a.value;~cbox_synth2.set(\rel,a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);

@@ -26,106 +26,79 @@ Tdef(\secuencias,{
 				~cbox_indice,{~cbox_lightsteps[~cbox_indice].value = 1;~cbox_lightsteps[reset].value = 0}
 			)
 		}.defer(0.01);
-		// percussions run as functions
-		~cbox_bombo[~cbox_indice].play;
-		~cbox_tarola[~cbox_indice].play;
-		~cbox_contras[~cbox_indice].play;
-		~cbox_bombo2[~cbox_indice].play;
-		~cbox_tarola2[~cbox_indice].play;
-		~cbox_contras2[~cbox_indice].play;
-		// synths run as realtime
+		// percussions: the step holds the function captured when it was set
+		~cbox_tracks[\kick].at(~cbox_indice).play;
+		~cbox_tracks[\snare].at(~cbox_indice).play;
+		~cbox_tracks[\hihats].at(~cbox_indice).play;
+		~cbox_tracks[\kick2].at(~cbox_indice).play;
+		~cbox_tracks[\snare2].at(~cbox_indice).play;
+		~cbox_tracks[\hihats2].at(~cbox_indice).play;
+		// melodic lines: the step is a gate, the instrument is triggered here
+		// (Nil.set is a no-op, so an uninitialised synth is harmless)
 		{
-		if(~cbox_checkbajo[~cbox_indice].value == true,//checkbox esta encendido
-			{~cbox_sintetizadores.value(\bass,1100,~cbox_indice)});//trigger
+			if(~cbox_tracks[\bass].at(~cbox_indice).notNil, {
+				~cbox_sintetizadores.value(\bass,1100,~cbox_indice);//trigger
+			});
 		}.defer(0.01);
 		//
 		{
-		if(~cbox_checkbajo2[~cbox_indice].value == true,
-			{~cbox_sintetizadores.value(\bass2,1101,~cbox_indice);});
+			if(~cbox_tracks[\bass2].at(~cbox_indice).notNil, {
+				~cbox_sintetizadores.value(\bass2,1101,~cbox_indice);
+			});
 		}.defer(0.01);
 		//
 		{
-		if(~cbox_checkambiente[~cbox_indice].value == true,
-			{
-				~cbox_ambiente_seq.put(~cbox_indice,~cbox_amb);
-				~cbox_ambiente_seq[~cbox_indice].set(
+			if(~cbox_tracks[\amb].at(~cbox_indice).notNil, {
+				~cbox_amb.set(
 					\gate,1,
 					\att,~cbox_amb1attknob.value,
 					\rel,~cbox_amb1relknob.value
-					);
-					~cbox_sintetizadores.value(\amb);
-					~cbox_ambiente_seq.put(~cbox_indice,~cbox_amb);
-		},{
-			~cbox_checkambiente[~cbox_indice].value = false;
-			~cbox_ambiente_seq.put(~cbox_indice, nil);
+				);
+				~cbox_sintetizadores.value(\amb);
 			});
 		}.defer(0.01);
 		// amb2
 		{
-		if(~cbox_checkambiente2[~cbox_indice].value == true,
-			{
-				~cbox_ambiente_seq2.put(~cbox_indice,~cbox_amb2);
-				~cbox_ambiente_seq2[~cbox_indice].set(
+			if(~cbox_tracks[\amb2].at(~cbox_indice).notNil, {
+				~cbox_amb2.set(
 					\gate,1,
 					\att,~cbox_amb2attknob.value,
 					\rel,~cbox_amb2relknob.value
-					);
+				);
 				~cbox_sintetizadores.value(\amb2);
-				~cbox_ambiente_seq2.put(~cbox_indice,~cbox_amb2);
-		},{
-			~cbox_checkambiente2[~cbox_indice].value = false;
-			~cbox_ambiente_seq2.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
 		//
 		{
-		if(~cbox_checksinte[~cbox_indice].value == true,
-			{
-				~cbox_sinte_seq.put(~cbox_indice,~cbox_chord);
-				~cbox_sinte_seq[~cbox_indice].set(
+			if(~cbox_tracks[\chords].at(~cbox_indice).notNil, {
+				~cbox_chord.set(
 					\gate,1,
 					\att,~cbox_sinte_seq1attknob.value,
 					\rel,~cbox_sinte_seq1relknob.value
-					);
+				);
 				~cbox_sintetizadores.value(\chords);
-				~cbox_sinte_seq.put(~cbox_indice,~cbox_chord);
-		},{
-			~cbox_checksinte[~cbox_indice].value = false;
-			~cbox_sinte_seq.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
 		// chords2
 		{
-		if(~cbox_checksinte2[~cbox_indice].value == true,
-			{
-				~cbox_sinte_seq2.put(~cbox_indice,~cbox_chord2);
-				~cbox_sinte_seq2[~cbox_indice].set(
+			if(~cbox_tracks[\chords2].at(~cbox_indice).notNil, {
+				~cbox_chord2.set(
 					\gate,1,
 					\att,~cbox_sinte_seq2attknob.value,
 					\rel,~cbox_sinte_seq2relknob.value
-					);
+				);
 				~cbox_sintetizadores.value(\chords2);
-				~cbox_sinte_seq2.put(~cbox_indice,~cbox_chord2);
-		},{
-			~cbox_checksinte2[~cbox_indice].value = false;
-			~cbox_sinte_seq2.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
 		// in
 		{
-		if(~cbox_checkin[~cbox_indice].value == true,
-			{
-				~cbox_in_seq.put(~cbox_indice,~cbox_entrada);//default primera frase
-				~cbox_in_seq[~cbox_indice].set(
+			if(~cbox_tracks[\in].at(~cbox_indice).notNil, {
+				~cbox_entrada.set(
 					\gate,1,
 					\att,~cbox_inattknob.value,
 					\rel,~cbox_inrelknob.value
-					);
+				);
 				~cbox_sintetizadores.value(\in);
-				// ~cbox_in_seq.put(~cbox_indice,~cbox_entrada);//siguiente
-		},{
-			~cbox_checkin[~cbox_indice].value = false;
-			~cbox_in_seq.put(~cbox_indice, nil);
 			});
 		}.defer(0.01);
 		//// end instruments

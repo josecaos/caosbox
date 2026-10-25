@@ -42,7 +42,7 @@ for (0, 31, {|i|
 	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
 
 	~cbox_checkbombo[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 10, 20, 20)).action={|val|
-		if(val.value,{ ~cbox_bombo.put(i,~cbox_b/*~cbox_kickgear=Synth(\kickgear)*/)},{~cbox_bombo.put(i,nil)});
+		CaosBox.setStep(\kick, i, val.value);
 	};
 
 	~cbox_checkbox = ~cbox_checkbox + a;
@@ -55,13 +55,7 @@ for (0, 31, {|i|
 
 	"Cleared kick sequence!".inform;
 
-	~cbox_bombo.put((0..31),nil);
-
-	for(0, 31, {|i|
-
-		~cbox_checkbombo[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\kick);
 
 })};
 //
@@ -81,7 +75,8 @@ for (0, 31, { |i|
 	~cbox_checktarola.put(i,variable);
 
 	~cbox_checktarola[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 30, 20, 20)).action={|val|
-		if(val.value,{~cbox_tarola.put(i,~cbox_t)},{~cbox_tarola.put(i,nil)})};
+		CaosBox.setStep(\snare, i, val.value);
+	};
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -94,13 +89,7 @@ for (0, 31, { |i|
 
 	"Cleared snare sequence!".inform;
 
-	~cbox_tarola.put((0..31),nil);
-
-	for(0, 31, {|i|
-
-		~cbox_checktarola[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\snare);
 
 })};
 
@@ -119,7 +108,8 @@ for (0, 31, { |i|
 	~cbox_checkcontras.put(i,variable);
 
 	~cbox_checkcontras[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 50, 20, 20)).action={|val|
-		if(val.value,{~cbox_contras.put(i,~cbox_h)},{~cbox_contras.put(i,nil)})};
+		CaosBox.setStep(\hihats, i, val.value);
+	};
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -132,13 +122,7 @@ for (0, 31, { |i|
 
 	"Cleared hihat sequence!".inform;
 
-	~cbox_contras.put((0..31),nil);
-
-	for(0, 31, {|i|
-
-		~cbox_checkcontras[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\hihats);
 
 })};
 
@@ -157,7 +141,8 @@ for (0, 31, { |i|
 	~cbox_checkbombo2.put(i,variable);
 
 	~cbox_checkbombo2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 70, 20, 20)).action={|val|
-		if(val.value,{~cbox_bombo2.put(i,~cbox_b2)},{~cbox_bombo2.put(i,nil)})};
+		CaosBox.setStep(\kick2, i, val.value);
+	};
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -170,13 +155,7 @@ for (0, 31, { |i|
 
 	"Cleared kick 2 steps!".inform;
 
-	~cbox_bombo2.put((0..31),nil);
-
-	for(0, 31, {|i|
-
-		~cbox_checkbombo2[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\kick2);
 
 })};
 
@@ -194,7 +173,8 @@ for (0, 31, { |i|
 	~cbox_checktarola2.put(i,variable);
 
 	~cbox_checktarola2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 90, 20, 20)).action={|val|
-		if(val.value,{~cbox_tarola2.put(i,~cbox_t2)},{~cbox_tarola2.put(i,nil)})};
+		CaosBox.setStep(\snare2, i, val.value);
+	};
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -207,13 +187,7 @@ for (0, 31, { |i|
 
 	"Cleared snare 2 steps!".inform;
 
-	~cbox_tarola2.put((0..31),nil);
-
-	for(0, 31, {|i|
-
-		~cbox_checktarola2[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\snare2);
 
 })};
 
@@ -231,7 +205,8 @@ for (0, 31, { |i|
 	~cbox_checkcontras2.put(i,variable);
 
 	~cbox_checkcontras2[i] = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 110, 20, 20)).action={|val|
-		if(val.value,{~cbox_contras2.put(i,~cbox_h2)},{~cbox_contras2.put(i,nil)})};
+		CaosBox.setStep(\hihats2, i, val.value);
+	};
 
 	~cbox_checkbox = ~cbox_checkbox + a;
 
@@ -244,13 +219,7 @@ for (0, 31, { |i|
 
 	"Cleared hihat 2 steps!".inform;
 
-	~cbox_contras2.put((0..31),nil);
-
-	for(0, 31, {|i|
-
-		~cbox_checkcontras2[i].value = 0;
-
-	});
+	CaosBox.clearSteps(\hihats2);
 
 })};
 
@@ -313,4 +282,11 @@ StaticText(~cbox_w,Rect(920,635,99,15)).string_("History:").font_(Font("Dejavu S
 ~cbox_hbutt.action={|val| var h=History; if(val.value==0,{"->History saved @ caosbox/Histories folder<-".inform;
 	h.saveStory(~cbox_url +/+ "Histories" +/+ ~cbox_ftype[1] ++ ~cbox_filename.value.join ++ ~cbox_fecha.dayStamp ++ ".scd");
 	h.stop; h.clear})};
+// --- model -> view: the track announces changes, the checkbox follows
+~cbox_tracks[\kick].onChange = {|track, index, value| ~cbox_checkbombo[index].value_(if(value.notNil, 1, 0)) };
+~cbox_tracks[\snare].onChange = {|track, index, value| ~cbox_checktarola[index].value_(if(value.notNil, 1, 0)) };
+~cbox_tracks[\hihats].onChange = {|track, index, value| ~cbox_checkcontras[index].value_(if(value.notNil, 1, 0)) };
+~cbox_tracks[\kick2].onChange = {|track, index, value| ~cbox_checkbombo2[index].value_(if(value.notNil, 1, 0)) };
+~cbox_tracks[\snare2].onChange = {|track, index, value| ~cbox_checktarola2[index].value_(if(value.notNil, 1, 0)) };
+~cbox_tracks[\hihats2].onChange = {|track, index, value| ~cbox_checkcontras2[index].value_(if(value.notNil, 1, 0)) };
 );

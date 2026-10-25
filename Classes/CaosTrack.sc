@@ -1,7 +1,7 @@
-// CaosBox v2.0 - Step pattern model
+// CaosBox v2.0.0 - Step pattern model
 //
-// A CaosTrack owns the pattern of one lane: `size` steps (32 by default) and a
-// `mode` that says when the instrument is resolved.
+// A CaosTrack owns the pattern of one lane: `size`, 32 steps by default and a
+// `mode` how the instrument is resolved.
 //
 //   \snapshot  the step stores the value returned by `source` at the moment the
 //              step is set. Redefining the source later does not touch steps
@@ -9,12 +9,7 @@
 //   \live      the step stores only its gate (true / nil). The instrument is
 //              resolved when the step is triggered (melodic lanes today).
 //
-// This class knows nothing about GUI, Synth, Server or the CaosBox environment:
-// it holds the pattern and reports changes through `onChange`. Views (the GUI,
-// a TUI, MIDI) subscribe and re-read the model instead of owning it.
-//
 // Index handling is defensive on purpose: indices outside 0..size-1 are ignored
-// rather than throwing, and incoming arrays are never mutated.
 
 CaosTrack {
 
