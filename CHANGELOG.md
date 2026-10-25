@@ -9,6 +9,8 @@
 
 # Changelog
 
+- ### v2.2.0
+    - Unified Clock
 
 - ### v2.1.4
     - Add bus patching for percussion instruments
