@@ -91,48 +91,67 @@ angostar la ventana.
 
 Aprobada la muestra, la primera fila real ya usa la rejilla nueva:
 
-* `Classes/CaosBoxGUI.sc` — registro de la vista y paleta. `CaosBox.gui.color(\red)`
-  acepta símbolo, `Color` o array `[r, g, b(, a)]`, y repinta todas las rejillas
-  registradas. `CaosBox.gui` es perezoso y compartido (`CaosBox.gui === CaosBox.gui`).
 * `Classes/CaosStepGrid.sc` — rejilla de una pista: celdas redondeadas, gap de grupo,
   pintar/borrar arrastrando, playhead, `refresh`. La geometría (ancho de celda,
   posición, hit-testing) está en métodos de clase para probarla headless.
+* `Classes/CaosBoxGUI.sc` — registro de la vista; `CaosBox.gui.color(\red)` repinta
+  lo registrado y `CaosBox.gui` es perezoso y compartido.
 * `CaosBox.sc` — `CaosBox.gui`; `CaosBox.stop` apaga el playhead de la vista.
 * `GUI/CaosBox-GUI_2.scd` — la fila de bass es la primera rejilla real. Se fueron los
   32 CheckBox y los knobs att/rel; la X de borrar pasó a `x = 962`.
 * `CB/CaosBox-seq.scd` — cada step avisa `CaosBox.gui.playhead(index)` (convive con
   el LED de las filas viejas hasta migrarlas).
 
-Prueba en la app: arrastrar sobre la fila Bass pinta/borra; la X limpia la pista;
-`CaosBox.gui.color(\red)` (o `\orange`, `Color.blue`, `[0.9,0.4,0.2]`) cambia el
-acento de la GUI en caliente; el playhead recorre la fila al reproducir. Captura del
-piloto dentro de la GUI real: `DevTest/img/pilot-real-rows.png`.
+Captura del piloto dentro de la GUI real: `DevTest/img/pilot-real-rows.png`.
 
-Lo que sigue en 5a:
+## 6. 5a-2: paleta, analizadores y granos estéreo (v2.3.1)
 
-1. Spec ordenado de las 13 pistas + builder de filas (label + rejilla + X).
-2. Migrar las 12 filas restantes; sacar `~cbox_check*` y la fila de LEDs.
-3. Transporte sincronizado desde el modelo (play/pause, métrica, random, BPM).
-4. Resize del bloque de pistas + transporte (los paneles de FX van en 5b).
-5. Promover datos a `CaosBox.tracks`/`CaosBox.voices` + alias; retirar `~cbox_param`.
+* **Paleta con roles** en `CaosBoxGUI`: `background`, `panel`, `text`, `muted`,
+  `accent`, `accentText` (contraste por luminancia), `cellOff`, `border`,
+  `playheadColor`. `color` repinta las rejillas y los `addColorListener`, así
+  cualquier widget nuevo sigue el acento.
+* **Analizadores flotantes**: `CaosBox.freqAnalyzer(true)` abre una ventana
+  redimensionable con `FreqScopeView` + `ScopeView` (osciloscopio sobre el bus 0 vía
+  `BusScopeSynth`); `false` los detiene y cierra. Se retiró el bloque embebido de
+  `GUI_4` (y `~cbox_fbot`/`~cbox_f`). `FreqScopeView` delega `resize_` en su
+  `ScopeView` interno, así que se crea sin encadenar para no perder la referencia.
+* **Botón `Scopes`** en la fila de transporte (el play se achicó a 415 px), fuera de
+  las filas de steps; usa la paleta y se repinta con el color global.
+* **Granos estéreo**: el bus `\grains` pasa a 2 canales (64-65) y el granulador suma
+  los dos canales antes de granular (`Mix(In.ar(inbus, 2))`). Así puede ser destino
+  de ruteo sin perder un canal. Los índices históricos de los demás buses no cambian.
+* `CaosBox.version = "2.3.1"`.
 
-## 6. Plan del resto de 5a
+Decisiones para 5a-3 (ruteo por fila):
 
-1. `Classes/CaosStepGrid.sc`: el widget de rejilla (dibujo, hit-testing, mouse,
-   refresh, playhead). Geometría pura en métodos testeables.
-2. Builder de filas desde el spec (label + rejilla + borrar), registrado en
-   `CaosBox.gui`, con alias.
-3. Transporte: play/pause/stop, métrica, random y BPM escuchando al modelo
-   (`CaosSequencer`, `CaosTrack`).
-4. Resize: `onResize` del bloque de pistas + transporte; mínimo de ventana.
-5. Migración de datos: `CaosBox.tracks` / `CaosBox.voices` + alias.
-6. `CB/CaosBox-seq.scd`: el step deja de tocar LEDs y avisa a la vista.
-7. Tests headless de la geometría del grid y del spec; prueba visual en la app.
+* Un selector por fila manda la pista a `master`, `reverb`, `delay`, `pitch`, `lpf`,
+  `hpf`, `bpf` o `grains`.
+* Es ruteo **por pista**, no por step: al elegir `\hpf` todos los steps de esa fila
+  pasan por el HPF compartido. No es un envío: el filtro decide su salida con sus
+  propios popups. Antes del primer play el nodo de FX todavía no existe.
+* Melódicos: el bus se aplica en el próximo trigger. Percusión: hay que pasarle el
+  bus a `func.play(target, bus)`; las funciones de `CaosGear` y de `defaults` lo
+  aceptan, las que capturan `out` dentro del closure no cambian de ruta (documentar).
+* Si más adelante se quiere ruteo **por step** (step 1 a master, step 4 a reverb), va
+  como feature aparte: datos por step + menú contextual, no un popup por fila.
 
-## 7. Verificación actual
+## 7. Plan del resto de 5a
 
-* Clases compilan; 14 `.scd` parsean; suite **275 aserciones, 0 fallos**
-  (`TestCaosBoxGUI` + `TestCaosStepGrid` suman 23).
+1. `out` en `CaosTrack` + `CaosBox.route(track, bus)` (acepta nombre o índice).
+2. Popup minimalista por fila con los 8 destinos, sincronizado con la API y la paleta.
+3. Builder de las 13 filas desde el spec; fuera CheckBox, knobs y LEDs.
+4. Transporte sincronizado desde el modelo (play/pause, métrica, random, BPM).
+5. Resize del bloque de pistas + transporte (los paneles de FX van en 5b).
+6. Promover datos a `CaosBox.tracks`/`CaosBox.voices` + alias; retirar `~cbox_param`.
+
+## 8. Verificación actual
+
+* Clases compilan; 14 `.scd` parsean; suite **282 aserciones, 0 fallos**
+  (`TestCaosBoxGUI` + `TestCaosStepGrid` suman 30 aserciones nuevas).
 * Prototipo y fila real evaluados headless con `QT_QPA_PLATFORM=offscreen`: celdas
   activas 10/10, playhead, pintado con mouse y cambio de color verificados por
-  píxeles.
+  píxeles. El SynthDef del granulador estéreo se construye headless sin errores.
+* Transporte renderizado offscreen: play 275..690, `Scopes` 695..780, record 790..920;
+  captura en `DevTest/img/transport-scopes.png`.
+* La ventana de analizadores se construye y se cierra limpio en modo headless
+  (600x430, FFT arriba y osciloscopio abajo); abrirla con audio requiere servidor.

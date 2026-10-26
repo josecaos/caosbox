@@ -3,7 +3,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.2.0";// version unica: la usan el GUI y la bienvenida
+	classvar <version = "2.3.1";// version unica: la usan el GUI y la bienvenida
 	classvar guiRegistry;// CaosBoxGUI: paleta + step grids de la vista
 
 	// registro de la vista (la API le habla a esto, no a widgets sueltos)
@@ -288,15 +288,10 @@ CaosBox {
 
 	}
 
+	// analizadores flotantes: true abre FFT + osciloscopio, false los cierra
 	*freqAnalyzer {|active = false|
 
-		var onoff;
-		if(active==false, {
-			onoff = 0;
-		},{
-			onoff = 1;
-		});
-		~cbox_fbot.valueAction_(onoff);
+		this.gui.freqAnalyzer(active);
 
 		^"";
 	}

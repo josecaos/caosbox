@@ -240,14 +240,22 @@ StaticText(~cbox_w,Rect(5,635,270,15)).string_("Beat:").font_(Font("Dejavu Sans"
 ~cbox_botr.action={|val| CaosBox.randomTime(val.value == 1) };
 //
 //play
-StaticText(~cbox_w,Rect(275,635,515,15)).string_("PLAY/PAUSE:").font_(Font("DejaVu Sans",14,true)).align_(\center).background_(Color(0.5,0.5,0.5));
-~cbox_bot=Button(~cbox_w,Rect(275,650,515,25));
+StaticText(~cbox_w,Rect(275,635,415,15)).string_("PLAY/PAUSE:").font_(Font("DejaVu Sans",14,true)).align_(\center).background_(Color(0.5,0.5,0.5));
+~cbox_bot=Button(~cbox_w,Rect(275,650,415,25));
 ~cbox_bot.states=[["=>",Color.black,Color.green],
 	["Pause",Color.white,Color.red]];
 ~cbox_bot.action={|val|
 	// el boton pausa (y play reanuda donde iba); el stop duro es CaosBox.stop
 	if(val.value == 0, { CaosBox.pause }, { CaosBox.play });
 };
+//scopes: ventana flotante con FFT + osciloscopio
+StaticText(~cbox_w,Rect(695,635,85,15)).string_("SCOPES:").font_(Font("DejaVu Sans",11,true)).align_(\center).stringColor_(CaosBox.gui.muted);
+~cbox_scopeBot=Button(~cbox_w,Rect(695,650,85,25));
+~cbox_scopeBot.states=[["Scopes",CaosBox.gui.text,CaosBox.gui.panel]];
+~cbox_scopeBot.action={ CaosBox.gui.toggleFreqAnalyzer };
+CaosBox.gui.addColorListener({|g|
+	~cbox_scopeBot !? {|bot| bot.states=[[ "Scopes", g.text, g.panel ]] };
+});
 //record
 ~cbox_filea=[~cbox_n.choose,~cbox_l.choose,~cbox_n.choose,~cbox_l.choose];
 ~cbox_filename=~cbox_filename.add(~cbox_filea.stutter((1..2).choose).scramble.join);

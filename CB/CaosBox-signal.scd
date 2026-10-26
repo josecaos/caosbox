@@ -65,5 +65,6 @@ SynthDef(\bandfilt,{|inbus=62,cutfreq=1000,rq=1,out=50,vol=1|
 }).add;
 //granulador
 SynthDef(\granulador,{|inbus=64,trigger,size,out=50|
-	Out.ar(out,GrainIn.ar(2,Impulse.kr(trigger),size,In.ar(inbus),[0,0.96],-1,1024,mul:2))}).add;
+	// el bus de granos es estereo: se suman los dos canales antes de granular
+	Out.ar(out,GrainIn.ar(2,Impulse.kr(trigger),size,Mix(In.ar(inbus,2)),[0,0.96],-1,1024,mul:2))}).add;
 );

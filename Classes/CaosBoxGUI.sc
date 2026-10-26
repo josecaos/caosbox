@@ -1,20 +1,30 @@
-// CaosBox v2.3.0 - GUI registry and palette
+// CaosBox v2.3.1 - GUI registry and palette
 //
-// The API reaches the view through CaosBox.gui. The registry owns the colors
-// (so `CaosBox.gui.color(\red)` repaints every registered step grid) and the
-// list of step grids that need the playhead. No widgets are created here: the
-// GUI files build them and register them.
+// The API reaches the view through CaosBox.gui. The registry owns the palette
+// (so `CaosBox.gui.color(\red)` repaints every registered view), the list of
+// step grids that need the playhead and the floating analyzers window.
+// No widgets are created here at load time: the GUI files build them and
+// register them.
 
 CaosBoxGUI {
 
 	classvar <colorAliases;
 
 	var <accent;
+	var <accentText;
 	var <background;
+	var <panel;
+	var <text;
+	var <muted;
 	var <cellOff;
 	var <border;
 	var <playheadColor;
 	var <stepGrids;
+	var <colorListeners;
+	var <analyzerWin;
+	var <freqView;
+	var <scopeView;
+	var <scopeSynth;
 
 	*initClass {
 
@@ -43,11 +53,15 @@ CaosBoxGUI {
 
 		accent = colorAliases[\green].copy;
 		background = Color(0.075, 0.08, 0.082);
+		panel = Color(0.11, 0.115, 0.12);
+		text = Color(0.84, 0.86, 0.84);
+		muted = Color(0.55, 0.58, 0.55);
 		cellOff = Color(0.15, 0.16, 0.17);
 		border = Color(0.28, 0.30, 0.28);
 		stepGrids = List.new;
+		colorListeners = List.new;
 
-		this.prUpdatePlayheadColor;
+		this.prUpdateDerived;
 
 		^this;
 
@@ -66,7 +80,7 @@ CaosBoxGUI {
 		});
 
 		accent = newColor;
-		this.prUpdatePlayheadColor;
+		this.prUpdateDerived;
 		this.prRefresh;
 
 		^this;
@@ -90,9 +104,18 @@ CaosBoxGUI {
 
 	}
 
-	prUpdatePlayheadColor {
+	prUpdateDerived {
+
+		var luminance;
 
 		playheadColor = accent.blend(Color.white, 0.7);
+
+		// texto legible sobre el acento (contraste por luminancia)
+		luminance = (0.2126 * accent.red) + (0.7152 * accent.green) + (0.0722 * accent.blue);
+		accentText = if(luminance > 0.55,
+			{ Color(0.05, 0.05, 0.05) },
+			{ Color(0.95, 0.96, 0.95) });
+
 		^this;
 
 	}
@@ -115,6 +138,23 @@ CaosBoxGUI {
 
 	}
 
+	// funciones que repintan widgets propios cuando cambia la paleta
+	addColorListener {|func|
+
+		colorListeners.add(func);
+
+		^this;
+
+	}
+
+	removeColorListener {|func|
+
+		colorListeners.remove(func);
+
+		^this;
+
+	}
+
 	playhead {|index|
 
 		stepGrids.do {|grid| grid.playhead_(index) };
@@ -126,6 +166,127 @@ CaosBoxGUI {
 	prRefresh {
 
 		stepGrids.do {|grid| grid.refresh };
+		colorListeners.do {|func| func.value(this) };
+		this.prThemeAnalyzers;
+
+		^this;
+
+	}
+
+	prThemeAnalyzers {
+
+		analyzerWin !? {|win| win.background_(background) };
+		freqView !? {|view| view.background_(panel) };
+		scopeView !? {|view| view.background_(panel) };
+
+		^this;
+
+	}
+
+	// --- analizadores flotantes (FFT + osciloscopio) --------------------
+
+	// true abre/activa la ventana; false la apaga y cierra
+	freqAnalyzer {|on = true|
+
+		if (on.asBoolean, { this.prOpenAnalyzers }, { this.prCloseAnalyzers });
+
+		^this;
+
+	}
+
+	toggleFreqAnalyzer {
+
+		var visible = analyzerWin.notNil and: { analyzerWin.isClosed.not };
+
+		this.freqAnalyzer(visible.not);
+
+		^this;
+
+	}
+
+	prOpenAnalyzers {
+
+		var server = CaosBox.server ?? { Server.default };
+
+		if (server.isNil or: { server.serverRunning.not }, {
+			"CaosBox: el servidor no esta corriendo; no puedo abrir los analizadores".warn;
+			^this;
+		});
+
+		analyzerWin ?? { this.prBuildAnalyzers };
+
+		analyzerWin.front;
+		freqView !? {|view| view.active_(true) };
+
+		scopeSynth !? {|synth|
+			synth.play(4096, Bus(\audio, 0, 2, server), 1024);
+			scopeView !? {|view|
+				view.bufnum_(synth.bufferIndex);
+				view.start;
+			};
+		};
+
+		^this;
+
+	}
+
+	prBuildAnalyzers {
+
+		var server = CaosBox.server ?? { Server.default };
+		var win = Window.new(
+			"CaosBox v" ++ CaosBox.version ++ " - Analyzers",
+			Rect.aboutPoint(Window.screenBounds.center, 300, 215)
+		);
+
+		win.background_(background);
+		analyzerWin = win;
+
+		StaticText(win, Rect(8, 8, 200, 14))
+			.string_("Spectrum")
+			.stringColor_(muted)
+			.font_(Font("DejaVu Sans", 10, true))
+			.resize_(2);
+		freqView = FreqScopeView(win, Rect(8, 24, 584, 190));
+		freqView.freqMode_(1);
+		freqView.resize_(5);// FreqScopeView delega resize_ en su ScopeView interno
+		freqView.background_(panel);
+
+		StaticText(win, Rect(8, 222, 200, 14))
+			.string_("Oscilloscope")
+			.stringColor_(muted)
+			.font_(Font("DejaVu Sans", 10, true))
+			.resize_(2);
+		scopeView = ScopeView(win, Rect(8, 238, 584, 184));
+		scopeView.resize_(5);
+		scopeView.server_(server);
+		scopeView.background_(panel);
+
+		scopeSynth = BusScopeSynth(server);
+
+		win.onClose_({ this.prCleanupAnalyzers });
+
+		^this;
+
+	}
+
+	prCloseAnalyzers {
+
+		analyzerWin !? {|win| win.close };
+
+		^this;
+
+	}
+
+	prCleanupAnalyzers {
+
+		freqView !? {|view| view.kill };
+		scopeView !? {|view| view.stop };
+		scopeSynth !? {|synth| synth.free };
+
+		analyzerWin = nil;
+		freqView = nil;
+		scopeView = nil;
+		scopeSynth = nil;
 
 		^this;
 

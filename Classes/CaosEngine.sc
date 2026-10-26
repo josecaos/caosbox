@@ -30,7 +30,7 @@ CaosEngine {
 			[\lpf, 2],     // 58-59
 			[\hpf, 2],     // 60-61
 			[\bpf, 2],     // 62-63
-			[\grains, 1]   // 64
+			[\grains, 2]   // 64-65: el granulador tambien acepta estereo
 		];
 	}
 

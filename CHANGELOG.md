@@ -9,8 +9,24 @@
 
 # Changelog
 
+- ### v2.3.1
+    - Color palette for GUI elements
+        - background 
+        - panel
+        - text
+        - muted
+        - accent
+        - accentText
+        - cellOff
+        - border
+        - playheadColor
+    - Freq Analyzer moved to floating window
+        - Scope button
+        - FreqScope Button
+
 - ### v2.3.0
     - GUI
+        - CaosBoxGUI
         - Global layout color 
         - Resizable window
         - New Steps layout

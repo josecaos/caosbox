@@ -103,16 +103,8 @@ StaticText(~cbox_w,Rect(575,603,125,14)).string_("Bandwidth").font_(Font("Dejavu
 ~cbox_numf6.action={~cbox_mastbandf.set(\rq,~cbox_rqmaxmin.map(~cbox_numf6.value));~cbox_bandrqfader.value_(~cbox_rqmaxmin.map(~cbox_numf6.value))};
 ~cbox_bandrqfader.value=0.5;
 ~cbox_numf6.value=0.5;
-//freqscope
-StaticText(~cbox_w,Rect(785,12,155,15)).string_("Frequency Analyzer:").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
-~cbox_fbot=Button(~cbox_w,Rect(940,12,80,15));
-~cbox_fbot.states=[["On",Color.black,Color.green],
-	["Off",Color.white,Color.red]];
-~cbox_fbot.action={|val| if(val.value==0,{~cbox_f.active_(false);"->Frequency Analyzer has Stopped<-".inform},
-	{~cbox_f.active_(true);"->Frequency Analyzer has Started<-".inform})};
-~cbox_f=FreqScopeView(~cbox_w,Rect(785,27,235,100)).freqMode_(1);
-~cbox_f.background_(Color(0.1,0.1,0.1));
-~cbox_f.active_(false);
+// analizadores (FFT + osciloscopio): ahora viven en una ventana flotante
+// CaosBox.freqAnalyzer(true/false), ver Classes/CaosBoxGUI.sc
 //granulator
 ~cbox_grandcolor=Color(alpha:0);//color aleatorio para el pad del granulador
 StaticText(~cbox_w,Rect(785,290,235,12)).string_("Granulator" ).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));

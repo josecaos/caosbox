@@ -63,15 +63,15 @@ TestCaosEngine : UnitTest {
 			"historic indices are preserved");
 
 		this.assertEquals(engine.busNames.collect { |name| engine.bus(name).numChannels }.asArray,
-			[2, 2, 2, 2, 2, 2, 2, 1],
-			"stereo pairs plus a mono granulador input");
+			[2, 2, 2, 2, 2, 2, 2, 2],
+			"stereo pairs, including the granulador input");
 
 	}
 
 	test_busLookup {
 
 		this.assertEquals(engine.bus(\reverb).index, 52);
-		this.assertEquals(engine.bus(\grains).numChannels, 1);
+		this.assertEquals(engine.bus(\grains).numChannels, 2);
 
 		this.assertException({ engine.bus(\nope) }, Error,
 			"an unknown bus must throw");
