@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////
-// CaosBox v2.1.0 - Acceptance fixture: the API session
+// CaosBox v2.3.5 - The API session
 //
 // Este es el script con el que josecaos toca el secuenciador desde el
 // intérprete. Se guarda aquí como documentación y como prueba de regresión
@@ -7,11 +7,13 @@
 //
 Platform.userExtensionDir
 CaosBox.browse;
-CaosBoxGUI.colorAliases // Colores posibles para interfaz
 ////////////////////////////////////////////////////////////
 
 c = CaosBox;
-c.environment;
+c.gui.color(\magenta); // Aplica color opcional para la GUI antes de correr
+CaosBoxGUI.colorAliases // Colores posibles para interfaz
+//
+c.environment; //inicializa
 // Wait for GUI boot:
 c.play;
 c.pause;
@@ -19,7 +21,6 @@ c.stop;
 c.bpm(120);
 c.freqAnalyzer(true);
 c.guiAlpha(0.5);
-c.gui.color(\blue);
 //
 g = CaosGear;
 //// Percussion synths

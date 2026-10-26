@@ -1,6 +1,6 @@
-//CaosBox GUI file 1 - v2.3.3 - ventana, transporte, bienvenida
+//CaosBox GUI file 1 - v2.3.5 - ventana, transporte, bienvenida
 (
-~cbox_w=Window.new(("CaosBox v" ++ CaosBox.version ++ " Live Coding Machine for Algorave Music") + " Today is " + ~cbox_fecha,Rect.aboutPoint(Window.screenBounds.center,560,430),false).background=Color(0,0,0);//
+~cbox_w=Window.new(("CaosBox v" ++ CaosBox.version ++ " Live Coding Machine for Algorave Music") + " Today is " + ~cbox_fecha,Rect.aboutPoint(Window.screenBounds.center,560,430),true).background=Color(0,0,0);//
 //
 // las filas de pistas (percs + melodicos + LineIn) las construye GUI/CaosBox-GUI_2.scd
 // con la rejilla nueva (5b)

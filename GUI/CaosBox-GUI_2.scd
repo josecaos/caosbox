@@ -1,4 +1,4 @@
-(//CaosBox GUI file 2 - v2.3.3 - las 13 pistas del secuenciador
+(//CaosBox GUI file 2 - v2.3.5 - las 13 pistas del secuenciador
 //
 // Un solo builder para todas las filas: etiqueta, rejilla de steps, ruteo
 // (melodicos) o aviso de ruteo por step (percision) y boton de limpiar.
@@ -44,13 +44,10 @@
 			route = PopUpMenu(~cbox_w, Rect(routeX, y + 2, routeW, 25))
 				.items_(busLabels)
 				.background_(gui.panel)
-				.stringColor_(gui.text);
+				.stringColor_(gui.muted);
 			route.value_(buses.indexOf(track.out ? \master) ? 0);
 			route.action_({|menu| CaosBox.route(spec[\name], buses[menu.value]) });
 			gui.addRoute(spec[\name], route, buses);
-			gui.addColorListener({|g|
-				route !? {|menu| menu.background_(g.panel); menu.stringColor_(g.text) };
-			});
 		}, {
 			// percision: la salida se elige al evaluar el instrumento, por step
 			StaticText(~cbox_w, Rect(routeX, y + 7, routeW, 14))

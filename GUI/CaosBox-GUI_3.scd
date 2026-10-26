@@ -1,4 +1,4 @@
-(//CaosBox GUI file 3 - v2.3.3 - master, aux, FX
+(//CaosBox GUI file 3 - v2.3.5 - master, aux, FX
 // (la fila de LineIn ahora la construye GUI_2 con el resto de pistas)
 //master sliders
 //master tag

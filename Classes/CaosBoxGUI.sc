@@ -1,4 +1,4 @@
-// CaosBox v2.3.3 - GUI registry and palette
+// CaosBox v2.3.5 - GUI registry and palette
 //
 // The API reaches the view through CaosBox.gui. The registry owns the palette
 // (so `CaosBox.gui.color(\red)` repaints every registered view), the list of
@@ -27,6 +27,11 @@ CaosBoxGUI {
 	var <freqView;
 	var <scopeView;
 	var <scopeSynth;
+	var <freqLabel;
+	var <scopeLabel;
+	var <designSize;
+	var <resizeView;
+	var <resizeRects;
 
 	*initClass {
 
@@ -192,6 +197,46 @@ CaosBoxGUI {
 
 	}
 
+	// --- resize fluido del GUI principal --------------------------------
+
+	// guarda los rects de diseno y los escala con la ventana
+	makeResizable {|win, width = 1120, height = 860|
+
+		designSize = Point(width, height);
+		resizeView = win.asView;
+		resizeRects = IdentityDictionary.new;
+
+		resizeView.children(View).do {|child|
+			resizeRects.put(child, child.bounds);
+		};
+
+		resizeView.onResize_({|view| this.prFluidResize(view) });
+
+		^this;
+
+	}
+
+	prFluidResize {|view|
+
+		var bounds = view.bounds;
+		var sx = bounds.width / designSize.x;
+		var sy = bounds.height / designSize.y;
+
+		if(bounds.width > 0 and: { bounds.height > 0 }, {
+			resizeRects.keysValuesDo {|child, rect|
+				child.bounds_(Rect(
+					(rect.left * sx).round,
+					(rect.top * sy).round,
+					(rect.width * sx).round,
+					(rect.height * sy).round
+				));
+			};
+		});
+
+		^this;
+
+	}
+
 	// --- widgets viejos con verde hardcodeado ---------------------------
 
 	// recorre la ventana una vez y guarda que widgets deben seguir al acento
@@ -255,16 +300,12 @@ CaosBoxGUI {
 		});
 
 		if(view.isKindOf(StaticText), {
-			var bgGreen = this.isGreen(view.background);
-			var fgGreen = this.isGreen(view.stringColor);
-			if(bgGreen or: { fgGreen }, {
-				accentEntries.add((
-					view: view,
-					role: \label,
-					bgGreen: bgGreen,
-					fgGreen: fgGreen
-				));
-			});
+			// todas las etiquetas: mismo color bajo sobre panel
+			accentEntries.add((view: view, role: \label));
+		});
+
+		if(view.isKindOf(PopUpMenu), {
+			accentEntries.add((view: view, role: \popup));
 		});
 
 		^this;
@@ -301,14 +342,20 @@ CaosBoxGUI {
 					},
 
 					\slider, {
+						var palette = view.palette;
 						view.knobColor_(accent);
+						palette.button_(accent);
+						view.palette_(palette);
 					},
 
 					\label, {
-						if(entry[\bgGreen], { view.background_(panel) });
-						if(entry[\fgGreen] or: { entry[\bgGreen] }, {
-							view.stringColor_(accent);
-						});
+						view.background_(panel);
+						view.stringColor_(muted);
+					},
+
+					\popup, {
+						view.background_(panel);
+						view.stringColor_(muted);
 					}
 				);
 			});
@@ -340,7 +387,7 @@ CaosBoxGUI {
 		};
 		scopeView !? {|view|
 			view.background_(panel);
-			view.waveColors_([accent]);
+			view.waveColors_([accent, accent]);
 		};
 
 		^this;
@@ -405,30 +452,61 @@ CaosBoxGUI {
 		win.background_(background);
 		analyzerWin = win;
 
-		StaticText(win, Rect(8, 8, 200, 14))
+		freqLabel = StaticText(win, Rect(8, 8, 200, 14))
 			.string_("Spectrum")
 			.stringColor_(muted)
-			.font_(Font("DejaVu Sans", 10, true))
-			.resize_(2);
+			.font_(Font("DejaVu Sans", 10, true));
 		freqView = FreqScopeView(win, Rect(8, 24, 584, 190));
 		freqView.freqMode_(1);
-		freqView.resize_(5);// FreqScopeView delega resize_ en su ScopeView interno
 		freqView.background_(panel);
 
-		StaticText(win, Rect(8, 222, 200, 14))
+		scopeLabel = StaticText(win, Rect(8, 222, 200, 14))
 			.string_("Oscilloscope")
 			.stringColor_(muted)
-			.font_(Font("DejaVu Sans", 10, true))
-			.resize_(2);
+			.font_(Font("DejaVu Sans", 10, true));
 		scopeView = ScopeView(win, Rect(8, 238, 584, 184));
-		scopeView.resize_(5);
 		scopeView.server_(server);
 		scopeView.background_(panel);
+
+		win.asView.onResize_({ this.prLayoutAnalyzers });
+		this.prLayoutAnalyzers;
 
 		scopeSynth = BusScopeSynth(server);
 
 		win.onClose_({ this.prCleanupAnalyzers });
 		this.prThemeAnalyzers;
+
+		^this;
+
+	}
+
+	prLayoutAnalyzers {
+
+		var bounds;
+		var width, height;
+		var pad = 8, labelH = 14, gap = 8, tight = 4;
+		var viewH, y;
+
+		if(analyzerWin.isNil, { ^this });
+
+		bounds = analyzerWin.asView.bounds;
+		width = bounds.width;
+		height = bounds.height;
+		viewH = ((height - (pad * 2) - (labelH * 2) - (tight * 4) - gap) / 2).max(40);
+		y = pad;
+
+		freqLabel !? {|label| label.bounds_(Rect(pad, y, width - (pad * 2), labelH)) };
+		y = y + labelH + tight;
+		freqView !? {|view|
+			if(view.scope.respondsTo(\bounds_), {
+				view.scope.bounds_(Rect(pad, y, width - (pad * 2), viewH));
+			});
+		};
+		y = y + viewH + gap;
+
+		scopeLabel !? {|label| label.bounds_(Rect(pad, y, width - (pad * 2), labelH)) };
+		y = y + labelH + tight;
+		scopeView !? {|view| view.bounds_(Rect(pad, y, width - (pad * 2), viewH)) };
 
 		^this;
 
@@ -452,6 +530,8 @@ CaosBoxGUI {
 		freqView = nil;
 		scopeView = nil;
 		scopeSynth = nil;
+		freqLabel = nil;
+		scopeLabel = nil;
 
 		^this;
 

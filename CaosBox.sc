@@ -3,7 +3,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.3.3";
+	classvar <version = "2.3.5";
 	classvar guiRegistry;
 
 	// Register View

@@ -221,15 +221,18 @@ columna mientras tanto: mute/solo por pista o probabilidad.
 
 ## 11. Tema global, botones unificados y transporte
 
-* `CaosBoxGUI.themeLegacy(~cbox_w.asView)` recorre la vista una vez y guarda **69
-  entradas**: 19 NumberBox, 24 botones, 6 etiquetas verdes y 20 sliders/Slider2D.
+* `CaosBoxGUI.themeLegacy(~cbox_w.asView)` recorre la vista una vez y guarda **142
+  entradas**: 19 NumberBox, 24 botones, 64 etiquetas, 15 popups y 20 sliders/Slider2D.
 * **Botones unificados** (play incluido): en estado inactivo `state 0` usan fondo
   `panel` y texto `accent`; en estado activo (`state > 0`) fondo `accent` y texto
   **negro**. Se conservan labels y el valor del botón.
 * **NumberBox**: fondo `panel`, texto `accent`, edición `accentText`.
-* **Etiquetas verdes**: fondo `panel`, texto `accent`.
+* **Etiquetas y popups**: todas las `StaticText` y los `PopUpMenu` usan fondo `panel`
+  y texto `muted`; ya no queda texto blanco en la ventana y la diferencia entre
+  títulos y etiquetas es de bajo contraste.
 * **Sliders y granulador**: `knobColor_(accent)` en todos los `Slider` y en el
-  `Slider2D` del granulador; el fondo/groove queda como estaba.
+  `Slider2D` del granulador; el fondo/groove queda como estaba. El handle completo
+  se colorea con `QPalette.button_(accent)` (el `knobColor` de SC sólo pinta la marca).
 * **Transporte alineado a columnas**: BPM `650..750` (100 px) y Scopes `760..870`
   (110 px) cubren la columna de filtros `650..870`; Record `882..990` (108) y
   History `1000..1104` (104) cubren la del granulador `882..1104`. El BPM tiene
@@ -238,14 +241,30 @@ columna mientras tanto: mute/solo por pista o probabilidad.
   activo el fondo es accent y el texto negro; `\red` repinta todo y el BPM sigue
   visible. Capturas `gui-5b.png`, `gui-5b-active.png` y `gui-5b-red.png`.
 
-## 12. Siguiente
+## 12. 5b-3: resize fluido y scopes (v2.3.5)
 
-1. **5b-3 (v2.3.4)**: `resizable` + `onResize` (filas, paneles y transporte).
-2. **Flam por step** (TODO después de la GUI): marca en la rejilla + segundo disparo.
-3. **5c**: rejilla con interacción avanzada (mute/solo, acentos, scroll, teclado).
-4. Retirar los alias `~cbox_tracks`/`~cbox_instruments` en 3.0.0.
+* Ventana **resizable** (`Window.new(..., true)`). `CaosBoxGUI.makeResizable` guarda
+  los rects de las 1120×860 de diseño y `prFluidResize` escala posición y tamaño de
+  todos los hijos con la ventana. Los fonts no escalan; el layout mantiene
+  proporciones.
+* Probado a 1400×1000 (grid `100,221,1135,31`) y 1000×760 (grid `71,168,811,24`),
+  sin solapes.
+* **Scopes**: se abandonó `resize_(5)` y ahora la ventana tiene
+  `prLayoutAnalyzers` explícito (labels + FFT + osciloscopio) en `onResize`.
+  Verificado: de 600×430 a 900×600, FFT `8,26,884,266` y scope `8,318,884,266`.
+  Los dos canales del osciloscopio usan `waveColors_([accent, accent])`.
+* **Sliders**: `knobColor` de SC sólo pinta la marca; para colorear el handle
+  completo se usa también `QPalette.button_(accent)`. Los 20 sliders y el `Slider2D`
+  del granulador llevan el acento.
+* `CaosBox.version = "2.3.5"`.
 
-## 13. Verificación actual
+## 13. Siguiente
+
+1. **Flam por step** (TODO): marca en la rejilla + segundo disparo.
+2. **5c**: rejilla con interacción avanzada (mute/solo, acentos, scroll, teclado).
+3. Retirar los alias `~cbox_tracks`/`~cbox_instruments` en 3.0.0.
+
+## 14. Verificación actual
 
 * Clases compilan; 14 `.scd` parsean; suite **286 aserciones, 0 fallos**.
 * Render headless de la GUI real (sin servidor): 13 rejillas registradas, 7 popups de
@@ -260,9 +279,13 @@ columna mientras tanto: mute/solo por pista o probabilidad.
   `DevTest/img/gui-5b.png` (verde) y `DevTest/img/gui-5b-red.png` (`\red`), 1120×860
   a 2x. Gaps de 12 px entre columnas y 16 px de margen, con solo el borde de
   antialias tocando el gap.
-* Tema: **69 entradas** (19 NumberBox, 24 botones, 6 etiquetas, 20 sliders). Sin
-  verde puro en estado inactivo; con botones activos el fondo es accent y el texto
-  negro; `\red` repinta todo. BPM 100×25 con número accent.
+* Tema: **142 entradas** (19 NumberBox, 24 botones, 64 etiquetas, 15 popups,
+  20 sliders). Sin texto blanco en etiquetas ni verde puro en estado inactivo; con
+  botones activos el fondo es accent y el texto negro; `\red` repinta todo. BPM
+  100×25 con número accent y scope con los dos canales en accent.
 * Analizadores: la ventana se construye/cierra headless (600x430) y los `waveColors`
   de FFT y osciloscopio toman el acento (probado con `\orange`).
+* Resize 5b: main window 1120×860→1400×1000→1000×760 con grid/faders/transporte
+  escalados; analyzer 600×430→900×600 con FFT y scope reposicionados sin cortarse.
+  Captura `DevTest/img/gui-5b-resized.png`.
 * SynthDef del granulador estéreo se construye headless sin errores.

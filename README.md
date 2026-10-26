@@ -46,4 +46,4 @@ Platform.userExtensionDir
 - CaosBox and CaosPercLib: [Carlos Hasbun](https://github.com/josecaos)
 - v2.x refactor and GUI: pair-coded with [**DeepSeek**](https://www.deepseek.com/) (DeepSeek Harness agent, model deepseek-v4-flash)
 - All architecture, design, and final code from [josecaos](https://josecaos.xyz)
-- Thanks to [WAD](https://wad.mx) for the endorsment of the project and for the support
+- Thanks to [WAD Agency](https://wad.mx) for the endorsment and project's support

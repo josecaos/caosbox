@@ -3,15 +3,23 @@
 
 ---
 ### TODOs:
-- Instrumentos melodicos deben recibir array en ruteo
-- Flam para percusiones
-    - Por step, no por pista: shift-click (o click derecho) marca el step con un puntito, y el secuenciador dispara la función dos veces con un retardo corto (por ejemplo 1/64 a 1/32 de beat)
-- Mute/solo por pista: dos botones chicos, muy útil en vivo y no compite con el ruteo. Requiere un muted en el modelo y que el secuenciador saltee el trigger (en melódicos conviene seguir avanzando la línea).
-- Probabilidad (100/75/50/25) por pista: variación sin tocar el patrón; también es feature.
-- Fill/randomizar la pista: generativo, destructivo, para un botón de performance
+- Melodic instruments should support an array in their routing (Such as persussion instruments).
+- "Flam" for percussion:
+    - Applied per step, not per track: shift-click (or right-click) marks the step with a small dot; the sequencer then triggers the function twice with a short delay (e.g., 1/64 to 1/32 of a beat).
+- Mute/solo per track: two small buttons—very useful for live performance, and they don't interfere with routing. This requires a "muted" state in the model, where the sequencer skips the trigger (for melodic parts, it’s better to keep the sequence advancing).
+- Probability (100/75/50/25) per track: allows for variation without altering the pattern itself—a great feature.
+- Fill/randomize track: generative and destructive—ideal for a performance button.
 ---
 
 # Changelog
+
+- ### v2.3.5
+    - True resizable app window
+    - Apply global color to SLider handles and knobs
+    - Bugfix: Scopes window
+        - Scope overlaps FreqScope when resized
+        - Scope channel 1 not colored
+    - Unify tag name colors
 
 - ### v2.3.4
     - GUI improvements
