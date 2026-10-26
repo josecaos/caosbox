@@ -1,172 +1,77 @@
-(//CaosBox GUI file 2 - v1.2 - bass, ambientes, acordes
-//bajo: primera fila de la rejilla nueva (v2.3.0)
-StaticText(~cbox_w,Rect(5,132,53,15)).string_("Bass:").stringColor_(Color(0.55,0.58,0.55)).font_(Font("DejaVu Sans",11,true)).align_(\left);
-~cbox_bassgrid = CaosStepGrid.new(~cbox_w, Rect(60, 130, 898, 20), ~cbox_tracks[\bass]);
-~cbox_delbass=Button(~cbox_w,Rect(962,131,16,16));
-~cbox_delbass.states=[["×",Color(0.85,0.35,0.35),Color(0.12,0.12,0.12)]];
-~cbox_delbass.action={|val|if(val.value==0,{
+(//CaosBox GUI file 2 - v2.3.2 - las 13 pistas del secuenciador
+//
+// Un solo builder para todas las filas: etiqueta, rejilla de steps, ruteo
+// (melodicos) o aviso de ruteo por step (percision) y boton de limpiar.
+// El orden del spec es el orden visual; CaosTrack sigue siendo el modelo.
+	var specs, gui, buses, busLabels;
+	var gridX = 60, gridW = 778, routeX = 842, routeW = 94, clearX = 941;
+	var rowH = 20, top = 10;
 
-	"Cleared bass steps!".inform;
+	specs = [
+		(name: \kick, label: "Kick", family: \drums),
+		(name: \snare, label: "Snare", family: \drums),
+		(name: \hihats, label: "Hats", family: \drums),
+		(name: \kick2, label: "Kick2", family: \drums),
+		(name: \snare2, label: "Snare2", family: \drums),
+		(name: \hihats2, label: "Hats2", family: \drums),
+		(name: \bass, label: "Bass", family: \melodic),
+		(name: \bass2, label: "Bass2", family: \melodic),
+		(name: \amb, label: "Pad", family: \melodic),
+		(name: \amb2, label: "Pad2", family: \melodic),
+		(name: \chords, label: "Chords", family: \melodic),
+		(name: \chords2, label: "Chords2", family: \melodic),
+		(name: \in, label: "LineIn", family: \melodic)
+	];
 
-	CaosBox.clearSteps(\bass);
+	gui = CaosBox.gui;
+	buses = [\master, \reverb, \delay, \pitch, \lpf, \hpf, \bpf, \grains];
+	busLabels = ["Master", "Reverb", "Delay", "Pitch", "LPF", "HPF", "BPF", "Grains"];
 
-})};
-//bajo2
-StaticText(~cbox_w,Rect(5,152,53,15)).string_("Bass2:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
+	specs.do {|spec, row|
+		var y = top + (row * rowH);
+		var track = ~cbox_tracks[spec[\name]];
+		var label, grid, route, clear;
 
-~cbox_checkbox = 60;
+		label = StaticText(~cbox_w, Rect(5, y + 2, 53, 15))
+			.string_(spec[\label])
+			.stringColor_(gui.text)
+			.font_(Font("DejaVu Sans", 11, true))
+			.align_(\left);
 
-for (0, 31, {|i|
+		grid = CaosStepGrid.new(~cbox_w, Rect(gridX, y, gridW, rowH), track, gui);
 
-	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
-	var check = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 150, 20, 20)).action={|val|
-		CaosBox.setStep(\bass2, i, val.value);
+		if (spec[\family] == \melodic, {
+			route = PopUpMenu(~cbox_w, Rect(routeX, y + 1, routeW, 18))
+				.items_(busLabels)
+				.background_(gui.panel)
+				.stringColor_(gui.text);
+			route.value_(buses.indexOf(track.out ? \master) ? 0);
+			route.action_({|menu| CaosBox.route(spec[\name], buses[menu.value]) });
+			gui.addRoute(spec[\name], route, buses);
+			gui.addColorListener({|g|
+				route !? {|menu| menu.background_(g.panel); menu.stringColor_(g.text) };
+			});
+		}, {
+			// percision: la salida se elige al evaluar el instrumento, por step
+			StaticText(~cbox_w, Rect(routeX, y + 3, routeW, 14))
+				.string_("per-step")
+				.stringColor_(gui.muted)
+				.font_(Font("DejaVu Sans", 9))
+				.align_(\center)
+				.toolTip_("La salida se elige al evaluar el instrumento: k.kick(out: ...), k.snare(out: ...)");
+		});
+
+		clear = Button(~cbox_w, Rect(clearX, y + 2, 16, 16))
+			.states_([["×", Color(0.85, 0.35, 0.35), gui.panel]])
+			.action_({|button|
+				if (button.value == 0, {
+					CaosBox.clearSteps(spec[\name]);
+				});
+			});
+		gui.addColorListener({|g|
+			clear !? {|bot|
+				bot.states = [["×", Color(0.85, 0.35, 0.35), g.panel]];
+			};
+		});
 	};
-
-	~cbox_checkbajo2.put(i,check);
-
-	~cbox_checkbox = ~cbox_checkbox + a;
-
-});
-// borra steps
-~cbox_delbass2=Button(~cbox_w,Rect(765,152,15,15));
-~cbox_delbass2.states=[[" X ",Color.black,Color.red]];
-~cbox_delbass2.action={|val|if(val.value==0,{
-
-	"Cleared bass 2 steps!".inform;
-
-	CaosBox.clearSteps(\bass2);
-
-})};
-//bass attack and release knobs
-~cbox_bass2attknob=EZKnob(~cbox_w,Rect(785,151,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| ~cbox_param.value(\bass2, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_bass2relknob=EZKnob(~cbox_w,Rect(870,151,81,17),nil,ControlSpec(0.05,4,\lin,0.001,0.5,\rel),{|a| ~cbox_param.value(\bass2, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-
-//ambiente
-StaticText(~cbox_w,Rect(5,172,53,15)).string_("Pad:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
-
-~cbox_checkbox = 60;
-
-for (0, 31, { |i|
-
-	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
-
-	~cbox_checkambiente.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 170, 20, 20)).action={|val|
-		CaosBox.setStep(\amb, i, val.value);
-	});
-
-	~cbox_checkbox = ~cbox_checkbox + a;
-
-});
-// borra steps
-~cbox_delamb=Button(~cbox_w,Rect(765,173,15,15));
-~cbox_delamb.states=[[" X ",Color.black,Color.red]];
-~cbox_delamb.action={|val|if(val.value==0,{
-
-	"Cleared pad steps!".inform;
-
-	CaosBox.clearSteps(\amb);
-
-})};
-//ambiente attack and release knobs
-~cbox_amb1attknob=EZKnob(~cbox_w,Rect(785,171,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.5,\att),{|a| ~cbox_param.value(\amb, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_amb1relknob=EZKnob(~cbox_w,Rect(870,171,81,17),nil,ControlSpec(0.25,12,\lin,0.001,2,\rel),{|a| ~cbox_param.value(\amb, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-
-//ambiente2
-StaticText(~cbox_w,Rect(5,192,53,15)).string_("pad2:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
-
-~cbox_checkbox = 60;
-
-for (0, 31, { |i|
-
-	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
-
-	~cbox_checkambiente2.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 190, 20, 20)).action={|val|
-		CaosBox.setStep(\amb2, i, val.value);
-	});
-
-	~cbox_checkbox = ~cbox_checkbox + a;
-
-});
-// borra steps
-~cbox_delamb2=Button(~cbox_w,Rect(765,192,15,15));
-~cbox_delamb2.states=[[" X ",Color.black,Color.red]];
-~cbox_delamb2.action={|val|if(val.value==0,{
-
-	"Cleared pad 2 steps!".inform;
-
-	CaosBox.clearSteps(\amb2);
-
-})};
-
-//ambiente2 attack and release knobs
-~cbox_amb2attknob=EZKnob(~cbox_w,Rect(785,191,81,17),nil,ControlSpec(0.25,2,\lin,0.001,0.25,\att),{|a| ~cbox_param.value(\amb2, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_amb2relknob=EZKnob(~cbox_w,Rect(870,191,81,17),nil,ControlSpec(0.25,12,\lin,0.001,4,\rel),{|a| ~cbox_param.value(\amb2, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-
-//acordes
-StaticText(~cbox_w,Rect(5,212,53,15)).string_("Chords:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
-
-~cbox_checkbox = 60;
-
-for (0, 31, { |i|
-
-	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
-
-	~cbox_checksinte.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 210, 20, 20)).action={|val|
-		CaosBox.setStep(\chords, i, val.value);
-	});
-
-	~cbox_checkbox = ~cbox_checkbox + a;
-
-});
-//resetea secuencias sinte
-~cbox_delsinte=Button(~cbox_w,Rect(765,212,15,15));
-~cbox_delsinte.states=[[" X ",Color.black,Color.red]];
-~cbox_delsinte.action={|val|if(val.value==0,{
-
-	"Cleared chord steps!".inform;
-
-	CaosBox.clearSteps(\chords);
-
-})};
-//acordes attack and release knobs
-~cbox_sinte_seq1attknob=EZKnob(~cbox_w,Rect(785,211,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.01,\att),{|a| ~cbox_param.value(\chords, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_sinte_seq1relknob=EZKnob(~cbox_w,Rect(870,211,81,17),nil,ControlSpec(0.05,8,\lin,0.001,1,\rel),{|a| ~cbox_param.value(\chords, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-
-
-//Acordes2
-StaticText(~cbox_w,Rect(5,232,53,15)).string_("Chords2:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
-
-~cbox_checkbox = 60;
-
-for (0, 31, { |i|
-
-	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
-
-	~cbox_checksinte2.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 230, 20, 20)).action={|val|
-		CaosBox.setStep(\chords2, i, val.value);
-	});
-
-	~cbox_checkbox = ~cbox_checkbox + a;
-
-});
-//resetea secuencias sinte
-~cbox_delsinte2=Button(~cbox_w,Rect(765,232,15,15));
-~cbox_delsinte2.states=[[" X ",Color.black,Color.red]];
-~cbox_delsinte2.action={|val|if(val.value==0,{
-
-	"Cleared guitChord steps!".inform;
-
-	CaosBox.clearSteps(\chords2);
-
-})};
-// --- model -> view: the track announces changes, the checkbox follows
-~cbox_tracks[\bass2].onChange = {|track, index, value| ~cbox_checkbajo2[index].value_(if(value.notNil, 1, 0)) };
-~cbox_tracks[\amb].onChange = {|track, index, value| ~cbox_checkambiente[index].value_(if(value.notNil, 1, 0)) };
-~cbox_tracks[\amb2].onChange = {|track, index, value| ~cbox_checkambiente2[index].value_(if(value.notNil, 1, 0)) };
-~cbox_tracks[\chords].onChange = {|track, index, value| ~cbox_checksinte[index].value_(if(value.notNil, 1, 0)) };
-~cbox_tracks[\chords2].onChange = {|track, index, value| ~cbox_checksinte2[index].value_(if(value.notNil, 1, 0)) };
-//acordes 2 attack and release knobs
-~cbox_sinte_seq2attknob=EZKnob(~cbox_w,Rect(785,231,81,17),nil,ControlSpec(0.01,1,\lin,0.001,0.1,\att),{|a| ~cbox_param.value(\chords2, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_sinte_seq2relknob=EZKnob(~cbox_w,Rect(870,231,81,17),nil,ControlSpec(0.05,8,\lin,0.001,0.5,\rel),{|a| ~cbox_param.value(\chords2, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-);
+)

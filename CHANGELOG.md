@@ -4,10 +4,20 @@
 ---
 ### TODOs:
 - Instrumentos melodicos deben recibir array en ruteo
-
+- Flam para percusiones
+    - Por step, no por pista: shift-click (o click derecho) marca el step con un puntito, y el secuenciador dispara la función dos veces con un retardo corto (por ejemplo 1/64 a 1/32 de beat)
 ---
 
 # Changelog
+
+- ### v2.3.2
+    - GUI colored Socopes
+    - New step grid layout for 32 steps
+        - All channels
+        - Remove Leds
+            - Active step highlited in Channel lane
+    - Add .route method
+        - Add routing popup to melodic instruments
 
 - ### v2.3.1
     - Color palette for GUI elements

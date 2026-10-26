@@ -69,6 +69,19 @@ CaosEngine {
 
 	}
 
+	// indice de bus -> nombre (nil si no es un bus del layout)
+	nameFor { |index|
+
+		var found;
+
+		layout.do { |pair|
+			if(buses[pair[0]].index == index, { found = pair[0] });
+		};
+
+		^found;
+
+	}
+
 	bus { |name|
 
 		var bus = buses[name];

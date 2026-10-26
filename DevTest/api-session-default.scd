@@ -5,27 +5,31 @@
 // intérprete. Se guarda aquí como documentación y como prueba de regresión
 // después de cada paso de la refactorización.
 //
+Platform.userExtensionDir
+CaosBox.browse;
 ////////////////////////////////////////////////////////////
 
 c = CaosBox;
 c.environment;
 // Wait for GUI boot:
 c.play;
-c.guiAlpha(0.5);
+c.pause;
+c.stop;
 c.bpm(120);
 c.freqAnalyzer(true);
-
+c.guiAlpha(0.5);
+c.gui.color(\blue);
+//
 g = CaosGear;
-
 //// Percussion synths
 k = g.new;
 k.kick();
 k.toTrack([0,4,8,12,16,20,24,28], false);
-k.kick(50,0.01,0.1);
+k.kick(\master,0.01,0.1);
 k.toTrack([0,14,15,16], false);
-k.kick(60,0.01,0.1);
+k.kick(\lpf,0.01,0.1);
 k.toTrack(Array.series(32,0,1));
-k.kick(62,0.01,0.2);
+k.kick(\hpf,0.01,0.2);
 k.toTrack(Array.series(16,1,2));
 k.kick(50,0.01,0.5);
 k.offTrack();
@@ -33,9 +37,10 @@ k.offTrack();
 h = g.new;
 h.hihats();
 h.toTrack([0,4,8,12,16,20,24,28]+2, true);
-h.hihats([60,62],att:0.01,rel:0.05,amp1:1);
+h.hihats([\reverb,\grains],att:0.01,rel:0.05,amp1:1);
 h.toTrack([0,4,8,12,16,20,24,28], false);
 h.offTrack();
+c.setSteps(\hihats);
 
 t = g.new;
 t.snare();
@@ -56,6 +61,8 @@ b.bass(\master,x,\seq);
 b.bass(\master,x/2,\rand,0.1,2,40,12920,0.01);
 b.bass(\grains,x/2,\rand,0.1,2,40,12920,0.01);
 b.offTrack();
+c.route(\bass, \master);
+
 
 e = g.new;
 e.bass2(\master);
@@ -91,8 +98,17 @@ i.offTrack;
 
 c.autoFx(\hpf,true,\normal, Array.series(20,100,750), [0.5,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\bpf,true,\normal, Array.series(15,1000,500), [0.15,0.25,0.35,0.5,0.75,0.9,1]);
+c.autoFx(\grains,true,\normal, [1,0.95,0.9,0.85],[1,0.95,0.9,0.85]);
+c.autoFx(\delay,true,\fast, [1,0.95,0.9,0.85]*0.1,[0.125,0.25,0.5,0.75,1]);
 
+c.bpm(20);
+c.randomTime(true, true, [10,20,30,40,50,60,70,80,90,100]);
+c.randomTime(false, false, [10,20,30,40,50,60,70,80,90,100]);
+c.toggleMetric();
+c.browse;
 c.stop;
+
+c.version
 
 // ---------------------------------------------------------------
 // Qué observar (checklist de aceptación)

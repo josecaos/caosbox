@@ -3,10 +3,10 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.3.1";// version unica: la usan el GUI y la bienvenida
-	classvar guiRegistry;// CaosBoxGUI: paleta + step grids de la vista
+	classvar <version = "2.3.2";
+	classvar guiRegistry;
 
-	// registro de la vista (la API le habla a esto, no a widgets sueltos)
+	// Register View
 	*gui {
 
 		^guiRegistry ?? { guiRegistry = CaosBoxGUI.new };
@@ -91,6 +91,64 @@ CaosBox {
 		if(engine.isNil, { ^out });
 
 		^engine.resolveOut(out);
+
+	}
+
+	// ruta de una pista melodica: nombre de bus o indice; nil = consultar
+	*route {|track, bus|
+
+		var tr, instrument, name, index;
+
+		tr = ~cbox_tracks !? {|tracks| tracks[track]};
+
+		if(tr.isNil, {
+			^("CaosBox.route: unknown track " ++ track).warn;
+		});
+
+		if(bus.isNil, {
+			^tr.out;
+		});
+
+		if(tr.mode == \snapshot, {
+			^("CaosBox.route:" + track + "routes per step; evaluate the instrument with out:")
+				.warn;
+		});
+
+		name = this.prBusName(bus);
+
+		if(name.isNil, {
+			^("CaosBox.route: unknown bus " ++ bus).warn;
+		});
+
+		tr.out = name;
+
+		index = this.engine !? {|eng| eng.busIndex(name)};
+		instrument = ~cbox_instruments !? {|voices| voices[track]};
+		instrument !? {|voice| index !? {|i| voice.out_(i) }};
+
+		this.gui.routeChanged(track, name);
+
+		^name;
+
+	}
+
+	*prBusName {|bus|
+
+		if(engine.isNil, { ^nil });
+
+		if(bus.isKindOf(Symbol), {
+			^if(engine.busNames.includes(bus), { bus }, { nil });
+		});
+
+		if(bus.isKindOf(Bus), {
+			bus = bus.index;
+		});
+
+		if(bus.isNumber, {
+			^engine.nameFor(bus.asInteger);
+		});
+
+		^nil;
 
 	}
 

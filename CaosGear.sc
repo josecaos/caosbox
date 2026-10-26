@@ -207,12 +207,21 @@ CaosGear : CaosBox {
 
 	prRegister {|track, voice, id|
 
+		var name;
+
 		if(~cbox_instruments.isNil, { ~cbox_instruments = Dictionary.new });
 
 		~cbox_instruments.put(track, voice);
 		~cbox_tracks[track].setInstrument(voice);
 		instrument = voice;
 		instance_id = id;
+
+		// la ruta del instrumento es la de la pista (y la vista la muestra)
+		name = CaosBox.engine !? {|eng| eng.nameFor(voice.out)};
+		if(name.notNil, {
+			~cbox_tracks[track].out = name;
+			CaosBox.gui.routeChanged(track, name);
+		});
 
 		^voice;
 

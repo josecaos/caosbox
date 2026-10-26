@@ -1,4 +1,4 @@
-// CaosBox v2.3.1 - GUI registry and palette
+// CaosBox v2.3.2 - GUI registry and palette
 //
 // The API reaches the view through CaosBox.gui. The registry owns the palette
 // (so `CaosBox.gui.color(\red)` repaints every registered view), the list of
@@ -21,6 +21,7 @@ CaosBoxGUI {
 	var <playheadColor;
 	var <stepGrids;
 	var <colorListeners;
+	var <routeViews;
 	var <analyzerWin;
 	var <freqView;
 	var <scopeView;
@@ -60,6 +61,7 @@ CaosBoxGUI {
 		border = Color(0.28, 0.30, 0.28);
 		stepGrids = List.new;
 		colorListeners = List.new;
+		routeViews = IdentityDictionary.new;
 
 		this.prUpdateDerived;
 
@@ -155,6 +157,31 @@ CaosBoxGUI {
 
 	}
 
+	// popups de ruteo: la API los actualiza y ellos actualizan la API
+	addRoute {|track, popup, buses|
+
+		routeViews.put(track, (popup: popup, buses: buses));
+
+		^this;
+
+	}
+
+	routeChanged {|track, name|
+
+		var entry = routeViews[track];
+		var index;
+
+		if(entry.notNil, {
+			index = entry[\buses].indexOf(name.asSymbol);
+			if(index.notNil, {
+				entry[\popup].value_(index);
+			});
+		});
+
+		^this;
+
+	}
+
 	playhead {|index|
 
 		stepGrids.do {|grid| grid.playhead_(index) };
@@ -176,8 +203,16 @@ CaosBoxGUI {
 	prThemeAnalyzers {
 
 		analyzerWin !? {|win| win.background_(background) };
-		freqView !? {|view| view.background_(panel) };
-		scopeView !? {|view| view.background_(panel) };
+		freqView !? {|view|
+			view.background_(panel);
+			if(view.scope.isKindOf(ScopeView), {
+				view.scope.waveColors_([accent]);
+			});
+		};
+		scopeView !? {|view|
+			view.background_(panel);
+			view.waveColors_([accent]);
+		};
 
 		^this;
 
@@ -264,6 +299,7 @@ CaosBoxGUI {
 		scopeSynth = BusScopeSynth(server);
 
 		win.onClose_({ this.prCleanupAnalyzers });
+		this.prThemeAnalyzers;
 
 		^this;
 

@@ -1,35 +1,5 @@
-(//CaosBox GUI file 3 - v1.2 - In, steps, aux
-StaticText(~cbox_w,Rect(5,252,53,15)).string_("LineIn:").stringColor_(Color(0.85,0.85,0.85)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.5,0.5,0.5));
-
-~cbox_checkbox = 60;
-
-for (0, 31, {|i|
-
-	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
-
-	~cbox_checkin.put(i,CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 250, 20, 20)).action={|val|
-		CaosBox.setStep(\in, i, val.value);
-	});
-
-	~cbox_checkbox = ~cbox_checkbox + a;
-
-});
-//resetea secuencias In
-~cbox_delin=Button(~cbox_w,Rect(765,252,15,15));
-~cbox_delin.states=[[" X ",Color.black,Color.red]];
-~cbox_delin.action={|val|
-
-	if(val.value==0,{
-
-		CaosBox.clearSteps(\in);
-
-		"Cleared line in steps!".inform;
-})};
-
-//line In attack and release knobs
-~cbox_inattknob=EZKnob(~cbox_w,Rect(785,251,81,17),nil,ControlSpec(0.01,0.25,\lin,0.001,0.1,\att),{|a| ~cbox_param.value(\in, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
-~cbox_inrelknob=EZKnob(~cbox_w,Rect(870,251,81,17),nil,ControlSpec(0.05,0.75,\lin,0.001,0.1,\rel),{|a| ~cbox_param.value(\in, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green,Color.grey, Color.black, Color.yellow);
-
+(//CaosBox GUI file 3 - v2.3.2 - master, aux, FX
+// (la fila de LineIn ahora la construye GUI_2 con el resto de pistas)
 //master sliders
 //master tag
 ~cbox_mastertag=StaticText(~cbox_w,Rect(5,290,270,12));
@@ -238,7 +208,5 @@ StaticText(~cbox_w,Rect(785,585,235,15)).string_("Automation:").font_(Font("Deja
 ~cbox_autobotg.states=[[" Auto On ",Color.gray(0.85),Color(alpha:0.25)],
 	[" Auto Off ",Color.black,Color.green(0.5)]];
 ~cbox_autobotg.action={|val|if(val.value==1,{Tdef(\autog).play},{Tdef(\autog).stop})};
-// --- model -> view: the track announces changes, the checkbox follows
-~cbox_tracks[\in].onChange = {|track, index, value| ~cbox_checkin[index].value_(if(value.notNil, 1, 0)) };
 //
 );

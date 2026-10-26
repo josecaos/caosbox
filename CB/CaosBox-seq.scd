@@ -2,20 +2,14 @@
 //CaosBox v2.1.5 Main sequencer
 //
 // El tiempo vive en ~cbox_seq (CaosSequencer). Aca solo se define:
-//   step:    que pasa en cada paso (LED + pistas)
+//   step:    que pasa en cada paso (playhead + pistas)
 //   prepare: las voces fijas del engine (master, fx, filtros), una sola vez
 //////////////////////////////////////////////////
 (
 ~cbox_seq = CaosSequencer.new(
 	step: { |index|
-		var last;
-		// guia led steps
-		last = if(index == 0, { 31 }, { index - 1 });
-		{
-			~cbox_lightsteps[index].value = 1;
-			~cbox_lightsteps[last].value = 0;
-			CaosBox.gui.playhead(index);// la rejilla nueva dibuja su columna
-		}.defer(0.01);
+		// el playhead lo dibuja cada rejilla; el LED viejo ya no existe
+		{ CaosBox.gui.playhead(index) }.defer(0.01);
 		// cada pista despacha su step: percusion toca la funcion guardada,
 		// melodicos avanzan su linea y disparan la voz
 		~cbox_tracks.do { |track| track.step(index) };

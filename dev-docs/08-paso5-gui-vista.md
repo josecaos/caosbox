@@ -135,23 +135,57 @@ Decisiones para 5a-3 (ruteo por fila):
 * Si más adelante se quiere ruteo **por step** (step 1 a master, step 4 a reverb), va
   como feature aparte: datos por step + menú contextual, no un popup por fila.
 
-## 7. Plan del resto de 5a
+## 7. 5a-3: ruteo y las 13 filas (v2.3.2)
 
-1. `out` en `CaosTrack` + `CaosBox.route(track, bus)` (acepta nombre o índice).
-2. Popup minimalista por fila con los 8 destinos, sincronizado con la API y la paleta.
-3. Builder de las 13 filas desde el spec; fuera CheckBox, knobs y LEDs.
-4. Transporte sincronizado desde el modelo (play/pause, métrica, random, BPM).
-5. Resize del bloque de pistas + transporte (los paneles de FX van en 5b).
-6. Promover datos a `CaosBox.tracks`/`CaosBox.voices` + alias; retirar `~cbox_param`.
+**Modelo y API**
 
-## 8. Verificación actual
+* `CaosTrack` gana `out` (nombre de bus del engine) y `CaosInstrument.out_` para
+  aplicar la salida en el próximo trigger. `CaosEngine.nameFor(index)` devuelve el
+  nombre de un bus del layout.
+* `CaosBox.route(track, bus)` acepta nombre (`\reverb`) o índice (`52`), resuelve y
+  actualiza el instrumento; sin argumento devuelve la ruta actual. Sólo aplica a
+  pistas melódicas: en percusión avisa que el ruteo es por step (snapshot).
+* `CaosGear.prRegister` toma la salida del instrumento recién creado y la refleja en
+  `track.out` + la vista: vale la última acción (API o `x.bass(out: ...)`).
+* La API actualiza la GUI: `CaosBoxGUI.addRoute`/`routeChanged` mantienen los popups
+  sincronizados en ambos sentidos.
 
-* Clases compilan; 14 `.scd` parsean; suite **282 aserciones, 0 fallos**
-  (`TestCaosBoxGUI` + `TestCaosStepGrid` suman 30 aserciones nuevas).
-* Prototipo y fila real evaluados headless con `QT_QPA_PLATFORM=offscreen`: celdas
-  activas 10/10, playhead, pintado con mouse y cambio de color verificados por
-  píxeles. El SynthDef del granulador estéreo se construye headless sin errores.
-* Transporte renderizado offscreen: play 275..690, `Scopes` 695..780, record 790..920;
-  captura en `DevTest/img/transport-scopes.png`.
-* La ventana de analizadores se construye y se cierra limpio en modo headless
-  (600x430, FFT arriba y osciloscopio abajo); abrirla con audio requiere servidor.
+**Builder de las 13 filas**
+
+* `GUI/CaosBox-GUI_2.scd` es ahora el único builder: spec ordenado (kick, snare,
+  hats, kick2, snare2, hats2, bass, bass2, pad, pad2, chords, chords2, lineIn),
+  etiqueta minimalista, rejilla de 778 px, X de limpiar y, en melódicos, popup de
+  ruteo (Master/Reverb/Delay/Pitch/LPF/HPF/BPF/Grains).
+* En percusión el popup se reemplaza por un `per-step` apagado con tooltip: la salida
+  se elige al evaluar el instrumento (`k.kick(out: ...)`) y el snapshot la conserva
+  por step. No se pisa ese flujo.
+* Se eliminaron los 416 CheckBox, los 14 knobs muertos, la fila de LEDs y las
+  globales `~cbox_check*`/`~cbox_light*`; `CB/CaosBox-seq.scd` solo avisa el playhead.
+* Los scopes toman el acento: `ScopeView.waveColors_([accent])` en FFT y osciloscopio,
+  y se repintan con `CaosBox.gui.color(...)`.
+
+**Percusión: qué poner en la columna**
+
+Por ahora el `per-step` informa y deja el flujo intacto. La idea de flam queda para
+5a-4: prefiero **flam por step** (shift/click derecho en el step, se dibuja una marca
+y se dispara dos veces con un retardo corto) antes que un flam por pista, porque
+respeta el ruteo por step y da más expresividad. Alternativas para esa columna:
+mute/solo por pista o probabilidad; se decide con la prueba en la app.
+
+## 8. Siguiente
+
+1. **5a-4**: flam por step (o mute/probabilidad) en la columna de percusión.
+2. Promover datos a `CaosBox.tracks`/`CaosBox.voices` + alias (pendiente de 5a).
+3. **5b**: reflow de paneles de FX/master + resize total; tema minimalista de sliders,
+   faders y popups viejos.
+4. **5c**: rejilla con interacción avanzada (mute/solo, acentos, scroll, teclado).
+
+## 9. Verificación actual
+
+* Clases compilan; 14 `.scd` parsean; suite **286 aserciones, 0 fallos**.
+* Render headless de la GUI real (sin servidor): 13 rejillas registradas, 7 popups de
+  ruteo con items correctos, valores 0/1/4 al cambiar de ruta, etiquetas y X en su
+  lugar, playhead correcto; captura de trabajo `/tmp/tracks-13.png`.
+* Analizadores: la ventana se construye/cierra headless (600x430) y los `waveColors`
+  de FFT y osciloscopio toman el acento (probado con `\orange`).
+* SynthDef del granulador estéreo se construye headless sin errores.

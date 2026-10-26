@@ -28,24 +28,6 @@
 // ~cbox_rqmaxmin=ControlSpec(0.01,1,\lin,0.01,1);
 // bpm
 ~cbox_randtimes=[47,62,94,141,188];
-// GUI steps
-~cbox_checksteps = [20,20,20,30];
-~cbox_checkbox = 60;
-~cbox_checkbombo=Array.fill(32,nil);
-~cbox_checktarola=Array.fill(32,nil);
-~cbox_checkcontras=Array.fill(32,nil);
-~cbox_checkbombo2=Array.fill(32,nil);
-~cbox_checktarola2=Array.fill(32,nil);
-~cbox_checkcontras2=Array.fill(32,nil);
-~cbox_checkbajo=Array.fill(32,nil);
-~cbox_checkbajo2=Array.fill(32,nil);
-~cbox_checkambiente=Array.fill(32,nil);
-~cbox_checkambiente2=Array.fill(32,nil);
-~cbox_checksinte=Array.fill(32,nil);
-~cbox_checksinte2=Array.fill(32,nil);
-~cbox_checkin=Array.fill(32,nil);
-~cbox_lightsteps=Array.fill(32,nil);
-~cbox_lightpos = 61;
 // Automation speed multipliers: stepDur * divisor. 1 normal, 0.5 fast,
 // 2 slow, 4 slowest. Multiplican la espera, no la dividen.
 // "Dont use 0 on these"

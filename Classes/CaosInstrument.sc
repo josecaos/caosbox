@@ -176,6 +176,14 @@ CaosInstrument {
 
 	}
 
+	out_ { |value|
+
+		out = value;
+
+		^this;
+
+	}
+
 	release {
 
 		// one-shot: el envelope libera la voz; no hay nodo vivo que soltar

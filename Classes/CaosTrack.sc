@@ -23,6 +23,7 @@ CaosTrack {
 	var <source;
 	var <>onChange;
 	var <>instrument;        // voz activa de la pista
+	var <>out;               // ruta de salida (melodicos): nombre de bus del engine
 	var <>pendingInstrument; // reemplazo que entra en el siguiente trigger
 	var <>target;            // grupo destino de la percusion (funciones por step)
 

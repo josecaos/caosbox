@@ -68,6 +68,16 @@ TestCaosEngine : UnitTest {
 
 	}
 
+	test_busNameForIndex {
+
+		this.assertEquals(engine.nameFor(50), \master);
+		this.assertEquals(engine.nameFor(52), \reverb);
+		this.assertEquals(engine.nameFor(64), \grains);
+		this.assertEquals(engine.nameFor(9999), nil,
+			"an index outside the layout has no name");
+
+	}
+
 	test_busLookup {
 
 		this.assertEquals(engine.bus(\reverb).index, 52);
