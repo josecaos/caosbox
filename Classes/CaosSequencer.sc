@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2014-2026 Carlos Hasbun (josecaos)
 // CaosBox v2.1.5 - Sequencer: un solo dueno del tiempo
 //
 // El sequencer posee el indice (0..size-1), la duracion del step (en beats), el

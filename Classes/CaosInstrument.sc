@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2014-2026 Carlos Hasbun (josecaos)
 // CaosBox v2.1.1 - Instrument (voice) model
 //
 // Un instrumento es la voz de una pista: sabe como sonar (un SynthDef o una

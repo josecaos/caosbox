@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2014-2026 Carlos Hasbun (josecaos)
 // CaosBox v2.0.0 - Step pattern model
 //
 // A CaosTrack owns the pattern of one lane: `size`, 32 steps by default and a

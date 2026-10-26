@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2014-2026 Carlos Hasbun (josecaos)
 // CaosBox v2.1.2 - Engine: server, execution order and bus map
 //
 // Un solo dueno del server, del orden de ejecucion y de los buses. Los

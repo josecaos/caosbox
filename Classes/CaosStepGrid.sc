@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2014-2026 Carlos Hasbun (josecaos)
 // CaosBox v2.3.0 - one lane step grid (UserView)
 //
 // Replaces the 32 CheckBox of a track with a single hand-drawn grid: rounded

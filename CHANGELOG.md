@@ -13,6 +13,9 @@
 
 # Changelog
 
+- ### v2.4.0
+    - Licence Upgrade
+
 - ### v2.3.5
     - True resizable app window
     - Apply global color to SLider handles and knobs

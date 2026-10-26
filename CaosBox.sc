@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2014-2026 Carlos Hasbun (josecaos)
 //Main Environment init
 CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.3.5";
+	classvar <version = "2.4.0";
 	classvar guiRegistry;
 
 	// Register View

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2014-2026 Carlos Hasbun (josecaos)
 // CaosBox v2.3.5 - GUI registry and palette
 //
 // The API reaches the view through CaosBox.gui. The registry owns the palette
