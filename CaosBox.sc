@@ -751,8 +751,13 @@ CaosBox {
 	*close {
 
 		~cbox_seq !? { |seq| seq.stop };
+		~cbox_midi_free !? { ~cbox_midi_free.value };
 		engine !? { |eng| eng.free };
-		Tdef.removeAll;
+
+		// sólo los Tdefs de CaosBox; no tocar los de otros proyectos
+		#[\secuencias, \autor, \autod, \autop, \autog, \autolpf, \autohpf, \autobpf]
+			.do { |name| Tdef(name).stop };
+
 		this.server.quit.freeAll.reboot;
 		this.server.recompile;
 		^"Terminando CaosBox";

@@ -197,6 +197,37 @@ CaosGear : CaosBox {
 	// Melodic instruments: a CaosInstrument owns the voice, the params and the
 	// note stream. The sequencer only advances/triggers it; there are no Tdefs.
 
+	// nombre de waveform -> variante de SynthDef (ambuno_<wave>)
+	prWaveName {|waveform|
+
+		var wave = (waveform ? 'sin').asSymbol;
+
+		if(#['sin', 'tri', 'pulse'].includes(wave).not, {
+			("CaosGear: unknown waveform" + waveform + "; using 'sin'").inform;
+			wave = 'sin';
+		});
+
+		^wave;
+
+	}
+
+	// primer acorde de chordsArray, validado contra la lista del instrumento
+	prChordName {|chordsArray, valid|
+
+		var chord = (chordsArray ? valid).asArray.first;
+
+		if(chord.isNil, { chord = valid.first });
+		chord = chord.asSymbol;
+
+		if(valid.includes(chord).not, {
+			("CaosGear: unknown chord" + chord + "; using" + valid.first).inform;
+			chord = valid.first;
+		});
+
+		^chord;
+
+	}
+
 	prNoteOrder {|seqType|
 
 		if(seqType == 'rand', { ^\rand });
@@ -320,9 +351,11 @@ CaosGear : CaosBox {
 		waveform='sin', att=0.25, rel=1, semi=0, iphase=0, cutf=8920, rq=0.85,
 		gate=0, amp=0.75, pan=0, retrigger=false|
 
-		var instrument;
+		var instrument, wave;
 
-		instrument = CaosInstrument.synth(\pad, \amb, \ambuno, CaosBox.resolveOut(out.asArray.first),
+		wave = this.prWaveName(waveform);
+
+		instrument = CaosInstrument.synth(\pad, \amb, ("ambuno_" ++ wave.asString).asSymbol, CaosBox.resolveOut(out.asArray.first),
 			(
 				att: att, rel: rel, semi: semi, iphase: iphase,
 				cutf: cutf, rq: rq, amp: amp, pan: pan
@@ -354,9 +387,11 @@ CaosGear : CaosBox {
 		chordsArray=#['Mmaj7', 'M', 'm'], att=0.05, rel=1, iphase=0.025,
 		width=0.1, cutf=1200, rq=0.5, pan=0, amp=0.5, retrigger=true|
 
-		var instrument;
+		var instrument, chord;
 
-		instrument = CaosInstrument.synth(\chords, \chords, \acordesuno, CaosBox.resolveOut(out.asArray.first),
+		chord = this.prChordName(chordsArray, #['M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', '5dim7', '5aug7']);
+
+		instrument = CaosInstrument.synth(\chords, \chords, ("acordesuno_" ++ chord.asString).asSymbol, CaosBox.resolveOut(out.asArray.first),
 			(
 				att: att, rel: rel, iphase: iphase, width: width,
 				cutf: cutf, rq: rq, pan: pan, amp: amp
@@ -371,9 +406,11 @@ CaosGear : CaosBox {
 		chordsArray=#['Mmaj7'], att=0.05, rel=1, iphase=0.025,
 		width=0.1, cutf=1200, rq=0.5, pan=0, amp=0.5, retrigger=true|
 
-		var instrument;
+		var instrument, chord;
 
-		instrument = CaosInstrument.synth(\chords2, \chords2, \acordesdos, CaosBox.resolveOut(out.asArray.first),
+		chord = this.prChordName(chordsArray, #['M', 'm', 'M7', 'm7', 'Mmaj7', 'mmaj7', 'M9', 'M9m', 'm9', 'm9m']);
+
+		instrument = CaosInstrument.synth(\chords2, \chords2, ("acordesdos_" ++ chord.asString).asSymbol, CaosBox.resolveOut(out.asArray.first),
 			(
 				att: att, rel: rel, iphase: iphase, width: width,
 				cutf: cutf, rq: rq, pan: pan, amp: amp

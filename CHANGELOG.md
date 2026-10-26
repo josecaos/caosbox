@@ -13,6 +13,16 @@
 
 # Changelog
 
+- ### v2.5.0
+    - Update default MIDI mapping to MIDIFunc.cc
+        - Update view
+    - Bugfix: .close
+        - Stop all sequences related to CaosBox correctly
+        - Free MIDI
+    - Instruments
+        - Pad: Create pads with different waves to change 
+        - Chords: Create synthjs with each possible chord on caosperclib class
+
 - ### v2.4.0
     - Licence Upgrade
 

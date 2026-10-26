@@ -6,26 +6,26 @@
 
 ## 1. Bugs rápidos (media hora)
 
-- [ ] **MIDI CC 11**: `CB/CaosBox-midi.scd` manda `\delaytime`; el SynthDef usa
-      `\deltime`. Cambiar el nombre del parámetro.
-- [ ] **B18 — `*close`**: `CaosBox.close` usa `Tdef.removeAll`, que borra Tdefs de
-      otros proyectos. Limitar a los Tdefs propios (`\secuencias`, `\autor`, ...).
-- [ ] Revisar `CB/CaosBox-midi.scd`: los CC están atados a widgets sueltos; al menos
-      confirmar que todos los globals que usa siguen existiendo tras 5b.
+- [x] **MIDI CC 11**: corregido a `\deltime`.
+- [x] **B18 — `*close`**: ahora detiene sólo `\secuencias`, `\autor`, `\autod`,
+      `\autop`, `\autog`, `\autolpf`, `\autohpf`, `\autobpf` y libera los
+      `MIDIFunc`.
+- [x] `CB/CaosBox-midi.scd` reescrito con `MIDIFunc.cc` (ver `11-fixes-v2.4.0.md`).
 
 ## 2. Timbre (los dos bugs diferidos del análisis)
 
-- [ ] **B4 — acorde**: `CB/CaosBox-synths.scd` tiene `var tipo = 'M'`; el arg `\chord`
-      no cambia el acorde. Requiere variantes de SynthDef o `Select` numérico.
-- [ ] **B5 — waveform**: `\ambuno` tiene `var onda = 'sin'`; el arg `\waveform` no
-      aplica. Mismo camino que B4.
+- [x] **B4 — acorde**: variantes de SynthDef por acorde; `chordsArray` elige la
+      primera al crear la voz.
+- [x] **B5 — waveform**: variantes `ambuno_sin|tri|pulse`; `waveform` elige al crear.
+- [ ] Segunda fase: cambiar acorde/waveform en caliente (hoy `set` no cambia el
+      SynthDef; hay que recrear la voz).
 - [ ] Revisar `bassCustom`/variantes `*Custom`: `~cbox_custom` se lee al cargar; evaluar
       si necesitan API de registro en vez de recarga.
 
 ## 3. Restos del Paso 5 (GUI como vista)
 
-- [ ] **MIDI/automatización por registro**: migrar `CB/CaosBox-midi.scd` a
-      `CaosBox.gui`/`CaosBox.route` en vez de `~cbox_*fader`.
+- [ ] **MIDI/automatización por registro**: el mapa ya usa `MIDIFunc`, pero sigue
+      leyendo/escribiendo `~cbox_*fader`; falta pasarlo a `CaosBox.gui`/API.
 - [ ] **A2 — arranque por scripts**: `~cbox_urls` sigue siendo parte del contrato;
       documentar o encapsular el orden en una API.
 - [ ] **A8 — `CB/CaosBox-defaults.scd`**: sigue siendo registro/fábrica más que
@@ -34,8 +34,7 @@
 
 ## 4. Paso 6 (API, docs y tests)
 
-- [ ] `.schelp` de `CaosBox`, `CaosGear`, `CaosTrack`, `CaosInstrument`,
-      `CaosEngine`, `CaosSequencer`, `CaosStepGrid`, `CaosBoxGUI`.
+- [x] `.schelp` inicial de las 8 clases en `HelpSource/Classes/`.
 - [ ] README/API al día (créditos y versión ya están).
 - [ ] CHANGELOG por versión (lo mantiene josecaos).
 - [ ] Tests de integración con server/audio: la suite es headless.

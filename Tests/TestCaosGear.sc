@@ -104,9 +104,27 @@ TestCaosGear : UnitTest {
 		var instrument = gear.pad(50, [48, 50], 'seq');
 
 		this.assertEquals(instrument.track, \amb);
-		this.assertEquals(instrument.defName, \ambuno);
+		this.assertEquals(instrument.defName, \ambuno_sin);
 		this.assert(instrument.oneShot,
 			"CaosPercLib pads use Env.perc: one-shot voices");
+
+	}
+
+	test_padWaveformSelectsVariant {
+
+		var tri = gear.pad(50, [48], 'seq', 'tri');
+
+		this.assertEquals(tri.defName, \ambuno_tri,
+			"waveform elige la variante del SynthDef");
+
+	}
+
+	test_chordArraySelectsVariant {
+
+		var chord = gear.chords(50, [48], 'seq', #['m']);
+
+		this.assertEquals(chord.defName, \acordesuno_m,
+			"el primer acorde de chordsArray elige la variante");
 
 	}
 
