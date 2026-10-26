@@ -14,6 +14,7 @@
 		{
 			~cbox_lightsteps[index].value = 1;
 			~cbox_lightsteps[last].value = 0;
+			CaosBox.gui.playhead(index);// la rejilla nueva dibuja su columna
 		}.defer(0.01);
 		// cada pista despacha su step: percusion toca la funcion guardada,
 		// melodicos avanzan su linea y disparan la voz

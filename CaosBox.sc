@@ -4,6 +4,14 @@ CaosBox {
 	classvar <server,url;
 	classvar <engine;
 	classvar <version = "2.2.0";// version unica: la usan el GUI y la bienvenida
+	classvar guiRegistry;// CaosBoxGUI: paleta + step grids de la vista
+
+	// registro de la vista (la API le habla a esto, no a widgets sueltos)
+	*gui {
+
+		^guiRegistry ?? { guiRegistry = CaosBoxGUI.new };
+
+	}
 
 	*environment {|gui = true|
 
@@ -174,6 +182,7 @@ CaosBox {
 
 		~cbox_seq !? { |seq| seq.stop };
 		this.prPauseAutomations;
+		this.gui.playhead(nil);// la rejilla no deja la columna encendida
 		~cbox_bot !? { |bot| bot.value_(0) };
 
 		^"";

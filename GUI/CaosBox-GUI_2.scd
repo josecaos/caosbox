@@ -1,22 +1,9 @@
 (//CaosBox GUI file 2 - v1.2 - bass, ambientes, acordes
-//bajo
-StaticText(~cbox_w,Rect(5,132,53,15)).string_("Bass:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
-~cbox_checkbox = 60;
-for (0, 31, { |i|
-
-	var a = ~cbox_checksteps[i%~cbox_checksteps.size];
-
-	var check = CheckBox.new(~cbox_w,Rect(~cbox_checkbox, 130, 20, 20)).action={|val|
-		CaosBox.setStep(\bass, i, val.value);
-	};
-
-	~cbox_checkbajo.put(i,check);
-
-	~cbox_checkbox = ~cbox_checkbox + a;// pinta secuenciador para instrumento
-
-});
-~cbox_delbass=Button(~cbox_w,Rect(765,132,15,15));
-~cbox_delbass.states=[[" X ",Color.black,Color.red]];
+//bajo: primera fila de la rejilla nueva (v2.3.0)
+StaticText(~cbox_w,Rect(5,132,53,15)).string_("Bass:").stringColor_(Color(0.55,0.58,0.55)).font_(Font("DejaVu Sans",11,true)).align_(\left);
+~cbox_bassgrid = CaosStepGrid.new(~cbox_w, Rect(60, 130, 898, 20), ~cbox_tracks[\bass]);
+~cbox_delbass=Button(~cbox_w,Rect(962,131,16,16));
+~cbox_delbass.states=[["×",Color(0.85,0.35,0.35),Color(0.12,0.12,0.12)]];
 ~cbox_delbass.action={|val|if(val.value==0,{
 
 	"Cleared bass steps!".inform;
@@ -24,12 +11,6 @@ for (0, 31, { |i|
 	CaosBox.clearSteps(\bass);
 
 })};
-//bajo attack and release knobs
-~cbox_bass1attknob=EZKnob(~cbox_w,Rect(785,131,81,17),nil,ControlSpec(0.01,0.5,\lin,0.001,0.05,\att),{|a| ~cbox_param.value(\bass, \att, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-~cbox_bass1relknob=EZKnob(~cbox_w,Rect(870,131,81,17),nil,ControlSpec(0.1,2,\lin,0.001,0.5,\rel),{|a| ~cbox_param.value(\bass, \rel, a.value)},unitWidth:25,layout:\horz).setColors(Color.grey,Color.black, Color.green(0.9),Color.grey, Color.black, Color.yellow);
-
-
-
 //bajo2
 StaticText(~cbox_w,Rect(5,152,53,15)).string_("Bass2:").stringColor_(Color(0.9,0.9,0.9)).font_(Font("Dejavu Sans",11,true)).align_(\left).background_(Color(0.25,0.25,0.25));
 
@@ -180,7 +161,6 @@ for (0, 31, { |i|
 
 })};
 // --- model -> view: the track announces changes, the checkbox follows
-~cbox_tracks[\bass].onChange = {|track, index, value| ~cbox_checkbajo[index].value_(if(value.notNil, 1, 0)) };
 ~cbox_tracks[\bass2].onChange = {|track, index, value| ~cbox_checkbajo2[index].value_(if(value.notNil, 1, 0)) };
 ~cbox_tracks[\amb].onChange = {|track, index, value| ~cbox_checkambiente[index].value_(if(value.notNil, 1, 0)) };
 ~cbox_tracks[\amb2].onChange = {|track, index, value| ~cbox_checkambiente2[index].value_(if(value.notNil, 1, 0)) };

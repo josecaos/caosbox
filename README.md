@@ -5,7 +5,7 @@ CaosBox v2.1.0
 #### You can download library here: https://github.com/josecaos/caosperclib
 Unzip and place the  'caosperclib' + 'caosbox' folders here:  
 ```
- Platform.userExtensionDir;
+    
  ```
 
 ### Basic Use

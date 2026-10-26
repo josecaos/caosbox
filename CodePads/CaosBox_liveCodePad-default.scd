@@ -1,8 +1,6 @@
 ////////////////////////////////////////////////////////////
 // CaosBox v2.1.1 - liveCodePad por defecto
 //
-// Bloques para evaluar en vivo (Cmd+Enter en el SCIDE).
-//
 // Percusión: cada step guarda el timbre vigente al marcarlo (snapshot).
 //            Volver a llamar a un método y hacer toTrack re-sella esos steps.
 // Melódicos: cada trigger crea una voz nueva (CaosPercLib usa envolventes

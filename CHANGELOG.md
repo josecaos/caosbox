@@ -9,6 +9,13 @@
 
 # Changelog
 
+- ### v2.3.0
+    - GUI
+        - Global layout color 
+        - Resizable window
+        - New Steps layout
+            - Bass line test
+
 - ### v2.2.0
     - New class:
         - CaosSequencer
