@@ -1,4 +1,4 @@
-CaosBox v2.1.0
+CaosBox v2.3.3
 ------
 **It's a not-so-common LiveCoding/AlgoRave music Secuencer/Processor for the CaosPercLib Class library, with a programming Interface and a GUI written in SuperCollider.**
 
@@ -14,7 +14,7 @@ Platform.userExtensionDir
     //instance sequencer
     c = CaosBox;
     c.environment;
-    //c.environment(false);//start without GUI(optional)
+    //c.environment(false);//start headless without GUI(optional)
 
     c.play;
     c.bpm(194);
@@ -41,4 +41,9 @@ Platform.userExtensionDir
 ##### Notes:
 - No audio buffers, only synthesis. Without [caosperclib](https://github.com/josecaos/caosperclib) won't work.
 - Tested on SuperCollider 3.12.0 and below over Linux, Windows and OSX.
-- Written by [josecaos.xyz](https://josecaos.xyz)
+
+##### Credits:
+- CaosBox and CaosPercLib: [Carlos Hasbun](https://github.com/josecaos)
+- v2.x refactor and GUI: pair-coded with [**DeepSeek**](https://www.deepseek.com/) (DeepSeek Harness agent, model deepseek-v4-flash)
+- All architecture, design, and final code from [josecaos](https://josecaos.xyz)
+- Thanks to [WAD](https://wad.mx) for the endorsment of the project and for the support

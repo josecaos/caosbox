@@ -1,4 +1,4 @@
-// CaosBox v2.3.2 - GUI registry and palette
+// CaosBox v2.3.3 - GUI registry and palette
 //
 // The API reaches the view through CaosBox.gui. The registry owns the palette
 // (so `CaosBox.gui.color(\red)` repaints every registered view), the list of
@@ -21,6 +21,7 @@ CaosBoxGUI {
 	var <playheadColor;
 	var <stepGrids;
 	var <colorListeners;
+	var <accentEntries;
 	var <routeViews;
 	var <analyzerWin;
 	var <freqView;
@@ -61,6 +62,7 @@ CaosBoxGUI {
 		border = Color(0.28, 0.30, 0.28);
 		stepGrids = List.new;
 		colorListeners = List.new;
+		accentEntries = List.new;
 		routeViews = IdentityDictionary.new;
 
 		this.prUpdateDerived;
@@ -190,10 +192,137 @@ CaosBoxGUI {
 
 	}
 
+	// --- widgets viejos con verde hardcodeado ---------------------------
+
+	// recorre la ventana una vez y guarda que widgets deben seguir al acento
+	themeLegacy {|parent, skip|
+
+		accentEntries = List.new;
+		this.prCollectGreen(parent, skip ? []);
+
+		^this.prApplyAccent;
+
+	}
+
+	isGreen {|color|
+
+		if(color.isNil or: { color.isKindOf(Color).not }, { ^false });
+
+		^(color.green > 0.25)
+			and: { color.red < 0.45 }
+			and: { color.blue < 0.45 }
+			and: { color.green > (color.red + 0.12) }
+			and: { color.green > (color.blue + 0.12) };
+
+	}
+
+	prCollectGreen {|view, skip|
+
+		view.children(View).do {|child|
+			if(skip.includes(child).not, {
+				this.prCollectGreenView(child);
+				this.prCollectGreen(child, skip);
+			});
+		};
+
+		^this;
+
+	}
+
+	prCollectGreenView {|view|
+
+		if(view.isKindOf(NumberBox), {
+			if(this.isGreen(view.background), {
+				accentEntries.add((view: view, role: \number));
+			});
+		});
+
+		if(view.isKindOf(Button), {
+			var states = view.states;
+			if(states.notNil, {
+				// todos los botones: inactivo = texto acento / fondo panel;
+				// activo (state > 0) = fondo acento / texto negro
+				accentEntries.add((
+					view: view,
+					role: \button,
+					labels: states.collect {|state| state[0] }
+				));
+			});
+		});
+
+		if(view.isKindOf(Slider) or: { view.isKindOf(Slider2D) }, {
+			accentEntries.add((view: view, role: \slider));
+		});
+
+		if(view.isKindOf(StaticText), {
+			var bgGreen = this.isGreen(view.background);
+			var fgGreen = this.isGreen(view.stringColor);
+			if(bgGreen or: { fgGreen }, {
+				accentEntries.add((
+					view: view,
+					role: \label,
+					bgGreen: bgGreen,
+					fgGreen: fgGreen
+				));
+			});
+		});
+
+		^this;
+
+	}
+
+	prApplyAccent {
+
+		accentEntries.do {|entry|
+			var view = entry[\view];
+
+			if(view.notNil, {
+				switch(entry[\role],
+
+					\number, {
+						view.background_(panel);
+						view.normalColor_(accent);
+						view.typingColor_(accentText);
+					},
+
+					\button, {
+						var value = view.value;
+						var count = entry[\labels].size;
+						var states = entry[\labels].collect {|label, index|
+							var active = (count > 1) and: { index > 0 };
+							if(active, {
+								[label, Color.black, accent]
+							}, {
+								[label, accent, panel]
+							});
+						};
+						view.states_(states);
+						view.value_(value);
+					},
+
+					\slider, {
+						view.knobColor_(accent);
+					},
+
+					\label, {
+						if(entry[\bgGreen], { view.background_(panel) });
+						if(entry[\fgGreen] or: { entry[\bgGreen] }, {
+							view.stringColor_(accent);
+						});
+					}
+				);
+			});
+		};
+
+		^this;
+
+	}
+
 	prRefresh {
 
 		stepGrids.do {|grid| grid.refresh };
 		colorListeners.do {|func| func.value(this) };
+		this.prApplyAccent;
 		this.prThemeAnalyzers;
 
 		^this;

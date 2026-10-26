@@ -6,9 +6,27 @@
 - Instrumentos melodicos deben recibir array en ruteo
 - Flam para percusiones
     - Por step, no por pista: shift-click (o click derecho) marca el step con un puntito, y el secuenciador dispara la función dos veces con un retardo corto (por ejemplo 1/64 a 1/32 de beat)
+- Mute/solo por pista: dos botones chicos, muy útil en vivo y no compite con el ruteo. Requiere un muted en el modelo y que el secuenciador saltee el trigger (en melódicos conviene seguir avanzando la línea).
+- Probabilidad (100/75/50/25) por pista: variación sin tocar el patrón; también es feature.
+- Fill/randomizar la pista: generativo, destructivo, para un botón de performance
 ---
 
 # Changelog
+
+- ### v2.3.4
+    - GUI improvements
+        - Bigger default window
+        - Contents rearrengement    
+            - FX panel revamp
+            - Moved BPM panel to transport panel
+            - Apply active color to all elements
+            - Buttons and sliders with new color palette
+                - Inactive: Text with active color
+                - Active: Background with active color
+
+- ### v2.3.3
+    - GUI aesthetics and usability improvements
+        - Channels layout and spacing
 
 - ### v2.3.2
     - GUI colored Socopes
@@ -17,7 +35,8 @@
         - Remove Leds
             - Active step highlited in Channel lane
     - Add .route method
-        - Add routing popup to melodic instruments
+    - Add routing popup to melodic instruments
+        - Attach to method .route
 
 - ### v2.3.1
     - Color palette for GUI elements
@@ -37,8 +56,8 @@
 - ### v2.3.0
     - GUI
         - CaosBoxGUI
-        - Global layout color 
-        - Resizable window
+        - Global layout color
+        - Tests for Resizable window
         - New Steps layout
             - Bass line test
 

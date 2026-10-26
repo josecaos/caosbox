@@ -3,7 +3,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.3.2";
+	classvar <version = "2.3.3";
 	classvar guiRegistry;
 
 	// Register View
@@ -12,6 +12,11 @@ CaosBox {
 		^guiRegistry ?? { guiRegistry = CaosBoxGUI.new };
 
 	}
+
+	// datos del modelo (alias mientras se deprecan las globales)
+	*tracks { ^~cbox_tracks }
+
+	*voices { ^~cbox_instruments }
 
 	*environment {|gui = true|
 
@@ -99,7 +104,7 @@ CaosBox {
 
 		var tr, instrument, name, index;
 
-		tr = ~cbox_tracks !? {|tracks| tracks[track]};
+		tr = this.tracks !? {|tracks| tracks[track]};
 
 		if(tr.isNil, {
 			^("CaosBox.route: unknown track " ++ track).warn;
@@ -123,7 +128,7 @@ CaosBox {
 		tr.out = name;
 
 		index = this.engine !? {|eng| eng.busIndex(name)};
-		instrument = ~cbox_instruments !? {|voices| voices[track]};
+		instrument = this.voices !? {|voices| voices[track]};
 		instrument !? {|voice| index !? {|i| voice.out_(i) }};
 
 		this.gui.routeChanged(track, name);
@@ -270,8 +275,30 @@ CaosBox {
 	*stepDur {|dur|
 
 		~cbox_seq !? { |seq| seq.stepDur = dur };
+		this.prSyncMetricButton;
 
 		^"";
+
+	}
+
+	// la etiqueta de metrica muestra lo que aplica al apretar
+	*prSyncMetricButton {
+
+		var button = ~cbox_botm;
+		var dur;
+
+		if(button.notNil and: { ~cbox_seq.notNil }, {
+			dur = ~cbox_seq.stepDur;
+			if((dur - 0.25).abs < 0.0001, {
+				button.value_(0);// apretar aplica Thirds
+			}, {
+				if((dur - (1/3)).abs < 0.0001, {
+					button.value_(1);// apretar aplica Fourths
+				});
+			});
+		});
+
+		^this;
 
 	}
 

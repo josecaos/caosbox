@@ -7,6 +7,7 @@
 //
 Platform.userExtensionDir
 CaosBox.browse;
+CaosBoxGUI.colorAliases // Colores posibles para interfaz
 ////////////////////////////////////////////////////////////
 
 c = CaosBox;

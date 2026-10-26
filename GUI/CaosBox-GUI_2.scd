@@ -1,11 +1,11 @@
-(//CaosBox GUI file 2 - v2.3.2 - las 13 pistas del secuenciador
+(//CaosBox GUI file 2 - v2.3.3 - las 13 pistas del secuenciador
 //
 // Un solo builder para todas las filas: etiqueta, rejilla de steps, ruteo
 // (melodicos) o aviso de ruteo por step (percision) y boton de limpiar.
 // El orden del spec es el orden visual; CaosTrack sigue siendo el modelo.
 	var specs, gui, buses, busLabels;
-	var gridX = 60, gridW = 778, routeX = 842, routeW = 94, clearX = 941;
-	var rowH = 20, top = 10;
+	var gridX = 80, gridW = 908, routeX = 994, routeW = 86, clearX = 1088;
+	var rowH = 29, top = 16, gridH = 27;
 
 	specs = [
 		(name: \kick, label: "Kick", family: \drums),
@@ -29,19 +29,19 @@
 
 	specs.do {|spec, row|
 		var y = top + (row * rowH);
-		var track = ~cbox_tracks[spec[\name]];
+		var track = CaosBox.tracks[spec[\name]];
 		var label, grid, route, clear;
 
-		label = StaticText(~cbox_w, Rect(5, y + 2, 53, 15))
+		label = StaticText(~cbox_w, Rect(16, y + 4, 60, 15))
 			.string_(spec[\label])
 			.stringColor_(gui.text)
 			.font_(Font("DejaVu Sans", 11, true))
 			.align_(\left);
 
-		grid = CaosStepGrid.new(~cbox_w, Rect(gridX, y, gridW, rowH), track, gui);
+		grid = CaosStepGrid.new(~cbox_w, Rect(gridX, y, gridW, gridH), track, gui);
 
 		if (spec[\family] == \melodic, {
-			route = PopUpMenu(~cbox_w, Rect(routeX, y + 1, routeW, 18))
+			route = PopUpMenu(~cbox_w, Rect(routeX, y + 2, routeW, 25))
 				.items_(busLabels)
 				.background_(gui.panel)
 				.stringColor_(gui.text);
@@ -53,7 +53,7 @@
 			});
 		}, {
 			// percision: la salida se elige al evaluar el instrumento, por step
-			StaticText(~cbox_w, Rect(routeX, y + 3, routeW, 14))
+			StaticText(~cbox_w, Rect(routeX, y + 7, routeW, 14))
 				.string_("per-step")
 				.stringColor_(gui.muted)
 				.font_(Font("DejaVu Sans", 9))
@@ -61,7 +61,7 @@
 				.toolTip_("La salida se elige al evaluar el instrumento: k.kick(out: ...), k.snare(out: ...)");
 		});
 
-		clear = Button(~cbox_w, Rect(clearX, y + 2, 16, 16))
+		clear = Button(~cbox_w, Rect(clearX, y + 6, 16, 16))
 			.states_([["×", Color(0.85, 0.35, 0.35), gui.panel]])
 			.action_({|button|
 				if (button.value == 0, {

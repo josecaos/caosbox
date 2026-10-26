@@ -1,8 +1,7 @@
 # Paso 5a — la GUI como vista (v2.3.0)
 
 > Estado: **prototipo de una fila** listo para revisar. Todavía no se toca la GUI real.
-> Todo lo de interfaz entra en **v2.3.0**; `CaosBox.version` sigue en `2.2.0` hasta cerrar
-> la fase. `CHANGELOG.md` sigue siendo tuyo.
+> Todo lo de interfaz entra en **v2.3.x**; el cierre de 5a es `v2.3.3`. `CHANGELOG.md` sigue siendo tuyo.
 
 ## 1. Alcance
 
@@ -154,7 +153,7 @@ Decisiones para 5a-3 (ruteo por fila):
 
 * `GUI/CaosBox-GUI_2.scd` es ahora el único builder: spec ordenado (kick, snare,
   hats, kick2, snare2, hats2, bass, bass2, pad, pad2, chords, chords2, lineIn),
-  etiqueta minimalista, rejilla de 778 px, X de limpiar y, en melódicos, popup de
+  etiqueta minimalista, rejilla de 830 px, X de limpiar y, en melódicos, popup de
   ruteo (Master/Reverb/Delay/Pitch/LPF/HPF/BPF/Grains).
 * En percusión el popup se reemplaza por un `per-step` apagado con tooltip: la salida
   se elige al evaluar el instrumento (`k.kick(out: ...)`) y el snapshot la conserva
@@ -166,26 +165,104 @@ Decisiones para 5a-3 (ruteo por fila):
 
 **Percusión: qué poner en la columna**
 
-Por ahora el `per-step` informa y deja el flujo intacto. La idea de flam queda para
-5a-4: prefiero **flam por step** (shift/click derecho en el step, se dibuja una marca
-y se dispara dos veces con un retardo corto) antes que un flam por pista, porque
-respeta el ruteo por step y da más expresividad. Alternativas para esa columna:
-mute/solo por pista o probabilidad; se decide con la prueba en la app.
+Por ahora el `per-step` informa y deja el flujo intacto. El flam quedó anotado en
+TODOs (después de terminar la GUI): **flam por step** (shift/click derecho en el step,
+se dibuja una marca y se dispara dos veces con un retardo corto) antes que un flam por
+pista, porque respeta el ruteo por step y da más expresividad. Alternativas para esa
+columna mientras tanto: mute/solo por pista o probabilidad.
 
-## 8. Siguiente
+## 8. 5a-4: cierre de 5a (v2.3.3)
 
-1. **5a-4**: flam por step (o mute/probabilidad) en la columna de percusión.
-2. Promover datos a `CaosBox.tracks`/`CaosBox.voices` + alias (pendiente de 5a).
-3. **5b**: reflow de paneles de FX/master + resize total; tema minimalista de sliders,
-   faders y popups viejos.
-4. **5c**: rejilla con interacción avanzada (mute/solo, acentos, scroll, teclado).
+* **Ancho completo**: rejilla `60..890` (830 px, celdas ~21.6), popup de ruteo
+  `895..990`, X `1000..1016`; se alinea con los paneles de abajo.
+* **Un poco de aire**: pitch 22, rejilla 21 px (celdas 15), top 3; la última fila queda
+  `267..288` y los paneles de FX empiezan en 290. El aire real (filas de 24-26 px)
+  necesita el reflow de paneles de 5b.
+* **Métrica sincronizada desde la API**: `CaosBox.stepDur(...)` mueve el botón
+  (`0` = Fourths corriendo, `1` = Thirds corriendo) además del secuenciador.
+* **Datos al modelo**: `CaosBox.tracks` y `CaosBox.voices` son alias del mismo objeto
+  que `~cbox_tracks`/`~cbox_instruments`; `CaosBox.route` y el builder ya los usan.
+* **BPM a la fila de transporte**: el numbox que estaba en `GUI_4` (sobre LineIn) se
+  movió a la barra de abajo; el botón de play bajó a 325 px y el BPM ocupa `605..690`.
+  Así las filas no quedan tapadas y el BPM sigue a mano.
+* `CaosBox.version = "2.3.3"`. Resize y ventana más grande quedan para 5b.
 
-## 9. Verificación actual
+## 9. 5b-1: ventana más grande y padding (sin bump aún)
+
+* Ventana **1120×820** (antes 1024×680); el contenido de 1024 se centra con márgenes
+  de 48 px. Cabe en la pantalla de 1920×1200 del setup.
+* Filas: pitch 29, rejilla 27 (celdas 21), top 16; etiqueta x=53, rejilla x=108
+  (838 px), ruteo x=951, X x=1056. Última fila `364..391`.
+* Paneles de master/FX/filtros/granulador desplazados +48/+120; transporte +48/+130,
+  con BPM ya en la barra inferior. No hay solapamientos: filas→paneles 19 px,
+  paneles→transporte 13 px, márgenes laterales 48 px.
+* Render completo verificado con un `CaosEngine` de prueba inyectado en GUI_3/GUI_4
+  (sin servidor): márgenes, gaps y etiquetas sin solapes.
+* Pendiente **5b-2**: repartir el ancho extra entre las columnas de paneles (más
+  padding interno), activar `resizable` y reflow en `onResize`. Versión a decidir
+  con el cierre de 5b.
+
+## 10. 5b-2: paneles repartidos y padding interno (sin bump aún)
+
+* Ventana **1120×860** (antes 820). Cuatro columnas con márgenes 16 y gutters 12:
+  master `16..296`, FX `308..638`, filtros `650..870`, granulador/automatización
+  `882..1104`.
+* Los paneles pasan de 342 a **382 px** de alto (`410..792`), con las posiciones
+  verticales escaladas: faders más largos y más aire entre controles.
+* Filas alineadas a los márgenes nuevos: etiqueta `16..76`, rejilla `80..988`
+  (908 px, celdas ~24), ruteo `994..1080`, X `1088..1104`; última fila `364..391`.
+* Transporte reflowado: Beat `16..291`, play `301..640`, BPM `650..735`,
+  Scopes `745..835`, record `845..990`, history `1000..1104`; labels y=805,
+  botones 820..845.
+* Verificación con render completo (motor falso): márgenes de 16, gutters de 12 sin
+  solapes (solo el pixel de antialias en el borde), filas→paneles 19 px,
+  paneles→transporte 13 px. Captura `DevTest/img/gui-5b.png`.
+* Pendiente **5b-3**: `resizable` + `onResize` real y tema de sliders/faders/popups.
+
+## 11. Tema global, botones unificados y transporte
+
+* `CaosBoxGUI.themeLegacy(~cbox_w.asView)` recorre la vista una vez y guarda **69
+  entradas**: 19 NumberBox, 24 botones, 6 etiquetas verdes y 20 sliders/Slider2D.
+* **Botones unificados** (play incluido): en estado inactivo `state 0` usan fondo
+  `panel` y texto `accent`; en estado activo (`state > 0`) fondo `accent` y texto
+  **negro**. Se conservan labels y el valor del botón.
+* **NumberBox**: fondo `panel`, texto `accent`, edición `accentText`.
+* **Etiquetas verdes**: fondo `panel`, texto `accent`.
+* **Sliders y granulador**: `knobColor_(accent)` en todos los `Slider` y en el
+  `Slider2D` del granulador; el fondo/groove queda como estaba.
+* **Transporte alineado a columnas**: BPM `650..750` (100 px) y Scopes `760..870`
+  (110 px) cubren la columna de filtros `650..870`; Record `882..990` (108) y
+  History `1000..1104` (104) cubren la del granulador `882..1104`. El BPM tiene
+  altura 25, igual que el botón de Scopes, y números accent.
+* Prueba headless: en estado inactivo no queda verde puro; con los botones en estado
+  activo el fondo es accent y el texto negro; `\red` repinta todo y el BPM sigue
+  visible. Capturas `gui-5b.png`, `gui-5b-active.png` y `gui-5b-red.png`.
+
+## 12. Siguiente
+
+1. **5b-3 (v2.3.4)**: `resizable` + `onResize` (filas, paneles y transporte).
+2. **Flam por step** (TODO después de la GUI): marca en la rejilla + segundo disparo.
+3. **5c**: rejilla con interacción avanzada (mute/solo, acentos, scroll, teclado).
+4. Retirar los alias `~cbox_tracks`/`~cbox_instruments` en 3.0.0.
+
+## 13. Verificación actual
 
 * Clases compilan; 14 `.scd` parsean; suite **286 aserciones, 0 fallos**.
 * Render headless de la GUI real (sin servidor): 13 rejillas registradas, 7 popups de
   ruteo con items correctos, valores 0/1/4 al cambiar de ruta, etiquetas y X en su
-  lugar, playhead correcto; captura de trabajo `/tmp/tracks-13.png`.
+  lugar, playhead correcto; captura `DevTest/img/tracks-13.png`.
+* Métrica: `CaosBox.stepDur(1/3)` deja el botón en 1 y `0.25` en 0; alias
+  `CaosBox.tracks === ~cbox_tracks` y `CaosBox.voices === ~cbox_instruments`.
+* Transporte renderizado offscreen: play 301..640, BPM `650..750`, Scopes
+  `760..870`, Record `882..990`, History `1000..1104`; captura
+  `DevTest/img/transport-bpm.png`.
+* Layout 5b completo renderizado offscreen con motor falso; capturas
+  `DevTest/img/gui-5b.png` (verde) y `DevTest/img/gui-5b-red.png` (`\red`), 1120×860
+  a 2x. Gaps de 12 px entre columnas y 16 px de margen, con solo el borde de
+  antialias tocando el gap.
+* Tema: **69 entradas** (19 NumberBox, 24 botones, 6 etiquetas, 20 sliders). Sin
+  verde puro en estado inactivo; con botones activos el fondo es accent y el texto
+  negro; `\red` repinta todo. BPM 100×25 con número accent.
 * Analizadores: la ventana se construye/cierra headless (600x430) y los `waveColors`
   de FFT y osciloscopio toman el acento (probado con `\orange`).
 * SynthDef del granulador estéreo se construye headless sin errores.
