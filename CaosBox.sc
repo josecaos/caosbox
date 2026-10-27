@@ -5,7 +5,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.4.0";
+	classvar <version = "2.5.1";
 	classvar guiRegistry;
 
 	// Register View
@@ -256,7 +256,7 @@ CaosBox {
 
 	*prPauseAutomations {
 
-		#[\autor, \autod, \autop, \autog].do { |name| Tdef(name).pause };
+		#[\autor, \autod, \autop, \autog, \autolpf, \autohpf, \autobpf].do { |name| Tdef(name).pause };
 
 		~cbox_autobotr !? { |bot| bot.value_(0) };
 		~cbox_autobotd !? { |bot| bot.value_(0) };

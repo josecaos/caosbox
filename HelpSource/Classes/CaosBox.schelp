@@ -1,0 +1,79 @@
+title:: CaosBox
+summary:: High-level CaosBox facade: startup, transport, routing and palette.
+categories:: CaosBox
+related:: Classes/CaosGear, Classes/CaosSequencer, Classes/CaosEngine, Classes/CaosBoxGUI
+
+description::
+CaosBox is the application facade. It creates the link::Classes/CaosEngine::, loads
+the startup files and exposes transport, BPM, step duration, per-track routing and
+the analyzers.
+
+The public API is preserved from previous versions: code::CaosBox.play::,
+code::CaosBox.stop::, code::CaosBox.bpm(140)::, and so on can still be used.
+
+classmethods::
+
+subsection:: Startup
+
+method:: environment
+Starts the engine and loads the SynthDefs, instruments and GUI.
+code::
+CaosBox.environment;        // with GUI
+CaosBox.environment(false); // without opening the window
+::
+
+method:: close
+Stops the sequencer, frees the engine and disconnects the MIDI mapping.
+
+subsection:: Transport
+
+method:: play
+method:: pause
+method:: stop
+code::play:: starts or resumes from the current step; code::pause:: keeps the step;
+code::stop:: returns to step 0 for the next play.
+
+method:: bpm
+code::
+CaosBox.bpm(126);
+::
+
+method:: stepDur
+Duration of one step in beats. code::0.25:: = Fourths, code::1/3:: = Thirds.
+code::
+CaosBox.stepDur(1/3);
+::
+
+method:: randomTime
+Enables randomized timing per step.
+code::
+CaosBox.randomTime(true);
+CaosBox.randomTime(false);
+::
+
+subsection:: Routing
+
+method:: route
+Routes a melodic track to an engine bus. Accepts a name, an index or a
+link::Classes/Bus::. Without an argument it returns the current route.
+code::
+CaosBox.route(\bass, \reverb);
+CaosBox.route(\bass, 52);
+CaosBox.route(\bass);
+::
+
+subsection:: Analyzers and GUI
+
+method:: freqAnalyzer
+Opens or closes the floating FFT and oscilloscope window.
+code::
+CaosBox.freqAnalyzer(true);
+CaosBox.freqAnalyzer(false);
+::
+
+method:: gui
+Returns the link::Classes/CaosBoxGUI:: registry.
+code::
+CaosBox.gui.color(\orange);
+CaosBox.gui.color([0.2, 0.6, 1.0]);
+::

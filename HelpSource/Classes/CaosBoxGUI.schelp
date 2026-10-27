@@ -1,0 +1,32 @@
+title:: CaosBoxGUI
+summary:: View registry: palette, step grids, routes and analyzers.
+categories:: CaosBox
+related:: Classes/CaosStepGrid, Classes/CaosBox
+
+description::
+The registry the API uses to talk to the view. It is reached through
+code::CaosBox.gui::. It stores the global accent, the step grids, the route popups,
+the themed sliders and labels, and the analyzer window.
+
+instancemethods::
+
+method:: color
+Accepts a link::Classes/Color::, a symbol (code::\red::, code::\orange::, ...) or an
+RGB(A) array. Repaints grids, buttons, sliders, labels and popups.
+code::
+CaosBox.gui.color(\orange);
+CaosBox.gui.color(Color.blue);
+::
+
+method:: freqAnalyzer
+method:: toggleFreqAnalyzer
+Opens or closes the floating FFT and oscilloscope window.
+
+method:: addStepGrid
+method:: playhead
+method:: addRoute
+method:: routeChanged
+Internal view registry; these are normally not called from live coding.
+
+method:: themeLegacy
+Walks the window once and applies the palette to the legacy widgets.

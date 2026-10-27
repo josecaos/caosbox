@@ -60,7 +60,7 @@ CaosBoxGUI {
 
 	init {
 
-		accent = colorAliases[\green].copy;
+		accent = colorAliases.choose.copy;
 		background = Color(0.075, 0.08, 0.082);
 		panel = Color(0.11, 0.115, 0.12);
 		text = Color(0.84, 0.86, 0.84);

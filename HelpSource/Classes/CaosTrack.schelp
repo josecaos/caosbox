@@ -1,0 +1,39 @@
+title:: CaosTrack
+summary:: 32-step pattern for one track (step model).
+categories:: CaosBox
+related:: Classes/CaosSequencer, Classes/CaosInstrument
+
+description::
+Each track (link::Classes/CaosBox#*tracks::) is a CaosTrack. The mode defines what
+each step stores:
+
+list::
+## code::\snapshot::: stores the resolved value when the step is marked (percussion).
+## code::\live::: stores only the gate and resolves the voice on trigger (melodic).
+::
+
+instancemethods::
+
+subsection:: API
+
+method:: putStep
+method:: put
+method:: clear
+method:: at
+method:: step
+code::
+t = CaosTrack.new(\bass, \live, 32);
+t.putStep(0, true);
+t.putStep(4, true);
+t.clear(4);
+t.step(0);
+::
+
+method:: setInstrument
+method:: releaseInstrument
+The first voice enters immediately; a replacement stays pending until the next
+trigger (code::activatePending::).
+
+method:: onChange
+Callback code::{|track, index, value| ... }:: when a step changes; the GUI uses it
+to redraw.

@@ -13,6 +13,27 @@
 
 # Changelog
 
+- ### v2.5.1
+    - Documentation:
+        - Add Documentation for:
+            - CaosBox
+            - CaosGear
+            - CaosTrack
+            - CaosInstrument 
+            - CaosEngine
+            - CaosSequencer
+            - CaosStepGrid
+            - CaosBoxGUI
+    - Midi mapping fixes
+        - Filters: Remap filter knobs to match filter order in controller
+        - Granulator: X CC20, Y CC17; ranges match the GUI (4..32, 0.01..0.05)
+    - Random color at startup
+    - Bugfix: .prPauseAutomations does not touch filter autamations
+        - autolpf, autohpf and autobpf added  
+    - Tests:
+        - Add TestCaosBox for automation pause
+        - Suite: 302 assertions
+
 - ### v2.5.0
     - Update default MIDI mapping to MIDIFunc.cc
         - Update view

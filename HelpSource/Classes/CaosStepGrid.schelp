@@ -1,0 +1,34 @@
+title:: CaosStepGrid
+summary:: Step grid for one track (UserView), with playhead and painting.
+categories:: CaosBox
+related:: Classes/CaosTrack, Classes/CaosBoxGUI
+
+description::
+A view for one track: it draws 32 rounded cells, gaps every 4 steps and the
+playhead column. Dragging paints or clears; it does not store the pattern, that is
+the job of link::Classes/CaosTrack::.
+
+classmethods::
+
+subsection:: Geometry
+
+method:: cellWidth
+method:: cellRect
+method:: indexAt
+Pure class methods, testable without Qt.
+
+subsection:: View
+
+method:: new
+code::
+grid = CaosStepGrid.new(parentView, Rect(0, 0, 900, 27), CaosBox.tracks[\bass]);
+::
+
+instancemethods::
+
+method:: refresh
+method:: playhead
+method:: draw
+method:: mouseDown
+method:: mouseMove
+method:: mouseUp

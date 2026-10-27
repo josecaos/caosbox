@@ -15,8 +15,9 @@ TestCaosBoxGUI : UnitTest {
 
 	test_defaults {
 
-		this.assertEquals(gui.accent, CaosBoxGUI.colorAliases[\green],
-			"el acento por defecto es el verde de la familia");
+		this.assert(
+			CaosBoxGUI.colorAliases.values.any {|color| color == gui.accent },
+			"el acento por defecto sale de la paleta");
 
 		this.assert(gui.stepGrids.isEmpty, "sin step grids registrados");
 		this.assert(gui.background.notNil);

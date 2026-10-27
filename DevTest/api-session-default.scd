@@ -7,11 +7,11 @@
 //
 Platform.userExtensionDir
 CaosBox.browse;
+CaosBoxGUI.colorAliases // Colores posibles para interfaz
+CaosBox.gui.color(\white); // Aplica color opcional para la GUI antes de correr
 ////////////////////////////////////////////////////////////
 
 c = CaosBox;
-c.gui.color(\magenta); // Aplica color opcional para la GUI antes de correr
-CaosBoxGUI.colorAliases // Colores posibles para interfaz
 //
 c.environment; //inicializa
 // Wait for GUI boot:
@@ -99,6 +99,7 @@ c.setSteps(\in);// opcion para agregar steps
 i.offTrack;
 
 c.autoFx(\hpf,true,\normal, Array.series(20,100,750), [0.5,0.35,0.5,0.75,0.9,1]);
+c.autoFx(\lpf,true,\normal, Array.series(15,1000,500), [0.15,0.25,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\bpf,true,\normal, Array.series(15,1000,500), [0.15,0.25,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\grains,true,\normal, [1,0.95,0.9,0.85],[1,0.95,0.9,0.85]);
 c.autoFx(\delay,true,\fast, [1,0.95,0.9,0.85]*0.1,[0.125,0.25,0.5,0.75,1]);
@@ -107,10 +108,14 @@ c.bpm(20);
 c.randomTime(true, true, [10,20,30,40,50,60,70,80,90,100]);
 c.randomTime(false, false, [10,20,30,40,50,60,70,80,90,100]);
 c.toggleMetric();
+
 c.browse;
+
 c.stop;
 
 c.version
+c.prPauseAutomations
+c.voices
 
 // ---------------------------------------------------------------
 // Qué observar (checklist de aceptación)

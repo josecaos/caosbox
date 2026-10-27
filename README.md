@@ -1,4 +1,4 @@
-CaosBox v2.4.0
+CaosBox v2.5.1
 ------
 **It's a not-so-common LiveCoding/AlgoRave music Secuencer/Processor for the CaosPercLib Class library, with a programming Interface and a GUI written in SuperCollider.**
 
@@ -9,7 +9,8 @@ Platform.userExtensionDir
  ```
 
 ### Basic Use
-- Moving towards v2.0 a programming interface has been created to control the GUI, still in progress, example to start CaosBox:
+- A Programming interface has been created to control the GUI.
+- Example to start CaosBox:
 ```
     //instance  sequencer
     c = CaosBox;

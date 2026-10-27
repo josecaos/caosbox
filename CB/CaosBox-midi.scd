@@ -34,9 +34,10 @@ specs = [
 	[36, { ~cbox_mastpit },    \pitch,            {|v| v.linlin(0,127,0.01,4) }, { ~cbox_auxpfader },     { ~cbox_nump },     nil],
 	[35, { ~cbox_mastpit },    \pitchDispersion,  {|v| v.linlin(0,127,0.01,1) }, { ~cbox_auxpdfader },    { ~cbox_numpd },    nil],
 	[34, { ~cbox_mastpit },    \timeDispersion,   {|v| v.linlin(0,127,0.01,1) }, { ~cbox_auxtdfader },    { ~cbox_numtd },    nil],
-	[33, { ~cbox_mastlowf },   \cutfreq,          {|v| v.linexp(0,127,20,20000)},{ ~cbox_lowcfader },     { ~cbox_numf1 },    nil],
-	[32, { ~cbox_mastbandf },  \cutfreq,          {|v| v.linexp(0,127,20,20000)},{ ~cbox_bandcfader },    { ~cbox_numf5 },    nil],
-	[31, { ~cbox_masthighf },  \cutfreq,          {|v| v.linexp(0,127,20,20000)},{ ~cbox_highcfader },    { ~cbox_numf3 },    nil]
+	// right-hand knobs 1/2/3, top to bottom: LPF, HPF, BPF
+	[31, { ~cbox_mastlowf },   \cutfreq,          {|v| v.linexp(0,127,20,20000)},{ ~cbox_lowcfader },     { ~cbox_numf1 },    nil],
+	[32, { ~cbox_masthighf },  \cutfreq,          {|v| v.linexp(0,127,20,20000)},{ ~cbox_highcfader },    { ~cbox_numf3 },    nil],
+	[33, { ~cbox_mastbandf },  \cutfreq,          {|v| v.linexp(0,127,20,20000)},{ ~cbox_bandcfader },    { ~cbox_numf5 },    nil]
 ];
 
 specs.do {|row|
@@ -47,22 +48,26 @@ specs.do {|row|
 	);
 };
 
-// granulador: CC20 trigger, CC17 size, CC15 reverse
-~cbox_midi_funcs.add(MIDIFunc.cc({|val|
-	~cbox_grains !? {|grain| grain.set(\trigger, val.linlin(0,127,0.1,8)) };
-	{ ~cbox_gfaders !? {|fader| fader.x_(val/127) } }.defer;
-}, 20));
+// granulador: crossfader = X (trigger), right pitch fader CC15 = Y (size).
+// The crossfader sends CC17 (normal) and CC20 (inverted); both normalize to
+// the same physical position, so either message can drive X.
+~cbox_midi_grain_x = {|val|
+	var norm = val / 127;
+	var spec = ~cbox_gtparam ? ControlSpec(4, 32, \lin, 1, 4);
+	~cbox_grains !? {|grain| grain.set(\trigger, spec.map(norm)) };
+	{ ~cbox_gfaders !? {|fader| fader.x_(norm) } }.defer;
+};
 
-~cbox_midi_funcs.add(MIDIFunc.cc({|val|
-	~cbox_grains !? {|grain| grain.set(\size, val.linlin(0,127,1,0.01)) };
-	{ ~cbox_gfaders !? {|fader| fader.y_(val/127) } }.defer;
-}, 17));
+~cbox_midi_grain_y = {|val|
+	var norm = val / 127;
+	var spec = ~cbox_gsparam ? ControlSpec(0.01, 0.05, \lin, 0.001, 0.05);
+	~cbox_grains !? {|grain| grain.set(\size, spec.map(norm)) };
+	{ ~cbox_gfaders !? {|fader| fader.y_(norm) } }.defer;
+};
 
-~cbox_midi_funcs.add(MIDIFunc.cc({|val|
-	var size = val.linlin(0,127,-1,-0.01);
-	~cbox_grains !? {|grain| grain.set(\size, size, \trigger, size) };
-	{ ~cbox_gfaders !? {|fader| fader.y_(val/127); fader.x_(val/127) } }.defer;
-}, 15));
+~cbox_midi_funcs.add(MIDIFunc.cc({|val| ~cbox_midi_grain_x.value(val) }, 17));
+~cbox_midi_funcs.add(MIDIFunc.cc({|val| ~cbox_midi_grain_x.value(127 - val) }, 20));
+~cbox_midi_funcs.add(MIDIFunc.cc({|val| ~cbox_midi_grain_y.value(val) }, 15));
 
 // liberar el mapeo (por ejemplo al cerrar CaosBox)
 ~cbox_midi_free = {

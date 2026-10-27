@@ -1,0 +1,24 @@
+title:: CaosEngine
+summary:: Owner of the server, named buses, groups and execution order.
+categories:: CaosBox
+related:: Classes/CaosBox, Classes/CaosBoxGUI
+
+description::
+A single owner of the server. Instruments request their output by name
+(code::\master::, code::\reverb::, code::\delay::, code::\pitch::, code::\lpf::,
+code::\hpf::, code::\bpf::, code::\grains::) and the engine resolves it to a bus
+index.
+
+instancemethods::
+
+method:: bus
+method:: busIndex
+method:: busName
+method:: nameFor
+method:: resolveOut
+code::
+e = CaosEngine.new(Server.local);
+e.busIndex(\reverb);   // 52
+e.nameFor(52);         // \reverb
+e.resolveOut(\delay);  // 54
+::

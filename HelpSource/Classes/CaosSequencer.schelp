@@ -1,0 +1,31 @@
+title:: CaosSequencer
+summary:: Owner of time: index, BPM, stepDur, randomTime and playhead.
+categories:: CaosBox
+related:: Classes/CaosTrack, Classes/CaosBox
+
+description::
+The sequencer owns the 0..size-1 index, the step duration in beats, the BPM and
+the random-time mode. The GUI and the API talk to it; tracks receive only their
+step.
+
+instancemethods::
+
+method:: play
+method:: pause
+method:: stop
+code::play:: starts or resumes; code::pause:: keeps the step; code::stop:: returns
+to 0.
+
+method:: bpm
+method:: stepDur
+method:: randomTime
+code::
+s = CaosSequencer.new(step: {|i| i.postln }, size: 32);
+s.bpm = 126;
+s.stepDur = 0.25;
+s.randomTime = true;
+::
+
+method:: onTempoChange
+Callback code::{|bpm| ... }:: when the effective tempo changes, including the value
+chosen in random time.

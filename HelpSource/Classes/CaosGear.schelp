@@ -1,0 +1,58 @@
+title:: CaosGear
+summary:: CaosBox instruments: percussion, basses, pads, chords and lineIn.
+categories:: CaosBox
+related:: Classes/CaosBox, Classes/CaosInstrument, Classes/CaosTrack
+
+description::
+CaosGear builds voices and registers them on the corresponding track. Each method
+returns a link::Classes/CaosInstrument::; the track it plays on is chosen with
+code::toTrack:: or with the instrument name.
+
+Percussive instruments store the function on each step (snapshot). Melodic
+instruments store only the gate and resolve the voice when the step fires (live).
+
+instancemethods::
+
+subsection:: Percussion
+
+method:: kick
+method:: snare
+method:: hihats
+method:: kick2
+method:: snare2
+method:: hihats2
+code::
+k = CaosGear.new;
+k.kick(out: \master);
+::
+
+subsection:: Melodic
+
+method:: bass
+method:: bass2
+method:: pad
+method:: pad2
+method:: chords
+method:: chords2
+method:: lineIn
+
+code::
+g = CaosGear.new;
+g.bass(out: \reverb, semitoneArray: [48, 50, 52, 55]);
+g.pad(waveform: 'tri');
+g.chords(chordsArray: #['m', 'M']);
+::
+
+note:: code::waveform:: and the first element of code::chordsArray:: choose the
+SynthDef variant when the instrument is created. Changing them afterwards requires
+recreating the voice; code::set(\chord, ...):: does not change the SynthDef.
+::
+
+subsection:: Track routing
+
+method:: toTrack
+method:: offTrack
+code::
+k.toTrack([0, 4, 8, 12]);
+k.offTrack;
+::

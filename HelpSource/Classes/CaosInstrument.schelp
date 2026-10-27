@@ -1,0 +1,30 @@
+title:: CaosInstrument
+summary:: A track voice: SynthDef or function, route, params and note line.
+categories:: CaosBox
+related:: Classes/CaosGear, Classes/CaosTrack
+
+description::
+A CaosInstrument knows how to sound (SynthDef or function), where it goes out
+(code::out::), with which parameters (code::params::) and, if melodic, how its
+note line advances. It does not know about the GUI or the clock: it receives
+code::trigger::, code::set::, code::release:: and code::free::.
+
+list::
+## code::kind:: — code::\synth:: or code::\function::.
+## code::mode:: — code::\free:: advances with the clock; code::\trig:: advances on trigger.
+## code::retrigger:: — a new voice per trigger, or legato.
+## code::oneShot:: — percussive envelopes with no live node to release.
+::
+
+instancemethods::
+
+method:: trigger
+method:: set
+method:: out
+code::
+i = CaosGear.new.bass(50);
+i.out_(\master);
+i.set(\cutf, 1200);
+i.trigger;
+i.release;
+::
