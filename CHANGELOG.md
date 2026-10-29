@@ -31,7 +31,8 @@
         - Frees group / nodes qith engine.free
         - Stops CaosBox's Tdefs only
         - Resets ~cbox_url to nil for a clean environment restart
-
+        - Fix: ~cbox_w.onClose
+            - Close only CB environment
 
 - ### v2.5.1
     - Documentation:
