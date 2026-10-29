@@ -23,6 +23,7 @@
         - play, pause, stop, bpm, randomTime, prPauseAutomations y prSyncMetricButton
         - record, toggleMetric
         - PrSetView optional .action method fot vallueAction_ cases
+        - playhead
     - Cleanup test
         - Tests/test-cleaup.scd
     - .close update
@@ -35,7 +36,8 @@
             - Close only CB environment
         - Bugfix: .routeChange updates PopUpMenu and crashes
             - Instrument creation affects GUI on AppClock with .prSetView
-
+        - Stress tests
+            - Tests/test-long-sesion.scd
 - ### v2.5.1
     - Documentation:
         - Add Documentation for:
