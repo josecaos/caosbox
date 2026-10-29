@@ -16,8 +16,22 @@
 - ### v2.5.2
     - Server/audio integration tests
         - Headless audio test
+            - Tests/test-headdless.scd
+        - Audio test
+            - Tests/test-audio.scd
     - New CaosBox.prSetView updates widgets into AppClock
         - play, pause, stop, bpm, randomTime, prPauseAutomations y prSyncMetricButton
+        - record, toggleMetric
+        - PrSetView optional .action method fot vallueAction_ cases
+    - Cleanup test
+        - Tests/test-cleaup.scd
+    - .close update
+        - Stops ~cbox_seq
+        - Frees MIDI
+        - Frees group / nodes qith engine.free
+        - Stops CaosBox's Tdefs only
+        - Resets ~cbox_url to nil for a clean environment restart
+
 
 - ### v2.5.1
     - Documentation:

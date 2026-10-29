@@ -220,9 +220,21 @@ CaosBox {
 
 	// La API puede llamarse desde un Routine/TempoClock; Qt sólo permite
 	// tocar widgets en AppClock.
-	*prSetView {|view, value|
+	*prSetView {|view, value, action = false|
 
-		view !? { { view.value_(value) }.defer };
+		view !? {
+			{
+				if(action, { view.valueAction_(value) }, { view.value_(value) });
+			}.defer;
+		};
+
+		^this;
+
+	}
+
+	*prToggleView {|view|
+
+		view !? { { view.valueAction_(if(view.value == 0, 1, 0)) }.defer };
 
 		^this;
 
@@ -343,7 +355,7 @@ CaosBox {
 		var button = ~cbox_botm;
 
 		if(button.notNil, {
-			button.valueAction_(if(button.value == 0, 1, 0));
+			this.prToggleView(button);
 		}, {
 			~cbox_seq !? { |seq| seq.stepDur = if(seq.stepDur == 0.25, 1/3, 0.25) };
 		});
@@ -354,7 +366,7 @@ CaosBox {
 
 	*record {
 
-		~cbox_recbot.valueAction_(1);
+		this.prSetView(~cbox_recbot, 1, true);
 
 		^"";
 
@@ -362,7 +374,7 @@ CaosBox {
 
 	*stopRecording {
 
-		~cbox_recbot.valueAction_(0);
+		this.prSetView(~cbox_recbot, 0, true);
 
 		^"";
 	}
@@ -372,7 +384,7 @@ CaosBox {
 		if(state == \start or: {state == \stop} or: {state == \load}, {
 			switch(state,
 				\start, {History.start},
-				\stop, {~cbox_hbutt.valueAction_(0)},
+				\stop, {this.prSetView(~cbox_hbutt, 0, true)},
 				\load, {History.loadStory(~cbox_url +/+ "Histories" +/+ name).play(verbose:true)}
 			);
 
@@ -505,10 +517,10 @@ CaosBox {
 				if(play == true, {
 					//velocidad
 					switch(speed,
-						'normal',{~cbox_autopopr.valueAction_(0);"Reverb normal speed".postln},
-						'fast',{~cbox_autopopr.valueAction_(1);"Reverb fast speed".postln},
-						'slow',{~cbox_autopopr.valueAction_(2);"Reverb slow speed".postln},
-						'slowest',{~cbox_autopopr.valueAction_(3);"Reverb slowest speed".postln}
+						'normal',{this.prSetView(~cbox_autopopr, 0, true);"Reverb normal speed".postln},
+						'fast',{this.prSetView(~cbox_autopopr, 1, true);"Reverb fast speed".postln},
+						'slow',{this.prSetView(~cbox_autopopr, 2, true);"Reverb slow speed".postln},
+						'slowest',{this.prSetView(~cbox_autopopr, 3, true);"Reverb slowest speed".postln}
 					);
 					~cbox_autoreverbmix=argArr1.asArray;
 					~cbox_autoreverbroom=argArr2.asArray;
@@ -517,21 +529,21 @@ CaosBox {
 					if(Tdef(\autor).isPlaying,{
 						^"Reverb Automation already running";
 					},{
-						~cbox_autobotr.valueAction_(1);
+						this.prSetView(~cbox_autobotr, 1, true);
 						^"Reverb Automation running";
 					});
 				}, {
-					~cbox_autobotr.valueAction_(0);
+					this.prSetView(~cbox_autobotr, 0, true);
 					^"Reverb Automation stopped";
 				});
 			},
 			'delay',{
 				if(play == true, {
 					switch(speed,
-						'normal',{~cbox_autopopd.valueAction_(0);"Delay normal speed".postln},
-						'fast',{~cbox_autopopd.valueAction_(1);"Delay fast speed".postln},
-						'slow',{~cbox_autopopd.valueAction_(2);"Delay slow speed".postln},
-						'slowest',{~cbox_autopopd.valueAction_(3);"Delay slowest speed".postln}
+						'normal',{this.prSetView(~cbox_autopopd, 0, true);"Delay normal speed".postln},
+						'fast',{this.prSetView(~cbox_autopopd, 1, true);"Delay fast speed".postln},
+						'slow',{this.prSetView(~cbox_autopopd, 2, true);"Delay slow speed".postln},
+						'slowest',{this.prSetView(~cbox_autopopd, 3, true);"Delay slowest speed".postln}
 					);
 					~cbox_autodelaytime=argArr1.asArray;
 					~cbox_autodelayfeed=argArr2.asArray;
@@ -539,21 +551,21 @@ CaosBox {
 					if(Tdef(\autod).isPlaying,{
 						^"Delay Automation already running";
 					},{
-						~cbox_autobotd.valueAction_(1);
+						this.prSetView(~cbox_autobotd, 1, true);
 						^"Delay Automation running";
 					});
 				}, {
-					~cbox_autobotd.valueAction_(0);
+					this.prSetView(~cbox_autobotd, 0, true);
 					^"Delay Automation stopped";
 				});
 			},
 			'pitch',{
 				if(play == true, {
 					switch(speed,
-						'normal',{~cbox_autopopp.valueAction_(0);"Pitch normal speed".postln},
-						'fast',{~cbox_autopopp.valueAction_(1);"Pitch fast speed".postln},
-						'slow',{~cbox_autopopp.valueAction_(2);"Pitch slow speed".postln},
-						'slowest',{~cbox_autopopp.valueAction_(3);"Pitch slowest speed".postln}
+						'normal',{this.prSetView(~cbox_autopopp, 0, true);"Pitch normal speed".postln},
+						'fast',{this.prSetView(~cbox_autopopp, 1, true);"Pitch fast speed".postln},
+						'slow',{this.prSetView(~cbox_autopopp, 2, true);"Pitch slow speed".postln},
+						'slowest',{this.prSetView(~cbox_autopopp, 3, true);"Pitch slowest speed".postln}
 					);
 					~cbox_autopitchrate=argArr1.asArray;
 					~cbox_autopitchdispersion=argArr2.asArray;
@@ -562,21 +574,21 @@ CaosBox {
 					if(Tdef(\autop).isPlaying,{
 						^"Pitch Automation already running";
 					},{
-						~cbox_autobotp.valueAction_(1);
+						this.prSetView(~cbox_autobotp, 1, true);
 						^"Pitch Automation running";
 					});
 				}, {
-					~cbox_autobotp.valueAction_(0);
+					this.prSetView(~cbox_autobotp, 0, true);
 					^"Pitch Automation stopped";
 				});
 			},
 			'grains',{
 				if(play == true, {
 					switch(speed,
-						'normal',{~cbox_autopopg.valueAction_(0);"Grains normal speed".postln},
-						'fast',{~cbox_autopopg.valueAction_(1);"Grains fast speed".postln},
-						'slow',{~cbox_autopopg.valueAction_(2);"Grains slow speed".postln},
-						'slowest',{~cbox_autopopg.valueAction_(3);"grains slowest speed".postln}
+						'normal',{this.prSetView(~cbox_autopopg, 0, true);"Grains normal speed".postln},
+						'fast',{this.prSetView(~cbox_autopopg, 1, true);"Grains fast speed".postln},
+						'slow',{this.prSetView(~cbox_autopopg, 2, true);"Grains slow speed".postln},
+						'slowest',{this.prSetView(~cbox_autopopg, 3, true);"grains slowest speed".postln}
 					);
 					~cbox_autograintrig=argArr1.asArray;
 					~cbox_autograinsize=argArr2.asArray;
@@ -584,11 +596,11 @@ CaosBox {
 					if(Tdef(\autog).isPlaying,{
 						^"Grains Automation already running";
 					},{
-						~cbox_autobotg.valueAction_(1);
+						this.prSetView(~cbox_autobotg, 1, true);
 						^"Grains Automation running";
 					});
 				}, {
-					~cbox_autobotg.valueAction_(0);
+					this.prSetView(~cbox_autobotg, 0, true);
 					^"Grains Automation stopped";
 				});
 			},
@@ -760,6 +772,8 @@ CaosBox {
 
 	*close {
 
+		// Limpia solo el ambiente de CaosBox. El server y los nodos de otros
+		// proyectos siguen vivos.
 		~cbox_seq !? { |seq| seq.stop };
 		~cbox_midi_free !? { ~cbox_midi_free.value };
 		engine !? { |eng| eng.free };
@@ -768,9 +782,10 @@ CaosBox {
 		#[\secuencias, \autor, \autod, \autop, \autog, \autolpf, \autohpf, \autobpf]
 			.do { |name| Tdef(name).stop };
 
-		this.server.quit.freeAll.reboot;
-		this.server.recompile;
-		^"Terminando CaosBox";
+		// Permite volver a llamar CaosBox.environment sin recompilar.
+		~cbox_url = nil;
+
+		^"CaosBox closed";
 
 	}
 
