@@ -5,7 +5,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.5.1";
+	classvar <version = "2.5.2";
 	classvar guiRegistry;
 
 	// Register View
@@ -772,18 +772,24 @@ CaosBox {
 
 	*close {
 
+		var eng = engine;
+
 		// Limpia solo el ambiente de CaosBox. El server y los nodos de otros
 		// proyectos siguen vivos.
 		~cbox_seq !? { |seq| seq.stop };
 		~cbox_midi_free !? { ~cbox_midi_free.value };
-		engine !? { |eng| eng.free };
 
-		// sólo los Tdefs de CaosBox; no tocar los de otros proyectos
+		// Detener los Tdefs antes de liberar grupos: si un step alcanzó a
+		// disparar un /s_new, le damos un bloque para que el server lo procese
+		// antes del /n_free.
 		#[\secuencias, \autor, \autod, \autop, \autog, \autolpf, \autohpf, \autobpf]
 			.do { |name| Tdef(name).stop };
 
-		// Permite volver a llamar CaosBox.environment sin recompilar.
 		~cbox_url = nil;
+
+		{
+			eng !? { |e| e.free };
+		}.defer(0.2);
 
 		^"CaosBox closed";
 

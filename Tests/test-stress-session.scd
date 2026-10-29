@@ -57,6 +57,7 @@ fork {
 		1.exit;
 	});
 
+
 	// Todos los canales, cada uno por un bus distinto.
 	gear = CaosGear.new;
 	gear.kick(out: \reverb);
@@ -89,7 +90,12 @@ fork {
 	[4, 12, 20, 28].do {|i| ~cbox_tracks[\chords2].putStep(i, true) };
 	[0, 16].do {|i| ~cbox_tracks[\in].putStep(i, true) };
 
-	{ CaosBox.play }.defer;
+
+
+	{
+		CaosBox.bpm(105);
+		CaosBox.play;
+	}.defer;
 
 	if(waitFor.value({ ~cbox_grains.notNil }, 20).not, {
 		"FAIL  CaosBox did not create nodes".postln;
@@ -165,7 +171,7 @@ fork {
 	};
 
 	CaosBox.close;
-	0.5.wait;
+	1.wait; // beats, not seconds: at 192 BPM 0.5 beats < the 0.2 s close delay
 
 	ok.value(CaosBox.engine.groups.isNil, "engine groups freed after close");
 	ok.value(s.serverRunning, "server survived CaosBox.close");

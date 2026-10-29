@@ -16,28 +16,32 @@
 - ### v2.5.2
     - Server/audio integration tests
         - Headless audio test
-            - Tests/test-headdless.scd
+            - Tests/test-headless.scd
         - Audio test
             - Tests/test-audio.scd
-    - New CaosBox.prSetView updates widgets into AppClock
-        - play, pause, stop, bpm, randomTime, prPauseAutomations y prSyncMetricButton
-        - record, toggleMetric
-        - PrSetView optional .action method fot vallueAction_ cases
-        - playhead
-    - Cleanup test
-        - Tests/test-cleaup.scd
-    - .close update
-        - Stops ~cbox_seq
-        - Frees MIDI
-        - Frees group / nodes qith engine.free
-        - Stops CaosBox's Tdefs only
-        - Resets ~cbox_url to nil for a clean environment restart
-        - Fix: ~cbox_w.onClose
-            - Close only CB environment
-        - Bugfix: .routeChange updates PopUpMenu and crashes
+        - New CaosBox.prSetView updates widgets into AppClock
+            - play, pause, stop, bpm, randomTime, prPauseAutomations y prSyncMetricButton
+            - record, toggleMetric
+            - playhead
+            - Optional action parameter for valueAction_ cases            
+        - Cleanup test
+            - Tests/test-cleanup.scd
+        - .close update
+            - Stops ~cbox_seq
+            - Frees MIDI
+            - Frees group / nodes with engine.free
+            - Stops CaosBox's Tdefs only
+            - Resets ~cbox_url to nil for a clean environment restart
+            - onClose no longer recompiles or kills the server
+                - Close only CB environment
+        - Bugfix: .routeChanged updates PopUpMenu and crashes
             - Instrument creation affects GUI on AppClock with .prSetView
         - Stress tests
-            - Tests/test-long-sesion.scd
+            - Tests/test-long-session.scd
+            - Tests/test-stress-session.scd
+            - Tests/test-stress-session-max.scd
+            - Stress max test: 17/17 OK
+
 - ### v2.5.1
     - Documentation:
         - Add Documentation for:
@@ -51,7 +55,7 @@
             - CaosBoxGUI
     - Midi mapping fixes
         - Filters: Remap filter knobs to match filter order in controller
-        - Granulator: X CC20, Y CC17; ranges match the GUI (4..32, 0.01..0.05)
+        - Granulator: X crossfader (CC17/20), Y CC15; ranges match the GUI (4..32, 0.01..0.05)
     - Random color at startup
     - Bugfix: .prPauseAutomations does not touch filter automations
         - autolpf, autohpf and autobpf added  

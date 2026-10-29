@@ -142,7 +142,7 @@ fork {
 	ok.value(maxCPU < 90, "CPU stayed below 90 percent (max %)".format(maxCPU.round(0.1)));
 
 	CaosBox.close;
-	0.5.wait;
+	1.wait; // beats, not seconds: at 192 BPM 0.5 beats < the 0.2 s close delay
 
 	ok.value(Tdef(\secuencias).isPlaying.not, "sequencer stopped after close");
 	ok.value(Tdef(\autolpf).isPlaying.not, "filter automation stopped after close");

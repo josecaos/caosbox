@@ -89,7 +89,7 @@ fork {
 	ok.value(~cbox_grains.isPlaying, "CaosBox grains is running before close");
 
 	CaosBox.close;
-	0.2.wait;
+	1.wait; // beats, not seconds: at 192 BPM 0.5 beats < the 0.2 s close delay
 
 	ok.value(Tdef(\secuencias).isPlaying.not, "CaosBox sequencer Tdef stopped");
 	ok.value(Tdef(\autolpf).isPlaying.not, "CaosBox filter automation stopped");
