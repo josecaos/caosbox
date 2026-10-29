@@ -3,7 +3,7 @@
 
 ---
 ### TODOs:
-- Melodic instruments should support an array in their routing (Such as persussion instruments).
+- Melodic instruments should support an array in Out routing (Like persussion instruments).
 - "Flam" for percussion:
     - Applied per step, not per track: shift-click (or right-click) marks the step with a small dot; the sequencer then triggers the function twice with a short delay (e.g., 1/64 to 1/32 of a beat).
 - Mute/solo per track: two small buttons—very useful for live performance, and they don't interfere with routing. This requires a "muted" state in the model, where the sequencer skips the trigger (for melodic parts, it’s better to keep the sequence advancing).
@@ -12,6 +12,12 @@
 ---
 
 # Changelog
+
+- ### v2.5.2
+    - Server/audio integration tests
+        - Headless audio test
+    - New CaosBox.prSetView updates widgets into AppClock
+        - play, pause, stop, bpm, randomTime, prPauseAutomations y prSyncMetricButton
 
 - ### v2.5.1
     - Documentation:
@@ -28,7 +34,7 @@
         - Filters: Remap filter knobs to match filter order in controller
         - Granulator: X CC20, Y CC17; ranges match the GUI (4..32, 0.01..0.05)
     - Random color at startup
-    - Bugfix: .prPauseAutomations does not touch filter autamations
+    - Bugfix: .prPauseAutomations does not touch filter automations
         - autolpf, autohpf and autobpf added  
     - Tests:
         - Add TestCaosBox for automation pause

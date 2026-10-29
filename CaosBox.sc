@@ -218,6 +218,16 @@ CaosBox {
 
 	}
 
+	// La API puede llamarse desde un Routine/TempoClock; Qt sólo permite
+	// tocar widgets en AppClock.
+	*prSetView {|view, value|
+
+		view !? { { view.value_(value) }.defer };
+
+		^this;
+
+	}
+
 	*play {
 
 		if(~cbox_seq.notNil and: { ~cbox_seq.isPlaying }, {
@@ -225,7 +235,7 @@ CaosBox {
 		});
 
 		~cbox_seq !? { |seq| seq.play };
-		~cbox_bot !? { |bot| bot.value_(1) };
+		this.prSetView(~cbox_bot, 1);
 
 		^"Machine is running";
 
@@ -236,7 +246,7 @@ CaosBox {
 
 		~cbox_seq !? { |seq| seq.pause };
 		this.prPauseAutomations;
-		~cbox_bot !? { |bot| bot.value_(0) };
+		this.prSetView(~cbox_bot, 0);
 
 		^"";
 
@@ -248,7 +258,7 @@ CaosBox {
 		~cbox_seq !? { |seq| seq.stop };
 		this.prPauseAutomations;
 		this.gui.playhead(nil);// la rejilla no deja la columna encendida
-		~cbox_bot !? { |bot| bot.value_(0) };
+		this.prSetView(~cbox_bot, 0);
 
 		^"";
 
@@ -258,16 +268,16 @@ CaosBox {
 
 		#[\autor, \autod, \autop, \autog, \autolpf, \autohpf, \autobpf].do { |name| Tdef(name).pause };
 
-		~cbox_autobotr !? { |bot| bot.value_(0) };
-		~cbox_autobotd !? { |bot| bot.value_(0) };
-		~cbox_autobotp !? { |bot| bot.value_(0) };
-		~cbox_autobotg !? { |bot| bot.value_(0) };
+		this.prSetView(~cbox_autobotr, 0);
+		this.prSetView(~cbox_autobotd, 0);
+		this.prSetView(~cbox_autobotp, 0);
+		this.prSetView(~cbox_autobotg, 0);
 
 	}
 
 	*bpm {|val|
 
-		~cbox_numclock !? { |num| num.value_(val) };
+		this.prSetView(~cbox_numclock, val);
 		~cbox_seq !? { |seq| seq.bpm = val };
 
 		^("+ BPM set to" + val);
@@ -292,10 +302,10 @@ CaosBox {
 		if(button.notNil and: { ~cbox_seq.notNil }, {
 			dur = ~cbox_seq.stepDur;
 			if((dur - 0.25).abs < 0.0001, {
-				button.value_(0);// apretar aplica Thirds
+				this.prSetView(button, 0);// apretar aplica Thirds
 			}, {
 				if((dur - (1/3)).abs < 0.0001, {
-					button.value_(1);// apretar aplica Fourths
+					this.prSetView(button, 1);// apretar aplica Fourths
 				});
 			});
 		});
@@ -322,7 +332,7 @@ CaosBox {
 		~cbox_seq !? { |seq| seq.randomTime = flag };
 		// boton: la etiqueta muestra lo que hara al apretar; random encendido
 		// deja "Regular Time" (apretar lo apaga) y viceversa
-		~cbox_botr !? { |bot| bot.value_(if(flag, 1, 0)) };
+		this.prSetView(~cbox_botr, if(flag, 1, 0));
 
 		^"";
 
