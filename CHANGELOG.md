@@ -33,6 +33,8 @@
         - Resets ~cbox_url to nil for a clean environment restart
         - Fix: ~cbox_w.onClose
             - Close only CB environment
+        - Bugfix: .routeChange updates PopUpMenu and crashes
+            - Instrument creation affects GUI on AppClock with .prSetView
 
 - ### v2.5.1
     - Documentation:

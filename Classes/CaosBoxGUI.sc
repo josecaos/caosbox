@@ -183,7 +183,7 @@ CaosBoxGUI {
 		if(entry.notNil, {
 			index = entry[\buses].indexOf(name.asSymbol);
 			if(index.notNil, {
-				entry[\popup].value_(index);
+				{ entry[\popup].value_(index) }.defer;
 			});
 		});
 
@@ -193,7 +193,7 @@ CaosBoxGUI {
 
 	playhead {|index|
 
-		stepGrids.do {|grid| grid.playhead_(index) };
+		{ stepGrids.do {|grid| grid.playhead_(index) } }.defer;
 
 		^this;
 
