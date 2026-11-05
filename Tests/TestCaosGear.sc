@@ -140,6 +140,29 @@ TestCaosGear : UnitTest {
 
 	}
 
+	test_chordArraySequencesVariants {
+
+		var chord = gear.chords(50, [48], 'seq', #['m', 'M7']);
+
+		this.assertEquals(chord.defName, \acordesuno_m);
+		this.assertEquals(chord.defNames, [\acordesuno_m, \acordesuno_M7]);
+
+		chord.updateTimbre(chord: 'M');
+		this.assertEquals(chord.defName, \acordesuno_M);
+		this.assert(chord.defNames.isNil,
+			"updateTimbre disables the automatic chord sequence");
+
+	}
+
+	test_chord2ArraySequencesVariants {
+
+		var chord = gear.chords2(50, [48], 'rand', #['M', 'M9']);
+
+		this.assertEquals(chord.defName, \acordesdos_M);
+		this.assertEquals(chord.defNames, [\acordesdos_M, \acordesdos_M9]);
+
+	}
+
 	test_pad2IsAOneShotVoice {
 
 		var instrument = gear.pad2(50, [48], 'seq');

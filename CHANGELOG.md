@@ -16,10 +16,23 @@
 - ### v2.6.0
     - CaosGear, CaosInstrument
         - .updateTimbre();
-            - Updates the instrument while conserving the actual preloaded instruments, useful for melodic instruments with, chords or different waveforms
+            - Updates timbre without creating a new instrument
+            - .waveform: for Pad
+            - .chord: for Chords and chords2
+            - Use of defName for advanced use
+            - Preserves the actual preloaded arguments when used
+            - Prevents errors when invalid waveform/chord is used
+        - Tests
+            - TestCaosInstrument updated with generic waveform, chords.chords2 and wrong values
+            - TestCaosGear updated with chordVariants registry
         - Update Documentation for:
             - CaosGear
             - CaosInstrument
+    - Reactivate SeqType for chordsArray
+        - New design in CaosInstrument: setDefSequence
+        - Pseq / Prand variants
+        - .updateTimbre(chord:) stops chordsArray sequence
+
 
 - ### v2.5.2
     - Server/audio integration tests
@@ -28,7 +41,7 @@
         - Audio test
             - Tests/test-audio.scd
         - New CaosBox.prSetView updates widgets into AppClock
-            - play, pause, stop, bpm, randomTime, prPauseAutomations y prSyncMetricButton
+            - play, pause, stop, bpm, randomTime, prPauseAutomations and prSyncMetricButton
             - record, toggleMetric
             - playhead
             - Optional action parameter for valueAction_ cases            

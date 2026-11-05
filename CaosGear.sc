@@ -259,6 +259,19 @@ CaosGear : CaosBox {
 
 	}
 
+	// chordsArray -> lista de defNames, validando cada acorde
+	prChordDefs {|chordsArray, valid, family|
+
+		var chords = (chordsArray ? valid).asArray.collect {|chord|
+			this.prChordName([chord], valid);
+		};
+
+		if(chords.isEmpty, { chords = [valid.first] });
+
+		^chords.collect {|chord| this.class.chordDef(chord, family) };
+
+	}
+
 	prNoteOrder {|seqType|
 
 		if(seqType == 'rand', { ^\rand });
@@ -418,16 +431,19 @@ CaosGear : CaosBox {
 		chordsArray=#['Mmaj7', 'M', 'm'], att=0.05, rel=1, iphase=0.025,
 		width=0.1, cutf=1200, rq=0.5, pan=0, amp=0.5, retrigger=true|
 
-		var instrument, chord;
+		var instrument, defs, order;
 
-		chord = this.prChordName(chordsArray, chordVariants[\chords]);
+		defs = this.prChordDefs(chordsArray, chordVariants[\chords], \chords);
+		order = this.prNoteOrder(seqType);
 
-		instrument = CaosInstrument.synth(\chords, \chords, this.class.chordDef(chord, \chords), CaosBox.resolveOut(out.asArray.first),
+		instrument = CaosInstrument.synth(\chords, \chords, defs.first, CaosBox.resolveOut(out.asArray.first),
 			(
 				att: att, rel: rel, iphase: iphase, width: width,
 				cutf: cutf, rq: rq, pan: pan, amp: amp
 			),
-			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true, target: this.prInstrumentGroup);
+			semitoneArray.asArray, \free, nil, retrigger, order, oneShot: true, target: this.prInstrumentGroup);
+
+		instrument.setDefSequence(defs, order);
 
 		^this.prRegister(\chords, instrument, "Chords");
 
@@ -437,16 +453,19 @@ CaosGear : CaosBox {
 		chordsArray=#['Mmaj7'], att=0.05, rel=1, iphase=0.025,
 		width=0.1, cutf=1200, rq=0.5, pan=0, amp=0.5, retrigger=true|
 
-		var instrument, chord;
+		var instrument, defs, order;
 
-		chord = this.prChordName(chordsArray, chordVariants[\chords2]);
+		defs = this.prChordDefs(chordsArray, chordVariants[\chords2], \chords2);
+		order = this.prNoteOrder(seqType);
 
-		instrument = CaosInstrument.synth(\chords2, \chords2, this.class.chordDef(chord, \chords2), CaosBox.resolveOut(out.asArray.first),
+		instrument = CaosInstrument.synth(\chords2, \chords2, defs.first, CaosBox.resolveOut(out.asArray.first),
 			(
 				att: att, rel: rel, iphase: iphase, width: width,
 				cutf: cutf, rq: rq, pan: pan, amp: amp
 			),
-			semitoneArray.asArray, \free, nil, retrigger, this.prNoteOrder(seqType), oneShot: true, target: this.prInstrumentGroup);
+			semitoneArray.asArray, \free, nil, retrigger, order, oneShot: true, target: this.prInstrumentGroup);
+
+		instrument.setDefSequence(defs, order);
 
 		^this.prRegister(\chords2, instrument, "Chords2");
 

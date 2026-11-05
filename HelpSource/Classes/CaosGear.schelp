@@ -70,11 +70,20 @@ code::
 g = CaosGear.new;
 g.bass(out: \reverb, semitoneArray: [48, 50, 52, 55]);
 g.pad(waveform: 'tri');
-g.chords(chordsArray: #['m', 'M']);
+
+// one chord: fixed timbre
+g.chords(chordsArray: #['m']);
+
+// several chords: sequence or random per trigger
+g.chords(chordsArray: #['m', 'M7'], seqType: 'seq');
+g.chords2(chordsArray: #['M', 'M9'], seqType: 'rand');
 ::
 
-note:: code::waveform:: and the first element of code::chordsArray:: choose the
-SynthDef variant when the instrument is created. To change it later, use
+note:: code::waveform:: chooses the pad SynthDef variant when the instrument is
+created. code::chordsArray:: is a chord sequence: one element keeps a fixed
+chord, several elements advance (code::seqType: 'seq'::) or are chosen at random
+(code::seqType: 'rand'::) on each trigger. Both the note line and the chord
+sequence use code::seqType::. To override the current chord manually, use
 link::Classes/CaosInstrument#-updateTimbre::. code::set(\chord, ...):: does not
 change the SynthDef.
 ::

@@ -110,6 +110,63 @@ TestCaosInstrument : UnitTest {
 
 	}
 
+	test_defSequenceAdvances {
+
+		instrument = this.prSynth;
+		instrument.setDefSequence([\foo, \bar], \seq);
+
+		instrument.advance;
+		instrument.trigger;
+		this.assertEquals(instrument.defName, \foo,
+			"the first trigger takes the first def");
+		this.assertEquals(spy.lastMessage[1], \foo);
+
+		instrument.advance;
+		instrument.trigger;
+		this.assertEquals(instrument.defName, \bar,
+			"the next trigger takes the next def");
+		this.assertEquals(spy.lastMessage[1], \bar);
+
+	}
+
+	test_defSequenceDoesNotDependOnNoteCount {
+
+		var defs = List.new;
+
+		instrument = CaosInstrument.synth(\x, \x, \a, 50, nil, [48],
+			\free, spy, true);
+		instrument.setDefSequence([\a, \b, \c], \seq);
+
+		3.do {
+			instrument.advance;
+			instrument.trigger;
+			defs.add(instrument.defName);
+		};
+
+		this.assertEquals(defs.asArray, [\a, \b, \c],
+			"chord variants advance independently of the note line length");
+		this.assertEquals(instrument.notes, [48]);
+
+	}
+
+	test_updateTimbreStopsDefSequence {
+
+		instrument = this.prSynth;
+		instrument.setDefSequence([\foo, \bar], \seq);
+
+		instrument.updateTimbre(\baz);
+
+		this.assertEquals(instrument.defName, \baz);
+		this.assert(instrument.defNames.isNil,
+			"manual timbre overrides the automatic chord sequence");
+
+		instrument.advance;
+		instrument.trigger;
+		this.assertEquals(spy.lastMessage[1], \baz,
+			"the next voice uses the manual timbre");
+
+	}
+
 	test_updateTimbreRejectsFunctions {
 
 		instrument = this.prFunction;

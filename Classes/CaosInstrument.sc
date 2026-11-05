@@ -43,7 +43,9 @@ CaosInstrument {
 	var <target;
 	var <nodeID;
 	var <note;
+	var <defNames;
 	var stream;
+	var defStream;
 
 	*new { |name, track, kind = \synth, defName, func, out, params, notes, mode = \free, output, retrigger = false, noteOrder = \seq, oneShot = false, target|
 
@@ -142,6 +144,27 @@ CaosInstrument {
 
 	}
 
+	// Secuencia de variantes de SynthDef. La usa chords/chords2 para recorrer
+	// chordsArray con seqType: \seq o \rand.
+	setDefSequence {|names, order = \seq|
+
+		names = (names ? []).asArray.collect(_.asSymbol);
+		defNames = names;
+
+		defStream = if(names.isEmpty, {
+			nil;
+		}, {
+			if(order == \rand, {
+				Prand(names, inf).asStream;
+			}, {
+				Pseq(names, inf).asStream;
+			});
+		});
+
+		^this;
+
+	}
+
 	nextNote {
 
 		if(stream.isNil) { ^note };
@@ -155,6 +178,8 @@ CaosInstrument {
 	trigger {
 
 		if(kind == \function, { ^this.prTriggerFunction });
+
+		this.prSelectDef;
 
 		^this.prTriggerSynth;
 
@@ -222,10 +247,16 @@ CaosInstrument {
 
 		if(newDefName.notNil, { targetDef = newDefName.asSymbol });
 
-		if(targetDef.isNil or: { targetDef == defName }, { ^this });
+		if(targetDef.isNil, { ^this });
 
-		this.release;
-		defName = targetDef;
+		// el override manual manda: corta la secuencia automática de acordes
+		defNames = nil;
+		defStream = nil;
+
+		if(targetDef != defName, {
+			this.release;
+			defName = targetDef;
+		});
 
 		^this;
 
@@ -269,6 +300,23 @@ CaosInstrument {
 	isPlaying { ^nodeID.notNil }
 
 	// --- internals -----------------------------------------------------
+
+	prSelectDef {
+
+		var newDef;
+
+		if(defStream.isNil, { ^this });
+
+		newDef = defStream.next;
+
+		if(newDef.notNil and: { newDef.asSymbol != defName }, {
+			this.release;
+			defName = newDef.asSymbol;
+		});
+
+		^this;
+
+	}
 
 	prTriggerFunction {
 

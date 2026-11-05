@@ -33,6 +33,8 @@ method:: updateTimbre
 Changes the SynthDef variant of a melodic instrument without creating a new
 instrument. The current voice is released; notes, params, route, mode,
 retrigger and oneShot are preserved. The next trigger uses the new variant.
+A manual chord change also stops any automatic chord sequence; re-declare the
+instrument with code::chordsArray::/code::seqType:: to start a new sequence.
 
 Named arguments:
 list::

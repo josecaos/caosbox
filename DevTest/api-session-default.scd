@@ -19,11 +19,12 @@ c.environment(false); //inicializa Headless
 c.play;
 c.pause;
 c.stop;
-c.bpm(120);
+c.bpm(66);
 c.freqAnalyzer(true);
 c.guiAlpha(0.5);
 //
 g = CaosGear;
+// available options
 g.waveforms;
 g.chordVariants;
 g.validChords(\chords);
@@ -90,8 +91,16 @@ r.offTrack([0,16]);
 
 v = g.new;
 v.chords(\master,x,\rand,att:0.25,rel:3,amp:0.005);
-v.toTrack(Array.series(8,0,4));
+v.toTrack(Array.series(4,0,8));
+g.validChords(\chords); //print valid chords for the \chords instrument
+v.chords(\master,x,\rand,[\M7,\m7,\mmaj7,\Mmaj7,'5aug7'],att:0.25,rel:2,amp:0.005);
+v.chords(\master,[60,67],\seq, g.validChords(\chords),att:0.25,rel:4,amp:0.005);
 v.offTrack([0,16]);
+z = v.chords(\master,x,\rand,[\M7,\m7,\mmaj7,\Mmaj7,'5aug7'],att:1,rel:2,amp:0.005);
+g.validChords(\chords);
+z.updateTimbre(chord: 'M');
+z.updateTimbre(chord: '5dim7');
+z.updateTimbre(chord: '5aug7');
 
 y = g.new;
 y.chords2(\master,x/2,\rand,[\Mmaj7,\m,\M,\m],0.01,2,amp:0.05);
