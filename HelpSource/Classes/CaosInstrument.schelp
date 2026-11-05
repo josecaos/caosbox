@@ -28,3 +28,39 @@ i.set(\cutf, 1200);
 i.trigger;
 i.release;
 ::
+
+method:: updateTimbre
+Changes the SynthDef variant of a melodic instrument without creating a new
+instrument. The current voice is released; notes, params, route, mode,
+retrigger and oneShot are preserved. The next trigger uses the new variant.
+
+Named arguments:
+list::
+## code::waveform::: for code::pad:: only. Must be one of
+   code::CaosGear.waveforms::.
+## code::chord::: for code::chords:: or code::chords2:: only. Must be one of
+   code::CaosGear.validChords(\chords):: or
+   code::CaosGear.validChords(\chords2)::.
+## first positional argument: any SynthDef name, for advanced use.
+::
+
+code::
+g = CaosGear.new;
+
+p = g.pad(waveform: 'sin');
+p.updateTimbre(waveform: 'tri');
+
+c = g.chords(chordsArray: #['m']);
+c.updateTimbre(chord: 'M7');
+
+c2 = g.chords2(chordsArray: #['M']);
+c2.updateTimbre(chord: 'M9');
+
+// escape hatch: use a loaded SynthDef directly
+p.updateTimbre(\ambuno_pulse);
+::
+
+note:: An invalid waveform or chord leaves the current timbre unchanged and posts
+a warning. code::set(\chord, ...):: still does not change the SynthDef; use
+code::updateTimbre:: for that.
+::

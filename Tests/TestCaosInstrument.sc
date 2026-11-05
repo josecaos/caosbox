@@ -59,6 +59,67 @@ TestCaosInstrument : UnitTest {
 
 	}
 
+	test_updateTimbreGenericPreservesState {
+
+		instrument = this.prSynth;
+
+		instrument.updateTimbre(\ambuno_tri);
+
+		this.assertEquals(instrument.defName, \ambuno_tri);
+		this.assertEquals(instrument.notes, [48, 50, 52]);
+		this.assertEquals(instrument.params[\att], 0.1);
+		this.assertEquals(instrument.out, 50);
+
+	}
+
+	test_updateTimbreWaveform {
+
+		instrument = this.prSynth;
+
+		instrument.updateTimbre(waveform: 'tri');
+		this.assertEquals(instrument.defName, \ambuno_tri);
+		this.assertEquals(instrument.notes, [48, 50, 52]);
+
+		// un waveform inválido no cambia la voz
+		instrument.updateTimbre(waveform: 'noise');
+		this.assertEquals(instrument.defName, \ambuno_tri);
+
+	}
+
+	test_updateTimbreChord {
+
+		instrument = CaosInstrument.synth(\chords, \chords, \acordesuno_m, 50,
+			(att: 0.1), [48, 52], \free, spy, true);
+
+		instrument.updateTimbre(chord: 'M7');
+		this.assertEquals(instrument.defName, \acordesuno_M7);
+
+		// M9 no existe en chords (sí en chords2)
+		instrument.updateTimbre(chord: 'M9');
+		this.assertEquals(instrument.defName, \acordesuno_M7);
+
+	}
+
+	test_updateTimbreChord2 {
+
+		instrument = CaosInstrument.synth(\chords2, \chords2, \acordesdos_M, 50,
+			(att: 0.1), [48, 52], \free, spy, true);
+
+		instrument.updateTimbre(chord: 'M9');
+		this.assertEquals(instrument.defName, \acordesdos_M9);
+
+	}
+
+	test_updateTimbreRejectsFunctions {
+
+		instrument = this.prFunction;
+
+		instrument.updateTimbre(\foo);
+		this.assertEquals(instrument.kind, \function);
+		this.assert(instrument.defName.isNil);
+
+	}
+
 	test_synthNeedsADefName {
 
 		this.assertException({ CaosInstrument.synth(\x, \x, nil) }, Error,

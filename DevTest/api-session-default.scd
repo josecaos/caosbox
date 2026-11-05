@@ -14,6 +14,7 @@ CaosBox.gui.color(\white); // Aplica color opcional para la GUI antes de correr
 c = CaosBox;
 //
 c.environment; //inicializa
+c.environment(false); //inicializa Headless
 // Wait for GUI boot:
 c.play;
 c.pause;
@@ -23,6 +24,10 @@ c.freqAnalyzer(true);
 c.guiAlpha(0.5);
 //
 g = CaosGear;
+g.waveforms;
+g.chordVariants;
+g.validChords(\chords);
+g.validChords(\chords2);
 //// Percussion synths
 k = g.new;
 k.kick();
@@ -75,6 +80,8 @@ p = g.new;
 p.pad(\reverb,x/2,\rand,\pulse,0.25,2,amp:0.01);
 p.toTrack(Array.series(8,0,4));
 p.offTrack([0,16]);
+// g.waveforms;
+p.updateTimbre(waveform: \pulse);
 
 r = g.new;
 r.pad2(\reverb,x/3,\rand,0.5,4,amp1:0.001,amp2:0.001);

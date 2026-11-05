@@ -13,6 +13,14 @@
 
 # Changelog
 
+- ### v2.6.0
+    - CaosGear, CaosInstrument
+        - .updateTimbre();
+            - Updates the instrument while conserving the actual preloaded instruments, useful for melodic instruments with, chords or different waveforms
+        - Update Documentation for:
+            - CaosGear
+            - CaosInstrument
+
 - ### v2.5.2
     - Server/audio integration tests
         - Headless audio test

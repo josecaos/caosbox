@@ -11,6 +11,36 @@ code::toTrack:: or with the instrument name.
 Percussive instruments store the function on each step (snapshot). Melodic
 instruments store only the gate and resolve the voice when the step fires (live).
 
+classmethods::
+
+subsection:: Variant registry
+
+method:: waveforms
+List of valid waveform symbols for code::pad:::
+code::[sin, tri, pulse]::
+
+method:: chordVariants
+Dictionary of valid chord sets, keyed by instrument family:
+code::\chords:: and code::\chords2::.
+
+method:: validChords
+Returns the chord list for one family.
+code::
+CaosGear.waveforms;                    // [ sin, tri, pulse ]
+CaosGear.validChords(\chords);         // M, m, M7, ...
+CaosGear.validChords(\chords2);        // M, m, M9, M9m, ...
+CaosGear.chordVariants[\chords2];      // same list
+::
+
+method:: waveformDef
+method:: chordDef
+Map a validated symbol to its SynthDef name.
+code::
+CaosGear.waveformDef('tri');           // \ambuno_tri
+CaosGear.chordDef('M7', \chords);      // \acordesuno_M7
+CaosGear.chordDef('M9', \chords2);     // \acordesdos_M9
+::
+
 instancemethods::
 
 subsection:: Percussion
@@ -44,8 +74,9 @@ g.chords(chordsArray: #['m', 'M']);
 ::
 
 note:: code::waveform:: and the first element of code::chordsArray:: choose the
-SynthDef variant when the instrument is created. Changing them afterwards requires
-recreating the voice; code::set(\chord, ...):: does not change the SynthDef.
+SynthDef variant when the instrument is created. To change it later, use
+link::Classes/CaosInstrument#-updateTimbre::. code::set(\chord, ...):: does not
+change the SynthDef.
 ::
 
 subsection:: Track routing

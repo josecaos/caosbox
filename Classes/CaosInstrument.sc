@@ -178,6 +178,59 @@ CaosInstrument {
 
 	}
 
+	// Cambia la variante de SynthDef sin crear otro instrumento. Conserva
+	// notas, params, ruta y estado de la pista. La voz actual se libera y el
+	// próximo trigger usa el nuevo defName.
+	updateTimbre {|newDefName, waveform, chord|
+
+		var targetDef, valid;
+
+		if(kind != \synth, {
+			("CaosInstrument(%): updateTimbre needs a synth instrument").format(name).warn;
+			^this;
+		});
+
+		if(waveform.notNil and: { chord.notNil }, {
+			"CaosInstrument: use waveform: or chord:, not both".warn;
+			^this;
+		});
+
+		if(waveform.notNil, {
+			if(name != \pad, {
+				("CaosInstrument(%): waveform applies only to pad").format(name).warn;
+				^this;
+			});
+			if(CaosGear.waveforms.includes(waveform.asSymbol).not, {
+				("CaosInstrument: unknown waveform " + waveform).warn;
+				^this;
+			});
+			targetDef = CaosGear.waveformDef(waveform);
+		});
+
+		if(chord.notNil, {
+			if(#[\chords, \chords2].includes(name).not, {
+				("CaosInstrument(%): chord applies only to chords/chords2").format(name).warn;
+				^this;
+			});
+			valid = CaosGear.validChords(name);
+			if(valid.includes(chord.asSymbol).not, {
+				("CaosInstrument: unknown chord " + chord).warn;
+				^this;
+			});
+			targetDef = CaosGear.chordDef(chord, name);
+		});
+
+		if(newDefName.notNil, { targetDef = newDefName.asSymbol });
+
+		if(targetDef.isNil or: { targetDef == defName }, { ^this });
+
+		this.release;
+		defName = targetDef;
+
+		^this;
+
+	}
+
 	out_ { |value|
 
 		out = value;

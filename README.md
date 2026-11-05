@@ -23,10 +23,21 @@ Platform.userExtensionDir
     c.guiAlpha(0.5);//set GUI opacity if wanted
 
     // instance an instrument
-    k = CaosGear.new;
-    k.kick();
+    g = CaosGear.new;
+
+    // instace a percussion instrument
+    k = g.new;
+    k.kick(\master);
     // Populate sequencer
     k.toTrack(Array.series(8,0,4));
+    // or
+    c.setSteps(\kick, Array.series(8,0,4));
+
+    // instance a melodic instrument
+    p = g.new
+    p.pad(\reverb, waveform: \sin);
+    p.updateTimbre(waveform: \tri); // updates the instrument conserving previous arguments
+
 
     // Get to know all methods and variables
     CaosBox.browse;

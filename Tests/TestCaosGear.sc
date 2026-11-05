@@ -128,6 +128,18 @@ TestCaosGear : UnitTest {
 
 	}
 
+	test_chordVariantsRegistry {
+
+		this.assertEquals(CaosGear.chordVariants[\chords].first, \M);
+		this.assertEquals(CaosGear.chordVariants[\chords2].first, \M);
+		this.assert(CaosGear.chordVariants[\chords].includes(\M7));
+		this.assert(CaosGear.chordVariants[\chords2].includes(\M9));
+		this.assert(CaosGear.chordVariants[\chords].includes(\M9).not,
+			"M9 belongs to chords2, not chords");
+		this.assertEquals(CaosGear.validChords(\chords2), CaosGear.chordVariants[\chords2]);
+
+	}
+
 	test_pad2IsAOneShotVoice {
 
 		var instrument = gear.pad2(50, [48], 'seq');
