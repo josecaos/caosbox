@@ -29,3 +29,8 @@ s.randomTime = true;
 method:: onTempoChange
 Callback code::{|bpm| ... }:: when the effective tempo changes, including the value
 chosen in random time.
+
+method:: onLoop
+Callback code::{|sequencer| ... }:: after the last step of a full loop, when the
+index wraps to 0. Used by code::CaosBox.randPattern::; it avoids a second clock or
+an external Tdef.

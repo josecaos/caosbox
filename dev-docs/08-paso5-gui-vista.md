@@ -1,7 +1,7 @@
 # Paso 5a — la GUI como vista (v2.3.0)
 
 > Estado: **prototipo de una fila** listo para revisar. Todavía no se toca la GUI real.
-> Todo lo de interfaz entra en **v2.3.x**; el cierre de 5a es `v2.3.3`. `CHANGELOG.md` sigue siendo tuyo.
+> Todo lo de interfaz entra en **v2.3.x**; el cierre de 5a es `v2.3.3`. `CHANGELOG.md`
 
 ## 1. Alcance
 

@@ -62,6 +62,31 @@ CaosBox.route(\bass, 52);
 CaosBox.route(\bass);
 ::
 
+subsection:: Pattern generation
+
+method:: randPattern
+Replaces the gates of one track with a new random pattern. code::density:: is the
+probability (0..1) that each step is on. Without code::every:: it is a one-shot
+change; with code::every: n:: it is applied again every code::n:: full loops of
+the link::Classes/CaosSequencer:: (code::size:: steps). The first pattern is
+applied immediately.
+code::
+CaosBox.randPattern(\kick, density: 0.5);
+CaosBox.randPattern(\kick, density: 0.25, every: 4);
+::
+Only the gates change: on melodic tracks the notes, chords and voice sequences
+are untouched. On percussion tracks the whole pattern is replaced, so its flams
+are cleared too. A one-shot call does not cancel an evolution already running;
+use code::stopRandPattern:: for that. Returns the
+link::Classes/CaosTrack::. The old code::randSteps:: remains available for an
+exact number of steps.
+
+method:: stopRandPattern
+Stops the periodic regeneration of a track. The current pattern stays as it is.
+code::
+CaosBox.stopRandPattern(\kick);
+::
+
 subsection:: Mute and solo
 
 method:: mute

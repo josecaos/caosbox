@@ -5,8 +5,15 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.6.2";
+	classvar <version = "2.6.3";
 	classvar guiRegistry;
+	classvar randPatterns;
+
+	*initClass {
+
+		randPatterns = IdentityDictionary.new;
+
+	}
 
 	// Register View
 	*gui {
@@ -166,6 +173,47 @@ CaosBox {
 		guiRegistry !? {|gui| gui.trackStateChanged(track) };
 
 		^tr.solo;
+
+	}
+
+	*prApplyRandPattern {|track, density|
+
+		var tr = this.tracks !? {|tracks| tracks[track]};
+
+		tr !? {|t| t.setIndices(CaosTrack.randomIndices(t.size, density)) };
+
+		^tr;
+
+	}
+
+	// Una vuelta de `size` steps. No usa Tdef externo: la senal viene del
+	// secuenciador, asi respeta pause/stop/randomTime.
+	*prRandPatternLoop {|seq|
+
+		randPatterns.keys.asArray.do {|track|
+			var config = randPatterns[track];
+			var tr = this.tracks !? {|tracks| tracks[track]};
+
+			if(tr.isNil, {
+				randPatterns.removeAt(track);
+			}, {
+				config[\count] = config[\count] + 1;
+				if(config[\count] >= config[\every], {
+					config[\count] = 0;
+					this.prApplyRandPattern(track, config[\density]);
+				});
+			});
+		};
+
+		^this;
+
+	}
+
+	*prClearRandPatterns {
+
+		randPatterns = IdentityDictionary.new;
+
+		^this;
 
 	}
 
@@ -538,6 +586,50 @@ CaosBox {
 		^"Added steps".inform;
 
 	}
+
+	// Reemplaza los gates de una pista. `density` es la probabilidad 0..1 de
+	// cada step. Con `every` se repite cada N vueltas del secuenciador.
+	*randPattern {|track, density = 0.5, every|
+
+		var tr = this.tracks !? {|tracks| tracks[track]};
+
+		if(tr.isNil, {
+			^("CaosBox.randPattern: unknown track " ++ track).warn;
+		});
+
+		if(density.isNumber.not or: { density < 0 } or: { density > 1 }, {
+			^("CaosBox.randPattern: density must be between 0 and 1").warn;
+		});
+
+		if(every.notNil and: {
+			every.isInteger.not or: { every < 1 }
+		}, {
+			^("CaosBox.randPattern: every must be a positive integer or nil").warn;
+		});
+
+		this.prApplyRandPattern(track, density);
+
+		if(every.notNil, {
+			randPatterns[track] = (density: density, every: every, count: 0);
+		});
+
+		^tr;
+
+	}
+
+	*stopRandPattern {|track|
+
+		var tr = this.tracks !? {|tracks| tracks[track]};
+
+		if(tr.isNil, {
+			^("CaosBox.stopRandPattern: unknown track " ++ track).warn;
+		});
+
+		randPatterns.removeAt(track);
+
+		^tr;
+
+	}
 	//
 
 	*autoFx {|fx = 'reverb', play = true, speed = 'normal', argArr1 = 0, argArr2 = 0, argArr3 = 0|
@@ -814,6 +906,8 @@ CaosBox {
 		// antes del /n_free.
 		#[\secuencias, \autor, \autod, \autop, \autog, \autolpf, \autohpf, \autobpf]
 			.do { |name| Tdef(name).stop };
+
+		this.prClearRandPatterns;
 
 		~cbox_url = nil;
 

@@ -27,7 +27,8 @@ CaosSequencer {
 	var <prepared = false;
 	var <tdef;
 	var stepFunc, prepareFunc;
-	var <>onTempoChange;// aviso a la vista (numbox de BPM)
+	var <>onTempoChange;// aviso a la vista - numbox de BPM
+	var <>onLoop;// aviso al cerrar cada vuelta de `size` steps
 
 	*new { |step, prepare, size = 32, bpm = 126, stepDur = 0.25, randtimes, tdefName = \secuencias|
 
@@ -182,6 +183,14 @@ CaosSequencer {
 
 	}
 
+	prNotifyLoop {
+
+		if(onLoop.notNil, { onLoop.value(this) });
+
+		^this;
+
+	}
+
 	prWait {
 
 		var randomBpm;
@@ -200,13 +209,23 @@ CaosSequencer {
 
 	}
 
+	// un paso sin espera: lo usa el loop y permite probar el wrap headless
+	prStep {
+
+		stepFunc.value(index);
+		index = (index + 1) % size;
+		if(index == 0, { this.prNotifyLoop });
+
+		^this;
+
+	}
+
 	prRun {
 
 		// el indice avanza antes de esperar: si el Tdef se reinicia al
 		// reanudar, continua con el step siguiente en vez de repetir el actual
 		loop {
-			stepFunc.value(index);
-			index = (index + 1) % size;
+			this.prStep;
 			this.prWait;
 		}
 

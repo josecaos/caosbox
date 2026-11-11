@@ -3,11 +3,28 @@
 
 ---
 ### TODOs:
-- Probability (100/75/50/25) per track: allows for variation without altering the pattern itself—a great feature.
-- Fill/randomize track: generative and destructive—ideal for a performance button.
+- Fill Back to previous pattern
+- GUI button for randPattern
 ---
 
 # Changelog
+
+- ### v2.6.3
+    - Implement Fill/Randomize per track 
+        - Add probabilistic randmization
+        - every: regenerate every X loops of CaosSequencer
+            - 32 steps default value
+            - onLoop callback
+        - density: per-step probability 0..1
+        - Desctructive
+            - Replaces gates
+            - flams are cleared
+        - GUI
+        - API
+            - .randPattern(track, density, every)
+            - .stopRandPattern(track)
+        - Tests
+            - 416 assertions
 
 - ### v2.6.2
     - Implement Mute/Solo per track
@@ -17,8 +34,8 @@
             - Add two buttons to each track
             - .clearSolos before create tracks
         - API
-            - .mute(instrument, true/false)
-            - .solo(instrument, true/false)
+            - .mute(track, true/false)
+            - .solo(track, true/false)
             - .isAudible 
         - Various solos at the same time
         - Mute over solo: if a track is muted, soloing it has no effect

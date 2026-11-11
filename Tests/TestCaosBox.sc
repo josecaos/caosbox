@@ -24,6 +24,7 @@ TestCaosBox : UnitTest {
 
 		automationNames.do {|name| Tdef(name).stop };
 		CaosTrack.clearSolos;
+		CaosBox.prClearRandPatterns;
 		~cbox_tracks = savedTracks;
 
 	}
@@ -43,6 +44,103 @@ TestCaosBox : UnitTest {
 		this.assert(track.solo, "solo reaches the track");
 		this.assert(CaosBox.solo(\kick, false).not, "solo can be lifted");
 		this.assert(track.solo.not, "the track follows the solo API");
+
+	}
+
+	test_randPatternIsDestructiveAndOneShot {
+
+		var track = CaosTrack.new(\kick, \snapshot, 8, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+
+		this.assertEquals(CaosBox.randPattern(\kick, density: 1), track,
+			"randPattern returns the track");
+		this.assertEquals(track.indices, (0 .. 7),
+			"density 1 fills every step");
+
+		this.assertEquals(CaosBox.randPattern(\kick, density: 0), track,
+			"the one-shot can run again");
+		this.assert(track.isEmpty, "density 0 empties the track");
+
+	}
+
+	test_randPatternWorksOnMelodicGates {
+
+		var track = CaosTrack.new(\bass, \live, 4);
+
+		~cbox_tracks = Dictionary[\bass -> track];
+		CaosBox.randPattern(\bass, density: 1);
+
+		this.assertEquals(track.indices, (0 .. 3),
+			"a melodic track receives random gates");
+		this.assertEquals(track.at(0), true,
+			"live steps store the gate, not an instrument");
+
+	}
+
+	test_randPatternClearsFlams {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.putStep(0, true);
+		track.flam(0, 0.5, 1);
+
+		CaosBox.randPattern(\kick, density: 0);
+
+		this.assert(track.flamAt(0).isNil,
+			"replacing the pattern also clears its flams");
+
+	}
+
+	test_randPatternValidatesItsArguments {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.setIndices([0]);
+
+		CaosBox.randPattern(\kick, density: 1.5);
+		CaosBox.randPattern(\kick, density: 0.5, every: 0);
+		CaosBox.randPattern(\kick, density: 0.5, every: 2.5);
+
+		this.assertEquals(track.indices, [0],
+			"invalid arguments leave the pattern untouched");
+
+	}
+
+	test_randPatternEveryRefreshesAtLoopBoundaries {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		CaosBox.randPattern(\kick, density: 1, every: 2);
+
+		this.assertEquals(track.indices, (0 .. 3),
+			"the first pattern is applied immediately");
+
+		track.clear;
+		CaosBox.prRandPatternLoop(nil);
+		this.assert(track.isEmpty, "the first loop only counts");
+
+		CaosBox.prRandPatternLoop(nil);
+		this.assertEquals(track.indices, (0 .. 3),
+			"the second loop regenerates the pattern");
+
+	}
+
+	test_stopRandPatternStopsTheEvolution {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		CaosBox.randPattern(\kick, density: 1, every: 1);
+		CaosBox.stopRandPattern(\kick);
+		track.clear;
+
+		CaosBox.prRandPatternLoop(nil);
+
+		this.assert(track.isEmpty, "a stopped pattern is not regenerated");
 
 	}
 

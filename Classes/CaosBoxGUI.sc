@@ -2,11 +2,7 @@
 // Copyright (C) 2014-2026 Carlos Hasbun (josecaos)
 // CaosBox v2.3.5 - GUI registry and palette
 //
-// The API reaches the view through CaosBox.gui. The registry owns the palette
-// (so `CaosBox.gui.color(\red)` repaints every registered view), the list of
-// step grids that need the playhead and the floating analyzers window.
-// No widgets are created here at load time: the GUI files build them and
-// register them.
+// The API reaches the view through CaosBox.gui
 
 CaosBoxGUI {
 

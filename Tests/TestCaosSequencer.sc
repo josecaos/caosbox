@@ -179,6 +179,20 @@ TestCaosSequencer : UnitTest {
 	// preparacion de voces fijas
 	// ------------------------------------------------------------------
 
+	test_loopCallbackFiresWhenTheIndexWraps {
+
+		var loops = 0;
+
+		seq.onLoop = {|sequencer| loops = loops + 1 };
+
+		7.do { seq.prStep };
+		this.assertEquals(loops, 0, "the callback does not fire mid-loop");
+
+		seq.prStep;
+		this.assertEquals(loops, 1, "the callback fires after the last step");
+
+	}
+
 	test_prepareRunsOnlyOnce {
 
 		seq.prepare;

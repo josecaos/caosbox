@@ -14,6 +14,16 @@ list::
 
 classmethods::
 
+subsection:: Pattern generation
+
+method:: randomIndices
+Returns an array of step indices for a random gate pattern.
+code::density:: is the probability (0..1) that each step is included. It is the
+pure generator used by code::CaosBox.randPattern::; it does not modify a track.
+code::
+CaosTrack.randomIndices(32, 0.5);
+::
+
 subsection:: Solo state
 
 method:: clearSolos

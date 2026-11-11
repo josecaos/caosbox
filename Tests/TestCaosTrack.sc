@@ -203,6 +203,27 @@ TestCaosTrack : UnitTest {
 	// mute / solo
 	// ------------------------------------------------------------------
 
+	test_randomIndicesRespectsBoundaries {
+
+		this.assertEquals(CaosTrack.randomIndices(8, 0), [],
+			"density 0 leaves every step off");
+		this.assertEquals(CaosTrack.randomIndices(8, 1), (0 .. 7),
+			"density 1 turns every step on");
+
+	}
+
+	test_randomIndicesAreValidAndUnique {
+
+		var indices = CaosTrack.randomIndices(32, 0.5);
+
+		this.assert(indices.every {|index|
+			index.isInteger and: { index >= 0 } and: { index < 32 }
+		}, "every index is inside the track");
+		this.assertEquals(indices.asSet.size, indices.size,
+			"the generator does not repeat indices");
+
+	}
+
 	test_muteAndSoloDefaultOff {
 
 		track = CaosTrack.new(\bass);

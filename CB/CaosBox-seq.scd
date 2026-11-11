@@ -55,4 +55,7 @@
 ~cbox_seq.onTempoChange = {|value|
 	{ ~cbox_numclock !? {|num| num.value_(value)} }.defer;
 };
+
+// randPattern cuenta los loops
+~cbox_seq.onLoop = {|seq| CaosBox.prRandPatternLoop(seq) };
 );

@@ -1,7 +1,6 @@
 # Mute / solo por pista (v2.6.2)
 
-> Estado: modelo, API, GUI y tests cerrados. `CHANGELOG.md` y los commits siguen
-> siendo de josecaos.
+> Estado: modelo, API, GUI y tests cerrados. `CHANGELOG.md`
 
 ## 1. Objetivo
 

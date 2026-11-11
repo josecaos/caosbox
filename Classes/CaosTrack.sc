@@ -46,6 +46,24 @@ CaosTrack {
 
 	}
 
+	// Generador puro para randPattern: cada step se enciende con `density`.
+	// No toca ninguna pista; la aplicacion la hace CaosBox.
+	*randomIndices { |size = 32, density = 0.5|
+
+		var total = size.asInteger;
+		var probability = density.asFloat;
+		var indices = List.new;
+
+		if(total <= 0, { ^[] });
+
+		total.do {|index|
+			if(1.0.rand < probability, { indices.add(index) });
+		};
+
+		^indices.asArray;
+
+	}
+
 	init { |argName, argMode, argSize, argSource|
 
 		name = argName.asSymbol;

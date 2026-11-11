@@ -52,8 +52,10 @@
 
 - [x] **Flam por step**: marca en el step + segundo disparo corto; cerrado en v2.6.1.
 - [x] Mute/solo por pista: cerrado en v2.6.2 (ver `12-mute-solo-v2.6.2.md`).
-- [ ] **Fill/randomize por pista**: botón generativo/destructivo para performance; va
-      antes de la segunda pasada de API/GUI.
+- [x] **Randomize/evolución por pista**: `randPattern`/`stopRandPattern` en v2.6.3
+      (ver `13-randpattern-v2.6.3.md`).
+- [ ] **Fill temporal**: variación de una vuelta que después vuelve al patrón base.
+- [ ] **Botón de performance** para `randPattern` en la GUI.
 - [ ] Probabilidad por pista (100/75/50/25) sin alterar el patrón.
 - [ ] Scroll y navegación por teclado en el bloque de pistas.
 - [ ] Ruteo por step en percusión (si se quiere más allá del snapshot actual).
@@ -71,7 +73,7 @@
 
 ```bash
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_check_ext.scd      # compila
-HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 398 aserciones
+HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 416 aserciones
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_syntax3.scd        # 14 .scd
 ```
 
