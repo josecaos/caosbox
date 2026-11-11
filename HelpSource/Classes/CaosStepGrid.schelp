@@ -12,6 +12,11 @@ On percussion tracks, code::shift:: + click or right-click toggles a small flam
 dot without changing the step gate. The flam amount and repeat count used by the
 view are code::flamAmount:: and code::flamRepeats::.
 
+On any track, code::ctrl:: + click toggles a repeater. Its icon is three dots of
+2, 4 and 6 px in the upper-right corner, sharing that place with the flam dot
+because a step cannot have both. The defaults used by the view are
+code::repeaterRepetitions:: and code::repeaterMetric::.
+
 classmethods::
 
 subsection:: Geometry
@@ -33,6 +38,11 @@ instancemethods::
 method:: flamAmount
 method:: flamRepeats
 Defaults used when shift-clicking or right-clicking a percussion cell.
+
+method:: repeaterRepetitions
+method:: repeaterMetric
+Defaults used when ctrl-clicking a cell. The repeater is stored in the track and
+is independent of the view; marking it does not change the step gate.
 
 method:: refresh
 method:: playhead

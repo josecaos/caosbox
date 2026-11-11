@@ -82,11 +82,15 @@ CaosBox.repeaterAt(\kick, 0); // (repetitions: 4, metric: 0.5)
   `repetitions: 4`.
 - Suite completa: **500 aserciones, 0 fallos**.
 
-## 6. GUI pendiente
+## 6. GUI
 
-- **Ctrl-click** sobre un step para marcar/desmarcar repeater.
-- Tres círculos de 2, 4 y 6 px en la esquina superior derecha, en el mismo lugar
-  del punto de flam.
+- **Ctrl-click** sobre un step marca/desmarca el repeater, sin pintar la celda.
+- Shift-click/right-click sigue siendo flam en percusión.
+- El icono son tres círculos de 2, 4 y 6 px en la esquina superior derecha.
 - Flam y repeater comparten el indicador porque son excluyentes.
-- La lista de métricas puede mostrarse como un menú de fracciones; el API sigue
+- `repeaterRepetitions` y `repeaterMetric` del `CaosStepGrid` fijan el default
+  del ctrl-click (`4` y `1/2`).
+- La lista de métricas puede mostrarse como un menú de fracciones; la API sigue
   aceptando la fracción directamente, no un índice lineal.
+- Prueba manual: ctrl-click enciende/apaga; shift-click sobre un repeater lo
+  reemplaza por flam.

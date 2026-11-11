@@ -24,6 +24,8 @@ CaosStepGrid {
 	var paintValue, lastIndex;
 	var <>flamAmount = 0.5;
 	var <>flamRepeats = 1;
+	var <>repeaterRepetitions = 4;
+	var <>repeaterMetric = 0.5;
 
 	*new {|parent, bounds, track, gui|
 
@@ -43,12 +45,14 @@ CaosStepGrid {
 		view.mouseMoveAction_({|v, x, y, mods| this.mouseMove(x, y) });
 		view.mouseUpAction_({|v, x, y, mods, button| this.mouseUp });
 		view.onResize_({|v| v.refresh });
+		view.toolTip_("Ctrl-click: repeater · Shift/right-click: flam on percussion");
 
 		gui.addStepGrid(this);
 
 		if (track.notNil, {
 			track.onChange = {|t, i, value| { this.refresh }.defer };
 			track.onFlamChange = {|t, i, value| { this.refresh }.defer };
+			track.onRepeaterChange = {|t, i, value| { this.refresh }.defer };
 		});
 
 		^this;
@@ -138,6 +142,7 @@ CaosStepGrid {
 				i,
 				track.at(i).notNil,
 				track.flamAt(i).notNil,
+				track.repeaterAt(i).notNil,
 				bounds
 			);
 		};
@@ -146,7 +151,7 @@ CaosStepGrid {
 
 	}
 
-	prDrawCell {|rect, index, isOn, isFlam, bounds|
+	prDrawCell {|rect, index, isOn, isFlam, isRepeater, bounds|
 
 		if (playhead == index, {
 			Pen.fillColor = Color(gui.accent.red, gui.accent.green, gui.accent.blue, 0.12);
@@ -171,10 +176,19 @@ CaosStepGrid {
 			Pen.stroke;
 		});
 
-		if (isFlam, {
+		if (isRepeater, {
+			// Tres puntos de 2, 4 y 6 px; el flam y el repeater son excluyentes.
 			Pen.fillColor = if(isOn, { gui.accentText }, { gui.muted });
+			Pen.addOval(Rect(rect.right - 17, rect.top + 5, 2, 2));
+			Pen.addOval(Rect(rect.right - 14, rect.top + 4, 4, 4));
 			Pen.addOval(Rect(rect.right - 9, rect.top + 3, 6, 6));
 			Pen.fill;
+		}, {
+			if (isFlam, {
+				Pen.fillColor = if(isOn, { gui.accentText }, { gui.muted });
+				Pen.addOval(Rect(rect.right - 9, rect.top + 3, 6, 6));
+				Pen.fill;
+			});
 		});
 
 		^this;
@@ -187,21 +201,32 @@ CaosStepGrid {
 
 		var index = this.class.indexAt(x, view.bounds.width, this.cells);
 		var shift = mods.notNil and: { mods.isShift };
+		var ctrl = mods.notNil and: { mods.isCtrl };
 		var secondary = button.notNil and: { button != 0 };
 
 		if (index.notNil, {
-			if(track.mode == \snapshot and: { shift or: { secondary } }, {
-				// shift-click / right-click: toggle flam, do not paint
-				if(track.flamAt(index).notNil, {
-					track.removeFlam(index);
+			if(ctrl, {
+				// Ctrl-click: toggle repeater, do not paint
+				if(track.repeaterAt(index).notNil, {
+					track.removeRepeater(index);
 				}, {
-					track.flam(index, flamAmount, flamRepeats);
+					track.repeater(index, repeaterRepetitions, repeaterMetric);
 				});
 				lastIndex = nil;
 			}, {
-				paintValue = track.at(index).isNil;
-				lastIndex = index;
-				track.putStep(index, paintValue);
+				if(track.mode == \snapshot and: { shift or: { secondary } }, {
+					// shift-click / right-click: toggle flam, do not paint
+					if(track.flamAt(index).notNil, {
+						track.removeFlam(index);
+					}, {
+						track.flam(index, flamAmount, flamRepeats);
+					});
+					lastIndex = nil;
+				}, {
+					paintValue = track.at(index).isNil;
+					lastIndex = index;
+					track.putStep(index, paintValue);
+				});
 			});
 		});
 

@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////
-// CaosBox v2.6.2 - The API session
+// CaosBox v2.6.6 - The API session
 //
 // Este es el código con el que josecaos toca el secuenciador desde el
 // intérprete. Se guarda aquí como documentación y como prueba de regresión
@@ -8,11 +8,10 @@
 Platform.userExtensionDir
 CaosBox.browse;
 CaosBoxGUI.colorAliases // Colores posibles para interfaz
-CaosBox.gui.color(\pink); // Aplica color opcional para la GUI antes comenzar
+CaosBox.gui.color(\magenta); // Aplica color opcional para la GUI antes comenzar
 ////////////////////////////////////////////////////////////
 
 c = CaosBox;
-//
 c.environment; //inicializa
 // c.environment(false); //inicializa Headless
 // Wait for GUI boot:
@@ -32,10 +31,12 @@ g.validChords(\chords2);
 //// Percussion synths
 k = g.new;
 k.kick();
+k.kick(amp1: 1,amp2:1);
+k.kick([50,64]);
 k.toTrack([0,4,8,12,16,20,24,28], true);
 c.tracks[\kick].flam([0,16],0.25,2);
 c.tracks[\kick].removeFlam([0,16]);
-k.kick(\master,0.01,0.1);
+k.kick(\master,0.01,0.5);
 k.toTrack([0,14,15,16], false);
 k.kick(\lpf,0.01,0.1);
 k.toTrack(Array.series(32,0,1));
@@ -48,6 +49,10 @@ c.tracks[\kick].removeFlam(8);
 k.kick(50,0.01,0.5);
 k.kick(\pitch,0.1,0.125);
 k.offTrack();
+c.repeater(\kick,[0,16],1);
+c.repeater(\kick,[0,16],4);
+c.tracks[\kick].repeater([4,18,20,22,24], 8, 1/2);
+c.tracks[\kick].repeater([4,18,20,22,24], 4, 1/4);
 
 h = g.new;
 h.hihats();
@@ -56,7 +61,7 @@ h.toTrack([0,4,8,12,16,20,24,28]+2, true);
 c.tracks[\hihats].flam([0,8,12,20,28]+2,0.5,2);
 c.tracks[\hihats].removeFlam([4,12,20,28]+2);
 h.hihats([\reverb],att:0.01,rel:0.75,amp1:1);
-h.hihats([\reverb,\grains],att:0.01,rel:0.05,amp1:1);
+h.hihats([\master,\reverb,\grains],att:0.01,rel:0.05,amp1:1);
 h.toTrack([0,4,8,12,16,20,24,28], false);
 h.offTrack();
 c.setSteps(\hihats);
@@ -65,7 +70,8 @@ t = g.new;
 t.snare();
 t.toTrack([0,8,16,24], true);
 t.snare(60);
-t.toTrack([6,22], true);
+t.snare(60,0.01,0.125,136,0.125,1,0.25,0.125,[0.12,-0.12]);
+t.toTrack(Array, true);
 t.offTrack();
 /// melodic synths
 c.freqAnalyzer(true);
@@ -125,13 +131,15 @@ i.toTrack();
 c.setSteps(\in);// opcion para agregar steps
 i.offTrack;
 
-c.autoFx(\hpf,true,\normal, Array.series(20,100,750), [0.5,0.35,0.5,0.75,0.9,1]);
+c.autoFx(\hpf,true,\slow, Array.series(20,100,750), [0.5,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\lpf,true,\normal, Array.series(15,1000,500), [0.15,0.25,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\bpf,true,\normal, Array.series(15,1000,500), [0.15,0.25,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\grains,true,\normal, [1,0.95,0.9,0.85],[1,0.95,0.9,0.85]);
 c.autoFx(\delay,true,\fast, [1,0.95,0.9,0.85]*0.1,[0.125,0.25,0.5,0.75,1]);
+c.autoFx(\pitch,true,\slow,[1.68,1.70,1.72,1.77,2]);
 
 c.bpm(20);
+c.randomTime(true, true, [126/2,126]);
 c.randomTime(true, true, [10,20,30,40,50,60,70,80,90,100]);
 c.randomTime(false, false, [10,20,30,40,50,60,70,80,90,100]);
 c.toggleMetric();
@@ -143,10 +151,11 @@ c.randPattern(\kick, density: 0.35, every: 4);
 // Congela la evolución, sin volver atrás
 c.stopRandPattern(\kick);
 // Fill de una vuelta y vuelve solo
-c.fill(\snare, density: 0.8);
+c.fill(\snare, density: 0.15);
 // Break de dos vueltas
 c.fill(\hihats, density: 0.6, loops: 2);
 //
+c.restorePattern(\kick);
 c.restorePattern(\snare);
 
 
@@ -158,18 +167,3 @@ c.version
 c.prPauseAutomations
 c.voices
 
-
-// ---------------------------------------------------------------
-// Qué observar (checklist de aceptación)
-// ---------------------------------------------------------------
-// [ ] kick: pares con timbre de kick(60) por HPF, impares con kick(62) por BPF
-// [ ] hihats alimentando HPF y BPF (out [60,62] escribe dos pares)
-// [ ] snare sólo en 6 y 22 (el segundo toTrack reemplaza)
-// [ ] pad sonando en 0 y 16: una voz nueva (nota siguiente) por trigger
-// [ ] lineIn en los steps encendidos (requiere entrada de audio)
-// [ ] autoFx(\hpf) y autoFx(\bpf) barriendo los buses 60-63
-//
-// Notas conocidas:
-// - i.offTrack sin argumentos saca la pista completa (desde v2.1.1).
-// - k.kick(50,...) al final no toca ningún paso: sólo define ~cbox_b para
-//   los próximos toTrack.

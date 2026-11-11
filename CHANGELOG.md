@@ -14,6 +14,12 @@
             - .repeater(\kick, [0, 4], repetitions:4, metric:1)
             - .removeRepeater(\kick, [0, 4])
             - .repeaterAt(\kick, 0)
+        - GUI
+            - Add dots to the steps to indicate repeater is on
+            - ctrl+click to add/remove repeater to the step
+        - Tests
+            - 500 assertions
+        
 
 - ### v2.6.7
     - Add playback probability per track
@@ -38,7 +44,7 @@
         - 450 assertions
 
 - ### v2.6.5
-    - Add Temporal random fill by loops 
+    - Add Temporary random fill by loops 
         - Restores previous pattern after X loops
         - .restorePattern overrides the fill
     - API
@@ -50,7 +56,6 @@
     - Add .restorePattern to restore previous sequence
         - .randPattern saves the previous pattern
         - restores gates and flams
-        - GUI
         - API
             - .restorePattern(track)
         - Tests:
@@ -58,12 +63,12 @@
 
 - ### v2.6.3
     - Implement Fill/Randomize per track 
-        - Add probabilistic randmization
+        - Add probabilistic randomization
         - every: regenerate every X loops of CaosSequencer
             - 32 steps default value
             - onLoop callback
         - density: per-step probability 0..1
-        - Desctructive
+        - Destructive
             - Replaces gates
             - flams are cleared
         - GUI
