@@ -6,10 +6,19 @@
 TestCaosBoxGUI : UnitTest {
 
 	var <gui;
+	var <savedTracks;
 
 	setUp {
 
 		gui = CaosBoxGUI.new;
+		savedTracks = ~cbox_tracks;
+
+	}
+
+	tearDown {
+
+		~cbox_tracks = savedTracks;
+		CaosTrack.clearSolos;
 
 	}
 
@@ -95,11 +104,65 @@ TestCaosBoxGUI : UnitTest {
 
 	}
 
+	test_muteAndSoloViewsAreRegistered {
+
+		var mute = CaosTestStateButton.new;
+		var solo = CaosTestStateButton.new;
+
+		gui.addMuteView(\kick, mute);
+		gui.addSoloView(\kick, solo);
+
+		this.assertEquals(gui.muteViews[\kick], mute, "the mute view is indexed");
+		this.assertEquals(gui.soloViews[\kick], solo, "the solo view is indexed");
+
+	}
+
+	test_trackStateChangedRefreshesMuteAndSolo {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { nil });
+		var mute = CaosTestStateButton.new;
+		var solo = CaosTestStateButton.new;
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		gui.addMuteView(\kick, mute);
+		gui.addSoloView(\kick, solo);
+
+		track.muted_(true);
+		track.solo_(true);
+		gui.trackStateChanged(\kick);
+		0.01.wait;
+
+		this.assertEquals(mute.value, 1, "the mute button follows the model");
+		this.assertEquals(solo.value, 1, "the solo button follows the model");
+
+		track.muted_(false);
+		track.solo_(false);
+		gui.trackStateChanged(\kick);
+		0.01.wait;
+
+		this.assertEquals(mute.value, 0, "the mute button clears");
+		this.assertEquals(solo.value, 0, "the solo button clears");
+
+	}
+
 	test_caosBoxGuiIsTheSameRegistry {
 
 		this.assert(CaosBox.gui === CaosBox.gui,
 			"CaosBox.gui devuelve siempre el mismo registro");
 
+	}
+
+}
+
+
+// Boton falso: solo guarda el valor, sin Qt ni ventana.
+CaosTestStateButton {
+
+	var <value;
+
+	value_ {|state|
+		value = state;
+		^this;
 	}
 
 }

@@ -18,6 +18,7 @@ TestCaosTrack : UnitTest {
 
 	tearDown {
 
+		CaosTrack.clearSolos;
 		currentValue = nil;
 		track = nil;
 
@@ -195,6 +196,170 @@ TestCaosTrack : UnitTest {
 		this.assert(track.flamAt(0).isNil);
 		this.assert(track.flamAt(1).isNil);
 		this.assert(track.flamAt(2).isNil);
+
+	}
+
+	// ------------------------------------------------------------------
+	// mute / solo
+	// ------------------------------------------------------------------
+
+	test_muteAndSoloDefaultOff {
+
+		track = CaosTrack.new(\bass);
+
+		this.assert(track.muted.not, "a new track is not muted");
+		this.assert(track.solo.not, "a new track is not soloed");
+		this.assert(track.isAudible, "a new track is audible");
+
+	}
+
+	test_mutedTrackIsNotAudible {
+
+		track = CaosTrack.new(\bass);
+
+		track.muted_(true);
+		this.assert(track.muted, "mute is stored");
+		this.assert(track.isAudible.not, "a muted track is not audible");
+
+		track.muted_(false);
+		this.assert(track.muted.not, "mute can be lifted");
+		this.assert(track.isAudible, "the track is audible again");
+
+	}
+
+	test_soloSilencesOtherTracksAndAllowsSeveral {
+
+		var first = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+		var second = CaosTrack.new(\snare, \snapshot, 4, { \fn });
+		var third = CaosTrack.new(\bass);
+
+		first.solo_(true);
+		this.assert(first.isAudible, "the soloed track is audible");
+		this.assert(second.isAudible.not, "another track is silenced");
+		this.assert(third.isAudible.not, "every other track is silenced");
+
+		second.solo_(true);
+		this.assert(first.isAudible and: { second.isAudible },
+			"several solos can coexist");
+		this.assert(third.isAudible.not, "the non soloed track stays silent");
+
+		second.solo_(false);
+		this.assert(first.isAudible, "the remaining solo keeps playing");
+		this.assert(second.isAudible.not, "lifting one solo silences that track");
+		this.assert(third.isAudible.not, "the rest stay silent while a solo exists");
+
+		first.solo_(false);
+		this.assert(third.isAudible, "without solos every track is audible");
+
+	}
+
+	test_clearSolosResetsTheFlags {
+
+		var first = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+		var second = CaosTrack.new(\snare, \snapshot, 4, { \fn });
+
+		first.solo_(true);
+		second.solo_(true);
+
+		CaosTrack.clearSolos;
+
+		this.assert(first.solo.not, "clearSolos clears the first flag");
+		this.assert(second.solo.not, "clearSolos clears the second flag");
+		this.assert(first.isAudible and: { second.isAudible },
+			"every track is audible again");
+
+	}
+
+	test_muteWinsOverSolo {
+
+		var soloed = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		soloed.solo_(true);
+		soloed.muted_(true);
+
+		this.assert(soloed.solo, "the track keeps its solo flag");
+		this.assert(soloed.muted, "the track keeps its mute flag");
+		this.assert(soloed.isAudible.not, "mute wins over solo");
+
+	}
+
+	test_mutedLiveStepAdvancesWithoutTriggering {
+
+		var voice = CaosTestVoice.new(\voice);
+
+		track = CaosTrack.new(\bass, \live, 4);
+		track.setInstrument(voice);
+		track.putStep(0, true);
+		track.muted_(true);
+
+		track.step(0);
+		this.assertEquals(voice.advances, 1,
+			"a muted melodic track still advances its line");
+		this.assertEquals(voice.triggers, 0,
+			"a muted melodic track does not trigger");
+
+		track.muted_(false);
+		track.step(0);
+		this.assertEquals(voice.advances, 2, "the line keeps advancing");
+		this.assertEquals(voice.triggers, 1, "the trigger comes back after unmute");
+
+	}
+
+	test_mutedPercussionDoesNotPlay {
+
+		var playable = CaosTestPlayable.new;
+
+		track = CaosTrack.new(\kick, \snapshot, 4, { playable });
+		track.putStep(0, true);
+		track.muted_(true);
+
+		track.step(0);
+		this.assertEquals(playable.plays, 0,
+			"a muted percussion step is not played");
+
+		track.muted_(false);
+		track.step(0);
+		this.assertEquals(playable.plays, 1,
+			"the percussion step plays after unmute");
+
+	}
+
+	test_soloStepPlaysOnlyTheSoloedTrack {
+
+		var playableA = CaosTestPlayable.new;
+		var playableB = CaosTestPlayable.new;
+		var first = CaosTrack.new(\kick, \snapshot, 4, { playableA });
+		var second = CaosTrack.new(\snare, \snapshot, 4, { playableB });
+
+		first.putStep(0, true);
+		second.putStep(0, true);
+		first.solo_(true);
+
+		first.step(0);
+		second.step(0);
+
+		this.assertEquals(playableA.plays, 1, "the soloed track plays");
+		this.assertEquals(playableB.plays, 0, "the other track stays silent");
+
+		first.solo_(false);
+		second.step(0);
+		this.assertEquals(playableB.plays, 1,
+			"the other track plays again when the solo is lifted");
+
+	}
+
+	test_nilResetsMuteAndSolo {
+
+		track = CaosTrack.new(\bass);
+
+		track.muted_(true);
+		track.muted_(nil);
+		track.solo_(true);
+		track.solo_(nil);
+
+		this.assert(track.muted.not, "nil lifts mute");
+		this.assert(track.solo.not, "nil lifts solo");
+		this.assert(track.isAudible, "the track is audible again");
 
 	}
 

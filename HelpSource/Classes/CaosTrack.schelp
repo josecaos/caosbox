@@ -12,6 +12,14 @@ list::
 ## code::\live::: stores only the gate and resolves the voice on trigger (melodic).
 ::
 
+classmethods::
+
+subsection:: Solo state
+
+method:: clearSolos
+Drops every active solo. The environment calls it when it builds new tracks so a
+fresh session never inherits the solos of the previous one.
+
 instancemethods::
 
 subsection:: API
@@ -56,6 +64,27 @@ t.flamAt(4); // (amount: 0.5, repeats: 1)
 method:: onFlamChange
 Callback code::{|track, index, value| ... }:: when a flam is added or removed;
 the GUI uses it to redraw the step dot.
+
+method:: muted
+Read-only state set by code::CaosBox.mute::. A muted track keeps its pattern and
+its melodic line advances, but it does not trigger or play percussion.
+code::
+CaosBox.mute(\kick, true);
+CaosBox.mute(\kick, false);
+::
+
+method:: solo
+Read-only state set by code::CaosBox.solo::. While at least one track is soloed,
+only the soloed tracks are audible. Several solos can coexist and mute wins over
+solo.
+code::
+CaosBox.solo(\bass, true);
+CaosBox.solo(\bass, false);
+::
+
+method:: isAudible
+The resolved state: not muted and either no solo is active or this track is one
+of the solos. Code::CaosTrack.step:: uses it before triggering.
 
 method:: setInstrument
 method:: releaseInstrument

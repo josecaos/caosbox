@@ -25,6 +25,8 @@ CaosBoxGUI {
 	var <colorListeners;
 	var <accentEntries;
 	var <routeViews;
+	var <muteViews;
+	var <soloViews;
 	var <analyzerWin;
 	var <freqView;
 	var <scopeView;
@@ -71,6 +73,8 @@ CaosBoxGUI {
 		colorListeners = List.new;
 		accentEntries = List.new;
 		routeViews = IdentityDictionary.new;
+		muteViews = IdentityDictionary.new;
+		soloViews = IdentityDictionary.new;
 
 		this.prUpdateDerived;
 
@@ -191,6 +195,37 @@ CaosBoxGUI {
 
 	}
 
+	addMuteView {|track, button|
+
+		muteViews.put(track, button);
+
+		^this;
+
+	}
+
+	addSoloView {|track, button|
+
+		soloViews.put(track, button);
+
+		^this;
+
+	}
+
+	trackStateChanged {|track|
+
+		var tr = CaosBox.tracks !? {|tracks| tracks[track]};
+
+		tr !? {|t|
+			{
+				muteViews[track] !? {|button| button.value_(if(t.muted, 1, 0)) };
+				soloViews[track] !? {|button| button.value_(if(t.solo, 1, 0)) };
+			}.defer;
+		};
+
+		^this;
+
+	}
+
 	playhead {|index|
 
 		{ stepGrids.do {|grid| grid.playhead_(index) } }.defer;
@@ -202,7 +237,7 @@ CaosBoxGUI {
 	// --- resize fluido del GUI principal --------------------------------
 
 	// guarda los rects de diseno y los escala con la ventana
-	makeResizable {|win, width = 1120, height = 860|
+	makeResizable {|win, width = 1180, height = 860|
 
 		designSize = Point(width, height);
 		resizeView = win.asView;

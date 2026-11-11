@@ -62,6 +62,28 @@ CaosBox.route(\bass, 52);
 CaosBox.route(\bass);
 ::
 
+subsection:: Mute and solo
+
+method:: mute
+Silences one track without clearing it or stopping its sequencer. The pattern is
+kept and a muted melodic line keeps advancing, but it does not trigger. A note
+that is already sounding is not cut; mute acts on the next trigger. Returns the
+new state.
+code::
+CaosBox.mute(\kick, true);
+CaosBox.mute(\kick, false);
+::
+
+method:: solo
+Makes one track the only audible one. Several tracks can be soloed at the same
+time. A muted track stays silent even when soloed (mute wins). As with mute, a
+note already sounding is not cut; solo acts on the next trigger. Returns the new
+state.
+code::
+CaosBox.solo(\bass, true);   // only the soloed tracks are heard
+CaosBox.solo(\bass, false);  // back to the full mix
+::
+
 subsection:: Analyzers and GUI
 
 method:: freqAnalyzer

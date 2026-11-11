@@ -47,6 +47,9 @@
 ~cbox_h2=nil;//hat2
 // Instruments (voices) registry: track -> CaosInstrument
 ~cbox_instruments = Dictionary.new;
+// Un entorno nuevo no hereda los solos del anterior: los CaosTrack son otros.
+CaosTrack.clearSolos;
+
 // Step patterns (model, see Classes/CaosTrack.sc):
 //   \snapshot stores the value resolved when the step is set (percussion)
 //   \live stores only the gate and resolves the instrument at trigger time

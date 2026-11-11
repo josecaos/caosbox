@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////
-// CaosBox v2.6.1 - The API session
+// CaosBox v2.6.2 - The API session
 //
 // Este es el código con el que josecaos toca el secuenciador desde el
 // intérprete. Se guarda aquí como documentación y como prueba de regresión
@@ -33,7 +33,8 @@ g.validChords(\chords2);
 k = g.new;
 k.kick();
 k.toTrack([0,4,8,12,16,20,24,28], true);
-c.tracks[\kick].flam([0,16],1);
+c.tracks[\kick].flam([0,16],0.25,2);
+c.tracks[\kick].removeFlam([0,16]);
 k.kick(\master,0.01,0.1);
 k.toTrack([0,14,15,16], false);
 k.kick(\lpf,0.01,0.1);
@@ -47,8 +48,9 @@ h = g.new;
 h.hihats();
 h.hihats(\master,0.01,0.1,9820,0.5,1,1,0.25);
 h.toTrack([0,4,8,12,16,20,24,28]+2, true);
-c.tracks[\hihats].flam([4,12,20,28]+2,0.5,4);
+c.tracks[\hihats].flam([0,8,12,20,28]+2,0.5,2);
 c.tracks[\hihats].removeFlam([4,12,20,28]+2);
+h.hihats([\reverb],att:0.01,rel:0.75,amp1:1);
 h.hihats([\reverb,\grains],att:0.01,rel:0.05,amp1:1);
 h.toTrack([0,4,8,12,16,20,24,28], false);
 h.offTrack();
@@ -67,7 +69,7 @@ m = g.new;
 x = m.melody(LCNE.dupOctave(Scale.minor.degrees, 3), 48);
 
 b = g.new;
-b.bass(\hpf,[60,60,60,63,60,60,60,67],seqType:\seq,att:0.25,rel:0.5,filtMaxFreq: 120,filtTime:0.25,amp1:0.25,amp2:0.025);
+b.bass(\hpf,[60,60,60,63,60,60,60,72],seqType:\seq,att:0.25,rel:0.5,filtMaxFreq: 120,filtTime:0.25,amp1:0.25,amp2:0.025);
 c.setSteps(\bass,Array.series(8,0,4));
 b.bass(\master,x,\seq);
 b.bass(\master,x/2,\rand,0.1,2,40,12920,0.01);

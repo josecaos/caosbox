@@ -151,6 +151,6 @@ StaticText(~cbox_w,Rect(882,689.24,222,13.4)).string_("Auto/Speed").font_(Font("
 //
 // una sola pasada: los verdes viejos siguen al acento global (play excluido)
 CaosBox.gui.themeLegacy(~cbox_w.asView);
-CaosBox.gui.makeResizable(~cbox_w, 1120, 860);
+CaosBox.gui.makeResizable(~cbox_w, 1180, 860);
 ~cbox_w.onClose={ CaosBox.close };// sin recompile: otras librerías siguen vivas
 );

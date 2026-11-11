@@ -17,6 +17,7 @@ CaosTrack {
 
 	classvar <defaultSize = 32;
 	classvar <modes = #[\snapshot, \live];
+	classvar <soloed;
 
 	var <name;
 	var <mode;
@@ -26,10 +27,18 @@ CaosTrack {
 	var <source;
 	var <>onChange;
 	var <>onFlamChange;
+	var <muted = false;
+	var <solo = false;
 	var <>instrument;        // voz activa de la pista
 	var <>out;               // ruta de salida (melodicos): nombre de bus del engine
 	var <>pendingInstrument; // reemplazo que entra en el siguiente trigger
 	var <>target;            // grupo destino de la percusion (funciones por step)
+
+	*initClass {
+
+		soloed = IdentitySet.new;
+
+	}
 
 	*new { |name, mode = \live, size, source|
 
@@ -222,6 +231,45 @@ CaosTrack {
 
 	}
 
+	// --- mute / solo -------------------------------------------------
+
+	muted_ {|state|
+
+		muted = state ? false;
+
+		^this;
+
+	}
+
+	solo_ {|state|
+
+		solo = state ? false;
+
+		if(solo, { soloed.add(this) }, { soloed.remove(this) });
+
+		^this;
+
+	}
+
+	isAudible {
+
+		^muted.not and: {
+			soloed.isEmpty or: { soloed.includes(this) }
+		};
+
+	}
+
+	*clearSolos {
+
+		var tracks = soloed.copy;
+
+		soloed = IdentitySet.new;
+		tracks.do {|track| track.solo_(false) };
+
+		^this;
+
+	}
+
 	// --- voz de la pista ---------------------------------------------
 
 	setInstrument { |newInstrument|
@@ -264,9 +312,9 @@ CaosTrack {
 		this.advance;
 
 		if(instrument.notNil, {
-			if(value.notNil, { this.trigger });
+			if(value.notNil and: { this.isAudible }, { this.trigger });
 		}, {
-			if(value.notNil and: { value.respondsTo(\play) }, {
+			if(value.notNil and: { this.isAudible } and: { value.respondsTo(\play) }, {
 				this.prPlayPercussion(value, index);
 			});
 		});

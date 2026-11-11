@@ -5,7 +5,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.6.1";
+	classvar <version = "2.6.2";
 	classvar guiRegistry;
 
 	// Register View
@@ -136,6 +136,36 @@ CaosBox {
 		this.gui.routeChanged(track, name);
 
 		^name;
+
+	}
+
+	*mute {|track, state = true|
+
+		var tr = this.tracks !? {|tracks| tracks[track]};
+
+		if(tr.isNil, {
+			^("CaosBox.mute: unknown track " ++ track).warn;
+		});
+
+		tr.muted_(state);
+		guiRegistry !? {|gui| gui.trackStateChanged(track) };
+
+		^tr.muted;
+
+	}
+
+	*solo {|track, state = true|
+
+		var tr = this.tracks !? {|tracks| tracks[track]};
+
+		if(tr.isNil, {
+			^("CaosBox.solo: unknown track " ++ track).warn;
+		});
+
+		tr.solo_(state);
+		guiRegistry !? {|gui| gui.trackStateChanged(track) };
+
+		^tr.solo;
 
 	}
 

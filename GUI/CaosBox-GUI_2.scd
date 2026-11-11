@@ -1,10 +1,12 @@
 (//CaosBox GUI file 2 - v2.3.5 - las 13 pistas del secuenciador
 //
 // Un solo builder para todas las filas: etiqueta, rejilla de steps, ruteo
-// (melodicos) o aviso de ruteo por step (percision) y boton de limpiar.
+// (melodicos) o aviso de ruteo por step (percision), boton de limpiar y
+// botones de mute/solo.
 // El orden del spec es el orden visual; CaosTrack sigue siendo el modelo.
 	var specs, gui, buses, busLabels;
 	var gridX = 80, gridW = 908, routeX = 994, routeW = 86, clearX = 1088;
+	var muteX = 1112, soloX = 1132, muteSoloW = 16;
 	var rowH = 29, top = 16, gridH = 27;
 
 	specs = [
@@ -30,7 +32,7 @@
 	specs.do {|spec, row|
 		var y = top + (row * rowH);
 		var track = CaosBox.tracks[spec[\name]];
-		var label, grid, route, clear;
+		var label, grid, route, clear, mute, solo;
 
 		label = StaticText(~cbox_w, Rect(16, y + 4, 60, 15))
 			.string_(spec[\label])
@@ -65,9 +67,36 @@
 					CaosBox.clearSteps(spec[\name]);
 				});
 			});
+
+		mute = Button(~cbox_w, Rect(muteX, y + 6, muteSoloW, 16))
+			.states_([
+				["M", gui.muted, gui.panel],
+				["M", gui.accentText, gui.accent]
+			])
+			.toolTip_("Mute this track")
+			.action_({|button| CaosBox.mute(spec[\name], button.value == 1) });
+		mute.value_(if(track.muted, 1, 0));
+		gui.addMuteView(spec[\name], mute);
+
+		solo = Button(~cbox_w, Rect(soloX, y + 6, muteSoloW, 16))
+			.states_([
+				["S", gui.muted, gui.panel],
+				["S", gui.accentText, gui.accent]
+			])
+			.toolTip_("Solo this track")
+			.action_({|button| CaosBox.solo(spec[\name], button.value == 1) });
+		solo.value_(if(track.solo, 1, 0));
+		gui.addSoloView(spec[\name], solo);
+
 		gui.addColorListener({|g|
 			clear !? {|bot|
 				bot.states = [["×", Color(0.85, 0.35, 0.35), g.panel]];
+			};
+			mute !? {|bot|
+				bot.states = [["M", g.muted, g.panel], ["M", g.accentText, g.accent]];
+			};
+			solo !? {|bot|
+				bot.states = [["S", g.muted, g.panel], ["S", g.accentText, g.accent]];
 			};
 		});
 	};

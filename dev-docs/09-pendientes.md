@@ -50,9 +50,11 @@
 
 ## 6. Backlog nuevo de GUI
 
-- [ ] **Flam por step** (TU TODO): marca en el step + segundo disparo corto; va después
-      de la GUI.
-- [ ] Mute/solo por pista.
+- [x] **Flam por step**: marca en el step + segundo disparo corto; cerrado en v2.6.1.
+- [x] Mute/solo por pista: cerrado en v2.6.2 (ver `12-mute-solo-v2.6.2.md`).
+- [ ] **Fill/randomize por pista**: botón generativo/destructivo para performance; va
+      antes de la segunda pasada de API/GUI.
+- [ ] Probabilidad por pista (100/75/50/25) sin alterar el patrón.
 - [ ] Scroll y navegación por teclado en el bloque de pistas.
 - [ ] Ruteo por step en percusión (si se quiere más allá del snapshot actual).
 - [ ] Resize: hoy es escalado proporcional y las fuentes no escalan; evaluar breakpoints
@@ -69,7 +71,7 @@
 
 ```bash
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_check_ext.scd      # compila
-HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 286 aserciones
+HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 398 aserciones
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_syntax3.scd        # 14 .scd
 ```
 

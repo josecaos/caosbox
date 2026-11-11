@@ -3,14 +3,28 @@
 
 ---
 ### TODOs:
-- Melodic instruments should support an array in Out routing (Like persussion instruments).
-- Mute/solo per track: two small buttons—very useful for live performance, and they don't interfere with routing. This requires a "muted" state in the model, where the sequencer skips the trigger (for melodic parts, it’s better to keep the sequence advancing).
 - Probability (100/75/50/25) per track: allows for variation without altering the pattern itself—a great feature.
 - Fill/randomize track: generative and destructive—ideal for a performance button.
 ---
 
 # Changelog
 
+- ### v2.6.2
+    - Implement Mute/Solo per track
+        - GUI
+            - Add 60px to the main window
+            - Update .makeResizable to the new width
+            - Add two buttons to each track
+            - .clearSolos before create tracks
+        - API
+            - .mute(instrument, true/false)
+            - .solo(instrument, true/false)
+            - .isAudible 
+        - Various solos at the same time
+        - Mute over solo: if a track is muted, soloing it has no effect
+        - Tests
+            - 392 assertions
+        
 - ### v2.6.1
     - Implement "Flam" for percussion instruments
         - Create API: 
