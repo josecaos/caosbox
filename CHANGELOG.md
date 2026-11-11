@@ -3,11 +3,20 @@
 
 ---
 ### TODOs:
-- Fill Back to previous pattern
 - GUI button for randPattern
 ---
 
 # Changelog 
+
+- ### v2.6.5
+    - Add Temporal random by loops 
+        - Restores previous pattern after X loops
+        - .restorePattern overrides the fill
+    - GUI
+    - API
+        - .fill(track, density, loops)
+    - Tests:
+        - 443 assertions
 
 - ### v2.6.4
     - Add .restorePattern to restore previous sequence

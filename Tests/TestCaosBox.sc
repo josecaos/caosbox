@@ -7,10 +7,12 @@ TestCaosBox : UnitTest {
 
 	var <automationNames;
 	var <savedTracks;
+	var <savedSeq;
 
 	setUp {
 
 		savedTracks = ~cbox_tracks;
+		savedSeq = ~cbox_seq;
 		automationNames = #[\autor, \autod, \autop, \autog, \autolpf, \autohpf, \autobpf];
 
 		// Tdefs de prueba con los mismos nombres que usa CaosBox
@@ -26,6 +28,7 @@ TestCaosBox : UnitTest {
 		CaosTrack.clearSolos;
 		CaosBox.prClearRandPatterns;
 		~cbox_tracks = savedTracks;
+		~cbox_seq = savedSeq;
 
 	}
 
@@ -210,6 +213,131 @@ TestCaosBox : UnitTest {
 
 		this.assertEquals(track.indices, [1],
 			"without history the current pattern is untouched");
+
+	}
+
+	test_fillRestoresAfterOneLoop {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.setIndices([0]);
+
+		CaosBox.fill(\kick, density: 1);
+		this.assertEquals(track.indices, (0 .. 3),
+			"fill replaces the pattern immediately");
+
+		CaosBox.prRandPatternLoop(nil);
+
+		this.assertEquals(track.indices, [0],
+			"the base pattern returns after one loop");
+
+	}
+
+	test_fillSpansSeveralLoops {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.setIndices([0]);
+
+		CaosBox.fill(\kick, density: 1, loops: 2);
+
+		CaosBox.prRandPatternLoop(nil);
+		this.assertEquals(track.indices, (0 .. 3),
+			"the fill survives the first loop");
+
+		CaosBox.prRandPatternLoop(nil);
+		this.assertEquals(track.indices, [0],
+			"the base pattern returns after the second loop");
+
+	}
+
+	test_restorePatternCancelsFill {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.setIndices([0]);
+
+		CaosBox.fill(\kick, density: 1, loops: 4);
+		CaosBox.restorePattern(\kick);
+
+		this.assertEquals(track.indices, [0],
+			"restorePattern ends the fill immediately");
+
+		CaosBox.prRandPatternLoop(nil);
+		this.assertEquals(track.indices, [0],
+			"the cancelled fill does not restore again");
+
+	}
+
+	test_randPatternCancelsFillWithItsBase {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.setIndices([0]);
+
+		CaosBox.fill(\kick, density: 0, loops: 4);
+		CaosBox.randPattern(\kick, density: 1);
+		CaosBox.restorePattern(\kick);
+
+		this.assertEquals(track.indices, [0],
+			"a new random pattern keeps the fill base as its history");
+
+	}
+
+	test_fillCountsFullLoopsFromTheNextBoundary {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		~cbox_seq = (index: 2);// a mitad de vuelta
+		track.setIndices([0]);
+
+		CaosBox.fill(\kick, density: 1, loops: 1);
+
+		CaosBox.prRandPatternLoop(nil);// cierra la vuelta parcial
+		this.assertEquals(track.indices, (0 .. 3),
+			"the partial loop does not consume the fill");
+
+		CaosBox.prRandPatternLoop(nil);// primera vuelta completa
+		this.assertEquals(track.indices, [0],
+			"the base returns after a complete loop");
+
+	}
+
+	test_fillStopsThePeriodicEvolution {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.setIndices([0]);
+
+		CaosBox.randPattern(\kick, density: 1, every: 1);
+		track.setIndices([0]);
+		CaosBox.fill(\kick, density: 1, loops: 1);
+
+		CaosBox.prRandPatternLoop(nil);
+		CaosBox.prRandPatternLoop(nil);
+
+		this.assertEquals(track.indices, [0],
+			"the periodic randPattern is stopped during the fill");
+
+	}
+
+	test_fillValidatesItsLoops {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.setIndices([0]);
+
+		CaosBox.fill(\kick, density: 1, loops: 0);
+
+		this.assertEquals(track.indices, [0],
+			"an invalid loop count leaves the pattern untouched");
 
 	}
 

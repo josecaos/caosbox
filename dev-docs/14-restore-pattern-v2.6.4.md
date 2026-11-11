@@ -73,6 +73,7 @@ CaosBox.restorePattern(\kick);
 
 ## 6. Pendiente
 
-* Fill temporal automático por `loops`, reutilizando este snapshot.
+* El fill temporal por `loops` se implementó en v2.6.5 reutilizando este
+  snapshot; ver `15-fill-v2.6.5.md`.
 * Botón de GUI para randomize/restore.
 * El undo es de un nivel; no hay historial profundo ni redo.

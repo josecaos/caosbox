@@ -79,8 +79,9 @@ are untouched. On percussion tracks the whole pattern is replaced, so its flams
 are cleared too. Before changing the track, the current gates and flams are saved
 as a one-level history for code::restorePattern::. Periodic regenerations do not
 overwrite that saved pattern. A one-shot call does not cancel an evolution
-already running; use code::stopRandPattern:: for that. Returns the
-link::Classes/CaosTrack::. The old code::randSteps:: remains available for an
+already running; use code::stopRandPattern:: for that. A manual random pattern
+also cancels an active code::fill::, using the fill base as its history. Returns
+the link::Classes/CaosTrack::. The old code::randSteps:: remains available for an
 exact number of steps.
 
 method:: stopRandPattern
@@ -93,11 +94,28 @@ method:: restorePattern
 Restores the gates and flams that were on the track immediately before the last
 code::randPattern:: call. It is a one-level undo: the history is consumed and the
 periodic evolution, if any, is stopped so the next loop cannot overwrite the
-restored pattern. Returns the link::Classes/CaosTrack::.
+restored pattern. It also cancels an active code::fill::. Returns the
+link::Classes/CaosTrack::.
 code::
 CaosBox.randPattern(\kick, density: 0.25);
 CaosBox.restorePattern(\kick);
 ::
+
+method:: fill
+Applies a temporary random pattern and restores the gates and flams that were
+there when code::fill:: was called, after code::loops:: complete loops of the
+sequencer. The default is one loop. If it is called halfway through a loop, that
+partial loop is finished first and then the complete loops are counted.
+code::
+CaosBox.fill(\kick, density: 0.75);
+CaosBox.fill(\kick, density: 0.75, loops: 2);
+::
+code::fill:: applies the random pattern immediately. It stops a periodic
+code::randPattern:: so the evolution cannot overwrite the fill, and only one fill
+can be active per track. code::restorePattern:: ends it early; otherwise the
+base pattern returns automatically. Returns the link::Classes/CaosTrack::. If
+the sequencer is not running, the fill stays until it starts looping or until
+code::restorePattern:: is called.
 
 subsection:: Mute and solo
 

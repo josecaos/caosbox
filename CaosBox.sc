@@ -5,15 +5,17 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.6.4";
+	classvar <version = "2.6.5";
 	classvar guiRegistry;
 	classvar randPatterns;
 	classvar lastPatterns;
+	classvar fills;
 
 	*initClass {
 
 		randPatterns = IdentityDictionary.new;
 		lastPatterns = IdentityDictionary.new;
+		fills = IdentityDictionary.new;
 
 	}
 
@@ -192,6 +194,8 @@ CaosBox {
 	// secuenciador, asi respeta pause/stop/randomTime.
 	*prRandPatternLoop {|seq|
 
+		fills.keys.asArray.do {|track| this.prFillTick(track) };
+
 		randPatterns.keys.asArray.do {|track|
 			var config = randPatterns[track];
 			var tr = this.tracks !? {|tracks| tracks[track]};
@@ -211,10 +215,38 @@ CaosBox {
 
 	}
 
+	*prFillTick {|track|
+
+		var config = fills[track];
+		var tr = this.tracks !? {|tracks| tracks[track]};
+
+		if(tr.isNil, {
+			fills.removeAt(track);
+			lastPatterns.removeAt(track);
+		}, {
+			if(config[\armed], {
+				config[\count] = config[\count] + 1;
+				if(config[\count] >= config[\loops], {
+					fills.removeAt(track);
+					lastPatterns.removeAt(track);
+					tr.restorePattern(config[\snapshot]);
+				});
+			}, {
+				// La llamada cayo a mitad de vuelta: cerramos esa vuelta
+				// parcial sin contarla y empezamos a contar en la siguiente.
+				config[\armed] = true;
+			});
+		});
+
+		^this;
+
+	}
+
 	*prClearRandPatterns {
 
 		randPatterns = IdentityDictionary.new;
 		lastPatterns = IdentityDictionary.new;
+		fills = IdentityDictionary.new;
 
 		^this;
 
@@ -595,6 +627,7 @@ CaosBox {
 	*randPattern {|track, density = 0.5, every|
 
 		var tr = this.tracks !? {|tracks| tracks[track]};
+		var fill;
 
 		if(tr.isNil, {
 			^("CaosBox.randPattern: unknown track " ++ track).warn;
@@ -610,7 +643,14 @@ CaosBox {
 			^("CaosBox.randPattern: every must be a positive integer or nil").warn;
 		});
 
-		lastPatterns[track] = tr.snapshotPattern;
+		// Un randPattern manual cancela el fill y conserva su base como historial.
+		fill = fills.removeAt(track);
+		if(fill.notNil, {
+			lastPatterns[track] = fill[\snapshot];
+		}, {
+			lastPatterns[track] = tr.snapshotPattern;
+		});
+
 		this.prApplyRandPattern(track, density);
 
 		if(every.notNil, {
@@ -652,8 +692,42 @@ CaosBox {
 			^("CaosBox.restorePattern: no previous pattern for " ++ track).warn;
 		});
 
+		fills.removeAt(track);
 		randPatterns.removeAt(track);
 		tr.restorePattern(snapshot);
+
+		^tr;
+
+	}
+
+	// Aplica un random temporal y lo restaura al cerrar `loops` vueltas.
+	// Detiene la evolucion periodica de randPattern para que no lo pise.
+	*fill {|track, density = 0.5, loops = 1|
+
+		var tr = this.tracks !? {|tracks| tracks[track]};
+		var armed = true;
+
+		if(tr.isNil, {
+			^("CaosBox.fill: unknown track " ++ track).warn;
+		});
+
+		if(density.isNumber.not or: { density < 0 } or: { density > 1 }, {
+			^("CaosBox.fill: density must be between 0 and 1").warn;
+		});
+
+		if(loops.isInteger.not or: { loops < 1 }, {
+			^("CaosBox.fill: loops must be a positive integer").warn;
+		});
+
+		if(fills[track].notNil, {
+			^("CaosBox.fill: a fill is already active for " ++ track).warn;
+		});
+
+		randPatterns.removeAt(track);
+		~cbox_seq !? {|seq| armed = seq.index == 0 };
+		lastPatterns[track] = tr.snapshotPattern;
+		this.prApplyRandPattern(track, density);
+		fills[track] = (snapshot: lastPatterns[track], loops: loops, count: 0, armed: armed);
 
 		^tr;
 
