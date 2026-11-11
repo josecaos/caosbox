@@ -22,8 +22,10 @@ CaosTrack {
 	var <mode;
 	var <size;
 	var <steps;
+	var <flams;
 	var <source;
 	var <>onChange;
+	var <>onFlamChange;
 	var <>instrument;        // voz activa de la pista
 	var <>out;               // ruta de salida (melodicos): nombre de bus del engine
 	var <>pendingInstrument; // reemplazo que entra en el siguiente trigger
@@ -51,6 +53,7 @@ CaosTrack {
 		});
 
 		steps = Array.fill(size, nil);
+		flams = Array.fill(size, nil);
 
 		^this;
 
@@ -113,6 +116,7 @@ CaosTrack {
 
 		if(this.isValidIndex(index), {
 			steps[index] = value;
+			if(value.isNil) { flams[index] = nil };
 			this.prChanged(index, value);
 		});
 
@@ -130,6 +134,59 @@ CaosTrack {
 		});
 
 		^this;
+
+	}
+
+	// El flam solo aplica a percusión (modo snapshot).
+	// amount: apertura 0..1; repeats: golpes extra 1..4.
+	flam {|stepsToMark, amount = 0.5, repeats = 1|
+
+		var indices = (stepsToMark ? []).asArray;
+
+		if(mode != \snapshot, {
+			"CaosTrack: flam only applies to percussion tracks".warn;
+			^this;
+		});
+
+		if(amount.isNumber.not or: { amount < 0 } or: { amount > 1 }, {
+			"CaosTrack: flam amount must be a number between 0 and 1".warn;
+			^this;
+		});
+
+		if(repeats.isInteger.not or: { repeats < 1 } or: { repeats > 4 }, {
+			"CaosTrack: flam repeats must be an integer between 1 and 4".warn;
+			^this;
+		});
+
+		indices.do {|index|
+			if(this.isValidIndex(index), {
+				flams[index] = (amount: amount, repeats: repeats);
+				this.prFlamChanged(index, flams[index]);
+			});
+		};
+
+		^this;
+
+	}
+
+	removeFlam {|stepsToRemove|
+
+		var indices = (stepsToRemove ? []).asArray;
+
+		indices.do {|index|
+			if(this.isValidIndex(index), {
+				flams[index] = nil;
+				this.prFlamChanged(index, nil);
+			});
+		};
+
+		^this;
+
+	}
+
+	flamAt {|index|
+
+		^if(this.isValidIndex(index)) { flams[index] };
 
 	}
 
@@ -210,7 +267,7 @@ CaosTrack {
 			if(value.notNil, { this.trigger });
 		}, {
 			if(value.notNil and: { value.respondsTo(\play) }, {
-				if(target.notNil, { value.play(target) }, { value.play });
+				this.prPlayPercussion(value, index);
 			});
 		});
 
@@ -243,6 +300,33 @@ CaosTrack {
 
 	// --- internals ---------------------------------------------------
 
+	prPlayPercussion {|value, index|
+
+		var flam = flams[index];
+
+		this.prPlayValue(value);
+
+		if(flam.notNil, {
+			flam[\repeats].do {|i|
+				TempoClock.default.sched(
+					(i + 1) * flam[\amount] * 0.0625,
+					{ this.prPlayValue(value) }
+				);
+			};
+		});
+
+		^this;
+
+	}
+
+	prPlayValue {|value|
+
+		if(target.notNil, { value.play(target) }, { value.play });
+
+		^this;
+
+	}
+
 	prStepValue {
 
 		^if(mode == \snapshot, { source.value }, { true });
@@ -252,6 +336,12 @@ CaosTrack {
 	prChanged { |index, value|
 
 		if(onChange.notNil, { onChange.value(this, index, value) });
+
+	}
+
+	prFlamChanged { |index, value|
+
+		if(onFlamChange.notNil, { onFlamChange.value(this, index, value) });
 
 	}
 

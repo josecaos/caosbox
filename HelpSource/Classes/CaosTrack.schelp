@@ -29,6 +29,34 @@ t.clear(4);
 t.step(0);
 ::
 
+method:: flam
+Adds a flam to one or more percussion steps. Only valid for code::\snapshot::
+tracks.
+code::
+t.flam(4);                    // amount 0.5, one extra hit
+t.flam(4, 0.25, 2);           // two extra hits
+t.flam([0, 4, 8], 0.5, 1);    // several steps
+::
+code::amount:: is the opening between hits (0..1) and code::repeats:: is the
+number of extra hits (1..4). The hits are scheduled in tempo-relative time.
+
+method:: removeFlam
+Removes the flam from one or more steps.
+code::
+t.removeFlam(4);
+t.removeFlam([0, 4, 8]);
+::
+
+method:: flamAt
+Returns the flam event for a step, or code::nil::.
+code::
+t.flamAt(4); // (amount: 0.5, repeats: 1)
+::
+
+method:: onFlamChange
+Callback code::{|track, index, value| ... }:: when a flam is added or removed;
+the GUI uses it to redraw the step dot.
+
 method:: setInstrument
 method:: releaseInstrument
 The first voice enters immediately; a replacement stays pending until the next

@@ -134,6 +134,84 @@ TestCaosTrack : UnitTest {
 	// writing
 	// ------------------------------------------------------------------
 
+	test_flamStoresAmountAndRepeats {
+
+		track = this.prSnapshot(\snare);
+
+		track.flam(4, 0.25, 2);
+		this.assertEquals(track.flamAt(4)[\amount], 0.25);
+		this.assertEquals(track.flamAt(4)[\repeats], 2);
+
+	}
+
+	test_flamAcceptsArraysAndRemoval {
+
+		track = this.prSnapshot(\snare);
+
+		track.flam([0, 4, 8], 0.5, 1);
+		this.assert(track.flamAt(0).notNil);
+		this.assert(track.flamAt(4).notNil);
+		this.assert(track.flamAt(8).notNil);
+
+		track.removeFlam([4, 8]);
+		this.assert(track.flamAt(0).notNil);
+		this.assert(track.flamAt(4).isNil);
+		this.assert(track.flamAt(8).isNil);
+
+	}
+
+	test_flamChangeCallback {
+
+		var changes = 0;
+
+		track = this.prSnapshot(\snare);
+		track.onFlamChange = {|track, index, value| changes = changes + 1 };
+
+		track.flam(0, 0.5, 1);
+		track.removeFlam(0);
+
+		this.assertEquals(changes, 2,
+			"flam and removeFlam notify the view");
+
+	}
+
+	test_flamOnlyForSnapshotTracks {
+
+		track = CaosTrack.new(\bass, \live);
+
+		track.flam(0, 0.5, 1);
+		this.assert(track.flamAt(0).isNil,
+			"melodic tracks do not accept flams");
+
+	}
+
+	test_flamValidatesItsRange {
+
+		track = this.prSnapshot(\snare);
+
+		track.flam(0, 1.5, 1);
+		track.flam(1, 0.5, 0);
+		track.flam(2, 0.5, 5);
+		this.assert(track.flamAt(0).isNil);
+		this.assert(track.flamAt(1).isNil);
+		this.assert(track.flamAt(2).isNil);
+
+	}
+
+	test_clearingAStepClearsItsFlam {
+
+		track = this.prSnapshot(\snare);
+
+		track.putStep(4, true);
+		track.flam(4, 0.5, 1);
+		track.putStep(4, false);
+
+		this.assert(track.at(4).isNil);
+		this.assert(track.flamAt(4).isNil,
+			"clearing a step also clears its flam");
+
+	}
+
 	test_putStepAcceptsNumbers {
 
 		track = CaosTrack.new(\bass);

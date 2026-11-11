@@ -4,14 +4,28 @@
 ---
 ### TODOs:
 - Melodic instruments should support an array in Out routing (Like persussion instruments).
-- "Flam" for percussion:
-    - Applied per step, not per track: shift-click (or right-click) marks the step with a small dot; the sequencer then triggers the function twice with a short delay (e.g., 1/64 to 1/32 of a beat).
 - Mute/solo per track: two small buttons—very useful for live performance, and they don't interfere with routing. This requires a "muted" state in the model, where the sequencer skips the trigger (for melodic parts, it’s better to keep the sequence advancing).
 - Probability (100/75/50/25) per track: allows for variation without altering the pattern itself—a great feature.
 - Fill/randomize track: generative and destructive—ideal for a performance button.
 ---
 
 # Changelog
+
+- ### v2.6.1
+    - Implement "Flam" for percussion instruments
+        - Create API: 
+            - .flam(steps, amount, repeats)
+            - .removeFlam(steps)
+            - .flamAt and .onFlamChange
+            - .setSteps and .clear removes flam from the steps
+        - Applied per step
+        - GUI
+            - Apply to CaosStepGrid
+            - Shift-click / right-click flams the step 
+            - Small dot in upper right corner of the step to indicate flam is on
+        - Tests
+            - TestCaosTrack updated with flam tests
+            - 350 assertions
 
 - ### v2.6.0
     - CaosGear, CaosInstrument

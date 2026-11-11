@@ -22,6 +22,8 @@ CaosStepGrid {
 	var <gui;
 	var <playhead;
 	var paintValue, lastIndex;
+	var <>flamAmount = 0.5;
+	var <>flamRepeats = 1;
 
 	*new {|parent, bounds, track, gui|
 
@@ -37,7 +39,7 @@ CaosStepGrid {
 		view = UserView(argParent, argBounds);
 		view.background_(gui.background);
 		view.drawFunc_({ this.draw });
-		view.mouseDownAction_({|v, x, y, mods, button, clicks| this.mouseDown(x, y) });
+		view.mouseDownAction_({|v, x, y, mods, button, clicks| this.mouseDown(x, y, mods, button) });
 		view.mouseMoveAction_({|v, x, y, mods| this.mouseMove(x, y) });
 		view.mouseUpAction_({|v, x, y, mods, button| this.mouseUp });
 		view.onResize_({|v| v.refresh });
@@ -46,6 +48,7 @@ CaosStepGrid {
 
 		if (track.notNil, {
 			track.onChange = {|t, i, value| { this.refresh }.defer };
+			track.onFlamChange = {|t, i, value| { this.refresh }.defer };
 		});
 
 		^this;
@@ -134,6 +137,7 @@ CaosStepGrid {
 				this.class.cellRect(i, width, height, cells),
 				i,
 				track.at(i).notNil,
+				track.flamAt(i).notNil,
 				bounds
 			);
 		};
@@ -142,7 +146,7 @@ CaosStepGrid {
 
 	}
 
-	prDrawCell {|rect, index, isOn, bounds|
+	prDrawCell {|rect, index, isOn, isFlam, bounds|
 
 		if (playhead == index, {
 			Pen.fillColor = Color(gui.accent.red, gui.accent.green, gui.accent.blue, 0.12);
@@ -167,20 +171,38 @@ CaosStepGrid {
 			Pen.stroke;
 		});
 
+		if (isFlam, {
+			Pen.fillColor = if(isOn, { gui.accentText }, { gui.muted });
+			Pen.addOval(Rect(rect.right - 9, rect.top + 3, 6, 6));
+			Pen.fill;
+		});
+
 		^this;
 
 	}
 
 	// --- pintar arrastrando ---------------------------------------------
 
-	mouseDown {|x, y|
+	mouseDown {|x, y, mods, button|
 
 		var index = this.class.indexAt(x, view.bounds.width, this.cells);
+		var shift = mods.notNil and: { mods.isShift };
+		var secondary = button.notNil and: { button != 0 };
 
 		if (index.notNil, {
-			paintValue = track.at(index).isNil;
-			lastIndex = index;
-			track.putStep(index, paintValue);
+			if(track.mode == \snapshot and: { shift or: { secondary } }, {
+				// shift-click / right-click: toggle flam, do not paint
+				if(track.flamAt(index).notNil, {
+					track.removeFlam(index);
+				}, {
+					track.flam(index, flamAmount, flamRepeats);
+				});
+				lastIndex = nil;
+			}, {
+				paintValue = track.at(index).isNil;
+				lastIndex = index;
+				track.putStep(index, paintValue);
+			});
 		});
 
 		^this;
