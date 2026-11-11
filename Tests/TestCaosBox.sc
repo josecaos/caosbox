@@ -255,6 +255,38 @@ TestCaosBox : UnitTest {
 
 	}
 
+	test_repeaterApi {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+
+		this.assertEquals(CaosBox.repeater(\kick, [0, 2], 4, 1/2), track,
+			"repeater returns the track");
+		this.assertEquals(CaosBox.repeaterAt(\kick, 0)[\repetitions], 4);
+		this.assertEquals(CaosBox.repeaterAt(\kick, 0)[\metric], 0.5);
+
+		CaosBox.removeRepeater(\kick, [0, 2]);
+
+		this.assert(CaosBox.repeaterAt(\kick, 0).isNil,
+			"removeRepeater clears the marks");
+
+	}
+
+	test_repeaterValidatesMetricAndRepetitions {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+
+		CaosBox.repeater(\kick, [0], 4, 0.37);
+		CaosBox.repeater(\kick, [0], 17, 1);
+
+		this.assert(CaosBox.repeaterAt(\kick, 0).isNil,
+			"invalid arguments leave the step unmarked");
+
+	}
+
 	test_patternHistoryTracksRandomAndFill {
 
 		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });

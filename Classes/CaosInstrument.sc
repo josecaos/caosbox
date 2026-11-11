@@ -185,6 +185,20 @@ CaosInstrument {
 
 	}
 
+	// Repite la nota y el timbre actuales sin avanzar la secuencia ni el
+	// defStream. Fuerza una voz nueva aunque el instrumento sea legato.
+	retriggerCurrent {
+
+		if(kind == \function, { ^this.prTriggerFunction });
+
+		if(oneShot.not) { this.release };
+		nodeID = output.nextNodeID;
+		output.sendBundle(nil, this.prNewMsg);
+
+		^this;
+
+	}
+
 	set { |...args|
 
 		if(args.size.odd, {

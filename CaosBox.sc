@@ -5,7 +5,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.6.7";
+	classvar <version = "2.6.8";
 	classvar guiRegistry;
 	classvar randPatterns;
 	classvar lastPatterns;
@@ -224,6 +224,56 @@ CaosBox {
 		this.prProbabilityChanged(track);
 
 		^tr.probability;
+
+	}
+
+	// Repeater por step: `repetitions` son golpes extra y `metric` es la
+	// fraccion del step donde caen (1, 1/2, 1/3, 1/4 o 1/8).
+	*repeater {|track, steps, repetitions = 1, metric = 1|
+
+		var tr = this.tracks !? {|tracks| tracks[track]};
+
+		if(tr.isNil, {
+			^("CaosBox.repeater: unknown track " ++ track).warn;
+		});
+
+		if(repetitions.isInteger.not or: { repetitions < 0 } or: { repetitions > 16 }, {
+			^("CaosBox.repeater: repetitions must be an integer between 0 and 16").warn;
+		});
+
+		if(CaosTrack.isValidRepeaterMetric(metric).not, {
+			^("CaosBox.repeater: metric must be 1, 1/2, 1/3, 1/4 or 1/8").warn;
+		});
+
+		tr.repeater(steps, repetitions, metric);
+
+		^tr;
+
+	}
+
+	*removeRepeater {|track, steps|
+
+		var tr = this.tracks !? {|tracks| tracks[track]};
+
+		if(tr.isNil, {
+			^("CaosBox.removeRepeater: unknown track " ++ track).warn;
+		});
+
+		tr.removeRepeater(steps);
+
+		^tr;
+
+	}
+
+	*repeaterAt {|track, index|
+
+		var tr = this.tracks !? {|tracks| tracks[track]};
+
+		if(tr.isNil, {
+			^("CaosBox.repeaterAt: unknown track " ++ track).warn;
+		});
+
+		^tr.repeaterAt(index);
 
 	}
 

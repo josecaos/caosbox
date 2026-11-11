@@ -18,15 +18,18 @@ CaosTrack {
 	classvar <defaultSize = 32;
 	classvar <modes = #[\snapshot, \live];
 	classvar <soloed;
+	classvar <repeaterMetrics;
 
 	var <name;
 	var <mode;
 	var <size;
 	var <steps;
 	var <flams;
+	var <repeaters;
 	var <source;
 	var <>onChange;
 	var <>onFlamChange;
+	var <>onRepeaterChange;
 	var <muted = false;
 	var <solo = false;
 	var <probability = 1.0;
@@ -38,6 +41,7 @@ CaosTrack {
 	*initClass {
 
 		soloed = IdentitySet.new;
+		repeaterMetrics = [1, 1/2, 1/3, 1/4, 1/8];
 
 	}
 
@@ -65,6 +69,23 @@ CaosTrack {
 
 	}
 
+	*isValidRepeaterMetric {|metric|
+
+		^repeaterMetrics.any {|valid| (valid - metric).abs < 0.0001 };
+
+	}
+
+	// Intervalos de las repeticiones extra; la ultima cae al final de la ventana.
+	*repeaterIntervals {|repetitions = 1, metric = 1, stepDur = 0.25|
+
+		var total = repetitions.asInteger;
+
+		if(total <= 0, { ^[] });
+
+		^(1 .. total).collect {|i| i * metric * stepDur / total };
+
+	}
+
 	init { |argName, argMode, argSize, argSource|
 
 		name = argName.asSymbol;
@@ -82,6 +103,7 @@ CaosTrack {
 
 		steps = Array.fill(size, nil);
 		flams = Array.fill(size, nil);
+		repeaters = Array.fill(size, nil);
 
 		^this;
 
@@ -144,7 +166,10 @@ CaosTrack {
 
 		if(this.isValidIndex(index), {
 			steps[index] = value;
-			if(value.isNil) { flams[index] = nil };
+			if(value.isNil) {
+				flams[index] = nil;
+				repeaters[index] = nil;
+			};
 			this.prChanged(index, value);
 		});
 
@@ -188,6 +213,10 @@ CaosTrack {
 
 		indices.do {|index|
 			if(this.isValidIndex(index), {
+				if(repeaters[index].notNil, {
+					repeaters[index] = nil;
+					this.prRepeaterChanged(index, nil);
+				});
 				flams[index] = (amount: amount, repeats: repeats);
 				this.prFlamChanged(index, flams[index]);
 			});
@@ -218,11 +247,68 @@ CaosTrack {
 
 	}
 
+	// Repeater por step: `repetitions` son golpes EXTRA y `metric` es la
+	// fraccion del step donde caen (1, 1/2, 1/3, 1/4 o 1/8).
+	repeater {|stepsToMark, repetitions = 1, metric = 1|
+
+		var indices = (stepsToMark ? []).asArray;
+
+		if(repetitions.isInteger.not or: { repetitions < 0 } or: { repetitions > 16 }, {
+			"CaosTrack: repeater repetitions must be an integer between 0 and 16".warn;
+			^this;
+		});
+
+		if(this.class.isValidRepeaterMetric(metric).not, {
+			"CaosTrack: repeater metric must be 1, 1/2, 1/3, 1/4 or 1/8".warn;
+			^this;
+		});
+
+		indices.do {|index|
+			if(this.isValidIndex(index), {
+				if(repetitions == 0, {
+					repeaters[index] = nil;
+					this.prRepeaterChanged(index, nil);
+				}, {
+					if(flams[index].notNil, {
+						flams[index] = nil;
+						this.prFlamChanged(index, nil);
+					});
+					repeaters[index] = (repetitions: repetitions, metric: metric);
+					this.prRepeaterChanged(index, repeaters[index]);
+				});
+			});
+		};
+
+		^this;
+
+	}
+
+	removeRepeater {|stepsToRemove|
+
+		var indices = (stepsToRemove ? []).asArray;
+
+		indices.do {|index|
+			if(this.isValidIndex(index), {
+				repeaters[index] = nil;
+				this.prRepeaterChanged(index, nil);
+			});
+		};
+
+		^this;
+
+	}
+
+	repeaterAt {|index|
+
+		^if(this.isValidIndex(index)) { repeaters[index] };
+
+	}
+
 	// El patron es un array fijo de `size` posiciones: el indice ES el orden.
-	// Se copian los dos arrays (gates y flams) para restaurar por posicion.
+	// Se copian los tres arrays (gates, flams y repeaters) por posicion.
 	snapshotPattern {
 
-		^(size: size, steps: steps.copy, flams: flams.copy);
+		^(size: size, steps: steps.copy, flams: flams.copy, repeaters: repeaters.copy);
 
 	}
 
@@ -230,23 +316,29 @@ CaosTrack {
 
 		var newSteps = snapshot !? {|s| s[\steps] };
 		var newFlams = snapshot !? {|s| s[\flams] };
+		var newRepeaters = snapshot !? {|s| s[\repeaters] };
+
+		if(newRepeaters.isNil, { newRepeaters = Array.fill(size, nil) });
 
 		if(newSteps.isNil or: { newFlams.isNil }, {
 			"CaosTrack.restorePattern: invalid snapshot".warn;
 			^this;
 		});
 
-		if(newSteps.size != size or: { newFlams.size != size }, {
+		if(newSteps.size != size or: { newFlams.size != size }
+			or: { newRepeaters.size != size }, {
 			"CaosTrack.restorePattern: snapshot size mismatch".warn;
 			^this;
 		});
 
 		steps = newSteps.copy;
 		flams = newFlams.copy;
+		repeaters = newRepeaters.copy;
 
 		size.do {|index|
 			this.prChanged(index, steps[index]);
 			this.prFlamChanged(index, flams[index]);
+			this.prRepeaterChanged(index, repeaters[index]);
 		};
 
 		^this;
@@ -377,20 +469,25 @@ CaosTrack {
 	// un step del secuenciador:
 	//   con voz    -> avanza la linea y dispara (melodicos)
 	//   sin voz    -> toca la funcion guardada en el step (percusion)
-	step { |index|
+	step { |index, stepDur = 0.25|
 
 		var value = this.at(index);
+		var repeater = repeaters[index];
+		var voice;
 
 		this.advance;
 
 		if(instrument.notNil, {
 			if(value.notNil and: { this.isAudible } and: { this.prShouldPlay }, {
 				this.trigger;
+				voice = instrument;
+				repeater !? { this.prScheduleRepeater(repeater, stepDur, false, nil, voice) };
 			});
 		}, {
 			if(value.notNil and: { this.isAudible } and: { this.prShouldPlay }
 				and: { value.respondsTo(\play) }, {
 				this.prPlayPercussion(value, index);
+				repeater !? { this.prScheduleRepeater(repeater, stepDur, true, value, nil) };
 			});
 		});
 
@@ -422,6 +519,28 @@ CaosTrack {
 	}
 
 	// --- internals ---------------------------------------------------
+
+	prScheduleRepeater {|config, stepDur, percussive = false, value, voice|
+
+		var intervals = this.class.repeaterIntervals(
+			config[\repetitions], config[\metric], stepDur
+		);
+
+		intervals.do {|delay|
+			TempoClock.default.sched(delay, {
+				if(this.isAudible, {
+					if(percussive, {
+						this.prPlayValue(value);
+					}, {
+						voice !? {|v| v.retriggerCurrent };
+					});
+				});
+			});
+		};
+
+		^this;
+
+	}
 
 	prPlayPercussion {|value, index|
 
@@ -465,6 +584,12 @@ CaosTrack {
 	prFlamChanged { |index, value|
 
 		if(onFlamChange.notNil, { onFlamChange.value(this, index, value) });
+
+	}
+
+	prRepeaterChanged { |index, value|
+
+		if(onRepeaterChange.notNil, { onRepeaterChange.value(this, index, value) });
 
 	}
 

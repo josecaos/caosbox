@@ -322,6 +322,58 @@ TestCaosInstrument : UnitTest {
 
 	}
 
+	test_retriggerCurrentKeepsTheNoteAndForcesANewVoice {
+
+		var firstID;
+
+		instrument = this.prSynth;
+		instrument.advance;
+		instrument.trigger;
+		firstID = instrument.nodeID;
+		spy.reset;
+
+		instrument.retriggerCurrent;
+
+		this.assertEquals(instrument.note, 48, "the note does not advance");
+		this.assertEquals(spy.messages.size, 2, "release + new voice");
+		this.assertEquals(spy.messages[0][0], '/n_set');
+		this.assertEquals(spy.messages[0][1], firstID);
+		this.assertEquals(spy.lastMessage[0], '/s_new');
+		this.assertEquals(spy.lastMessage[spy.lastMessage.indexOf(\note) + 1], 48);
+		this.assert(instrument.nodeID != firstID, "the repeat is a new voice");
+
+	}
+
+	test_retriggerCurrentDoesNotAdvanceTheDefSequence {
+
+		instrument = this.prSynth;
+		instrument.setDefSequence([\ambuno, \ambuno_tri]);
+		instrument.advance;
+		instrument.trigger;
+		this.assertEquals(instrument.defName, \ambuno);
+
+		instrument.retriggerCurrent;
+
+		this.assertEquals(instrument.defName, \ambuno,
+			"the current timbre is repeated, not the next one");
+
+	}
+
+	test_retriggerCurrentSkipsReleaseForOneShot {
+
+		instrument = this.prSynth(retrigger: true, oneShot: true);
+		instrument.advance;
+		instrument.trigger;
+		spy.reset;
+
+		instrument.retriggerCurrent;
+
+		this.assertEquals(spy.messages.size, 1, "only the repeat voice is created");
+		this.assertEquals(spy.lastMessage[0], '/s_new');
+		this.assertEquals(spy.lastMessage[spy.lastMessage.indexOf(\note) + 1], 48);
+
+	}
+
 	test_retriggerReleasesThePreviousVoice {
 
 		var firstID;

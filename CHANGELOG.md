@@ -3,11 +3,17 @@
 
 ---
 ### TODOs:
-- Repeater for \sequenced tracks
-    - Like flam but repeat timbre over 16th notes
+
 ---
 
 # Changelog 
+
+- ### v2.6.8
+    - Implement Repeater functionality
+        - API
+            - .repeater(\kick, [0, 4], repetitions:4, metric:1)
+            - .removeRepeater(\kick, [0, 4])
+            - .repeaterAt(\kick, 0)
 
 - ### v2.6.7
     - Add playback probability per track
@@ -15,8 +21,10 @@
         - Does not modifies the pattern, gates and flams
     - API
         - .trackProbability(track, probability 0..1)
+        - .retriggerCurrent()
     - GUI
         - Add GUI button for track probability + NumBox to set the value
+        - Bugfix: NumberBox color does not use accent color at change
     - Tests:
         - 465 assertions
 

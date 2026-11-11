@@ -12,7 +12,7 @@
 		{ CaosBox.gui.playhead(index) }.defer(0.01);
 		// cada pista despacha su step: percusion toca la funcion guardada,
 		// melodicos avanzan su linea y disparan la voz
-		~cbox_tracks.do { |track| track.step(index) };
+		~cbox_tracks.do { |track| track.step(index, ~cbox_seq.stepDur) };
 	},
 	prepare: { |seq|
 		var eng = CaosBox.engine;

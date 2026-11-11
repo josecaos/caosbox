@@ -200,6 +200,103 @@ TestCaosTrack : UnitTest {
 	}
 
 	// ------------------------------------------------------------------
+	// repeater
+	// ------------------------------------------------------------------
+
+	test_repeaterStoresAndRemoves {
+
+		track = this.prSnapshot(\kick);
+
+		track.repeater([0, 4], 4, 1/2);
+
+		this.assertEquals(track.repeaterAt(0)[\repetitions], 4);
+		this.assertEquals(track.repeaterAt(0)[\metric], 0.5);
+		this.assertEquals(track.repeaterAt(4)[\metric], 0.5);
+
+		track.removeRepeater([0, 4]);
+
+		this.assert(track.repeaterAt(0).isNil, "removeRepeater clears the mark");
+		this.assert(track.repeaterAt(4).isNil, "all selected steps are cleared");
+
+	}
+
+	test_repeaterIntervalsEndAtTheWindow {
+
+		var intervals = CaosTrack.repeaterIntervals(4, 1/2, 0.25);
+
+		this.assertEquals(intervals.size, 4);
+		this.assertEquals(intervals.last, 0.125,
+			"the last hit lands at the end of the window");
+		this.assertEquals(intervals[0], 0.03125,
+			"the hits are evenly distributed");
+
+	}
+
+	test_repeaterValidatesItsArguments {
+
+		track = this.prSnapshot(\kick);
+
+		track.repeater(0, 4, 0.37);
+		track.repeater(1, 17, 1);
+		track.repeater(2, -1, 1);
+
+		this.assert(track.repeaterAt(0).isNil);
+		this.assert(track.repeaterAt(1).isNil);
+		this.assert(track.repeaterAt(2).isNil);
+
+	}
+
+	test_flamAndRepeaterAreExclusive {
+
+		track = this.prSnapshot(\kick);
+
+		track.flam(0, 0.5, 1);
+		track.repeater(0, 4, 1/2);
+
+		this.assert(track.flamAt(0).isNil,
+			"repeater removes the flam of that step");
+		this.assert(track.repeaterAt(0).notNil);
+
+		track.flam(0, 0.5, 1);
+
+		this.assert(track.repeaterAt(0).isNil,
+			"flam removes the repeater of that step");
+		this.assert(track.flamAt(0).notNil);
+
+	}
+
+	test_repeaterSurvivesSnapshotAndRestore {
+
+		var snapshot;
+
+		track = this.prSnapshot(\kick);
+		track.putStep(0, true);
+		track.repeater(0, 3, 1/3);
+
+		snapshot = track.snapshotPattern;
+		track.removeRepeater(0);
+		track.restorePattern(snapshot);
+
+		this.assertEquals(track.repeaterAt(0)[\repetitions], 3,
+			"the repeater is part of the pattern history");
+		this.assertEquals(track.repeaterAt(0)[\metric], 1/3);
+
+	}
+
+	test_clearingAStepClearsItsRepeater {
+
+		track = this.prSnapshot(\kick);
+		track.putStep(0, true);
+		track.repeater(0, 4, 1);
+
+		track.putStep(0, false);
+
+		this.assert(track.repeaterAt(0).isNil,
+			"clearing a step also clears its repeater");
+
+	}
+
+	// ------------------------------------------------------------------
 	// playback probability
 	// ------------------------------------------------------------------
 

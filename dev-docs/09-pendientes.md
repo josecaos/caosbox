@@ -67,6 +67,8 @@
       (ver `18-track-probability-v2.6.7.md`).
 - [x] **GUI de probabilidad** por pista: campo `P` numérico en v2.6.7 (ver
       `18-track-probability-v2.6.7.md`).
+- [x] **Repeater por step**: API en v2.6.8 (ver `19-repeater-v2.6.8.md`).
+- [ ] **GUI del repeater**: ctrl-click para marcar y tres círculos en la grilla.
 - [ ] Scroll y navegación por teclado en el bloque de pistas.
 - [ ] Ruteo por step en percusión (si se quiere más allá del snapshot actual).
 - [ ] Resize: hoy es escalado proporcional y las fuentes no escalan; evaluar breakpoints
@@ -83,7 +85,7 @@
 
 ```bash
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_check_ext.scd      # compila
-HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 465 aserciones
+HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 500 aserciones
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_syntax3.scd        # 14 .scd
 ```
 

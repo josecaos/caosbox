@@ -71,6 +71,22 @@ code::
 t.flamAt(4); // (amount: 0.5, repeats: 1)
 ::
 
+method:: repeater
+Marks one or more steps with a repeater. code::repetitions:: are extra hits and
+code::metric:: is the fraction of the step window (code::1::, code::1/2::,
+code::1/3::, code::1/4:: or code::1/8::). The mark is exclusive with flam.
+code::
+t.repeater(0, 4, 1/2);
+::
+
+method:: removeRepeater
+method:: repeaterAt
+Removes or returns a repeater mark.
+code::
+t.removeRepeater(0);
+t.repeaterAt(0);
+::
+
 method:: onFlamChange
 Callback code::{|track, index, value| ... }:: when a flam is added or removed;
 the GUI uses it to redraw the step dot.
@@ -103,14 +119,14 @@ without editing their gates. In melodic tracks the line still advances; in
 percussion the step and its flam are skipped. The default is code::1.0::.
 
 method:: snapshotPattern
-Returns an event with copies of the complete gate and flam arrays
-(code::steps:: and code::flams::). The index is the position in those fixed-size
-arrays, so there is no separate order to remember.
+Returns an event with copies of the complete gate, flam and repeater arrays
+(code::steps::, code::flams:: and code::repeaters::). The index is the position
+in those fixed-size arrays, so there is no separate order to remember.
 
 method:: restorePattern
-Restores a snapshot returned by code::snapshotPattern::. Both arrays are copied
-back by position and the view is notified for every step and flam. A snapshot
-from a different track size is rejected.
+Restores a snapshot returned by code::snapshotPattern::. The three arrays are
+copied back by position and the view is notified for every step, flam and
+repeater. A snapshot from a different track size is rejected.
 
 method:: setInstrument
 method:: releaseInstrument
