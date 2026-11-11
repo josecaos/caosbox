@@ -58,7 +58,11 @@
       `14-restore-pattern-v2.6.4.md`).
 - [x] **Fill temporal**: `fill` por vueltas, con vuelta al patrón base en v2.6.5
       (ver `15-fill-v2.6.5.md`).
-- [ ] **Botón de performance** para `randPattern`/`fill`/`restorePattern` en la GUI.
+- [x] **Botón R** para `randPattern`/`restorePattern` en la GUI (v2.6.6, ver
+      `16-r-button-v2.6.6.md`).
+- [ ] **Botón/gesto para fill** en la GUI.
+- [x] **Columnas M/S/R y bloque inferior** alineados a 1180 (v2.6.6, ver
+      `17-layout-v2.6.6.md`).
 - [ ] Probabilidad por pista (100/75/50/25) sin alterar el patrón.
 - [ ] Scroll y navegación por teclado en el bloque de pistas.
 - [ ] Ruteo por step en percusión (si se quiere más allá del snapshot actual).
@@ -76,7 +80,7 @@
 
 ```bash
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_check_ext.scd      # compila
-HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 443 aserciones
+HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 450 aserciones
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_syntax3.scd        # 14 .scd
 ```
 

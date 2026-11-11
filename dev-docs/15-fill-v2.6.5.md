@@ -79,6 +79,7 @@ CaosBox.restorePattern(\kick);  // corta el fill y vuelve al base
 
 ## 7. Pendiente
 
-* Botón de GUI para `fill`/`restorePattern`.
+* El botón R de v2.6.6 cubre `randPattern`/`restorePattern`; un botón propio para
+  `fill` sigue pendiente.
 * No hay fills paralelos en varias pistas coordinados como una sola sección.
 * No hay un contador visible de vueltas restantes del fill.

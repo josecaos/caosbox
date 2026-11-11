@@ -23,6 +23,7 @@ CaosBoxGUI {
 	var <routeViews;
 	var <muteViews;
 	var <soloViews;
+	var <randomViews;
 	var <analyzerWin;
 	var <freqView;
 	var <scopeView;
@@ -71,6 +72,7 @@ CaosBoxGUI {
 		routeViews = IdentityDictionary.new;
 		muteViews = IdentityDictionary.new;
 		soloViews = IdentityDictionary.new;
+		randomViews = IdentityDictionary.new;
 
 		this.prUpdateDerived;
 
@@ -207,6 +209,14 @@ CaosBoxGUI {
 
 	}
 
+	addRandomView {|track, button|
+
+		randomViews.put(track, button);
+
+		^this;
+
+	}
+
 	trackStateChanged {|track|
 
 		var tr = CaosBox.tracks !? {|tracks| tracks[track]};
@@ -222,6 +232,16 @@ CaosBoxGUI {
 
 	}
 
+	trackPatternChanged {|track|
+
+		var active = CaosBox.hasPatternHistory(track);
+
+		{ randomViews[track] !? {|button| button.value_(if(active, 1, 0)) } }.defer;
+
+		^this;
+
+	}
+
 	playhead {|index|
 
 		{ stepGrids.do {|grid| grid.playhead_(index) } }.defer;
@@ -231,6 +251,39 @@ CaosBoxGUI {
 	}
 
 	// --- resize fluido del GUI principal --------------------------------
+
+	// Reparte el bloque inferior en el ancho nuevo conservando la proporcion
+	// horizontal del diseno de 1120. Es idempotente: si ya esta escalado, no
+	// vuelve a mover los widgets.
+	scaleLowerSection {|win, top = 400, left = 16, oldRight = 1104, newRight = 1164|
+
+		var scale = (newRight - left) / (oldRight - left);
+		var maxRight = 0;
+
+		win.asView.children(View).do {|child|
+			var rect = child.bounds;
+			if(rect.top >= top, {
+				maxRight = max(maxRight, rect.left + rect.width);
+			});
+		};
+
+		if(maxRight > (oldRight + 1), { ^this });
+
+		win.asView.children(View).do {|child|
+			var rect = child.bounds;
+			if(rect.top >= top, {
+				child.bounds_(Rect(
+					(left + ((rect.left - left) * scale)).round,
+					rect.top,
+					(rect.width * scale).round,
+					rect.height
+				));
+			});
+		};
+
+		^this;
+
+	}
 
 	// guarda los rects de diseno y los escala con la ventana
 	makeResizable {|win, width = 1180, height = 860|

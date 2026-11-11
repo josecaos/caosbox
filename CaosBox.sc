@@ -5,7 +5,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.6.5";
+	classvar <version = "2.6.6";
 	classvar guiRegistry;
 	classvar randPatterns;
 	classvar lastPatterns;
@@ -180,6 +180,22 @@ CaosBox {
 
 	}
 
+	*hasPatternHistory {|track|
+
+		var patterns = lastPatterns;
+
+		^if(patterns.isNil, { false }, { patterns[track].notNil });
+
+	}
+
+	*prPatternStateChanged {|track|
+
+		guiRegistry !? {|gui| gui.trackPatternChanged(track) };
+
+		^this;
+
+	}
+
 	*prApplyRandPattern {|track, density|
 
 		var tr = this.tracks !? {|tracks| tracks[track]};
@@ -230,6 +246,7 @@ CaosBox {
 					fills.removeAt(track);
 					lastPatterns.removeAt(track);
 					tr.restorePattern(config[\snapshot]);
+					this.prPatternStateChanged(track);
 				});
 			}, {
 				// La llamada cayo a mitad de vuelta: cerramos esa vuelta
@@ -657,6 +674,8 @@ CaosBox {
 			randPatterns[track] = (density: density, every: every, count: 0);
 		});
 
+		this.prPatternStateChanged(track);
+
 		^tr;
 
 	}
@@ -695,6 +714,7 @@ CaosBox {
 		fills.removeAt(track);
 		randPatterns.removeAt(track);
 		tr.restorePattern(snapshot);
+		this.prPatternStateChanged(track);
 
 		^tr;
 
@@ -728,6 +748,7 @@ CaosBox {
 		lastPatterns[track] = tr.snapshotPattern;
 		this.prApplyRandPattern(track, density);
 		fills[track] = (snapshot: lastPatterns[track], loops: loops, count: 0, armed: armed);
+		this.prPatternStateChanged(track);
 
 		^tr;
 

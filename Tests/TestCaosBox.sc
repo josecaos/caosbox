@@ -216,6 +216,34 @@ TestCaosBox : UnitTest {
 
 	}
 
+	test_patternHistoryTracksRandomAndFill {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.setIndices([0]);
+
+		this.assert(CaosBox.hasPatternHistory(\kick).not,
+			"a fresh track has no pattern history");
+
+		CaosBox.randPattern(\kick, density: 0);
+		this.assert(CaosBox.hasPatternHistory(\kick),
+			"randPattern leaves something to restore");
+
+		CaosBox.restorePattern(\kick);
+		this.assert(CaosBox.hasPatternHistory(\kick).not,
+			"restorePattern consumes the history");
+
+		CaosBox.fill(\kick, density: 1);
+		this.assert(CaosBox.hasPatternHistory(\kick),
+			"a fill also leaves a base to restore");
+
+		CaosBox.prRandPatternLoop(nil);
+		this.assert(CaosBox.hasPatternHistory(\kick).not,
+			"the automatic restore consumes the fill history");
+
+	}
+
 	test_fillRestoresAfterOneLoop {
 
 		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });

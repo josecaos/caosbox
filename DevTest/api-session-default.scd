@@ -8,18 +8,18 @@
 Platform.userExtensionDir
 CaosBox.browse;
 CaosBoxGUI.colorAliases // Colores posibles para interfaz
-CaosBox.gui.color(\white); // Aplica color opcional para la GUI antes de correr
+CaosBox.gui.color(\pink); // Aplica color opcional para la GUI antes comenzar
 ////////////////////////////////////////////////////////////
 
 c = CaosBox;
 //
 c.environment; //inicializa
-c.environment(false); //inicializa Headless
+// c.environment(false); //inicializa Headless
 // Wait for GUI boot:
 c.play;
 c.pause;
 c.stop;
-c.bpm(33);
+c.bpm(182);
 c.freqAnalyzer(true);
 c.guiAlpha(0.5);
 //
@@ -41,7 +41,12 @@ k.kick(\lpf,0.01,0.1);
 k.toTrack(Array.series(32,0,1));
 k.kick(\hpf,0.01,0.2);
 k.toTrack(Array.series(16,1,2));
+c.setSteps(\kick, Array.series(16,0,2), false);
+c.tracks[\kick].flam([0,16],1,4)
+c.tracks[\kick].flam([4,8],0.5,2)
+c.tracks[\kick].removeFlam(8);
 k.kick(50,0.01,0.5);
+k.kick(\pitch,0.1,0.125);
 k.offTrack();
 
 h = g.new;
@@ -131,6 +136,20 @@ c.randomTime(true, true, [10,20,30,40,50,60,70,80,90,100]);
 c.randomTime(false, false, [10,20,30,40,50,60,70,80,90,100]);
 c.toggleMetric();
 
+// Groove nuevo, se queda
+c.randPattern(\kick, density: 0.5);
+// Groove que cambia cada 4 vueltas
+c.randPattern(\kick, density: 0.35, every: 4);
+// Congela la evolución, sin volver atrás
+c.stopRandPattern(\kick);
+// Fill de una vuelta y vuelve solo
+c.fill(\snare, density: 0.8);
+// Break de dos vueltas
+c.fill(\hihats, density: 0.6, loops: 2);
+//
+c.restorePattern(\snare);
+
+
 c.browse;
 
 c.stop;
@@ -138,6 +157,7 @@ c.stop;
 c.version
 c.prPauseAutomations
 c.voices
+
 
 // ---------------------------------------------------------------
 // Qué observar (checklist de aceptación)

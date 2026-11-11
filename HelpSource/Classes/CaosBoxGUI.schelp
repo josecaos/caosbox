@@ -6,7 +6,8 @@ related:: Classes/CaosStepGrid, Classes/CaosBox
 description::
 The registry the API uses to talk to the view. It is reached through
 code::CaosBox.gui::. It stores the global accent, the step grids, the route popups,
-the mute and solo buttons, the themed sliders and labels, and the analyzer window.
+the mute, solo and random buttons, the themed sliders and labels, and the
+analyzer window.
 
 instancemethods::
 
@@ -29,9 +30,18 @@ method:: routeChanged
 method:: addMuteView
 method:: addSoloView
 method:: trackStateChanged
+method:: addRandomView
+method:: trackPatternChanged
 Internal view registry; these are normally not called from live coding. The
 mute and solo buttons are refreshed from the model after code::CaosBox.mute:: and
-code::CaosBox.solo::.
+code::CaosBox.solo::. The random button follows
+code::CaosBox.hasPatternHistory:: so it also reacts when the API changes the
+pattern.
+
+method:: scaleLowerSection
+Internal layout helper. Reparte el bloque inferior (master, efectos, filtros,
+granulador y transporte) en el ancho de 1180 conservando la proporción del diseño
+de 1120. Es idempotente.
 
 method:: themeLegacy
 Walks the window once and applies the palette to the legacy widgets.

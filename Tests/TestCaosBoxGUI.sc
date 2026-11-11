@@ -19,6 +19,7 @@ TestCaosBoxGUI : UnitTest {
 
 		~cbox_tracks = savedTracks;
 		CaosTrack.clearSolos;
+		CaosBox.prClearRandPatterns;
 
 	}
 
@@ -142,6 +143,30 @@ TestCaosBoxGUI : UnitTest {
 
 		this.assertEquals(mute.value, 0, "the mute button clears");
 		this.assertEquals(solo.value, 0, "the solo button clears");
+
+	}
+
+	test_trackPatternChangedRefreshesTheRandomView {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+		var random = CaosTestStateButton.new;
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		gui.addRandomView(\kick, random);
+
+		CaosBox.randPattern(\kick, density: 0.5);
+		gui.trackPatternChanged(\kick);
+		0.01.wait;
+
+		this.assertEquals(random.value, 1,
+			"the R button turns on when there is history");
+
+		CaosBox.restorePattern(\kick);
+		gui.trackPatternChanged(\kick);
+		0.01.wait;
+
+		this.assertEquals(random.value, 0,
+			"the R button turns off after restore");
 
 	}
 

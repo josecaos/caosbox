@@ -149,6 +149,8 @@ StaticText(~cbox_w,Rect(882,689.24,222,13.4)).string_("Auto/Speed").font_(Font("
 };
 // el BPM se movio a la fila de transporte (GUI_1) para no tapar LineIn
 //
+// reparte master/efectos/filtros/granulador en el ancho de 1180
+CaosBox.gui.scaleLowerSection(~cbox_w);
 // una sola pasada: los verdes viejos siguen al acento global (play excluido)
 CaosBox.gui.themeLegacy(~cbox_w.asView);
 CaosBox.gui.makeResizable(~cbox_w, 1180, 860);

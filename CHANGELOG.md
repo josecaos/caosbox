@@ -3,16 +3,25 @@
 
 ---
 ### TODOs:
-- GUI button for randPattern
+- Repeater for \sequenced tracks
+    - Like flam but repeat timbre over 16th notes
 ---
 
 # Changelog 
 
+- ### v2.6.6
+    - GUI
+        - Add GUI button for randPattern
+            - On: .randPattern
+            - Off: .restorePattern
+    - Fix position of elements 
+    - Tests:
+        - 450 assertions
+
 - ### v2.6.5
-    - Add Temporal random by loops 
+    - Add Temporal random fill by loops 
         - Restores previous pattern after X loops
         - .restorePattern overrides the fill
-    - GUI
     - API
         - .fill(track, density, loops)
     - Tests:

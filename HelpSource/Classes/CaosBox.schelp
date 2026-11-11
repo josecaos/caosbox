@@ -82,7 +82,8 @@ overwrite that saved pattern. A one-shot call does not cancel an evolution
 already running; use code::stopRandPattern:: for that. A manual random pattern
 also cancels an active code::fill::, using the fill base as its history. Returns
 the link::Classes/CaosTrack::. The old code::randSteps:: remains available for an
-exact number of steps.
+exact number of steps. The per-track code::R:: button calls this method with the
+default density.
 
 method:: stopRandPattern
 Stops the periodic regeneration of a track. The current pattern stays as it is.
@@ -99,6 +100,15 @@ link::Classes/CaosTrack::.
 code::
 CaosBox.randPattern(\kick, density: 0.25);
 CaosBox.restorePattern(\kick);
+::
+The per-track code::R:: button toggles this method: off calls code::randPattern::
+and on calls code::restorePattern::.
+
+method:: hasPatternHistory
+Returns true while code::restorePattern:: has a saved pattern to restore. The
+code::R:: button uses it to show its on/off state.
+code::
+CaosBox.hasPatternHistory(\kick);
 ::
 
 method:: fill

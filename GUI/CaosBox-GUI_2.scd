@@ -2,11 +2,13 @@
 //
 // Un solo builder para todas las filas: etiqueta, rejilla de steps, ruteo
 // (melodicos) o aviso de ruteo por step (percision), boton de limpiar y
-// botones de mute/solo.
+// botones de mute/solo/random.
 // El orden del spec es el orden visual; CaosTrack sigue siendo el modelo.
 	var specs, gui, buses, busLabels;
-	var gridX = 80, gridW = 908, routeX = 994, routeW = 86, clearX = 1088;
-	var muteX = 1112, soloX = 1132, muteSoloW = 16;
+	var gridX = 80, gridW = 908, routeX = 994, routeW = 86;
+	// columnas de botones: mismo ancho y 4 px entre todas
+	var clearX = 1088, muteX = 1108, soloX = 1128, randomX = 1148;
+	var muteSoloW = 16;
 	var rowH = 29, top = 16, gridH = 27;
 
 	specs = [
@@ -32,7 +34,7 @@
 	specs.do {|spec, row|
 		var y = top + (row * rowH);
 		var track = CaosBox.tracks[spec[\name]];
-		var label, grid, route, clear, mute, solo;
+		var label, grid, route, clear, mute, solo, random;
 
 		label = StaticText(~cbox_w, Rect(16, y + 4, 60, 15))
 			.string_(spec[\label])
@@ -60,7 +62,7 @@
 				.toolTip_("La salida se elige al evaluar el instrumento: k.kick(out: ...), k.snare(out: ...)");
 		});
 
-		clear = Button(~cbox_w, Rect(clearX, y + 6, 16, 16))
+		clear = Button(~cbox_w, Rect(clearX, y + 6, muteSoloW, 16))
 			.states_([["×", Color(0.85, 0.35, 0.35), gui.panel]])
 			.action_({|button|
 				if (button.value == 0, {
@@ -88,6 +90,22 @@
 		solo.value_(if(track.solo, 1, 0));
 		gui.addSoloView(spec[\name], solo);
 
+		random = Button(~cbox_w, Rect(randomX, y + 6, muteSoloW, 16))
+			.states_([
+				["R", gui.muted, gui.panel],
+				["R", gui.accentText, gui.accent]
+			])
+			.toolTip_("Randomize this track / restore the previous pattern")
+			.action_({|button|
+				if(button.value == 1, {
+					CaosBox.randPattern(spec[\name]);
+				}, {
+					CaosBox.restorePattern(spec[\name]);
+				});
+			});
+		random.value_(if(CaosBox.hasPatternHistory(spec[\name]), 1, 0));
+		gui.addRandomView(spec[\name], random);
+
 		gui.addColorListener({|g|
 			clear !? {|bot|
 				bot.states = [["×", Color(0.85, 0.35, 0.35), g.panel]];
@@ -97,6 +115,9 @@
 			};
 			solo !? {|bot|
 				bot.states = [["S", g.muted, g.panel], ["S", g.accentText, g.accent]];
+			};
+			random !? {|bot|
+				bot.states = [["R", g.muted, g.panel], ["R", g.accentText, g.accent]];
 			};
 		});
 	};
