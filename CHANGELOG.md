@@ -10,6 +10,10 @@
 
 - ### v2.6.8
     - Implement Repeater functionality
+        - Repetitions are extra steps
+        - Metrics as fractions of TimeClock
+        - flam/repeater are exclusive
+        - repeater uses .snapShotPattern and .restorePattern
         - API
             - .repeater(\kick, [0, 4], repetitions:4, metric:1)
             - .removeRepeater(\kick, [0, 4])
@@ -20,14 +24,13 @@
         - Tests
             - 500 assertions
         
-
 - ### v2.6.7
     - Add playback probability per track
-        - Change the probability of
-        - Does not modifies the pattern, gates and flams
+        - Change the probability of a step being played
+        - It does not modifies the pattern, gates and flams
     - API
         - .trackProbability(track, probability 0..1)
-        - .retriggerCurrent()
+        - CaosInstrument.retriggerCurrent()
     - GUI
         - Add GUI button for track probability + NumBox to set the value
         - Bugfix: NumberBox color does not use accent color at change
@@ -39,7 +42,7 @@
         - Add GUI button for randPattern
             - On: .randPattern
             - Off: .restorePattern
-    - Fix position of elements 
+    - Align M/S/R columns and redistribute FX block 
     - Tests:
         - 450 assertions
 
@@ -71,7 +74,6 @@
         - Destructive
             - Replaces gates
             - flams are cleared
-        - GUI
         - API
             - .randPattern(track, density, every)
             - .stopRandPattern(track)

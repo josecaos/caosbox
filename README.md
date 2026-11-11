@@ -36,6 +36,8 @@ Platform.userExtensionDir
     k.toTrack(Array.series(8,0,4));
     // or
     c.setSteps(\kick, Array.series(8,0,4));
+    c.tracks[\kick].flam([0, 4], 0.1); //adds flam to selected steps
+    c.repeater(\kick, [0, 4], repetitions:4, metric:1); // adds flam to selected steps
 
     // instance a melodic instrument
     p = g.new
