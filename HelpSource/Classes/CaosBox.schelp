@@ -76,8 +76,10 @@ CaosBox.randPattern(\kick, density: 0.25, every: 4);
 ::
 Only the gates change: on melodic tracks the notes, chords and voice sequences
 are untouched. On percussion tracks the whole pattern is replaced, so its flams
-are cleared too. A one-shot call does not cancel an evolution already running;
-use code::stopRandPattern:: for that. Returns the
+are cleared too. Before changing the track, the current gates and flams are saved
+as a one-level history for code::restorePattern::. Periodic regenerations do not
+overwrite that saved pattern. A one-shot call does not cancel an evolution
+already running; use code::stopRandPattern:: for that. Returns the
 link::Classes/CaosTrack::. The old code::randSteps:: remains available for an
 exact number of steps.
 
@@ -85,6 +87,16 @@ method:: stopRandPattern
 Stops the periodic regeneration of a track. The current pattern stays as it is.
 code::
 CaosBox.stopRandPattern(\kick);
+::
+
+method:: restorePattern
+Restores the gates and flams that were on the track immediately before the last
+code::randPattern:: call. It is a one-level undo: the history is consumed and the
+periodic evolution, if any, is stopped so the next loop cannot overwrite the
+restored pattern. Returns the link::Classes/CaosTrack::.
+code::
+CaosBox.randPattern(\kick, density: 0.25);
+CaosBox.restorePattern(\kick);
 ::
 
 subsection:: Mute and solo

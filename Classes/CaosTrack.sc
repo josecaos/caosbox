@@ -217,6 +217,41 @@ CaosTrack {
 
 	}
 
+	// El patron es un array fijo de `size` posiciones: el indice ES el orden.
+	// Se copian los dos arrays (gates y flams) para restaurar por posicion.
+	snapshotPattern {
+
+		^(size: size, steps: steps.copy, flams: flams.copy);
+
+	}
+
+	restorePattern {|snapshot|
+
+		var newSteps = snapshot !? {|s| s[\steps] };
+		var newFlams = snapshot !? {|s| s[\flams] };
+
+		if(newSteps.isNil or: { newFlams.isNil }, {
+			"CaosTrack.restorePattern: invalid snapshot".warn;
+			^this;
+		});
+
+		if(newSteps.size != size or: { newFlams.size != size }, {
+			"CaosTrack.restorePattern: snapshot size mismatch".warn;
+			^this;
+		});
+
+		steps = newSteps.copy;
+		flams = newFlams.copy;
+
+		size.do {|index|
+			this.prChanged(index, steps[index]);
+			this.prFlamChanged(index, flams[index]);
+		};
+
+		^this;
+
+	}
+
 	// no argument clears the whole track
 	clear { |stepsToClear|
 

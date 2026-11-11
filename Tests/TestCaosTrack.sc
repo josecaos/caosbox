@@ -200,6 +200,94 @@ TestCaosTrack : UnitTest {
 	}
 
 	// ------------------------------------------------------------------
+	// pattern history
+	// ------------------------------------------------------------------
+
+	test_snapshotPatternPreservesStepsAndFlams {
+
+		var snapshot;
+
+		track = this.prSnapshot(\kick);
+
+		currentValue = \a;
+		track.putStep(0, true);
+		currentValue = \b;
+		track.putStep(2, true);
+		track.flam(2, 0.25, 2);
+
+		snapshot = track.snapshotPattern;
+		track.clear;
+		currentValue = \c;
+		track.putStep(1, true);
+
+		track.restorePattern(snapshot);
+
+		this.assertEquals(track.indices, [0, 2],
+			"the active steps come back in their original positions");
+		this.assertEquals(track.at(0), \a,
+			"the step keeps the value it had at snapshot time");
+		this.assertEquals(track.at(2), \b,
+			"another step keeps its own value");
+		this.assertEquals(track.flamAt(2)[\amount], 0.25,
+			"the flam is restored too");
+
+	}
+
+	test_snapshotPatternIsACopy {
+
+		var snapshot;
+
+		track = this.prSnapshot(\kick);
+		currentValue = \a;
+		track.putStep(0, true);
+
+		snapshot = track.snapshotPattern;
+		track.clear;
+
+		this.assertEquals(snapshot[\steps][0], \a,
+			"clearing the track does not mutate the snapshot");
+		this.assertEquals(snapshot[\flams][0], nil,
+			"the flam array is copied as well");
+
+	}
+
+	test_restorePatternNotifiesTheView {
+
+		var snapshot;
+		var stepChanges = 0;
+		var flamChanges = 0;
+
+		track = this.prSnapshot(\kick);
+		currentValue = \a;
+		track.putStep(0, true);
+		snapshot = track.snapshotPattern;
+
+		track.onChange = {|changed, index, value| stepChanges = stepChanges + 1 };
+		track.onFlamChange = {|changed, index, value| flamChanges = flamChanges + 1 };
+
+		track.restorePattern(snapshot);
+
+		this.assertEquals(stepChanges, track.size,
+			"the view gets one step notification per position");
+		this.assertEquals(flamChanges, track.size,
+			"the view gets one flam notification per position");
+
+	}
+
+	test_restorePatternRejectsASizeMismatch {
+
+		var snapshot = this.prSnapshot(\kick).snapshotPattern;
+		var other = CaosTrack.new(\snare, \snapshot, 8, { \fn });
+
+		other.setIndices([1]);
+		other.restorePattern(snapshot);
+
+		this.assertEquals(other.indices, [1],
+			"a snapshot from another size does not touch the track");
+
+	}
+
+	// ------------------------------------------------------------------
 	// mute / solo
 	// ------------------------------------------------------------------
 

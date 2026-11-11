@@ -7,7 +7,17 @@
 - GUI button for randPattern
 ---
 
-# Changelog
+# Changelog 
+
+- ### v2.6.4
+    - Add .restorePattern to restore previous sequence
+        - .randPattern saves the previous pattern
+        - restores gates and flams
+        - GUI
+        - API
+            - .restorePattern(track)
+        - Tests:
+            - 432 assertions
 
 - ### v2.6.3
     - Implement Fill/Randomize per track 

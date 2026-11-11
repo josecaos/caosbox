@@ -5,13 +5,15 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.6.3";
+	classvar <version = "2.6.4";
 	classvar guiRegistry;
 	classvar randPatterns;
+	classvar lastPatterns;
 
 	*initClass {
 
 		randPatterns = IdentityDictionary.new;
+		lastPatterns = IdentityDictionary.new;
 
 	}
 
@@ -212,6 +214,7 @@ CaosBox {
 	*prClearRandPatterns {
 
 		randPatterns = IdentityDictionary.new;
+		lastPatterns = IdentityDictionary.new;
 
 		^this;
 
@@ -607,6 +610,7 @@ CaosBox {
 			^("CaosBox.randPattern: every must be a positive integer or nil").warn;
 		});
 
+		lastPatterns[track] = tr.snapshotPattern;
 		this.prApplyRandPattern(track, density);
 
 		if(every.notNil, {
@@ -626,6 +630,30 @@ CaosBox {
 		});
 
 		randPatterns.removeAt(track);
+
+		^tr;
+
+	}
+
+	// Vuelve al patron que habia antes del ultimo randPattern. Detiene la
+	// evolucion periodica para que el siguiente loop no lo pise.
+	*restorePattern {|track|
+
+		var tr = this.tracks !? {|tracks| tracks[track]};
+		var snapshot;
+
+		if(tr.isNil, {
+			^("CaosBox.restorePattern: unknown track " ++ track).warn;
+		});
+
+		snapshot = lastPatterns.removeAt(track);
+
+		if(snapshot.isNil, {
+			^("CaosBox.restorePattern: no previous pattern for " ++ track).warn;
+		});
+
+		randPatterns.removeAt(track);
+		tr.restorePattern(snapshot);
 
 		^tr;
 

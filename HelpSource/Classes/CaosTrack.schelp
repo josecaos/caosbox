@@ -96,6 +96,16 @@ method:: isAudible
 The resolved state: not muted and either no solo is active or this track is one
 of the solos. Code::CaosTrack.step:: uses it before triggering.
 
+method:: snapshotPattern
+Returns an event with copies of the complete gate and flam arrays
+(code::steps:: and code::flams::). The index is the position in those fixed-size
+arrays, so there is no separate order to remember.
+
+method:: restorePattern
+Restores a snapshot returned by code::snapshotPattern::. Both arrays are copied
+back by position and the view is notified for every step and flam. A snapshot
+from a different track size is rejected.
+
 method:: setInstrument
 method:: releaseInstrument
 The first voice enters immediately; a replacement stays pending until the next

@@ -144,6 +144,75 @@ TestCaosBox : UnitTest {
 
 	}
 
+	test_restorePatternReturnsToThePreviousPattern {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.setIndices([0, 2]);
+		track.flam(2, 0.5, 1);
+
+		CaosBox.randPattern(\kick, density: 0);
+		this.assert(track.isEmpty, "randPattern replaced the old pattern");
+
+		CaosBox.restorePattern(\kick);
+
+		this.assertEquals(track.indices, [0, 2],
+			"restorePattern brings back the previous steps");
+		this.assertEquals(track.flamAt(2)[\amount], 0.5,
+			"restorePattern brings back the previous flams");
+
+	}
+
+	test_restorePatternKeepsTheOriginalThroughPeriodicLoops {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.setIndices([0]);
+
+		CaosBox.randPattern(\kick, density: 0, every: 1);
+		CaosBox.prRandPatternLoop(nil);
+
+		CaosBox.restorePattern(\kick);
+
+		this.assertEquals(track.indices, [0],
+			"periodic regenerations do not overwrite the saved pattern");
+
+	}
+
+	test_restorePatternStopsThePeriodicEvolution {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		CaosBox.randPattern(\kick, density: 1, every: 1);
+		CaosBox.restorePattern(\kick);
+
+		this.assert(track.isEmpty,
+			"restorePattern brings back the original empty pattern");
+
+		CaosBox.prRandPatternLoop(nil);
+
+		this.assert(track.isEmpty,
+			"the loop does not regenerate a restored pattern");
+
+	}
+
+	test_restorePatternWithoutHistoryIsSafe {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		track.setIndices([1]);
+
+		CaosBox.restorePattern(\kick);
+
+		this.assertEquals(track.indices, [1],
+			"without history the current pattern is untouched");
+
+	}
+
 	test_pauseAutomationsPausesAllIncludingFilters {
 
 		automationNames.do {|name|

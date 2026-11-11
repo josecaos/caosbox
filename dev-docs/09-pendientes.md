@@ -54,6 +54,8 @@
 - [x] Mute/solo por pista: cerrado en v2.6.2 (ver `12-mute-solo-v2.6.2.md`).
 - [x] **Randomize/evolución por pista**: `randPattern`/`stopRandPattern` en v2.6.3
       (ver `13-randpattern-v2.6.3.md`).
+- [x] **Restaurar patrón anterior**: `restorePattern` en v2.6.4 (ver
+      `14-restore-pattern-v2.6.4.md`).
 - [ ] **Fill temporal**: variación de una vuelta que después vuelve al patrón base.
 - [ ] **Botón de performance** para `randPattern` en la GUI.
 - [ ] Probabilidad por pista (100/75/50/25) sin alterar el patrón.
@@ -73,7 +75,7 @@
 
 ```bash
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_check_ext.scd      # compila
-HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 416 aserciones
+HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 432 aserciones
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_syntax3.scd        # 14 .scd
 ```
 
