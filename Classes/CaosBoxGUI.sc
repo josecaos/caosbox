@@ -24,6 +24,7 @@ CaosBoxGUI {
 	var <muteViews;
 	var <soloViews;
 	var <randomViews;
+	var <probabilityViews;
 	var <analyzerWin;
 	var <freqView;
 	var <scopeView;
@@ -73,6 +74,7 @@ CaosBoxGUI {
 		muteViews = IdentityDictionary.new;
 		soloViews = IdentityDictionary.new;
 		randomViews = IdentityDictionary.new;
+		probabilityViews = IdentityDictionary.new;
 
 		this.prUpdateDerived;
 
@@ -217,6 +219,14 @@ CaosBoxGUI {
 
 	}
 
+	addProbabilityView {|track, box|
+
+		probabilityViews.put(track, box);
+
+		^this;
+
+	}
+
 	trackStateChanged {|track|
 
 		var tr = CaosBox.tracks !? {|tracks| tracks[track]};
@@ -237,6 +247,18 @@ CaosBoxGUI {
 		var active = CaosBox.hasPatternHistory(track);
 
 		{ randomViews[track] !? {|button| button.value_(if(active, 1, 0)) } }.defer;
+
+		^this;
+
+	}
+
+	trackProbabilityChanged {|track|
+
+		var value = CaosBox.trackProbability(track);
+
+		if(value.isNumber, {
+			{ probabilityViews[track] !? {|box| box.value_((value * 100).round) } }.defer;
+		});
 
 		^this;
 
@@ -408,8 +430,9 @@ CaosBoxGUI {
 
 					\number, {
 						view.background_(panel);
+						view.stringColor_(accent);
 						view.normalColor_(accent);
-						view.typingColor_(accentText);
+						view.typingColor_(accent);
 					},
 
 					\button, {

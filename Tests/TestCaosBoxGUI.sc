@@ -170,6 +170,23 @@ TestCaosBoxGUI : UnitTest {
 
 	}
 
+	test_trackProbabilityChangedRefreshesTheView {
+
+		var track = CaosTrack.new(\bass, \live, 4);
+		var box = CaosTestStateButton.new;
+
+		~cbox_tracks = Dictionary[\bass -> track];
+		gui.addProbabilityView(\bass, box);
+
+		CaosBox.trackProbability(\bass, 0.85);
+		gui.trackProbabilityChanged(\bass);
+		0.01.wait;
+
+		this.assertEquals(box.value, 85,
+			"the view receives the playback chance as a percentage");
+
+	}
+
 	test_caosBoxGuiIsTheSameRegistry {
 
 		this.assert(CaosBox.gui === CaosBox.gui,

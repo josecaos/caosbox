@@ -200,6 +200,89 @@ TestCaosTrack : UnitTest {
 	}
 
 	// ------------------------------------------------------------------
+	// playback probability
+	// ------------------------------------------------------------------
+
+	test_probabilityDefaultsToOneAndResets {
+
+		track = CaosTrack.new(\bass);
+
+		this.assertEquals(track.probability, 1.0,
+			"a new track always plays its active steps");
+
+		track.probability_(0.25);
+		this.assertEquals(track.probability, 0.25, "the chance is stored");
+
+		track.probability_(nil);
+		this.assertEquals(track.probability, 1.0,
+			"nil returns to the default chance");
+
+	}
+
+	test_probabilityZeroStillAdvancesTheMelodicLine {
+
+		var voice = CaosTestVoice.new(\voice);
+
+		track = CaosTrack.new(\bass, \live, 4);
+		track.setInstrument(voice);
+		track.putStep(0, true);
+		track.probability_(0.0);
+
+		track.step(0);
+		track.step(0);
+
+		this.assertEquals(voice.advances, 2,
+			"the line advances even when the step does not trigger");
+		this.assertEquals(voice.triggers, 0,
+			"probability zero never triggers");
+
+	}
+
+	test_probabilityZeroSilencesPercussion {
+
+		var playable = CaosTestPlayable.new;
+
+		track = CaosTrack.new(\kick, \snapshot, 4, { playable });
+		track.putStep(0, true);
+		track.probability_(0.0);
+
+		track.step(0);
+
+		this.assertEquals(playable.plays, 0,
+			"probability zero does not play the percussion step");
+
+	}
+
+	test_probabilityOneAlwaysTriggers {
+
+		var voice = CaosTestVoice.new(\voice);
+
+		track = CaosTrack.new(\bass, \live, 4);
+		track.setInstrument(voice);
+		track.putStep(0, true);
+		track.probability_(1.0);
+
+		track.step(0);
+		track.step(0);
+
+		this.assertEquals(voice.triggers, 2,
+			"probability one always triggers");
+
+	}
+
+	test_probabilityDoesNotTouchThePattern {
+
+		track = CaosTrack.new(\bass);
+		track.setIndices([0, 4, 8]);
+
+		track.probability_(0.5);
+
+		this.assertEquals(track.indices, [0, 4, 8],
+			"changing the chance does not edit the pattern");
+
+	}
+
+	// ------------------------------------------------------------------
 	// pattern history
 	// ------------------------------------------------------------------
 

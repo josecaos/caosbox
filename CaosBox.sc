@@ -5,7 +5,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.6.6";
+	classvar <version = "2.6.7";
 	classvar guiRegistry;
 	classvar randPatterns;
 	classvar lastPatterns;
@@ -193,6 +193,37 @@ CaosBox {
 		guiRegistry !? {|gui| gui.trackPatternChanged(track) };
 
 		^this;
+
+	}
+
+	*prProbabilityChanged {|track|
+
+		guiRegistry !? {|gui| gui.trackProbabilityChanged(track) };
+
+		^this;
+
+	}
+
+	// Probabilidad de playback por pista: no cambia el patron, solo decide si
+	// cada step activo dispara en esta pasada.
+	*trackProbability {|track, value|
+
+		var tr = this.tracks !? {|tracks| tracks[track]};
+
+		if(tr.isNil, {
+			^("CaosBox.trackProbability: unknown track " ++ track).warn;
+		});
+
+		if(value.isNil, { ^tr.probability });
+
+		if(value.isNumber.not or: { value < 0 } or: { value > 1 }, {
+			^("CaosBox.trackProbability: probability must be between 0 and 1").warn;
+		});
+
+		tr.probability_(value);
+		this.prProbabilityChanged(track);
+
+		^tr.probability;
 
 	}
 

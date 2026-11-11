@@ -216,6 +216,45 @@ TestCaosBox : UnitTest {
 
 	}
 
+	test_trackProbabilityApi {
+
+		var track = CaosTrack.new(\bass, \live, 4);
+
+		~cbox_tracks = Dictionary[\bass -> track];
+
+		this.assertEquals(CaosBox.trackProbability(\bass), 1.0,
+			"a new track is at 100 percent");
+		this.assertEquals(CaosBox.trackProbability(\bass, 0.75), 0.75,
+			"the setter returns the new chance");
+		this.assertEquals(track.probability, 0.75,
+			"the API reaches the track");
+
+		CaosBox.trackProbability(\bass, 1.5);
+		CaosBox.trackProbability(\bass, -0.1);
+
+		this.assertEquals(track.probability, 0.75,
+			"invalid chances leave the track untouched");
+
+	}
+
+	test_trackProbabilitySurvivesPatternChanges {
+
+		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });
+
+		~cbox_tracks = Dictionary[\kick -> track];
+		CaosBox.trackProbability(\kick, 0.25);
+		track.setIndices([0]);
+
+		CaosBox.randPattern(\kick, density: 1);
+		this.assertEquals(track.probability, 0.25,
+			"randPattern does not change the playback chance");
+
+		CaosBox.restorePattern(\kick);
+		this.assertEquals(track.probability, 0.25,
+			"restorePattern does not change the playback chance");
+
+	}
+
 	test_patternHistoryTracksRandomAndFill {
 
 		var track = CaosTrack.new(\kick, \snapshot, 4, { \fn });

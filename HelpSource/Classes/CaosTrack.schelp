@@ -96,6 +96,12 @@ method:: isAudible
 The resolved state: not muted and either no solo is active or this track is one
 of the solos. Code::CaosTrack.step:: uses it before triggering.
 
+method:: probability
+Read-only playback chance, set by code::CaosBox.trackProbability::. It is
+independent of the pattern: a value below 1 makes active steps miss some passes
+without editing their gates. In melodic tracks the line still advances; in
+percussion the step and its flam are skipped. The default is code::1.0::.
+
 method:: snapshotPattern
 Returns an event with copies of the complete gate and flam arrays
 (code::steps:: and code::flams::). The index is the position in those fixed-size

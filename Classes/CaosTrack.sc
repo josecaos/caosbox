@@ -29,6 +29,7 @@ CaosTrack {
 	var <>onFlamChange;
 	var <muted = false;
 	var <solo = false;
+	var <probability = 1.0;
 	var <>instrument;        // voz activa de la pista
 	var <>out;               // ruta de salida (melodicos): nombre de bus del engine
 	var <>pendingInstrument; // reemplazo que entra en el siguiente trigger
@@ -284,7 +285,7 @@ CaosTrack {
 
 	}
 
-	// --- mute / solo -------------------------------------------------
+	// --- mute / solo / playback probability ---------------------------
 
 	muted_ {|state|
 
@@ -308,6 +309,24 @@ CaosTrack {
 
 		^muted.not and: {
 			soloed.isEmpty or: { soloed.includes(this) }
+		};
+
+	}
+
+	probability_ {|value|
+
+		probability = (value ? 1.0).asFloat;
+
+		^this;
+
+	}
+
+	// Chance de que un step activo dispare en esta pasada. 0 y 1 no consumen
+	// RNG; el patron no se toca.
+	prShouldPlay {
+
+		^probability >= 1.0 or: {
+			probability > 0 and: { 1.0.rand < probability }
 		};
 
 	}
@@ -365,9 +384,12 @@ CaosTrack {
 		this.advance;
 
 		if(instrument.notNil, {
-			if(value.notNil and: { this.isAudible }, { this.trigger });
+			if(value.notNil and: { this.isAudible } and: { this.prShouldPlay }, {
+				this.trigger;
+			});
 		}, {
-			if(value.notNil and: { this.isAudible } and: { value.respondsTo(\play) }, {
+			if(value.notNil and: { this.isAudible } and: { this.prShouldPlay }
+				and: { value.respondsTo(\play) }, {
 				this.prPlayPercussion(value, index);
 			});
 		});

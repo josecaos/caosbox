@@ -1,7 +1,6 @@
 # Ajuste de layout (v2.6.6)
 
-> Cierre visual de la ventana de 1180: columnas de botones parejas y bloque
-> inferior repartido sin dejar el hueco de la derecha.
+> Cierre visual de la ventana de 1180: columnas de botones parejas y bloque inferior repartido sin dejar el hueco de la derecha.
 
 ## 1. Columnas de botones
 

@@ -9,6 +9,17 @@
 
 # Changelog 
 
+- ### v2.6.7
+    - Add playback probability per track
+        - Change the probability of
+        - Does not modifies the pattern, gates and flams
+    - API
+        - .trackProbability(track, probability 0..1)
+    - GUI
+        - Add GUI button for track probability + NumBox to set the value
+    - Tests:
+        - 465 assertions
+
 - ### v2.6.6
     - GUI
         - Add GUI button for randPattern

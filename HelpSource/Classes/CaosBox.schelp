@@ -127,6 +127,24 @@ base pattern returns automatically. Returns the link::Classes/CaosTrack::. If
 the sequencer is not running, the fill stays until it starts looping or until
 code::restorePattern:: is called.
 
+subsection:: Playback probability
+
+method:: trackProbability
+Gets or sets the playback chance of a track. Without a value it returns the
+current chance; with a value (0..1) it sets it and returns the new one.
+code::
+CaosBox.trackProbability(\kick);        // current chance
+CaosBox.trackProbability(\kick, 0.75);  // 75 percent
+CaosBox.trackProbability(\kick, 0.25);  // 25 percent
+::
+This does not edit the pattern: active steps keep their gates and flams. On each
+pass, an active step has that chance to trigger. On melodic tracks the line keeps
+advancing when the note is skipped; on percussion the play and its flam are
+skipped. Mute and solo still take precedence. The default is code::1.0::
+(100 percent). This is independent of the generation density used by
+code::randPattern:: and code::fill::, and code::restorePattern:: does not change
+it.
+
 subsection:: Mute and solo
 
 method:: mute

@@ -63,7 +63,10 @@
 - [ ] **Botón/gesto para fill** en la GUI.
 - [x] **Columnas M/S/R y bloque inferior** alineados a 1180 (v2.6.6, ver
       `17-layout-v2.6.6.md`).
-- [ ] Probabilidad por pista (100/75/50/25) sin alterar el patrón.
+- [x] **Probabilidad de playback por pista**: `trackProbability` en v2.6.7
+      (ver `18-track-probability-v2.6.7.md`).
+- [x] **GUI de probabilidad** por pista: campo `P` numérico en v2.6.7 (ver
+      `18-track-probability-v2.6.7.md`).
 - [ ] Scroll y navegación por teclado en el bloque de pistas.
 - [ ] Ruteo por step en percusión (si se quiere más allá del snapshot actual).
 - [ ] Resize: hoy es escalado proporcional y las fuentes no escalan; evaluar breakpoints
@@ -80,7 +83,7 @@
 
 ```bash
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_check_ext.scd      # compila
-HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 450 aserciones
+HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 465 aserciones
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_syntax3.scd        # 14 .scd
 ```
 

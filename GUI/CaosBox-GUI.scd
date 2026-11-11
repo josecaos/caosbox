@@ -33,15 +33,17 @@ StaticText(~cbox_w,Rect(301,805,339,15)).string_("PLAY/PAUSE:").font_(Font("Deja
 // BPM (contenedor completo del bloque y numeros con el acento global)
 StaticText(~cbox_w,Rect(650,805,100,15)).string_("BPM:").font_(Font("DejaVu Sans",11,true)).align_(\center).stringColor_(CaosBox.gui.muted);
 ~cbox_numclock=NumberBox(~cbox_w,Rect(650,820,100,25)).background_(CaosBox.gui.panel).align_(\center);
+~cbox_numclock.stringColor_(CaosBox.gui.accent);
 ~cbox_numclock.normalColor_(CaosBox.gui.accent);
-~cbox_numclock.typingColor_(CaosBox.gui.accentText);
+~cbox_numclock.typingColor_(CaosBox.gui.accent);
 ~cbox_numclock.value=126;
 ~cbox_numclock.action={ CaosBox.bpm(~cbox_numclock.value) };
 CaosBox.gui.addColorListener({|g|
 	~cbox_numclock !? {|num|
 		num.background_(g.panel);
+		num.stringColor_(g.accent);
 		num.normalColor_(g.accent);
-		num.typingColor_(g.accentText);
+		num.typingColor_(g.accent);
 	};
 });
 
