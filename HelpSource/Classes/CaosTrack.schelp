@@ -93,7 +93,8 @@ the GUI uses it to redraw the step dot.
 
 method:: muted
 Read-only state set by code::CaosBox.mute::. A muted track keeps its pattern and
-its melodic line advances, but it does not trigger or play percussion.
+its melodic line advances, but it does not trigger or play percussion audio. A
+MIDI tap attached to the track keeps receiving the command path.
 code::
 CaosBox.mute(\kick, true);
 CaosBox.mute(\kick, false);
@@ -101,8 +102,8 @@ CaosBox.mute(\kick, false);
 
 method:: solo
 Read-only state set by code::CaosBox.solo::. While at least one track is soloed,
-only the soloed tracks are audible. Several solos can coexist and mute wins over
-solo.
+only the soloed tracks are audible in CaosBox. Several solos can coexist and mute
+wins over solo. MIDI taps are not affected by the audio solo.
 code::
 CaosBox.solo(\bass, true);
 CaosBox.solo(\bass, false);
@@ -136,3 +137,15 @@ trigger (code::activatePending::).
 method:: onChange
 Callback code::{|track, index, value| ... }:: when a step changes; the GUI uses it
 to redraw.
+
+method:: onTrigger
+Audio callback code::{|track, index, value, voice| ... }:: after a step really
+triggers or plays. It does not fire for off steps, muted/soloed tracks or skipped
+playback probability. The voice is the current link::Classes/CaosInstrument:: on
+melodic tracks and code::nil:: for percussion.
+
+method:: onCommand
+Command callback code::{|track, index, value, voice| ... }:: when a step passes
+the gate and playback probability, before the audio mute/solo is applied. It is
+used by MIDI taps so the external sequence can keep running while CaosBox audio
+is muted or soloed. It does not fire for off steps or skipped probability.

@@ -178,19 +178,21 @@ CaosBox.repeaterAt(\kick, 0); // (repetitions: 4, metric: 1)
 subsection:: Mute and solo
 
 method:: mute
-Silences one track without clearing it or stopping its sequencer. The pattern is
-kept and a muted melodic line keeps advancing, but it does not trigger. A note
-that is already sounding is not cut; mute acts on the next trigger. Returns the
-new state.
+Silences the CaosBox audio of one track without clearing it or stopping its
+sequencer. The pattern is kept and a muted melodic line keeps advancing, but it
+does not trigger audio. A note that is already sounding is not cut; mute acts on
+the next trigger. MIDI taps attached to the track keep running because they use
+the command path, not the audio trigger. Returns the new state.
 code::
 CaosBox.mute(\kick, true);
 CaosBox.mute(\kick, false);
 ::
 
 method:: solo
-Makes one track the only audible one. Several tracks can be soloed at the same
-time. A muted track stays silent even when soloed (mute wins). As with mute, a
-note already sounding is not cut; solo acts on the next trigger. Returns the new
+Makes one track the only audible one in CaosBox audio. Several tracks can be
+soloed at the same time. A muted track stays silent even when soloed (mute wins).
+As with mute, a note already sounding is not cut; solo acts on the next audio
+trigger. MIDI taps keep running regardless of the audio solo. Returns the new
 state.
 code::
 CaosBox.solo(\bass, true);   // only the soloed tracks are heard

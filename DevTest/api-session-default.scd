@@ -158,20 +158,21 @@ c.restorePattern(\snare);
 c = CaosBox;
 c.environment;
 
+CaosBox.play;
+
 CaosMIDI.devices;
 CaosMIDI.connectOnly("USB X-Session");
-
-p = MIDIOut.new(2, 0);   // CH345 es destination index 2
-p.connect(2);            // crea la conexión ALSA
-p.noteOn(60, 100);
-p.noteOff(0, 60);
 //
-m = CaosMIDI.out("CH345", 0);
-m.output.connect(2);
-m.noteOn(60, 100);
-m.noteOff(60);
+CaosMIDI.detachOut(\kick);
+CaosMIDI.attachOut(\bass, "CH345", 0);
+//
+CaosMIDI.detachOut(\bass);
+CaosMIDI.attachOut(\kick, "CH345", 0, [28,36,38,39,41,43].choose);
 
-
+CaosMIDI.attachOut(\bass, "CH345", 0); // nota actual
+CaosMIDI.attachOut(\kick, "CH345", 0, note: 72);
+CaosBox.stop; // panic
+//
 CaosMIDI.monitor(true);
 
 c.stop;

@@ -9,12 +9,14 @@
 CaosMIDI {
 
 	classvar <outputPorts;
+	classvar <trackOuts;
 	classvar monitorFuncs;
 	classvar <monitorOn = false;
 
 	*initClass {
 
 		outputPorts = IdentityDictionary.new;
+		trackOuts = IdentityDictionary.new;
 
 	}
 
@@ -172,8 +174,60 @@ CaosMIDI {
 
 	}
 
+	// Engancha una salida MIDI a una pista. La voz de audio sigue sonando.
+	// En percusion `note` es obligatorio; en melodicos se usa la nota actual
+	// de CaosInstrument.
+	*attachOut {|track, device, channel = 0, note, velocity = 100|
+
+		var tr, port, trackOut;
+
+		tr = if(track.isKindOf(Symbol), {
+			CaosBox.tracks !? {|tracks| tracks[track] };
+		}, {
+			track;
+		});
+
+		if(tr.isNil or: { tr.isKindOf(CaosTrack).not }, {
+			("CaosMIDI.attachOut: unknown track " ++ track).warn;
+			^nil;
+		});
+
+		if(tr.mode == \snapshot and: { note.isNil }, {
+			("CaosMIDI.attachOut: percussion tracks need note: for " ++ tr.name).warn;
+			^nil;
+		});
+
+		port = this.out(device, channel);
+		if(port.isNil, { ^nil });
+
+		trackOuts[tr] !? {|old| old.free };
+
+		trackOut = CaosMIDITrackOut.new(tr, port, note, velocity);
+		trackOuts[tr] = trackOut;
+
+		^trackOut;
+
+	}
+
+	*detachOut {|track|
+
+		var tr, trackOut;
+
+		tr = if(track.isKindOf(Symbol), {
+			CaosBox.tracks !? {|tracks| tracks[track] };
+		}, {
+			track;
+		});
+		trackOut = trackOuts.removeAt(tr);
+		trackOut !? {|t| t.free };
+
+		^trackOut;
+
+	}
+
 	*panic {
 
+		trackOuts.do {|trackOut| trackOut !? {|t| t.panic } };
 		outputPorts.do {|port| port !? {|p| p.allNotesOff } };
 		^this;
 
@@ -217,6 +271,8 @@ CaosMIDI {
 	*free {
 
 		this.monitor(false);
+		trackOuts.do {|trackOut| trackOut !? {|t| t.free } };
+		trackOuts = IdentityDictionary.new;
 		this.panic;
 		this.disconnectAll;
 		outputPorts = IdentityDictionary.new;

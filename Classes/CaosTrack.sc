@@ -30,6 +30,8 @@ CaosTrack {
 	var <>onChange;
 	var <>onFlamChange;
 	var <>onRepeaterChange;
+	var <>onTrigger;
+	var <>onCommand;
 	var <muted = false;
 	var <solo = false;
 	var <probability = 1.0;
@@ -478,16 +480,24 @@ CaosTrack {
 		this.advance;
 
 		if(instrument.notNil, {
-			if(value.notNil and: { this.isAudible } and: { this.prShouldPlay }, {
-				this.trigger;
-				voice = instrument;
-				repeater !? { this.prScheduleRepeater(repeater, stepDur, false, nil, voice) };
+			if(value.notNil and: { this.prShouldPlay }, {
+				if(this.isAudible, {
+					this.trigger;
+					voice = instrument;
+					this.prTriggered(index, value, voice);
+					repeater !? { this.prScheduleRepeater(repeater, stepDur, false, nil, voice) };
+				});
+				this.prCommand(index, value, instrument);
 			});
 		}, {
-			if(value.notNil and: { this.isAudible } and: { this.prShouldPlay }
+			if(value.notNil and: { this.prShouldPlay }
 				and: { value.respondsTo(\play) }, {
-				this.prPlayPercussion(value, index);
-				repeater !? { this.prScheduleRepeater(repeater, stepDur, true, value, nil) };
+				if(this.isAudible, {
+					this.prPlayPercussion(value, index);
+					this.prTriggered(index, value, nil);
+					repeater !? { this.prScheduleRepeater(repeater, stepDur, true, value, nil) };
+				});
+				this.prCommand(index, value, nil);
 			});
 		});
 
@@ -590,6 +600,20 @@ CaosTrack {
 	prRepeaterChanged { |index, value|
 
 		if(onRepeaterChange.notNil, { onRepeaterChange.value(this, index, value) });
+
+	}
+
+	prTriggered { |index, value, voice|
+
+		if(onTrigger.notNil, { onTrigger.value(this, index, value, voice) });
+
+	}
+
+	// Evento de comando: gate + probabilidad, independiente del mute/solo de
+	// audio. Lo consume el tap MIDI.
+	prCommand { |index, value, voice|
+
+		if(onCommand.notNil, { onCommand.value(this, index, value, voice) });
 
 	}
 

@@ -70,8 +70,24 @@ m.noteOn(48, 100);
 m.noteOff(48);
 ::
 
+method:: attachOut
+Attaches a link::Classes/CaosMIDITrackOut:: to a track without replacing its
+audio voice. Percussion requires code::note::: melodic tracks use the current
+instrument note.
+code::
+CaosMIDI.attachOut(\kick, "CH345", 0, note: 36);
+CaosMIDI.attachOut(\bass, "CH345", 0);
+::
+The previous MIDI note is turned off on the next command. Audio mute/solo does
+not stop the tap; playback probability still applies because the command path
+uses the same gate.
+
+method:: detachOut
+Removes the tap from a track and releases its callback.
+
 method:: panic
-Sends all-notes-off on every output created through CaosMIDI.
+Sends note-off for pending track notes and all-notes-off on every output created
+through CaosMIDI.
 
 method:: monitor
 method:: monitorOff

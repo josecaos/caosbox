@@ -297,6 +297,89 @@ TestCaosTrack : UnitTest {
 	}
 
 	// ------------------------------------------------------------------
+	// trigger callback
+	// ------------------------------------------------------------------
+
+	test_onTriggerFiresOnlyForAudibleSteps {
+
+		var voice = CaosTestVoice.new(\voice);
+		var calls = 0;
+
+		track = CaosTrack.new(\bass, \live, 4);
+		track.setInstrument(voice);
+		track.onTrigger = {|t, index, value, triggeredVoice| calls = calls + 1 };
+		track.putStep(0, true);
+
+		track.step(0);
+		this.assertEquals(calls, 1, "an active step notifies the trigger");
+
+		track.step(1);
+		this.assertEquals(calls, 1, "an off step does not notify");
+
+		track.probability_(0.0);
+		track.step(0);
+		this.assertEquals(calls, 1, "a skipped probability does not notify");
+
+	}
+
+	test_onCommandSurvivesAudioMute {
+
+		var voice = CaosTestVoice.new(\voice);
+		var commands = 0;
+		var triggers = 0;
+
+		track = CaosTrack.new(\bass, \live, 4);
+		track.setInstrument(voice);
+		track.onCommand = {|t, i, value, v| commands = commands + 1 };
+		track.onTrigger = {|t, i, value, v| triggers = triggers + 1 };
+		track.putStep(0, true);
+		track.muted_(true);
+
+		track.step(0);
+
+		this.assertEquals(commands, 1,
+			"the MIDI command survives an audio mute");
+		this.assertEquals(triggers, 0,
+			"the audio trigger is still muted");
+
+	}
+
+	test_onCommandStillRespectsProbability {
+
+		var voice = CaosTestVoice.new(\voice);
+		var commands = 0;
+
+		track = CaosTrack.new(\bass, \live, 4);
+		track.setInstrument(voice);
+		track.onCommand = {|t, i, value, v| commands = commands + 1 };
+		track.putStep(0, true);
+		track.probability_(0.0);
+
+		track.step(0);
+
+		this.assertEquals(commands, 0,
+			"probability zero also skips the MIDI command");
+
+	}
+
+	test_onTriggerFiresForPercussionOnlyWhenItPlays {
+
+		var playable = CaosTestPlayable.new;
+		var calls = 0;
+
+		track = CaosTrack.new(\kick, \snapshot, 4, { playable });
+		track.onTrigger = {|t, index, value, voice| calls = calls + 1 };
+		track.putStep(0, true);
+
+		track.step(0);
+		this.assertEquals(calls, 1, "a played percussion step notifies");
+
+		track.step(1);
+		this.assertEquals(calls, 1, "an empty percussion step does not notify");
+
+	}
+
+	// ------------------------------------------------------------------
 	// playback probability
 	// ------------------------------------------------------------------
 

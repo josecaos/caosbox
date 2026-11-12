@@ -64,6 +64,75 @@ TestCaosMIDI : UnitTest {
 
 	}
 
+	test_trackOutSendsPercussionNotesAndNoteOff {
+
+		var sink = CaosTestMIDISink.new;
+		var playable = CaosTestPlayable.new;
+		var track = CaosTrack.new(\kick, \snapshot, 4, { playable });
+		var tap;
+
+		track.putStep(0, true);
+		tap = CaosMIDITrackOut.new(track, sink, 36, 100);
+
+		track.step(0);
+		this.assertEquals(sink.messages[0], [\noteOn, 36, 100]);
+
+		track.step(0);
+		this.assertEquals(sink.messages[1], [\noteOff, 36]);
+		this.assertEquals(sink.messages[2], [\noteOn, 36, 100]);
+
+		tap.panic;
+		this.assertEquals(sink.messages.last, [\noteOff, 36]);
+
+	}
+
+	test_trackOutUsesTheCurrentMelodicNote {
+
+		var sink = CaosTestMIDISink.new;
+		var voice = CaosTestNoteVoice.new(60);
+		var track = CaosTrack.new(\bass, \live, 4);
+		var tap;
+
+		track.setInstrument(voice);
+		track.putStep(0, true);
+		tap = CaosMIDITrackOut.new(track, sink, nil, 90);
+
+		track.step(0);
+
+		this.assertEquals(sink.messages[0], [\noteOn, 60, 90]);
+
+	}
+
+	test_trackOutKeepsSendingWhenAudioIsMuted {
+
+		var sink = CaosTestMIDISink.new;
+		var track = CaosTrack.new(\kick, \snapshot, 4, { CaosTestPlayable.new });
+		var tap;
+
+		track.putStep(0, true);
+		track.muted_(true);
+		tap = CaosMIDITrackOut.new(track, sink, 36, 100);
+
+		track.step(0);
+
+		this.assertEquals(sink.messages[0], [\noteOn, 36, 100],
+			"MIDI continues while the audio track is muted");
+
+	}
+
+	test_trackOutClearsTheTriggerCallback {
+
+		var sink = CaosTestMIDISink.new;
+		var track = CaosTrack.new(\kick, \snapshot, 4, { CaosTestPlayable.new });
+		var tap;
+
+		tap = CaosMIDITrackOut.new(track, sink, 36);
+		tap.free;
+
+		this.assert(track.onCommand.isNil, "free releases the track callback");
+
+	}
+
 	test_endpointSelection {
 
 		var kick = MIDIEndPoint("Xsession", "in", 10);
@@ -100,5 +169,50 @@ CaosTestMIDIBackend {
 	program {|chan, value| messages.add([\program, chan, value]); ^this }
 	bend {|chan, value| messages.add([\bend, chan, value]); ^this }
 	allNotesOff {|chan| messages.add([\allNotesOff, chan]); ^this }
+
+}
+
+
+// Salida MIDI falsa para probar el tap por track
+CaosTestMIDISink {
+
+	var <messages;
+
+	*new { ^super.new.init }
+
+	init {
+
+		messages = List.new;
+		^this;
+
+	}
+
+	noteOn {|note, velocity| messages.add([\noteOn, note, velocity]); ^this }
+	noteOff {|note| messages.add([\noteOff, note]); ^this }
+
+}
+
+// Voz melódica falsa con nota actual
+CaosTestNoteVoice {
+
+	var <note;
+	var <advances;
+	var <triggers;
+
+	*new {|note| ^super.new.init(note) }
+
+	init {|argNote|
+
+		note = argNote;
+		advances = 0;
+		triggers = 0;
+		^this;
+
+	}
+
+	advance { advances = advances + 1; ^this }
+	trigger { triggers = triggers + 1; ^this }
+	release { ^this }
+	free { ^this }
 
 }

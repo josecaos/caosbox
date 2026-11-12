@@ -5,7 +5,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.7.0";
+	classvar <version = "2.7.1";
 	classvar guiRegistry;
 	classvar randPatterns;
 	classvar lastPatterns;
@@ -479,6 +479,7 @@ CaosBox {
 	*stop {
 
 		~cbox_seq !? { |seq| seq.stop };
+		CaosMIDI.panic;
 		this.prPauseAutomations;
 		this.gui.playhead(nil);// la rejilla no deja la columna encendida
 		this.prSetView(~cbox_bot, 0);

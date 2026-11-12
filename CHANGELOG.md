@@ -3,7 +3,6 @@
 
 ---
 ### TODOs:
-- CaosMIDI + CaosMIDIOut + CaosMIDIIn + panic + monitor + preset XSession.
 - Tap de salida por track con note map y noteOff en próximo trigger.
 - Mapeo configurable + learn + persistencia + filtros.
 - Teclado monofónico, después polifonía.
@@ -12,6 +11,28 @@
 ---
 
 # Changelog 
+
+
+- ### v2.7.1
+    - MIDI output per track
+        - Keep the CaosBox audio voice and add MIDI on top
+        - API
+            - .attachOut(track, device, channel, note, velocity)
+            - .detachOut(track)
+        - CaosMIDITrackOut
+            - Listens to the track command event
+            - Percussion uses an explicit note map
+            - Melodic tracks use the current CaosInstrument note
+        - CaosTrack
+            - .onTrigger: audio event, as before
+            - .onCommand: gate/probability event for MIDI
+        - Audio mute/solo no longer stops MIDI output
+            - CaosBox.mute and CaosBox.solo affect only CaosBox audio
+            - Playback probability still gates both paths
+        - Previous MIDI note is turned off on the next step
+        - .panic on CaosBox.stop and CaosMIDI.free
+    - Tests
+        - 530 assertions
 
 - ### v2.7.0
     - Create new classes for MIDI

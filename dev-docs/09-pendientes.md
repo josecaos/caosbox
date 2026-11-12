@@ -87,7 +87,7 @@
 
 ```bash
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_check_ext.scd      # compila
-HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 515 aserciones
+HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 530 aserciones
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_syntax3.scd        # 14 .scd
 ```
 
@@ -99,7 +99,7 @@ HOME=/tmp/dsh_sc_home sclang /tmp/dsh_syntax3.scd        # 14 .scd
 
 - [x] Foundation: `CaosMIDI` + `CaosMIDIOut` + monitor/panic (v2.7.0).
 - [x] Smoke test de hardware: `Tests/test-midi.scd`.
-- [ ] Salida MIDI por track.
+- [x] Salida MIDI por track: `CaosMIDI.attachOut` (v2.7.1).
 - [ ] Teclado MIDI.
 - [ ] Mapeo/learn/persistencia.
 - [ ] MIDI clock.

@@ -1,0 +1,40 @@
+title:: CaosMIDITrackOut
+summary:: MIDI output tap for one track: audio and MIDI together.
+categories:: CaosBox
+related:: Classes/CaosMIDI, Classes/CaosTrack, Classes/CaosMIDIOut
+
+description::
+Listens to link::Classes/CaosTrack#-onTrigger:: and repeats the current step as a
+MIDI note on a link::Classes/CaosMIDIOut::. It does not replace the audio voice;
+both outputs sound together.
+
+On melodic tracks the note comes from the current
+link::Classes/CaosInstrument#-note::. On percussion tracks the note must be
+explicit (for example kick 36, snare 38). The previous note is turned off when
+the track triggers again; code::panic:: turns off the pending note.
+
+The tap listens to link::Classes/CaosTrack#-onCommand::, so audio mute/solo does
+not stop the MIDI sequence. Playback probability still applies to both.
+
+classmethods::
+
+method:: new
+code::
+tap = CaosMIDITrackOut(track, midiOut, 36, 100);
+::
+
+instancemethods::
+
+method:: track
+method:: out
+method:: noteNumber
+method:: velocity
+Read-only tap configuration.
+
+method:: panic
+Sends note-off for the last note and clears it. The sequencer does not need to
+stop.
+
+method:: free
+Calls code::panic:: and releases the track's trigger callback.
+
