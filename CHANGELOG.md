@@ -3,11 +3,38 @@
 
 ---
 ### TODOs:
-
+- CaosMIDI + CaosMIDIOut + CaosMIDIIn + panic + monitor + preset XSession.
+- Tap de salida por track con note map y noteOff en próximo trigger.
+- Mapeo configurable + learn + persistencia + filtros.
+- Teclado monofónico, después polifonía.
+- Pitch bend/aftertouch, program change.
+- MIDI clock/transport.
 ---
 
 # Changelog 
 
+- ### v2.7.0
+    - Create new classes for MIDI
+        - CaosMIDI 
+            - .start
+            - .connect
+            - .connectAll
+            - .disconnectAll
+            - .connectOnly(deviceName/deviceIndex)
+            - inputs, destinations, devices
+            - .out(device, channel)
+        - CaosMIDIOut
+            - .noteOn, .noteOff, .cc, .program, .bend, .allNotesOff y .connect
+            - .panic
+                - All-notes-off
+            - .monitor(true/false)
+            - .free
+    - Linux fix for CaosMIDI.out connection
+    - If MIDI ain't available, Warns and continues
+    - Legacy XSession mapping still remains
+    - Tests
+        - 515 assertions
+         
 - ### v2.6.8
     - Implement Repeater functionality
         - Repetitions are extra steps

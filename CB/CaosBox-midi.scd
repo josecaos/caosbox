@@ -4,7 +4,9 @@
 (
 var specs;
 
-MIDIIn.connectAll;
+// El cliente MIDI se inicializa despues del boot para no bloquear la
+// bienvenida; el mapa XSession queda registrado mientras tanto.
+{ ~cbox_url !? { CaosMIDI.start(autoConnect: true) } }.defer(0.1);
 
 ~cbox_midi_funcs = List.new;
 

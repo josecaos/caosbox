@@ -50,6 +50,7 @@
 
 ## 6. Backlog nuevo de GUI
 
+
 - [x] **Flam por step**: marca en el step + segundo disparo corto; cerrado en v2.6.1.
 - [x] Mute/solo por pista: cerrado en v2.6.2 (ver `12-mute-solo-v2.6.2.md`).
 - [x] **Randomize/evolución por pista**: `randPattern`/`stopRandPattern` en v2.6.3
@@ -86,9 +87,19 @@
 
 ```bash
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_check_ext.scd      # compila
-HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 500 aserciones
+HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 515 aserciones
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_syntax3.scd        # 14 .scd
 ```
 
 > Nota: los scripts de `/tmp` son de la sesión; si no están, recrear el entorno
 > headless con los symlinks de extensiones y los scripts de test.
+
+
+## 9. MIDI (v2.7.x)
+
+- [x] Foundation: `CaosMIDI` + `CaosMIDIOut` + monitor/panic (v2.7.0).
+- [x] Smoke test de hardware: `Tests/test-midi.scd`.
+- [ ] Salida MIDI por track.
+- [ ] Teclado MIDI.
+- [ ] Mapeo/learn/persistencia.
+- [ ] MIDI clock.

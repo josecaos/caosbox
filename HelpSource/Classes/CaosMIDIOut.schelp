@@ -1,0 +1,42 @@
+title:: CaosMIDIOut
+summary:: MIDI output wrapper with channel and range validation.
+categories:: CaosBox
+related:: Classes/CaosMIDI, Classes/MIDIOut
+
+description::
+Wraps a link::Classes/MIDIOut:: backend, fixes its channel and validates MIDI
+ranges. The backend is injectable, so the class can be tested without hardware.
+
+classmethods::
+
+method:: new
+code::
+m = CaosMIDIOut(MIDIOut.newByName("BassStation", "out"), 1);
+m.noteOn(48, 100);
+m.noteOff(48);
+::
+
+instancemethods::
+
+method:: noteOn
+method:: noteOff
+Send notes with 0..127 range. Velocity is preserved.
+
+method:: cc
+Sends a control change with controller and value in 0..127.
+
+method:: program
+Sends a program change.
+
+method:: bend
+Sends pitch bend in 0..16383.
+
+method:: allNotesOff
+Sends CC 123 (all notes off) on the wrapper channel.
+
+method:: connect
+method:: disconnect
+Linux only. Creates or removes the ALSA/JACK connection from the SuperCollider
+output port to a destination index. code::CaosMIDI.out:: does this
+automatically on Linux.
+

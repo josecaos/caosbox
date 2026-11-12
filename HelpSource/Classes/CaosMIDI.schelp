@@ -1,0 +1,86 @@
+title:: CaosMIDI
+summary:: MIDI infrastructure: devices, connections, output wrappers and monitor.
+categories:: CaosBox
+related:: Classes/CaosMIDIOut, Classes/MIDIOut, Classes/MIDIIn
+
+description::
+CaosMIDI is the MIDI infrastructure layer. It initializes the MIDI client,
+lists the external inputs and outputs, connects devices and creates
+link::Classes/CaosMIDIOut:: wrappers. It does not know about tracks, instruments
+or the GUI.
+
+By default code::start:: does not connect any input: select one device, or use
+code::connectAll:: when there is only one controller. If MIDI is unavailable,
+code::start:: posts a warning and returns instead of stopping CaosBox.
+
+The legacy XSession mapping still lives in code::CB/CaosBox-midi.scd:: while the
+configurable mapping layer is developed. That script calls
+code::CaosMIDI.start(autoConnect: true):: to preserve the current startup.
+
+classmethods::
+
+method:: start
+Initializes the MIDI client. With code::autoConnect: true:: it also connects all
+inputs.
+code::
+CaosMIDI.start;                    // init, no input connected
+CaosMIDI.start(autoConnect: true); // legacy XSession bootstrap
+::
+
+method:: inputs
+method:: destinations
+method:: devices
+Return the currently available external MIDI endpoints. code::devices:: returns
+code::(inputs: ..., destinations: ...)::.
+code::
+CaosMIDI.devices;
+::
+
+method:: connectAll
+Connects all external inputs. Useful when there is only one controller.
+
+method:: connect
+Connects one input by endpoint, list index, device name or uid. Inputs and
+outputs are separate lists; an index is the position inside code::inputs::.
+code::
+CaosMIDI.connect("USB X-Session");
+CaosMIDI.connect(CaosMIDI.inputs[3], 0);
+CaosMIDI.connect(3, 0); // input list index 3
+::
+The second argument is the SuperCollider input port. If the startup already
+called code::connectAll::, disconnect first or use code::connectOnly::.
+
+method:: connectOnly
+Disconnects every input and connects only the selected device.
+code::
+CaosMIDI.connectOnly("USB X-Session");
+::
+
+method:: disconnectAll
+Disconnects all MIDI inputs.
+
+method:: out
+Returns a cached link::Classes/CaosMIDIOut:: for a destination and channel. The
+destination can be an endpoint, list index, device name or uid. On Linux it
+also creates the ALSA/JACK output connection automatically; pass
+code::autoConnect: false:: to avoid it.
+code::
+m = CaosMIDI.out("USB X-Session", 0);
+m.noteOn(48, 100);
+m.noteOff(48);
+::
+
+method:: panic
+Sends all-notes-off on every output created through CaosMIDI.
+
+method:: monitor
+method:: monitorOff
+Simple console monitor for note on/off, CC, program change and bend.
+code::
+CaosMIDI.monitor(true);
+CaosMIDI.monitor(false);
+::
+
+method:: free
+Stops the monitor, sends panic, disconnects inputs and clears cached outputs.
+

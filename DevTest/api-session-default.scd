@@ -68,6 +68,7 @@ c.setSteps(\hihats);
 
 t = g.new;
 t.snare();
+t.snare(\master,0.01,0.015);
 t.toTrack([0,8,16,24], true);
 t.snare(60);
 t.snare(60,0.01,0.125,136,0.125,1,0.25,0.125,[0.12,-0.12]);
@@ -144,25 +145,38 @@ c.randomTime(true, true, [10,20,30,40,50,60,70,80,90,100]);
 c.randomTime(false, false, [10,20,30,40,50,60,70,80,90,100]);
 c.toggleMetric();
 
-// Groove nuevo, se queda
 c.randPattern(\kick, density: 0.5);
-// Groove que cambia cada 4 vueltas
 c.randPattern(\kick, density: 0.35, every: 4);
-// Congela la evolución, sin volver atrás
 c.stopRandPattern(\kick);
-// Fill de una vuelta y vuelve solo
 c.fill(\snare, density: 0.15);
-// Break de dos vueltas
 c.fill(\hihats, density: 0.6, loops: 2);
 //
 c.restorePattern(\kick);
 c.restorePattern(\snare);
 
+// MIDI tests
+c = CaosBox;
+c.environment;
 
-c.browse;
+CaosMIDI.devices;
+CaosMIDI.connectOnly("USB X-Session");
+
+p = MIDIOut.new(2, 0);   // CH345 es destination index 2
+p.connect(2);            // crea la conexión ALSA
+p.noteOn(60, 100);
+p.noteOff(0, 60);
+//
+m = CaosMIDI.out("CH345", 0);
+m.output.connect(2);
+m.noteOn(60, 100);
+m.noteOff(60);
+
+
+CaosMIDI.monitor(true);
 
 c.stop;
 
+c.browse;
 c.version
 c.prPauseAutomations
 c.voices
