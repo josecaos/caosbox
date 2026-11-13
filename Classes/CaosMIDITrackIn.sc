@@ -51,7 +51,7 @@ CaosMIDITrackIn {
 	}
 
 	// MIDIIn ya convierte noteOn velocity 0 en noteOff; si esa opcion esta
-	// apagada, lo cubrimos aca.
+	// apagada, lo cubrimos aquí.
 	noteOn { |noteNumber, velocity = 100|
 
 		var num = noteNumber.asInteger.clip(0, 127);

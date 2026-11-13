@@ -37,7 +37,7 @@ StaticText(win, Rect(16, 10, 620, 24))
 	.font_(Font("DejaVu Sans", 16, true))
 	.stringColor_(labelColor);
 StaticText(win, Rect(16, 34, 980, 16))
-	.string_("Tres vistas sobre el mismo CaosTrack(\\bass). Pintá arrastrando en A, arrastrá en B, o tocá los CheckBox.")
+	.string_("Tres vistas sobre el mismo CaosTrack(\\bass). Pinta arrastrando en A, arrastra en B, o toca los CheckBox.")
 	.font_(Font("DejaVu Sans", 10))
 	.stringColor_(mutedColor);
 

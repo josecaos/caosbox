@@ -45,7 +45,7 @@ Se parte el trabajo en pasos chicos:
    gratis, pero sus celdas son de tamaño fijo (`thumbSize`, 12 px) salvo
    `elasticMode_` + `thumbSize_`, no permite color por paso ni huecos de grupo, y su
    estilo es el del widget. Es una opción válida para "salir rápido", no para la vista
-   que querés.
+   que quieres.
 7. **Resize = geometría calculada + `onResize`.** Se mantiene el look; el bloque de
    pistas y el transporte se recalculan desde variables (márgenes, alto de fila,
    spacing). Los paneles de FX se reflowan en 5b.

@@ -1,4 +1,4 @@
-## CaosBox v2.7.2
+## CaosBox v2.7.3
 
 **It's a not-so-common LiveCoding/AlgoRave music Secuencer/Processor for the CaosPercLib Class library, with a programming Interface and a GUI written in SuperCollider.**
 

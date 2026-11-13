@@ -11,6 +11,9 @@
 
 # Changelog 
 
+- ### v2.7.3
+    - 
+
 - ### v2.7.2
     - MIDI
         - Keyboard input for melodic tracks
