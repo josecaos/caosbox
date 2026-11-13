@@ -12,6 +12,8 @@ CaosMIDI {
 	classvar <trackOuts;
 	classvar <trackIns;
 	classvar <masterSyncs;
+	classvar <slaveSync;
+	classvar slaveRandomTime = false;
 	classvar monitorFuncs;
 	classvar <monitorOn = false;
 
@@ -21,6 +23,8 @@ CaosMIDI {
 		trackOuts = IdentityDictionary.new;
 		trackIns = IdentityDictionary.new;
 		masterSyncs = Dictionary.new;
+		slaveSync = nil;
+		slaveRandomTime = false;
 
 	}
 
@@ -351,6 +355,60 @@ CaosMIDI {
 
 	}
 
+	// Engancha un clock esclavo: CaosBox sigue el tempo y el transporte del
+	// equipo externo. Una sola fuente; adjuntar otra reemplaza la anterior.
+	*attachSlaveSync {|device|
+
+		var seq, src, sync;
+
+		if(MIDIClient.initialized.not, { this.start(false) });
+
+		seq = ~cbox_seq;
+		if(seq.isNil, {
+			"CaosMIDI.attachSlaveSync: CaosBox sequencer is not running".warn;
+			^nil;
+		});
+
+		src = this.prFind(this.inputs, device);
+		if(src.isNil, {
+			("CaosMIDI.attachSlaveSync: input not found " ++ device).warn;
+			^nil;
+		});
+
+		this.detachSlaveSync;
+
+		sync = CaosMIDISlaveSync.new(seq);
+		sync.install(src.uid);
+		slaveSync = sync;
+
+		slaveRandomTime = seq.randomTime;
+		seq.externalClock = true;
+		CaosBox.randomTime(false);
+
+		^sync;
+
+	}
+
+	*detachSlaveSync {
+
+		var sync = slaveSync, seq;
+
+		slaveSync = nil;
+		sync !? {|it| it.free };
+
+		seq = ~cbox_seq;
+		if(seq.notNil, {
+			seq.externalClock = false;
+			seq.prApplyTempo;
+			CaosBox.randomTime(slaveRandomTime ? false);
+		});
+
+		slaveRandomTime = false;
+
+		^sync;
+
+	}
+
 	*panic {
 
 		trackIns.do {|tap| tap !? {|t| t.releaseAll } };
@@ -397,6 +455,7 @@ CaosMIDI {
 
 	*free {
 
+		this.detachSlaveSync;
 		this.monitor(false);
 		masterSyncs.do {|sync| sync !? {|s| s.free } };
 		masterSyncs = Dictionary.new;

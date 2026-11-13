@@ -79,6 +79,26 @@ TestCaosSequencer : UnitTest {
 
 	}
 
+	test_externalClockDoesNotOverrideTempo {
+
+		var before = TempoClock.default.tempo;
+
+		seq.externalClock = true;
+		seq.bpm = 140;
+
+		this.assertFloatEquals(TempoClock.default.tempo, before,
+			"con clock externo la caja no pisa el tempo", 0.0001);
+
+		seq.externalClock = false;
+		seq.bpm = 140;
+
+		this.assertFloatEquals(TempoClock.default.tempo, 140 / 60,
+			"sin slave vuelve a mandar la caja", 0.0001);
+
+		seq.bpm = 120;
+
+	}
+
 	test_tempoChangeNotifiesTheView {
 
 		var seen = List.new;

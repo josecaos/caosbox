@@ -124,7 +124,6 @@ CaosMIDI.attachMasterSync("CH345");
 link::Classes/CaosBox#-play:: sends Start (or Continue when resuming),
 code::pause:: and code::stop:: send Stop. The clock keeps ticking while the
 external device is stopped.
-A slave sync (CaosBox following an external clock) is not implemented yet.
 
 method:: detachMasterSync
 Stops the clock and sends Stop to the device.
@@ -134,6 +133,22 @@ method:: stopMasterSyncs
 Internal transport fan-out used by link::Classes/CaosBox::. code::startMasterSyncs(true)::
 sends Continue only to taps that already received Start or Continue; otherwise it
 sends Start, so a clock attached during a pause does not leave the device stopped.
+
+method:: attachSlaveSync
+Attaches a link::Classes/CaosMIDISlaveSync:: to an input. CaosBox follows the
+external 24 ppqn clock and its Start/Stop/Continue transport: Start resets and
+plays, Stop pauses and keeps the step, Continue resumes. Only one slave source is
+active; attaching another replaces it.
+code::
+CaosMIDI.attachSlaveSync("USB MIDI Interface");
+::
+While attached, code::CaosSequencer.externalClock:: is true and `randomTime` is
+disabled; detaching restores both. The input has to be connected first, as with
+code::attachIn::.
+
+method:: detachSlaveSync
+Stops following the external clock, restores the previous tempo behavior and
+the previous `randomTime` state.
 
 method:: panic
 Sends note-off for pending track notes and keyboard keys, and all-notes-off on
@@ -148,6 +163,6 @@ CaosMIDI.monitor(false);
 ::
 
 method:: free
-Stops the monitor, frees the master syncs, input taps and track outputs, sends
-panic, disconnects inputs and clears cached outputs.
+Stops the monitor, detaches the slave sync, frees the master syncs, input taps
+and track outputs, sends panic, disconnects inputs and clears cached outputs.
 

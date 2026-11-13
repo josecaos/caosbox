@@ -1,0 +1,68 @@
+title:: CaosMIDISlaveSync
+summary:: MIDI clock slave tap: follows an external clock and transport.
+categories:: CaosBox
+related:: Classes/CaosMIDI, Classes/CaosSequencer, Classes/CaosBox
+
+description::
+Listens to MIDI clock (24 ppqn) from one input and adjusts
+link::Classes/TempoClock:: so the CaosBox sequencer follows the external tempo.
+The tempo is estimated from a window of 24 intervals (one beat), updated once
+per beat and smoothed; the BPM value also reaches the GUI.
+
+It follows the external transport:
+
+list::
+## Start: resets CaosBox to step 0 and plays.
+## Stop: pauses CaosBox and keeps the step for Continue.
+## Continue: resumes from the current step.
+::
+
+While the slave sync is attached, code::CaosSequencer.externalClock:: is true, so
+the sequencer does not overwrite the tempo. `randomTime` is disabled and restored
+when the sync is detached.
+
+The usual entry point is link::Classes/CaosMIDI#-attachSlaveSync::. The input has
+to be connected first: the CaosBox bootstrap calls code::connectAll::, otherwise
+use code::CaosMIDI.connect:: before attaching.
+
+classmethods::
+
+method:: window
+method:: minBpm
+method:: maxBpm
+Estimation window in intervals, and accepted BPM range.
+
+method:: new
+code::
+s = CaosMIDISlaveSync(seq);                 // TempoClock.default, Main.elapsedTime
+s = CaosMIDISlaveSync(seq, clock, timeFunc, transport);
+::
+
+instancemethods::
+
+method:: install
+Connects the MIDI clock, start, stop and continue responders to a source uid.
+code::
+s.install(src.uid);
+::
+
+method:: free
+Frees the responders. It does not restore the sequencer; that is handled by
+code::CaosMIDI.detachSlaveSync::.
+
+method:: handleClock
+Entry point for one clock tick. It can be called directly in tests.
+
+method:: handleStart
+method:: handleStop
+method:: handleContinue
+Transport handlers. They call the injected transport object, which defaults to
+link::Classes/CaosBox::.
+
+method:: seq
+method:: clock
+method:: transport
+Read-only objects used by the tap.
+
+method:: lastBpm
+Last smoothed BPM estimate, or nil before the first update.

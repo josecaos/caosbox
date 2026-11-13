@@ -19,12 +19,17 @@ to 0.
 method:: bpm
 method:: stepDur
 method:: randomTime
+method:: externalClock
 code::
 s = CaosSequencer.new(step: {|i| i.postln }, size: 32);
 s.bpm = 126;
 s.stepDur = 0.25;
 s.randomTime = true;
+s.externalClock = true; // the tempo comes from a slave clock
 ::
+With code::externalClock:: true, code::bpm:: and code::onTempoChange:: keep
+working, but the sequencer does not write code::TempoClock.tempo::. The slave
+sync owns the tempo; code::randomTime:: is ignored while the flag is on.
 
 method:: onTempoChange
 Callback code::{|bpm| ... }:: when the effective tempo changes, including the value

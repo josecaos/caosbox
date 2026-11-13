@@ -416,6 +416,47 @@ TestCaosMIDI : UnitTest {
 
 	}
 
+	test_slaveClockEstimatesTempo {
+
+		var seq = CaosTestSlaveSeq.new;
+		var clock = CaosTestSlaveClock.new;
+		var transport = CaosTestTransport.new;
+		var times = Array.series(26, 0, 60 / 126 / 24);
+		var i = 0;
+		var sync = CaosMIDISlaveSync.new(seq, clock, {
+			var t = times[i];
+			i = i + 1;
+			t;
+		}, transport);
+
+		25.do { sync.handleClock };
+
+		this.assertFloatEquals(clock.tempo, 126 / 60,
+			"estima 126 BPM desde los ticks", 0.01);
+		this.assertEquals(seq.bpm, 126,
+			"el BPM redondeado llega a la secuencia");
+
+	}
+
+	test_slaveClockFollowsTransport {
+
+		var seq = CaosTestSlaveSeq.new;
+		var clock = CaosTestSlaveClock.new;
+		var transport = CaosTestTransport.new;
+		var sync = CaosMIDISlaveSync.new(seq, clock, nil, transport);
+
+		sync.handleStart;
+		this.assertEquals(transport.messages[0], \stop);
+		this.assertEquals(transport.messages[1], \play);
+
+		sync.handleStop;
+		this.assertEquals(transport.messages[2], \pause);
+
+		sync.handleContinue;
+		this.assertEquals(transport.messages[3], \play);
+
+	}
+
 	test_endpointSelection {
 
 		var kick = MIDIEndPoint("Xsession", "in", 10);
@@ -575,5 +616,51 @@ CaosTestMIDIClockOut {
 	start { messages.add([\start]); ^this }
 	stop { messages.add([\stop]); ^this }
 	continue { messages.add([\continue]); ^this }
+
+}
+
+// Secuencia falsa para el slave: solo guarda el BPM que le mandan
+CaosTestSlaveSeq {
+
+	var <bpm = 120;
+
+	*new { ^super.new.init }
+
+	init { bpm = 120; ^this }
+
+	bpm_ {|value| bpm = value; ^this }
+
+}
+
+// Reloj falso para el slave: guarda el tempo en beats/segundo
+CaosTestSlaveClock {
+
+	var <tempo = 2.0;
+
+	*new { ^super.new.init }
+
+	init { tempo = 2.0; ^this }
+
+	tempo_ {|value| tempo = value; ^this }
+
+}
+
+// Transporte falso: registra Stop / Play / Pause
+CaosTestTransport {
+
+	var <messages;
+
+	*new { ^super.new.init }
+
+	init {
+
+		messages = List.new;
+		^this;
+
+	}
+
+	stop { messages.add(\stop); ^this }
+	play { messages.add(\play); ^this }
+	pause { messages.add(\pause); ^this }
 
 }

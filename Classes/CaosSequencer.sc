@@ -25,6 +25,7 @@ CaosSequencer {
 	var <running = false;
 	var <paused = false;
 	var <prepared = false;
+	var <>externalClock = false;// el tempo lo manda un clock externo
 	var <tdef;
 	var stepFunc, prepareFunc;
 	var <>onTempoChange;// aviso a la vista - numbox de BPM
@@ -168,7 +169,7 @@ CaosSequencer {
 
 	prApplyTempo {
 
-		TempoClock.tempo = bpm / 60;
+		if(externalClock.not, { TempoClock.tempo = bpm / 60; });
 		this.prNotifyTempo(bpm);
 
 		^this;
@@ -195,7 +196,7 @@ CaosSequencer {
 
 		var randomBpm;
 
-		if(randomTime, {
+		if(randomTime and: { externalClock.not }, {
 			randomBpm = randtimes.choose;
 			TempoClock.tempo = randomBpm / 60;
 			this.prNotifyTempo(randomBpm);

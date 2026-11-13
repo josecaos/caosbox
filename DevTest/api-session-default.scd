@@ -197,10 +197,15 @@ CaosMIDI.detachIn(\bass);
 CaosMIDI.attachMasterSync("CH345");
 CaosMIDI.detachMasterSync("CH345");
 
+// Master Sync
+CaosMIDI.attachSlaveSync("CH345");
+CaosMIDI.detachSlaveSync("CH345");
 
 CaosBox.stop; // panic
 //
 CaosMIDI.monitor(true);
+
+CaosBox.gui.color.randomColor;
 
 c.stop;
 

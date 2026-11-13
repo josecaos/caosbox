@@ -6,10 +6,24 @@
 - Teclado polifónico, MIDI thru y percusión por notas
 - Mapeo configurable + learn + persistencia + filtros.
 - Pitch bend/aftertouch, program change.
-- MIDI clock slave
 ---
 
 # Changelog 
+
+- ### v2.7.4
+    - Implement CaosMIDISlaveSync
+        - Slave clock
+            - API
+                - .attachSlaveSync(device)
+                - .detachSlaveSync
+            - CaosMIDISlaveSync
+                - Follows an external 24 ppqn clock
+                - Sends it to TempoClock and the GUI
+                - Start resets and plays; Stop pauses; Continue resumes
+                - .randomTime is turned off and restored on detach
+            - CaosSequencer.externalClock avoids overwriting the external tempo
+    - Tests
+        627 assertions
 
 - ### v2.7.3
      MIDI
