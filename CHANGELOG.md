@@ -3,15 +3,36 @@
 
 ---
 ### TODOs:
-- Tap de salida por track con note map y noteOff en próximo trigger.
+- Teclado polifónico, MIDI thru y percusión por notas
 - Mapeo configurable + learn + persistencia + filtros.
-- Teclado monofónico, después polifonía.
 - Pitch bend/aftertouch, program change.
 - MIDI clock/transport.
 ---
 
 # Changelog 
 
+- ### v2.7.2
+    - MIDI
+        - Keyboard input for melodic tracks
+            - API
+                - .attachIn(track, device, channel)
+                - .detachIn(track)
+            - CaosMIDITrackIn
+                - Monophonic
+                - Plays the assigned CaosInstrument voice-track
+                - The sequencer keeps advancing while active 
+                - Triggers with no active steps
+                - Uses track's audio mute/solo
+                - Velocity scales amp/amp1/amp2 for that note only
+                - One-shot envelopes: note-off keeps the tail
+            - .panic releases held keys; .free releases the MIDIdefs
+    - GUI
+        - Random accent color in sequence
+            - .color.randomColor(true/false), ..random stays as alias
+                - Changes the accent every 0.5, 1, 2 or 4 beats
+            - Follows TempoClock.default, so BPM and random time apply
+    - Tests
+        - 583 assertions
 
 - ### v2.7.1
     - MIDI output per track

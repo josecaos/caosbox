@@ -34,6 +34,7 @@ CaosBoxGUI {
 	var <designSize;
 	var <resizeView;
 	var <resizeRects;
+	var <colorRandomTask;
 
 	*initClass {
 
@@ -87,7 +88,12 @@ CaosBoxGUI {
 	// acepta Color, simbolo (\red, \blue, ...) o array [r, g, b(, a)]
 	color {|value|
 
-		var newColor = this.class.colorFor(value);
+		var newColor;
+
+		// sin argumento devuelve la vista: permite encadenar color.randomColor(...)
+		if (value.isNil, { ^this });
+
+		newColor = this.class.colorFor(value);
 
 		if (newColor.isNil, {
 			("CaosBoxGUI: color no reconocido: " ++ value).warn;
@@ -104,6 +110,54 @@ CaosBoxGUI {
 
 	color_ {|value| ^this.color(value) }
 
+	// --- easter egg: acento aleatorio al tempo de la caja ---------------
+
+	// Uso: CaosBox.gui.color.randomColor(true)  arranca
+	//      CaosBox.gui.color.randomColor(false) detiene (deja el color actual)
+	//
+	// El Task vive en TempoClock.default, el mismo reloj de la secuencia:
+	// las esperas son beats, asi que el cambio sigue el BPM y el tiempo
+	// aleatorio. Apagado no registra listeners ni agrega trabajo al step.
+	randomColor {|active = true|
+
+		if (active, {
+			this.prStartColorRandom;
+		}, {
+			this.prStopColorRandom;
+		});
+
+		^this;
+
+	}
+
+	// alias corto: la forma original de la API
+	random {|active = true| ^this.randomColor(active) }
+
+	prStartColorRandom {
+
+		this.prStopColorRandom;// no duplicar el Task
+
+		colorRandomTask = Task({
+			loop {
+				var step = this.class.randomColorStep;
+				{ this.color(step[\color]) }.defer(0);
+				step[\beats].wait;
+			}
+		}).play(TempoClock.default);
+
+		^this;
+
+	}
+
+	prStopColorRandom {
+
+		colorRandomTask !? {|task| task.stop };
+		colorRandomTask = nil;
+
+		^this;
+
+	}
+
 	*colorFor {|value|
 
 		if (value.isNil, { ^nil });
@@ -116,6 +170,20 @@ CaosBoxGUI {
 		});
 
 		^nil;
+
+	}
+
+
+	*randomColorStep {
+
+		var palette = colorAliases.keys.asArray.reject {|name|
+			(name == \grey) or: { name == \gray }
+		};
+
+		^(
+			color: palette.choose,
+			beats: #[0.5, 1, 2, 4].wchoose(#[0.12, 0.33, 0.35, 0.20])
+		);
 
 	}
 

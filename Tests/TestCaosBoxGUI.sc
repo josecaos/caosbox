@@ -17,6 +17,7 @@ TestCaosBoxGUI : UnitTest {
 
 	tearDown {
 
+		gui.randomColor(false);
 		~cbox_tracks = savedTracks;
 		CaosTrack.clearSolos;
 		CaosBox.prClearRandPatterns;
@@ -93,6 +94,66 @@ TestCaosBoxGUI : UnitTest {
 		gui.color(\notAColor);
 
 		this.assertEquals(gui.accent, before, "un color invalido no rompe la vista");
+
+	}
+
+	test_colorWithoutArgumentCanChain {
+
+		this.assert(gui.color === gui,
+			"color() sin argumento devuelve la vista y permite encadenar");
+
+	}
+
+	test_randomColorStepIsAColorAndAWait {
+
+		var allowedBeats = #[0.5, 1, 2, 4];
+
+		8.do {
+			var step = CaosBoxGUI.randomColorStep;
+
+			this.assert(
+				CaosBoxGUI.colorAliases[step[\color]].notNil,
+				"el color del paso existe en la paleta");
+
+			this.assert(
+				allowedBeats.includes(step[\beats]),
+				"la espera es musical: 0.5, 1, 2 o 4 beats");
+		};
+
+	}
+
+	test_colorRandomStartsAndStops {
+
+		this.assert(gui.colorRandomTask.isNil,
+			"el easter egg arranca apagado");
+
+		gui.randomColor(true);
+
+		this.assert(gui.colorRandomTask.notNil,
+			"randomColor(true) crea el Task");
+
+		this.assert(gui.colorRandomTask.clock === TempoClock.default,
+			"espera en beats del mismo reloj que la secuencia");
+
+		this.assert(gui.colorRandomTask.isPlaying,
+			"el Task queda corriendo");
+
+		gui.randomColor(false);
+
+		this.assert(gui.colorRandomTask.isNil,
+			"randomColor(false) lo detiene y libera");
+
+		gui.randomColor(false);// idempotente, como un transporte
+
+		this.assert(gui.colorRandomTask.isNil,
+			"apagarlo dos veces no rompe nada");
+
+		gui.random(true);// alias corto de la API original
+
+		this.assert(gui.colorRandomTask.notNil,
+			"el alias random tambien arranca el ciclo");
+
+		gui.random(false);
 
 	}
 

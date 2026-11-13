@@ -44,6 +44,9 @@ CaosInstrument {
 	var <nodeID;
 	var <note;
 	var <defNames;
+	var <liveNote;
+	var <liveVelocity;
+	var liveTrigger = false;
 	var stream;
 	var defStream;
 
@@ -199,6 +202,41 @@ CaosInstrument {
 
 	}
 
+	// --- teclado -------------------------------------------------------
+
+	// Dispara la voz con una nota externa. La altura la manda el teclado,
+	// pero la linea secuenciada no se congela: el proximo advance vuelve a
+	// mover `note` y el step usa la nota de la secuencia.
+	noteOn { |noteNumber, velocity = 100|
+
+		liveNote = noteNumber.asInteger.clip(0, 127);
+		liveVelocity = velocity.asInteger.clip(1, 127);
+		note = liveNote;
+
+		liveTrigger = true;
+		this.trigger;
+		liveTrigger = false;
+
+		^this;
+
+	}
+
+	// Suelta la nota si es la que sonaba. En las voces one-shot el envelope
+	// ya maneja la cola; en las gateadas se manda gate 0.
+	noteOff { |noteNumber|
+
+		if(liveNote.notNil and: { noteNumber.asInteger == liveNote }, {
+			liveNote = nil;
+			liveVelocity = nil;
+			if(oneShot.not, { this.release });
+		});
+
+		^this;
+
+	}
+
+	isHeld { ^liveNote.notNil }
+
 	set { |...args|
 
 		if(args.size.odd, {
@@ -343,22 +381,29 @@ CaosInstrument {
 
 	prTriggerSynth {
 
-		if(mode == \trig) { note = this.nextNote };
-		if(note.isNil) { note = this.nextNote };
+		var factor = 1;
+
+		if(liveTrigger.not, {
+			if(mode == \trig) { note = this.nextNote };
+			if(note.isNil) { note = this.nextNote };
+		}, {
+			note = liveNote;
+			factor = liveVelocity.linlin(1, 127, 0.1, 1.0);
+		});
 
 		if(retrigger) {
 			// las voces one-shot (envolventes percusivas) se liberan solas:
 			// no hay que mandarles gate 0 a un nodo que ya murio
 			if(oneShot.not) { this.release };
 			nodeID = output.nextNodeID;
-			output.sendBundle(nil, this.prNewMsg);
+			output.sendBundle(nil, this.prNewMsg(factor));
 		} {
 			// legato: una sola voz; si ya canta, solo actualiza nota y params
 			if(nodeID.isNil, {
 				nodeID = output.nextNodeID;
-				output.sendBundle(nil, this.prNewMsg);
+				output.sendBundle(nil, this.prNewMsg(factor));
 			}, {
-				output.sendBundle(nil, ['/n_set', nodeID] ++ this.prVoicePairs);
+				output.sendBundle(nil, ['/n_set', nodeID] ++ this.prVoicePairs(factor));
 			});
 		};
 
@@ -376,23 +421,39 @@ CaosInstrument {
 
 	}
 
-	// [\note, n, <params...>] — lo que se actualiza en una voz que ya canta
-	prVoicePairs {
+	// [\note, n, <params...>] — lo que se actualiza en una voz que ya canta.
+	// `factor` escala las amplitudes para la velocity de una nota de teclado;
+	// `params` no se modifica.
+	prVoicePairs { |factor = 1|
 
 		var pairs = [];
 
 		if(note.notNil, { pairs = pairs ++ [\note, note] });
 		if(params.size > 0, {
-			params.keysValuesDo { |key, value| pairs = pairs ++ [key, value] };
+			params.keysValuesDo { |key, value|
+				pairs = pairs ++ [key, this.prScaledAmp(key, value, factor)];
+			};
 		});
 
 		^pairs;
 
 	}
 
-	prNewMsg {
+	prScaledAmp { |key, value, factor|
 
-		var pairs = [\out, out, \gate, 1] ++ this.prVoicePairs;
+		if(factor != 1
+			and: { value.isNumber }
+			and: { key.asString.beginsWith("amp") }, {
+			^value * factor;
+		});
+
+		^value;
+
+	}
+
+	prNewMsg { |factor = 1|
+
+		var pairs = [\out, out, \gate, 1] ++ this.prVoicePairs(factor);
 
 		^(['/s_new', defName, nodeID, 0, target ? 0] ++ pairs);
 

@@ -5,7 +5,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.7.1";
+	classvar <version = "2.7.2";
 	classvar guiRegistry;
 	classvar randPatterns;
 	classvar lastPatterns;
@@ -1103,6 +1103,7 @@ CaosBox {
 
 		// Limpia solo el ambiente de CaosBox. El server y los nodos de otros
 		// proyectos siguen vivos.
+		guiRegistry !? { |gui| gui.randomColor(false) };// el easter egg no sobrevive al cierre
 		~cbox_seq !? { |seq| seq.stop };
 		~cbox_midi_free !? { ~cbox_midi_free.value };
 		CaosMIDI.free;

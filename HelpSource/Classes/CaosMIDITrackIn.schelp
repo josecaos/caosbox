@@ -1,0 +1,59 @@
+title:: CaosMIDITrackIn
+summary:: MIDI keyboard input tap for one melodic track.
+categories:: CaosBox
+related:: Classes/CaosMIDI, Classes/CaosTrack, Classes/CaosInstrument
+
+description::
+Listens to note on/off on one MIDI input and plays the current
+link::Classes/CaosInstrument:: voice of a melodic track. The sequence is not
+frozen: a key press triggers the voice, and the next sequencer step continues
+with its own note line.
+
+Monophonic with last-note priority: the most recent key sounds and, when it is
+released, the previous held key sounds again. The audio mute/solo state of the
+track applies, so a muted track does not sound from the keyboard. Velocity scales
+the code::amp:: arguments of that note only; the instrument's stored parameters
+are not modified.
+
+The melodic instruments use one-shot envelopes, so note off does not cut the
+tail: every trigger creates a new voice and the envelope releases itself. For
+sustained keyboard playing the SynthDefs would need gated envelopes.
+
+code::install:: is separated from code::new:: so the note state machine can be
+tested without MIDI hardware.
+
+classmethods::
+
+method:: new
+code::
+tap = CaosMIDITrackIn(track);
+::
+
+instancemethods::
+
+method:: track
+Read-only track being played.
+
+method:: install
+Connects the note-on and note-off link::Classes/MIDIdef:: responders to a source
+uid and channel. code::channel:: can be nil for omni.
+code::
+tap.install(srcUID, 0);
+::
+
+method:: noteOn
+method:: noteOff
+MIDI entry points; they can also be called by tests without responders.
+code::noteOn:: ignores the note when the track is not audible.
+
+method:: releaseAll
+Releases the sounding keyboard note and clears the held keys. Used by
+code::CaosMIDI.panic:: and when detaching.
+
+method:: free
+Calls code::releaseAll:: and frees both responders.
+
+method:: heldNotes
+method:: sounding
+Read-only monophonic state: the keys still held, in press order, and the note
+currently sent to the voice (nil when nothing sounds from the keyboard).

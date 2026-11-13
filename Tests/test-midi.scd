@@ -1,6 +1,6 @@
 // CaosBox v2.7.0 - MIDI smoke test (hardware)
 //
-// Este test necesita un dispositivo MIDI real. No es UnitTest porque depende
+// Este test necesita un dispositivo MIDI No es UnitTest porque depende
 // de ALSA/JACK y de escuchar el sonido.
 //
 // Antes de correrlo:
@@ -8,8 +8,8 @@
 //   2. Ajustá deviceName, channel y note.
 //
 // En Linux `CaosMIDI.out` crea la conexión ALSA/JACK automáticamente. Los otros
-// dos caminos sirven para comparar el puerto y el uid directo; si usás esos,
-// revisá el patchbay.
+// dos caminos sirven para comparar el puerto y el uid directo; si usas esos,
+// revisa el patchbay.
 //
 // El test deja el monitor de entrada prendido para mover perillas/teclas.
 

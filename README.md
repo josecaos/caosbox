@@ -1,4 +1,4 @@
-## CaosBox v2.7.1
+## CaosBox v2.7.2
 
 **It's a not-so-common LiveCoding/AlgoRave music Secuencer/Processor for the CaosPercLib Class library, with a programming Interface and a GUI written in SuperCollider.**
 
@@ -55,6 +55,30 @@ Platform.userExtensionDir
 
     c.stop;
 ```
+### MIDI control
+```
+CaosMIDI.devices;
+
+// Connect specific device
+CaosMIDI.connectOnly("USB X-Sessions");
+
+// Connect an instrument to an external synth
+// Percussions sends a value
+CaosMIDI.attachOut(\kick, "CH345", 0, [28,36,38,39,41,43].choose);
+// Melodic instruments send the sequenced scale
+CasoMIDI.detachOut(\kick);
+CaosMIDI.attachOut(\bass, "CH345", 0);
+
+// Play caos instruments with external keyboard
+CaosMIDI.attachIn(\bass, "MPK mini 3", 0);
+CaosMIDI.detachIn(\bass);
+
+// Detect MIDI inputs
+CaosMIDI.monitor(true);
+
+
+```
+
 
 #### Improvise, have fun and algorave a lot.
 

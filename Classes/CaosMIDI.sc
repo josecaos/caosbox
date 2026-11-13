@@ -10,6 +10,7 @@ CaosMIDI {
 
 	classvar <outputPorts;
 	classvar <trackOuts;
+	classvar <trackIns;
 	classvar monitorFuncs;
 	classvar <monitorOn = false;
 
@@ -17,6 +18,7 @@ CaosMIDI {
 
 		outputPorts = IdentityDictionary.new;
 		trackOuts = IdentityDictionary.new;
+		trackIns = IdentityDictionary.new;
 
 	}
 
@@ -225,8 +227,71 @@ CaosMIDI {
 
 	}
 
+	// Engancha un teclado MIDI a una pista melodica. La entrada tiene que
+	// estar conectada: el bootstrap de CaosBox ya hace connectAll; si no,
+	// usar CaosMIDI.connect antes. `channel` nil = omni.
+	*attachIn {|track, device, channel = 0|
+
+		var tr, src, tap;
+
+		tr = if(track.isKindOf(Symbol), {
+			CaosBox.tracks !? {|tracks| tracks[track] };
+		}, {
+			track;
+		});
+
+		if(tr.isNil or: { tr.isKindOf(CaosTrack).not }, {
+			("CaosMIDI.attachIn: unknown track " ++ track).warn;
+			^nil;
+		});
+
+		if(tr.mode != \live, {
+			("CaosMIDI.attachIn: percussion input is not supported yet for " ++ tr.name).warn;
+			^nil;
+		});
+
+		if(tr.instrument.isNil, {
+			("CaosMIDI.attachIn: track has no voice yet " ++ tr.name).warn;
+			^nil;
+		});
+
+		if(MIDIClient.initialized.not, { this.start(false) });
+
+		src = this.prFind(this.inputs, device);
+		if(src.isNil, {
+			("CaosMIDI.attachIn: input not found " ++ device).warn;
+			^nil;
+		});
+
+		trackIns[tr] !? {|old| old.free };
+
+		tap = CaosMIDITrackIn.new(tr);
+		tap.install(src.uid, if(channel.isNil, { nil }, { channel.asInteger.clip(0, 15) }));
+		trackIns[tr] = tap;
+
+		^tap;
+
+	}
+
+	*detachIn {|track|
+
+		var tr, tap;
+
+		tr = if(track.isKindOf(Symbol), {
+			CaosBox.tracks !? {|tracks| tracks[track] };
+		}, {
+			track;
+		});
+		tap = trackIns.removeAt(tr);
+		tap !? {|t| t.free };
+
+		^tap;
+
+	}
+
 	*panic {
 
+		trackIns.do {|tap| tap !? {|t| t.releaseAll } };
 		trackOuts.do {|trackOut| trackOut !? {|t| t.panic } };
 		outputPorts.do {|port| port !? {|p| p.allNotesOff } };
 		^this;
@@ -271,6 +336,8 @@ CaosMIDI {
 	*free {
 
 		this.monitor(false);
+		trackIns.do {|tap| tap !? {|t| t.free } };
+		trackIns = IdentityDictionary.new;
 		trackOuts.do {|trackOut| trackOut !? {|t| t.free } };
 		trackOuts = IdentityDictionary.new;
 		this.panic;

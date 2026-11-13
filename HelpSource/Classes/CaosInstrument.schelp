@@ -22,6 +22,20 @@ method:: trigger
 method:: retriggerCurrent
 Repeats the current note and SynthDef with a new voice, without advancing the
 note or the chord sequence. It is what the step repeater uses internally.
+method:: noteOn
+method:: noteOff
+method:: isHeld
+Play a note from a MIDI keyboard on the same voice. code::noteOn(note,
+velocity):: sets code::note::, triggers a voice and scales the code::amp::
+arguments by the velocity for that note only. code::noteOff(note):: clears
+code::liveNote:: when it is the held key; one-shot voices keep their envelope
+tail, gated voices receive gate 0. The sequence is not frozen: the next
+code::advance:: returns to the note line.
+code::
+i.noteOn(60, 100);
+i.noteOff(60);
+i.isHeld; // false
+::
 method:: set
 method:: out
 code::

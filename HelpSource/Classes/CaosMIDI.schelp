@@ -85,9 +85,27 @@ uses the same gate.
 method:: detachOut
 Removes the tap from a track and releases its callback.
 
+method:: attachIn
+Attaches a link::Classes/CaosMIDITrackIn:: to a melodic track, so a MIDI
+keyboard plays that track's current instrument. The device can be an endpoint,
+list index, device name or uid; code::channel:: nil means omni.
+code::
+CaosMIDI.attachIn(\bass, "USB X-Session", 0);
+CaosMIDI.attachIn(\bass, 3); // input list index
+::
+Only tracks with a voice are accepted; percussion input is not supported yet.
+The input has to be connected first: the CaosBox bootstrap calls
+code::connectAll::, otherwise use code::CaosMIDI.connect:: before attaching.
+The track's audio mute/solo silences the keyboard, but the sequencer keeps
+advancing: a key press is one more trigger on the same voice.
+
+method:: detachIn
+Removes the input tap from a track, releases the sounding key and frees the
+responders.
+
 method:: panic
-Sends note-off for pending track notes and all-notes-off on every output created
-through CaosMIDI.
+Sends note-off for pending track notes and keyboard keys, and all-notes-off on
+every output created through CaosMIDI.
 
 method:: monitor
 method:: monitorOff
@@ -98,5 +116,6 @@ CaosMIDI.monitor(false);
 ::
 
 method:: free
-Stops the monitor, sends panic, disconnects inputs and clears cached outputs.
+Stops the monitor, frees the input taps and track outputs, sends panic,
+disconnects inputs and clears cached outputs.
 

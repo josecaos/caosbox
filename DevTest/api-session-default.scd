@@ -8,8 +8,8 @@
 Platform.userExtensionDir
 CaosBox.browse;
 CaosBoxGUI.colorAliases // Colores posibles para interfaz
-CaosBox.gui.color(\magenta); // Aplica color opcional para la GUI antes comenzar
-////////////////////////////////////////////////////////////
+CaosBox.gui.color(\green); // Aplica color opcional para la GUI antes comenzar
+//
 
 c = CaosBox;
 c.environment; //inicializa
@@ -18,7 +18,7 @@ c.environment; //inicializa
 c.play;
 c.pause;
 c.stop;
-c.bpm(182);
+c.bpm(18);
 c.freqAnalyzer(true);
 c.guiAlpha(0.5);
 //
@@ -81,7 +81,7 @@ m = g.new;
 x = m.melody(LCNE.dupOctave(Scale.minor.degrees, 3), 48);
 
 b = g.new;
-b.bass(\hpf,[60,60,60,63,60,60,60,72],seqType:\seq,att:0.25,rel:0.5,filtMaxFreq: 120,filtTime:0.25,amp1:0.25,amp2:0.025);
+b.bass(\hpf,[60,60,60,63,60,60,60,72]/2,seqType:\rand,att:0.015,rel:0.25,filtMaxFreq: 120,filtTime:0.25,amp1:0.25,amp2:0.025);
 c.setSteps(\bass,Array.series(8,0,4));
 b.bass(\master,x,\seq);
 b.bass(\master,x/2,\rand,0.1,2,40,12920,0.01);
@@ -137,7 +137,7 @@ c.autoFx(\lpf,true,\normal, Array.series(15,1000,500), [0.15,0.25,0.35,0.5,0.75,
 c.autoFx(\bpf,true,\normal, Array.series(15,1000,500), [0.15,0.25,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\grains,true,\normal, [1,0.95,0.9,0.85],[1,0.95,0.9,0.85]);
 c.autoFx(\delay,true,\fast, [1,0.95,0.9,0.85]*0.1,[0.125,0.25,0.5,0.75,1]);
-c.autoFx(\pitch,true,\slow,[1.68,1.70,1.72,1.77,2]);
+c.autoFx(\pitch,true,\slowest,[0.43,1, 0.45, 0.43],0,0);
 
 c.bpm(20);
 c.randomTime(true, true, [126/2,126]);
@@ -163,11 +163,13 @@ CaosBox.play;
 CaosMIDI.devices;
 CaosMIDI.connectOnly("USB X-Session");
 //
-CaosMIDI.detachOut(\kick);
-CaosMIDI.attachOut(\bass, "CH345", 0);
-//
 CaosMIDI.detachOut(\bass);
 CaosMIDI.attachOut(\kick, "CH345", 0, [28,36,38,39,41,43].choose);
+
+CaosMIDI.detachOut(\kick);
+CaosMIDI.attachOut(\bass, "CH345",0,velocity:127);
+CaosMIDI.attachOut(\bass, "CH345", 0, [28,36,38,39,41,43].choose, 127);
+//
 
 CaosMIDI.attachOut(\bass, "CH345", 0); // nota actual
 CaosMIDI.attachOut(\kick, "CH345", 0, note: 72);

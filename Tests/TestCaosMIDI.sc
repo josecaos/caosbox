@@ -133,6 +133,108 @@ TestCaosMIDI : UnitTest {
 
 	}
 
+	// ------------------------------------------------------------------
+	// teclado
+	// ------------------------------------------------------------------
+
+	test_trackInPlaysAndReleasesTheVoice {
+
+		var voice = CaosTestMidiVoice.new(\bass);
+		var track = CaosTrack.new(\bass, \live, 4);
+		var tap;
+
+		track.setInstrument(voice);
+		tap = CaosMIDITrackIn.new(track);
+
+		tap.noteOn(60, 100);
+		tap.noteOff(60);
+
+		this.assertEquals(voice.calls[0], [\noteOn, 60, 100]);
+		this.assertEquals(voice.calls[1], [\noteOff, 60]);
+
+	}
+
+	test_trackInIsMonophonicAndFallsBack {
+
+		var voice = CaosTestMidiVoice.new(\bass);
+		var track = CaosTrack.new(\bass, \live, 4);
+		var tap;
+
+		track.setInstrument(voice);
+		tap = CaosMIDITrackIn.new(track);
+
+		tap.noteOn(60, 100);
+		tap.noteOn(64, 90);
+		tap.noteOff(64);
+
+		this.assertEquals(voice.calls[2], [\noteOff, 64],
+			"al soltar la tecla que manda se libera esa nota");
+		this.assertEquals(voice.calls[3], [\noteOn, 60, 100],
+			"vuelve la tecla que seguia apretada");
+
+	}
+
+	test_trackInRespectsAudioMute {
+
+		var voice = CaosTestMidiVoice.new(\bass);
+		var track = CaosTrack.new(\bass, \live, 4);
+		var tap;
+
+		track.setInstrument(voice);
+		tap = CaosMIDITrackIn.new(track);
+
+		track.muted_(true);
+		tap.noteOn(60, 100);
+
+		this.assert(voice.calls.isEmpty, "el mute de la pista apaga el teclado");
+
+		track.muted_(false);
+		tap.noteOff(60);
+		tap.noteOn(62, 80);
+
+		this.assertEquals(voice.calls[0], [\noteOn, 62, 80],
+			"al desmutear vuelve a sonar");
+
+	}
+
+	test_trackInZeroVelocityIsNoteOff {
+
+		var voice = CaosTestMidiVoice.new(\bass);
+		var track = CaosTrack.new(\bass, \live, 4);
+		var tap;
+
+		track.setInstrument(voice);
+		tap = CaosMIDITrackIn.new(track);
+
+		tap.noteOn(60, 100);
+		tap.noteOn(60, 0);
+
+		this.assertEquals(voice.calls[1], [\noteOff, 60]);
+
+	}
+
+	test_trackInReleaseAllAndFree {
+
+		var voice = CaosTestMidiVoice.new(\bass);
+		var track = CaosTrack.new(\bass, \live, 4);
+		var tap;
+
+		track.setInstrument(voice);
+		tap = CaosMIDITrackIn.new(track);
+		tap.install(0, 0);
+
+		tap.noteOn(60, 100);
+		tap.releaseAll;
+
+		this.assert(tap.sounding.isNil, "panic suelta la nota del teclado");
+		this.assertEquals(voice.calls.last, [\noteOff, 60]);
+
+		tap.free;
+
+		this.assert(tap.heldNotes.isEmpty, "free limpia el estado mono");
+
+	}
+
 	test_endpointSelection {
 
 		var kick = MIDIEndPoint("Xsession", "in", 10);
@@ -212,6 +314,31 @@ CaosTestNoteVoice {
 
 	advance { advances = advances + 1; ^this }
 	trigger { triggers = triggers + 1; ^this }
+	release { ^this }
+	free { ^this }
+
+}
+
+// Voz falsa para el tap de teclado: guarda noteOn/noteOff
+CaosTestMidiVoice {
+
+	var <name;
+	var <calls;
+
+	*new {|name = \bass| ^super.new.init(name) }
+
+	init {|argName|
+
+		name = argName;
+		calls = List.new;
+		^this;
+
+	}
+
+	noteOn {|note, velocity| calls.add([\noteOn, note, velocity]); ^this }
+	noteOff {|note| calls.add([\noteOff, note]); ^this }
+	advance { ^this }
+	trigger { ^this }
 	release { ^this }
 	free { ^this }
 

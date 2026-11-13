@@ -467,6 +467,126 @@ TestCaosInstrument : UnitTest {
 
 	}
 
+	// ------------------------------------------------------------------
+	// teclado
+	// ------------------------------------------------------------------
+
+	test_noteOnPlaysTheKeyboardNote {
+
+		var msg, i;
+
+		instrument = this.prSynth(notes: #[48, 50], params: (att: 0.1),
+			retrigger: true, oneShot: true);
+
+		instrument.noteOn(60, 127);
+
+		this.assertEquals(instrument.note, 60, "la voz canta la nota del teclado");
+		this.assertEquals(instrument.liveNote, 60);
+		this.assert(instrument.isHeld, "la tecla queda registrada");
+
+		msg = spy.messages.last;
+		i = msg.indexOf(\note);
+		this.assertEquals(msg[i + 1], 60, "la nota viaja en /s_new");
+
+	}
+
+	test_noteOnVelocityScalesTheAmps {
+
+		var msg, i, factor;
+
+		instrument = this.prSynth(params: (att: 0.1, amp1: 0.5, amp2: 0.25),
+			retrigger: true, oneShot: true);
+
+		instrument.noteOn(60, 64);
+
+		factor = 64.linlin(1, 127, 0.1, 1.0);
+		msg = spy.messages.last;
+
+		i = msg.indexOf(\amp1);
+		this.assertFloatEquals(msg[i + 1], 0.5 * factor,
+			"velocity escala amp1", 0.0001);
+
+		i = msg.indexOf(\amp2);
+		this.assertFloatEquals(msg[i + 1], 0.25 * factor,
+			"velocity escala amp2", 0.0001);
+
+		this.assertEquals(instrument.params[\amp1], 0.5,
+			"los params del instrumento no cambian");
+
+	}
+
+	test_noteOffClearsTheOneShotKeyWithoutPokingTheNode {
+
+		instrument = this.prSynth(retrigger: true, oneShot: true);
+		instrument.noteOn(60, 100);
+		spy.reset;
+
+		instrument.noteOff(60);
+
+		this.assert(instrument.liveNote.isNil, "la tecla se suelta");
+		this.assert(instrument.isHeld.not);
+		this.assertEquals(spy.messages.size, 0,
+			"one-shot: el envelope se encarga de la cola");
+
+	}
+
+	test_noteOffReleasesAGatedVoice {
+
+		instrument = this.prSynth;
+		instrument.noteOn(60, 100);
+		spy.reset;
+
+		instrument.noteOff(60);
+
+		this.assertEquals(spy.messages[0][0], '/n_set');
+		this.assertEquals(spy.messages[0][2], \gate);
+		this.assertEquals(spy.messages[0][3], 0);
+
+	}
+
+	test_noteOffOnlyReleasesTheHeldNote {
+
+		instrument = this.prSynth(retrigger: true, oneShot: true);
+		instrument.noteOn(60, 100);
+		spy.reset;
+
+		instrument.noteOff(64);
+
+		this.assert(instrument.isHeld, "otra tecla no suelta la actual");
+		this.assertEquals(spy.messages.size, 0);
+
+	}
+
+	test_sequenceKeepsAdvancingWhileAKeyIsHeld {
+
+		instrument = this.prSynth(notes: #[48, 50], retrigger: true, oneShot: true);
+		instrument.advance;// consume 48
+		instrument.noteOn(60, 100);
+
+		instrument.advance;
+
+		this.assertEquals(instrument.note, 50,
+			"la linea secuenciada sigue avanzando");
+		this.assertEquals(instrument.liveNote, 60,
+			"la tecla sigue registrada");
+
+	}
+
+	test_liveTriggerDoesNotConsumeTheNoteStream {
+
+		instrument = this.prSynth(notes: #[48, 50], mode: \trig,
+			retrigger: true, oneShot: true);
+
+		instrument.noteOn(60, 100);
+		this.assertEquals(instrument.note, 60);
+
+		instrument.trigger;// el siguiente trigger de la secuencia
+
+		this.assertEquals(instrument.note, 48,
+			"la nota del teclado no consume la linea");
+
+	}
+
 	test_setSendsNSetToTheVoice {
 
 		instrument = this.prSynth;
