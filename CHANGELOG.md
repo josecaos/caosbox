@@ -6,13 +6,31 @@
 - Teclado polifónico, MIDI thru y percusión por notas
 - Mapeo configurable + learn + persistencia + filtros.
 - Pitch bend/aftertouch, program change.
-- MIDI clock/transport.
+- MIDI clock slave
 ---
 
 # Changelog 
 
 - ### v2.7.3
-    - 
+     MIDI
+        - Master clock
+            - API
+                - .attachMasterSync(device)
+                - .detachMasterSync(device)
+            - CaosMIDIClock
+                - Sends 24 ppqn following TempoClock
+                - Continuous clock while attached; Start/Stop/Continue
+                  control the external transport
+                - Ticks scheduled in absolute beats, without drift
+                - Several destinations; detach/free sends Stop
+            - CaosBox.play / pause / stop send Start / Stop / Continue
+    - Bugfixes:
+        - Re-evaluating a CaosGear instrument now updates the keyboard
+          control on the next note, not on the next sequencer step
+        - A clock attached during pause sends Start on resume if it never received Start/Continue
+        - .attachOut, .attachIn and their detach accept a CaosInstrument and resolve its track
+    - Tests
+        - 619 assertions
 
 - ### v2.7.2
     - MIDI

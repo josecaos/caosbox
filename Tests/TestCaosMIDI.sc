@@ -7,9 +7,13 @@ TestCaosMIDI : UnitTest {
 
 	var <out;
 	var <backend;
+	var <savedTracks;
+	var <savedVoices;
 
 	setUp {
 
+		savedTracks = ~cbox_tracks;
+		savedVoices = ~cbox_instruments;
 		backend = CaosTestMIDIBackend.new;
 		out = CaosMIDIOut.new(backend, 2);
 
@@ -17,6 +21,9 @@ TestCaosMIDI : UnitTest {
 
 	tearDown {
 
+		CaosMIDI.masterSyncs.clear;
+		~cbox_tracks = savedTracks;
+		~cbox_instruments = savedVoices;
 		out = nil;
 		backend = nil;
 
@@ -61,6 +68,20 @@ TestCaosMIDI : UnitTest {
 		out.allNotesOff;
 
 		this.assertEquals(backend.messages[0], [\allNotesOff, 2]);
+
+	}
+
+	test_clockAndTransportMessages {
+
+		out.midiClock;
+		out.start;
+		out.continue;
+		out.stop;
+
+		this.assertEquals(backend.messages[0], [\midiClock]);
+		this.assertEquals(backend.messages[1], [\start]);
+		this.assertEquals(backend.messages[2], [\continue]);
+		this.assertEquals(backend.messages[3], [\stop]);
 
 	}
 
@@ -235,6 +256,166 @@ TestCaosMIDI : UnitTest {
 
 	}
 
+	test_trackInActivatesThePendingInstrumentOnTheNextNote {
+
+		var first = CaosTestMidiVoice.new(\bass2);
+		var second = CaosTestMidiVoice.new(\bass2);
+		var track = CaosTrack.new(\bass2, \live, 4);
+		var tap;
+
+		track.setInstrument(first);
+		track.setInstrument(second);
+		tap = CaosMIDITrackIn.new(track);
+
+		this.assert(track.pendingInstrument === second,
+			"el instrumento nuevo queda pendiente");
+		this.assert(track.instrument === first, "la voz vieja sigue activa");
+
+		tap.noteOn(60, 100);
+
+		this.assert(track.instrument === second,
+			"la tecla activa la voz pendiente");
+		this.assert(track.pendingInstrument.isNil);
+		this.assertEquals(second.calls[0], [\noteOn, 60, 100]);
+
+	}
+
+	test_trackInDoesNotSwapWhileAKeyIsHeld {
+
+		var first = CaosTestMidiVoice.new(\bass2);
+		var second = CaosTestMidiVoice.new(\bass2);
+		var track = CaosTrack.new(\bass2, \live, 4);
+		var tap;
+
+		track.setInstrument(first);
+		tap = CaosMIDITrackIn.new(track);
+		tap.noteOn(60, 100);
+
+		track.setInstrument(second);
+		this.assert(track.instrument === first,
+			"el sostenido sigue en la voz vieja");
+
+		tap.noteOff(60);
+		this.assert(track.instrument === first,
+			"el noteOff tampoco hace el swap");
+		this.assert(track.pendingInstrument === second);
+
+		tap.noteOn(62, 100);
+		this.assert(track.instrument === second,
+			"la siguiente nota usa la voz nueva");
+
+	}
+
+	test_clockSendsTransport {
+
+		var sink = CaosTestMIDIClockOut.new;
+		var clock = CaosTestClock.new;
+		var sync = CaosMIDIClock.new(sink, clock);
+
+		sync.sendStart;
+		sync.sendContinue;
+		sync.sendStop;
+
+		this.assertEquals(sink.messages[0], [\start]);
+		this.assertEquals(sink.messages[1], [\continue]);
+		this.assertEquals(sink.messages[2], [\stop]);
+
+	}
+
+	test_clockSchedulesTicksInAbsoluteBeats {
+
+		var sink = CaosTestMIDIClockOut.new;
+		var clock = CaosTestClock.new;
+		var sync = CaosMIDIClock.new(sink, clock);
+
+		sync.start;
+
+		this.assertEquals(clock.pending.size, 1, "agenda el primer tick");
+		this.assertEquals(clock.pending[0][0], 0, "arranca en el beat actual");
+
+		clock.fire;
+		this.assertEquals(sink.messages[0], [\midiClock]);
+		this.assertEquals(clock.pending[0][0], 1 / 24,
+			"el siguiente tick queda a 1/24 de beat");
+
+		sync.stop;
+		clock.fire;// el callback viejo ya no debe mandar nada
+		this.assertEquals(sink.messages.size, 1, "stop corta los ticks");
+
+	}
+
+	test_clockFreeSendsStop {
+
+		var sink = CaosTestMIDIClockOut.new;
+		var clock = CaosTestClock.new;
+		var sync = CaosMIDIClock.new(sink, clock);
+
+		sync.start;
+		sync.free;
+
+		this.assertEquals(sink.messages.last, [\stop],
+			"al soltar el clock se avisa Stop al equipo");
+
+	}
+
+	test_masterSyncTransportBroadcast {
+
+		var sink = CaosTestMIDIClockOut.new;
+		var clock = CaosTestClock.new;
+		var sync = CaosMIDIClock.new(sink, clock);
+
+		CaosMIDI.masterSyncs.put(\test, sync);
+
+		CaosMIDI.startMasterSyncs(false);
+		CaosMIDI.startMasterSyncs(true);
+		CaosMIDI.stopMasterSyncs;
+
+		this.assertEquals(sink.messages[0], [\start]);
+		this.assertEquals(sink.messages[1], [\continue]);
+		this.assertEquals(sink.messages[2], [\stop]);
+
+	}
+
+	test_masterSyncResumeWithoutStartSendsStart {
+
+		var sink = CaosTestMIDIClockOut.new;
+		var clock = CaosTestClock.new;
+		var sync = CaosMIDIClock.new(sink, clock);
+
+		CaosMIDI.masterSyncs.put(\test, sync);
+		CaosMIDI.startMasterSyncs(true);
+
+		this.assertEquals(sink.messages[0], [\start],
+			"un resume sin Start previo arranca con Start");
+		this.assert(sync.hasStarted, "el tap queda marcado como iniciado");
+
+	}
+
+	test_resolveTrackAcceptsSymbolsTracksAndInstruments {
+
+		var track = CaosTrack.new(\bass2, \live, 4);
+		var instrument = CaosInstrument.synth(\bass2, \bass2, \bajodos, 50, (),
+			nil, \free, nil, true, \seq, true);
+		var padTrack = CaosTrack.new(\amb, \live, 4);
+		var pad = CaosInstrument.synth(\pad, \amb, \ambuno, 50, (),
+			nil, \free, nil, true, \seq, true);
+
+		~cbox_tracks = Dictionary[\bass2 -> track, \amb -> padTrack];
+		~cbox_instruments = Dictionary[\bass2 -> instrument, \amb -> pad];
+
+		this.assertEquals(CaosMIDI.prResolveTrack(\bass2), track,
+			"un simbolo resuelve la pista");
+		this.assertEquals(CaosMIDI.prResolveTrack(track), track,
+			"un CaosTrack se acepta directo");
+		this.assertEquals(CaosMIDI.prResolveTrack(instrument), track,
+			"un CaosInstrument resuelve su pista");
+		this.assertEquals(CaosMIDI.prResolveTrack(\pad), padTrack,
+			"un nombre de instrumento resuelve su pista");
+		this.assert(CaosMIDI.prResolveTrack(\missing).isNil,
+			"una pista desconocida devuelve nil");
+
+	}
+
 	test_endpointSelection {
 
 		var kick = MIDIEndPoint("Xsession", "in", 10);
@@ -271,6 +452,10 @@ CaosTestMIDIBackend {
 	program {|chan, value| messages.add([\program, chan, value]); ^this }
 	bend {|chan, value| messages.add([\bend, chan, value]); ^this }
 	allNotesOff {|chan| messages.add([\allNotesOff, chan]); ^this }
+	midiClock { messages.add([\midiClock]); ^this }
+	start { messages.add([\start]); ^this }
+	stop { messages.add([\stop]); ^this }
+	continue { messages.add([\continue]); ^this }
 
 }
 
@@ -341,5 +526,54 @@ CaosTestMidiVoice {
 	trigger { ^this }
 	release { ^this }
 	free { ^this }
+
+}
+
+// Reloj falso: guarda los schedAbs y los dispara a mano
+CaosTestClock {
+
+	var <beats = 0;
+	var <pending;
+
+	*new { ^super.new.init }
+
+	init {
+
+		pending = List.new;
+		^this;
+
+	}
+
+	schedAbs {|beat, func| pending.add([beat, func]); ^this }
+
+	fire {
+
+		var item = pending.removeAt(0);
+
+		item !? { item[1].value };
+		^this;
+
+	}
+
+}
+
+// Salida falsa para el clock: solo registra los mensajes
+CaosTestMIDIClockOut {
+
+	var <messages;
+
+	*new { ^super.new.init }
+
+	init {
+
+		messages = List.new;
+		^this;
+
+	}
+
+	midiClock { messages.add([\midiClock]); ^this }
+	start { messages.add([\start]); ^this }
+	stop { messages.add([\stop]); ^this }
+	continue { messages.add([\continue]); ^this }
 
 }

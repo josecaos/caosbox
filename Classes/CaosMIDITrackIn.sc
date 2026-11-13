@@ -62,6 +62,10 @@ CaosMIDITrackIn {
 		heldNotes.removeAllSuchThat { |pair| pair[0] == num };
 		heldNotes.add([num, velocity.asInteger.clip(1, 127)]);
 
+		// al reevaluar CaosGear queda una voz nueva en pendingInstrument;
+		// la siguiente tecla la activa; el cambio no entra en una nota ya sonando
+		if(track.isAudible, { track.activatePending });
+
 		voice = this.prVoice;
 		if(track.isAudible and: { voice.notNil }, {
 			sounding = num;

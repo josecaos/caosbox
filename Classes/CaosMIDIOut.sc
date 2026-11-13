@@ -63,6 +63,13 @@ CaosMIDIOut {
 
 	}
 
+	// --- reloj y transporte (system real-time, sin canal) ---------------
+
+	midiClock { output.midiClock; ^this }
+	start { output.start; ^this }
+	stop { output.stop; ^this }
+	continue { output.continue; ^this }
+
 	// Linux: crea la conexion ALSA/JACK desde el puerto de SuperCollider.
 	connect {|device = 0|
 

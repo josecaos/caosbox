@@ -31,7 +31,9 @@ method:: play
 method:: pause
 method:: stop
 code::play:: starts or resumes from the current step; code::pause:: keeps the step;
-code::stop:: returns to step 0 for the next play.
+code::stop:: returns to step 0 for the next play. They also send MIDI transport
+to the clocks attached with code::CaosMIDI.attachMasterSync::: Start, Continue
+when resuming from a pause, and Stop.
 
 method:: bpm
 code::

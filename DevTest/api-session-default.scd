@@ -9,6 +9,7 @@ Platform.userExtensionDir
 CaosBox.browse;
 CaosBoxGUI.colorAliases // Colores posibles para interfaz
 CaosBox.gui.color(\green); // Aplica color opcional para la GUI antes comenzar
+CaosBox.gui.color.randomColor(true);
 //
 
 c = CaosBox;
@@ -31,7 +32,9 @@ g.validChords(\chords2);
 //// Percussion synths
 k = g.new;
 k.kick();
-k.kick(amp1: 1,amp2:1);
+k.kick(\lpf,0.15,0.5,amp1: 0.025,amp2:0.001);
+k.kick(\bpf,0.01,0.35,amp1: 0.025,amp2:0.01);
+k.kick(\lpf,0.05,0.5,2,0.5,60,62,42,amp1: 0.05,amp2:0.01);
 k.kick([50,64]);
 k.toTrack([0,4,8,12,16,20,24,28], true);
 c.tracks[\kick].flam([0,16],0.25,2);
@@ -56,7 +59,8 @@ c.tracks[\kick].repeater([4,18,20,22,24], 4, 1/4);
 
 h = g.new;
 h.hihats();
-h.hihats(\master,0.01,0.1,9820,0.5,1,1,0.25);
+h.hihats([\master,\hpf],0.01,0.15,12820,0.5,1,0.35,0.125);
+h.hihats([\master,\hpf],0.01,0.15,9820,0.5,1,0.45,0.15);
 h.toTrack([0,4,8,12,16,20,24,28]+2, true);
 c.tracks[\hihats].flam([0,8,12,20,28]+2,0.5,2);
 c.tracks[\hihats].removeFlam([4,12,20,28]+2);
@@ -68,7 +72,8 @@ c.setSteps(\hihats);
 
 t = g.new;
 t.snare();
-t.snare(\master,0.01,0.015);
+t.snare(\pitch,0.01,0.015);
+t.snare([\reverb, \grains],0.01,0.15,229,0.5,1,0.35,0.1);
 t.toTrack([0,8,16,24], true);
 t.snare(60);
 t.snare(60,0.01,0.125,136,0.125,1,0.25,0.125,[0.12,-0.12]);
@@ -82,6 +87,8 @@ x = m.melody(LCNE.dupOctave(Scale.minor.degrees, 3), 48);
 
 b = g.new;
 b.bass(\hpf,[60,60,60,63,60,60,60,72]/2,seqType:\rand,att:0.015,rel:0.25,filtMaxFreq: 120,filtTime:0.25,amp1:0.25,amp2:0.025);
+b.bass(\hpf,[60,60,60,63,60,60,60,72]/2,seqType:\rand,att:0.01,rel:6,filtMaxFreq: 120,filtTime:1,amp1:0.25,amp2:0.025);
+b.bass([\master,\grains,\lpf],x+12,seqType:\rand,att:0.01,rel:1,filtMaxFreq: 120,filtTime:1,amp1:0.25,amp2:0.025);
 c.setSteps(\bass,Array.series(8,0,4));
 b.bass(\master,x,\seq);
 b.bass(\master,x/2,\rand,0.1,2,40,12920,0.01);
@@ -92,6 +99,7 @@ c.route(\bass, \master);
 
 e = g.new;
 e.bass2(\master);
+b.bass2(\hpf,[60,60,60,63,60,60,60,72],seqType:\rand,att:0.01,rel:0.75,amp1:0.0125,amp2:0.01);
 e.bass2(\lpf,x,\rand,0.5,1,0.5,40,12920,0.5);
 c.setSteps(\bass2);
 
@@ -108,7 +116,7 @@ r.toTrack(Array.series(8,2,4));
 r.offTrack([0,16]);
 
 v = g.new;
-v.chords(\master,x,\rand,att:0.25,rel:3,amp:0.005);
+v.chords([\grains,\hpf],x,\rand,att:1,rel:2,amp:0.0075);
 v.toTrack(Array.series(4,0,8));
 g.validChords(\chords); //print valid chords for the \chords instrument
 v.chords(\master,x,\rand,[\M7,\m7,\mmaj7,\Mmaj7,'5aug7'],att:0.25,rel:2,amp:0.005);
@@ -122,23 +130,25 @@ z.updateTimbre(chord: '5aug7');
 
 y = g.new;
 y.chords2(\master,x/2,\rand,[\Mmaj7,\m,\M,\m],0.01,2,amp:0.05);
-y.chords2(\reverb,x,\rand,[\Mmaj7,\m,\M,\m],0.01,4,amp:0.025);
+y.chords2([\lpf,\reverb],x,\rand,[\Mmaj7,\m,\M,\m],0.01,8,amp:0.0125);
 y.toTrack(Array.series(8,2,4));
 y.offTrack();
 
 i = g.new;
-i.lineIn(\master);
+i.lineIn(\grains,1,0.01,0.5);
+i.lineIn([\hpf,\grains],1,0.01,0.5);
 i.toTrack();
 c.setSteps(\in);// opcion para agregar steps
 i.offTrack;
 
+c.autoFx(\reverb,true,\slow, 0.75, [0.05,0.1,0-2,05,0.750,08,0.85,0.90,0.95,1], 0.82);
 c.autoFx(\hpf,true,\slow, Array.series(20,100,750), [0.5,0.35,0.5,0.75,0.9,1]);
-c.autoFx(\lpf,true,\normal, Array.series(15,1000,500), [0.15,0.25,0.35,0.5,0.75,0.9,1]);
+c.autoFx(\lpf,true,\slowest, Array.series(15,100,50), [0.25,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\bpf,true,\normal, Array.series(15,1000,500), [0.15,0.25,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\grains,true,\normal, [1,0.95,0.9,0.85],[1,0.95,0.9,0.85]);
-c.autoFx(\delay,true,\fast, [1,0.95,0.9,0.85]*0.1,[0.125,0.25,0.5,0.75,1]);
-c.autoFx(\pitch,true,\slowest,[0.43,1, 0.45, 0.43],0,0);
-
+c.autoFx(\delay,true,\slow, [0.01,0.02],[0.25]);
+c.autoFx(\pitch,true,\slowest,[0.84,1, 0.16, 0.23],[0.01,0.025],0);
+z
 c.bpm(20);
 c.randomTime(true, true, [126/2,126]);
 c.randomTime(true, true, [10,20,30,40,50,60,70,80,90,100]);
@@ -156,23 +166,38 @@ c.restorePattern(\snare);
 
 // MIDI tests
 c = CaosBox;
+g = CaosGear;
 c.environment;
 
 CaosBox.play;
 
 CaosMIDI.devices;
 CaosMIDI.connectOnly("USB X-Session");
-//
+
+// COntrola sintes externos
 CaosMIDI.detachOut(\bass);
+CaosMIDI.detachOut(\kick);
+
 CaosMIDI.attachOut(\kick, "CH345", 0, [28,36,38,39,41,43].choose);
 
-CaosMIDI.detachOut(\kick);
 CaosMIDI.attachOut(\bass, "CH345",0,velocity:127);
 CaosMIDI.attachOut(\bass, "CH345", 0, [28,36,38,39,41,43].choose, 127);
 //
 
 CaosMIDI.attachOut(\bass, "CH345", 0); // nota actual
 CaosMIDI.attachOut(\kick, "CH345", 0, note: 72);
+
+// Soporte para teclados externos
+
+CaosMIDI.attachIn(\bass, "MPK mini 3", 0);
+CaosMIDI.attachIn(\pad, 0); // índice de CaosMIDI.inputs
+CaosMIDI.detachIn(\bass);
+
+// Master Sync
+CaosMIDI.attachMasterSync("CH345");
+CaosMIDI.detachMasterSync("CH345");
+
+
 CaosBox.stop; // panic
 //
 CaosMIDI.monitor(true);

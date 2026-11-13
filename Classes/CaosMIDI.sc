@@ -11,6 +11,7 @@ CaosMIDI {
 	classvar <outputPorts;
 	classvar <trackOuts;
 	classvar <trackIns;
+	classvar <masterSyncs;
 	classvar monitorFuncs;
 	classvar <monitorOn = false;
 
@@ -19,6 +20,7 @@ CaosMIDI {
 		outputPorts = IdentityDictionary.new;
 		trackOuts = IdentityDictionary.new;
 		trackIns = IdentityDictionary.new;
+		masterSyncs = Dictionary.new;
 
 	}
 
@@ -178,18 +180,15 @@ CaosMIDI {
 
 	// Engancha una salida MIDI a una pista. La voz de audio sigue sonando.
 	// En percusion `note` es obligatorio; en melodicos se usa la nota actual
-	// de CaosInstrument.
+	// de CaosInstrument. El primer argumento puede ser el simbolo de la pista,
+	// un CaosTrack o un CaosInstrument (se resuelve a su pista).
 	*attachOut {|track, device, channel = 0, note, velocity = 100|
 
 		var tr, port, trackOut;
 
-		tr = if(track.isKindOf(Symbol), {
-			CaosBox.tracks !? {|tracks| tracks[track] };
-		}, {
-			track;
-		});
+		tr = this.prResolveTrack(track);
 
-		if(tr.isNil or: { tr.isKindOf(CaosTrack).not }, {
+		if(tr.isNil, {
 			("CaosMIDI.attachOut: unknown track " ++ track).warn;
 			^nil;
 		});
@@ -215,11 +214,7 @@ CaosMIDI {
 
 		var tr, trackOut;
 
-		tr = if(track.isKindOf(Symbol), {
-			CaosBox.tracks !? {|tracks| tracks[track] };
-		}, {
-			track;
-		});
+		tr = this.prResolveTrack(track);
 		trackOut = trackOuts.removeAt(tr);
 		trackOut !? {|t| t.free };
 
@@ -234,13 +229,9 @@ CaosMIDI {
 
 		var tr, src, tap;
 
-		tr = if(track.isKindOf(Symbol), {
-			CaosBox.tracks !? {|tracks| tracks[track] };
-		}, {
-			track;
-		});
+		tr = this.prResolveTrack(track);
 
-		if(tr.isNil or: { tr.isKindOf(CaosTrack).not }, {
+		if(tr.isNil, {
 			("CaosMIDI.attachIn: unknown track " ++ track).warn;
 			^nil;
 		});
@@ -277,15 +268,86 @@ CaosMIDI {
 
 		var tr, tap;
 
-		tr = if(track.isKindOf(Symbol), {
-			CaosBox.tracks !? {|tracks| tracks[track] };
-		}, {
-			track;
-		});
+		tr = this.prResolveTrack(track);
 		tap = trackIns.removeAt(tr);
 		tap !? {|t| t.free };
 
 		^tap;
+
+	}
+
+	// Engancha un clock maestro a una salida. El tap manda 24 ppqn sobre
+	// TempoClock.default y el transporte lo maneja CaosBox.
+	*attachMasterSync {|device|
+
+		var dest, out, sync;
+
+		if(MIDIClient.initialized.not, { this.start(false) });
+
+		dest = this.prFind(this.destinations, device);
+		if(dest.isNil, {
+			("CaosMIDI.attachMasterSync: output not found " ++ device).warn;
+			^nil;
+		});
+
+		sync = masterSyncs[dest.uid];
+		if(sync.notNil, { ^sync });
+
+		out = this.out(dest, 0);
+		if(out.isNil, { ^nil });
+
+		sync = CaosMIDIClock.new(out);
+		sync.start;
+		masterSyncs.put(dest.uid, sync);
+
+		// si la caja ya esta sonando, el equipo externo arranca ahora
+		if(~cbox_seq.notNil and: { ~cbox_seq.isPlaying }, { sync.sendStart });
+
+		^sync;
+
+	}
+
+	*detachMasterSync {|device|
+
+		var dest, sync;
+
+		if(MIDIClient.initialized.not, { ^nil });
+
+		dest = this.prFind(this.destinations, device);
+		if(dest.isNil, {
+			("CaosMIDI.detachMasterSync: output not found " ++ device).warn;
+			^nil;
+		});
+
+		sync = masterSyncs.removeAt(dest.uid);
+		sync !? {|s| s.free };
+
+		^sync;
+
+	}
+
+	// Start (o Continue si la caja venia pausada) para todos los maestros.
+	// Si el tap nunca recibio un Start/Continue, resume con Start: un
+	// Continue sin Start previo puede dejar el equipo parado.
+	*startMasterSyncs {|resume = false|
+
+		masterSyncs.do {|sync|
+			if(resume and: { sync.hasStarted }, {
+				sync.sendContinue;
+			}, {
+				sync.sendStart;
+			});
+		};
+
+		^this;
+
+	}
+
+	*stopMasterSyncs {
+
+		masterSyncs.do {|sync| sync.sendStop };
+
+		^this;
 
 	}
 
@@ -336,6 +398,8 @@ CaosMIDI {
 	*free {
 
 		this.monitor(false);
+		masterSyncs.do {|sync| sync !? {|s| s.free } };
+		masterSyncs = Dictionary.new;
 		trackIns.do {|tap| tap !? {|t| t.free } };
 		trackIns = IdentityDictionary.new;
 		trackOuts.do {|trackOut| trackOut !? {|t| t.free } };
@@ -366,6 +430,33 @@ CaosMIDI {
 			.format(kind, num, val, chan, src)).postln;
 
 		^this;
+
+	}
+
+	// Acepta simbolo de pista, nombre de instrumento, CaosTrack o
+	// CaosInstrument; devuelve el CaosTrack. Un instrumento se resuelve por
+	// su campo `track`; un simbolo que no es pista se busca por nombre de voz.
+	*prResolveTrack {|track|
+
+		var tr, voice;
+
+		if(track.isKindOf(CaosInstrument), { track = track.track });
+
+		if(track.isKindOf(Symbol), {
+			tr = CaosBox.tracks !? {|tracks| tracks[track] };
+			if(tr.isNil, {
+				voice = CaosBox.voices !? {|voices|
+					voices.values.detect {|v| v.notNil and: { v.name == track } };
+				};
+				if(voice.notNil, {
+					tr = CaosBox.tracks !? {|tracks| tracks[voice.track] };
+				});
+			});
+		}, {
+			tr = track;
+		});
+
+		^if(tr.isKindOf(CaosTrack), { tr }, { nil });
 
 	}
 

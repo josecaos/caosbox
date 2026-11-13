@@ -15,6 +15,10 @@ track applies, so a muted track does not sound from the keyboard. Velocity scale
 the code::amp:: arguments of that note only; the instrument's stored parameters
 are not modified.
 
+If the track has a pending instrument (for example after re-evaluating
+code::CaosGear.bass2:: with other parameters), the next note activates it. A key
+that is already held keeps its old timbre through its sustain and release.
+
 The melodic instruments use one-shot envelopes, so note off does not cut the
 tail: every trigger creates a new voice and the envelope releases itself. For
 sustained keyboard playing the SynthDefs would need gated envelopes.

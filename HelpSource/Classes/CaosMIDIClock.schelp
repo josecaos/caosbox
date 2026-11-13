@@ -1,0 +1,54 @@
+title:: CaosMIDIClock
+summary:: MIDI clock master tap: 24 ppqn and transport from CaosBox.
+categories:: CaosBox
+related:: Classes/CaosMIDI, Classes/CaosMIDIOut, Classes/MIDIOut
+
+description::
+Sends MIDI clock (24 ticks per quarter note) on one output and follows
+link::Classes/TempoClock::, specifically code::TempoClock.default::. It therefore
+respects the CaosBox BPM and the random-time mode.
+
+Ticks are scheduled at absolute beat positions (1/24 beat apart) so the clock
+does not accumulate drift; the normal language-side jitter of a few milliseconds
+remains. The clock can keep running while the external device is stopped:
+code::sendStart::, code::sendStop:: and code::sendContinue:: control its
+transport, and link::Classes/CaosBox:: calls them from code::play::,
+code::pause:: and code::stop::.
+
+The usual entry point is link::Classes/CaosMIDI#-attachMasterSync::.
+
+classmethods::
+
+method:: new
+code::
+c = CaosMIDIClock(midiOut);              // TempoClock.default
+c = CaosMIDIClock(midiOut, someClock);
+::
+
+instancemethods::
+
+method:: out
+method:: clock
+Read-only output wrapper and clock.
+
+method:: start
+method:: stop
+Start or stop the clock ticks. code::stop:: does not send a Stop message.
+code::tickBeats:: returns the distance between ticks (1/24 beat).
+
+method:: free
+Stops the ticks and sends MIDI Stop to the device.
+
+method:: sendStart
+method:: sendStop
+method:: sendContinue
+Send the corresponding system real-time transport message. code::sendStart::
+and code::sendContinue:: mark code::hasStarted:: as true; a tap that never sent
+one of those does not get a Continue when CaosBox resumes, it gets Start.
+
+method:: hasStarted
+True after the first Start or Continue. It lets the transport layer decide
+between Start and Continue without leaving an unsynced device stopped.
+
+method:: tickBeats
+Distance between clock ticks in beats (code::1 / 24::).

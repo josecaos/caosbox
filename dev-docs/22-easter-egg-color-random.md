@@ -77,7 +77,7 @@ widgets que ya no existen.
 ## 5. Tests
 
 - `TestCaosBoxGUI`: 24 aserciones nuevas.
-- Suite completa: **583 aserciones, 0 fallos**.
+- Suite completa: **592 aserciones, 0 fallos**.
 - Smoke headless: con el ciclo activo el acento cambia; al apagarlo dejan de
   llegar cambios; `CaosBox.close` libera el Task.
 

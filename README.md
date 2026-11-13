@@ -65,6 +65,7 @@ CaosMIDI.connectOnly("USB X-Sessions");
 // Connect an instrument to an external synth
 // Percussions sends a value
 CaosMIDI.attachOut(\kick, "CH345", 0, [28,36,38,39,41,43].choose);
+
 // Melodic instruments send the sequenced scale
 CasoMIDI.detachOut(\kick);
 CaosMIDI.attachOut(\bass, "CH345", 0);
@@ -72,6 +73,10 @@ CaosMIDI.attachOut(\bass, "CH345", 0);
 // Play caos instruments with external keyboard
 CaosMIDI.attachIn(\bass, "MPK mini 3", 0);
 CaosMIDI.detachIn(\bass);
+
+// 
+CaosBox.attachMasterSync("CH345");// Start sending master signal
+CaosBox.detachSyncMaster("CH345");// Stop master sync
 
 // Detect MIDI inputs
 CaosMIDI.monitor(true);

@@ -29,8 +29,14 @@ CaosMIDI.detachIn(\bass);
 - **La secuencia no se congela.** `advance` sigue moviendo la línea en cada
   step; el próximo step usa la nota de la secuencia. El teclado sirve igual con
   la secuencia parada o sin steps activos, porque dispara la voz directo.
+- **Reevaluar el instrumento** (por ejemplo `CaosGear.bass2` con otros
+  parámetros) deja la voz nueva en `pendingInstrument`. La **siguiente tecla**
+  la activa; una nota sostenida no cambia de timbre durante su sustain ni su
+  release. Es el mismo criterio que el trigger del step, pero sin esperar a un
+  step.
 - **Mute/solo de la pista** apagan el teclado, igual que el resto del audio de
-  esa pista.
+  esa pista. Con la pista muteada el swap de timbre tampoco ocurre hasta que se
+  vuelva audible; por ahora se acepta.
 - **Velocity** escala `amp`, `amp1` y `amp2` sólo en esa nota; los `params` del
   instrumento no se modifican.
 - **Panic** (`CaosBox.stop`) suelta las teclas; `free` libera los `MIDIdef` y
@@ -59,8 +65,9 @@ mono y para las voces gateadas futuras.
   - `heldNotes`, `sounding`.
   - `install(srcID, channel)`: dos `MIDIdef` (noteOn/noteOff).
   - `noteOn` / `noteOff` / `releaseAll` / `free`.
-  - Respeta `track.isAudible`; la voz se resuelve en cada evento contra
-    `track.instrument`, así sobrevive a un cambio de timbre.
+  - Respeta `track.isAudible`; en `noteOn` llama `track.activatePending` antes
+    de resolver la voz, así el timbre reevaluado entra en la siguiente nota y no
+    en la que está sonando.
 - `CaosMIDI`
   - `trackIns`, `attachIn`, `detachIn`.
   - `panic` incluye `releaseAll` de los taps.
@@ -73,8 +80,9 @@ mono y para las voces gateadas futuras.
   actual, la línea sigue avanzando y `\trig` no consume el stream.
 - `TestCaosMIDI`: toca y suelta la voz, mono con vuelta a la tecla anterior,
   mute de la pista, velocity 0 como noteOff, `releaseAll` e `install`/`free`
-  headless.
-- Suite completa: **583 aserciones, 0 fallos**.
+  headless, activación del instrumento pendiente en la siguiente nota y que una
+  tecla sostenida no haga el swap.
+- Suite completa: **592 aserciones, 0 fallos**.
 - Smoke de hardware: controlador MIDI con el bajo y los melódicos, incluida una
   canción de prueba. Percusión todavía no (es la fase siguiente).
 

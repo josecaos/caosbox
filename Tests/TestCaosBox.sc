@@ -25,6 +25,7 @@ TestCaosBox : UnitTest {
 	tearDown {
 
 		automationNames.do {|name| Tdef(name).stop };
+		CaosMIDI.masterSyncs.clear;
 		CaosTrack.clearSolos;
 		CaosBox.prClearRandPatterns;
 		~cbox_tracks = savedTracks;
@@ -453,5 +454,91 @@ TestCaosBox : UnitTest {
 		};
 
 	}
+
+	test_playSendsMidiTransportToMasterSyncs {
+
+		var seq = CaosTestPlaySeq.new;
+		var sync = CaosTestMasterSync.new;
+
+		~cbox_seq = seq;
+		CaosMIDI.masterSyncs.put(\test, sync);
+
+		CaosBox.play;
+		this.assertEquals(sync.messages[0], \start, "play manda Start");
+		this.assertEquals(seq.plays, 1);
+
+		CaosBox.pause;
+		this.assertEquals(sync.messages[1], \stop, "pause manda Stop");
+
+		CaosBox.play;
+		this.assertEquals(sync.messages[2], \continue,
+			"al reanudar desde pausa manda Continue");
+
+	}
+
+}
+
+// Secuenciador falso para probar el transporte de CaosBox
+CaosTestPlaySeq {
+
+	var <isPlaying = false;
+	var <paused = false;
+	var <plays = 0;
+
+	*new { ^super.new.init }
+
+	init { ^this }
+
+	play {
+
+		plays = plays + 1;
+		isPlaying = true;
+		paused = false;
+		^this;
+
+	}
+
+	pause {
+
+		isPlaying = false;
+		paused = true;
+		^this;
+
+	}
+
+}
+
+// Tap de clock falso: solo registra el transporte
+CaosTestMasterSync {
+
+	var <messages;
+	var <hasStarted = false;
+
+	*new { ^super.new.init }
+
+	init {
+
+		messages = List.new;
+		^this;
+
+	}
+
+	sendStart {
+
+		messages.add(\start);
+		hasStarted = true;
+		^this;
+
+	}
+
+	sendContinue {
+
+		messages.add(\continue);
+		hasStarted = true;
+		^this;
+
+	}
+
+	sendStop { messages.add(\stop); ^this }
 
 }

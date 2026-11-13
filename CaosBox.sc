@@ -453,11 +453,18 @@ CaosBox {
 
 	*play {
 
+		var resuming;
+
 		if(~cbox_seq.notNil and: { ~cbox_seq.isPlaying }, {
 			^"CaosBox already running";
 		});
 
-		~cbox_seq !? { |seq| seq.play };
+		resuming = ~cbox_seq !? { ~cbox_seq.paused } ? false;
+
+		~cbox_seq !? { |seq|
+			seq.play;
+			CaosMIDI.startMasterSyncs(resuming);
+		};
 		this.prSetView(~cbox_bot, 1);
 
 		^"Machine is running";
@@ -468,6 +475,7 @@ CaosBox {
 	*pause {
 
 		~cbox_seq !? { |seq| seq.pause };
+		CaosMIDI.stopMasterSyncs;
 		this.prPauseAutomations;
 		this.prSetView(~cbox_bot, 0);
 
@@ -479,6 +487,7 @@ CaosBox {
 	*stop {
 
 		~cbox_seq !? { |seq| seq.stop };
+		CaosMIDI.stopMasterSyncs;
 		CaosMIDI.panic;
 		this.prPauseAutomations;
 		this.gui.playhead(nil);// la rejilla no deja la columna encendida
