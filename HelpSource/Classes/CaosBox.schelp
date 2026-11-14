@@ -64,6 +64,30 @@ CaosBox.route(\bass, 52);
 CaosBox.route(\bass);
 ::
 
+method:: fxRoute
+Routes one FX to another FX or to code::\master::. Without a destination it
+returns the current route. Self-routing and cycles are rejected; code::\master::
+is terminal. Returns the new destination, or nil when the route is invalid.
+code::
+CaosBox.fxRoute(\pitch, \delay);
+CaosBox.fxRoute(\delay, \reverb);
+CaosBox.fxRoute(\reverb, \grains);
+CaosBox.fxRoute(\pitch);          // -> \delay
+CaosBox.fxRoute(\pitch, \master); // back to master
+::
+
+method:: fxRoutes
+Dictionary with the explicit routes. An FX without an entry goes to
+code::\master::.
+
+method:: fxNames
+The routable FX names: code::\reverb::, code::\delay::, code::\pitch::,
+code::\lpf::, code::\hpf::, code::\bpf:: and code::\grains::.
+
+method:: fxDestinations
+The destinations available for a selector: code::\master:: plus code::fxNames::.
+A source FX should not offer itself; code::fxRoute:: already rejects it.
+
 subsection:: Pattern generation
 
 method:: randPattern

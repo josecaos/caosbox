@@ -10,6 +10,26 @@
 
 # Changelog 
 
+- ### v2.7.5
+    - FX Routing
+        - Add effect rejection to avoid self routing
+        - Add routing to any effect without FX execution order
+        - GUI
+            - Add FX selector to:
+                - Pitch
+                - Delay
+                - Reverb
+            - Update select options to previous fx routing
+            - Chain selected value to GUI effect
+        - API
+            - .fxRoute(fxOut, fxIn)
+            - CaosBox.fxRoute(\pitch);          // consulta -> \delay
+            - CaosBox.fxRoutes // shows routes
+            - CaosBox.fxNames // shows FX names 
+            - CaosBox.fxDestinations
+        - Tests
+            - 638 
+
 - ### v2.7.4
     - Implement CaosMIDISlaveSync
         - Slave clock
@@ -23,7 +43,8 @@
                 - .randomTime is turned off and restored on detach
             - CaosSequencer.externalClock avoids overwriting the external tempo
     - Tests
-        627 assertions
+        - Smoke test controlled by ardour
+        - 627 assertions
 
 - ### v2.7.3
      MIDI

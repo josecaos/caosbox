@@ -72,11 +72,13 @@ CaosMIDI.detachSlaveSync;
 - `CaosSequencer.externalClock`: con el flag prendido el BPM no pisa el
   `TempoClock`; al apagarlo vuelve a mandar la caja.
 - Suite completa: **627 aserciones, 0 fallos**.
+- Smoke de hardware: **Ardour 9** como maestro (Mclk generator) →
+  `j2amidi_bridge` → SC. Play/pause y tempo siguen bien; el primer smoke pasó.
+  Falta probar cambios de tempo en marcha y carga sostenida.
 
 ## 8. Pendiente
 
-- Probar con hardware real que mande clock (DAW, MPC, otro secuenciador). El
-  TD-3 como maestro no está confirmado.
+- Probar cambios de tempo en marcha, Stop/Continue y carga sostenida.
 - Song position pointer al reanudar.
 - MMC y swing/divisiones de clock.
 - Evaluar si conviene seguir también el tempo con la caja parada o solo al
@@ -89,4 +91,6 @@ CaosMIDI.detachSlaveSync;
   puede rebotar si hay un lazo MIDI.
 - Con `randomTime` encendido antes de adjuntar, se apaga mientras dura el slave
   y se restaura al soltar.
+- Para JACK → ALSA se usó `j2amidi_bridge`; `a2jmidid` va en la dirección
+  contraria (ALSA → JACK).
 - No se tocó el CHANGELOG.

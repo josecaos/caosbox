@@ -169,6 +169,8 @@ c = CaosBox;
 g = CaosGear;
 c.environment;
 
+MIDIClient.list;
+
 CaosBox.play;
 
 CaosMIDI.devices;
@@ -197,9 +199,10 @@ CaosMIDI.detachIn(\bass);
 CaosMIDI.attachMasterSync("CH345");
 CaosMIDI.detachMasterSync("CH345");
 
-// Master Sync
-CaosMIDI.attachSlaveSync("CH345");
-CaosMIDI.detachSlaveSync("CH345");
+// Slave Sync
+CaosMIDI.devices;
+CaosMIDI.attachSlaveSync("j2a_bridge"); // attach via j2a to Ardour
+CaosMIDI.detachSlaveSync("j2a_bridge");
 
 CaosBox.stop; // panic
 //

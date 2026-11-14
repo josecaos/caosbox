@@ -9,17 +9,21 @@
 ~cbox_lowfiltag=StaticText(~cbox_w,Rect(650,426.75,220,13.4));
 ~cbox_lowfiltag.string_("LowPassFilter: " ++ CaosBox.engine.busIndex(\lpf)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 //Lowpass out
-~cbox_lowoutpop=PopUpMenu(~cbox_w,Rect(650,443.51,220,16.75)).items=["LPF Out to Master","LPF Out to Reverb",
-	"LPF Out to Delay","LPF Out to Pitch"];
+~cbox_lowoutpop=PopUpMenu(~cbox_w,Rect(650,443.51,220,16.75))
+	.items_(["Master","Reverb","Delay","Pitch","HPF","BPF","Grains"]);
 ~cbox_lowoutpop.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
 ~cbox_lowoutpop.action={|menu|
-	switch(menu.value,
-		0,{~cbox_mastlowf.set(\out,CaosBox.engine.busIndex(\master));"+ LPF Out to Master".inform;},
-		1,{~cbox_mastlowf.set(\out,CaosBox.engine.busIndex(\reverb));"+ LPF Out to Reverb".inform;},
-		2,{~cbox_mastlowf.set(\out,CaosBox.engine.busIndex(\delay));"+ LPF Out to Delay".inform;},
-		3,{~cbox_mastlowf.set(\out,CaosBox.engine.busIndex(\pitch));"+ LPF Out to Pitch".inform;}
-	);
+	var dests = [\master, \reverb, \delay, \pitch, \hpf, \bpf, \grains];
+	var route = CaosBox.fxRoute(\lpf, dests[menu.value]);
+	var current;
+	if(route.isNil, {
+		current = dests.indexOf(CaosBox.fxRoute(\lpf));
+		current !? {|i| menu.value_(i) };
+	});
 };
+~cbox_lowoutpop.value_(
+	[\master, \reverb, \delay, \pitch, \hpf, \bpf, \grains].indexOf(CaosBox.fxRoute(\lpf))
+);
 //Lowpass cutfreq
 StaticText(~cbox_w,Rect(650,463.61,134.15,15.64)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf1=NumberBox(~cbox_w,Rect(784.15,462.5,85.85,17.87)).background_(Color(0,1,0));
@@ -44,17 +48,21 @@ StaticText(~cbox_w,Rect(650,510.53,134.15,15.64)).string_("Bandwidth").font_(Fon
 ~cbox_highfiltag=StaticText(~cbox_w,Rect(650,555.2,220,13.4));
 ~cbox_highfiltag.string_("HighPassFilter: " ++ CaosBox.engine.busIndex(\hpf)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 //Highpass out
-~cbox_highoutpop=PopUpMenu(~cbox_w,Rect(650,571.96,220,16.75)).items=["HPF Out to Master","HPF Out to Reverb",
-	"HPF Out to Delay","HPF Out to Pitch"];
+~cbox_highoutpop=PopUpMenu(~cbox_w,Rect(650,571.96,220,16.75))
+	.items_(["Master","Reverb","Delay","Pitch","LPF","BPF","Grains"]);
 ~cbox_highoutpop.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
 ~cbox_highoutpop.action={|menu|
-	switch(menu.value,
-		0,{~cbox_masthighf.set(\out,CaosBox.engine.busIndex(\master));"+ HPF Out to Master".inform;},
-		1,{~cbox_masthighf.set(\out,CaosBox.engine.busIndex(\reverb));"+ HPF Out to Reverb".inform;},
-		2,{~cbox_masthighf.set(\out,CaosBox.engine.busIndex(\delay));"+ HPF Out to Delay".inform;},
-		3,{~cbox_masthighf.set(\out,CaosBox.engine.busIndex(\pitch));"+ HPF Out to Pitch".inform;}
-	);
+	var dests = [\master, \reverb, \delay, \pitch, \lpf, \bpf, \grains];
+	var route = CaosBox.fxRoute(\hpf, dests[menu.value]);
+	var current;
+	if(route.isNil, {
+		current = dests.indexOf(CaosBox.fxRoute(\hpf));
+		current !? {|i| menu.value_(i) };
+	});
 };
+~cbox_highoutpop.value_(
+	[\master, \reverb, \delay, \pitch, \lpf, \bpf, \grains].indexOf(CaosBox.fxRoute(\hpf))
+);
 //Highpass cutfreq
 StaticText(~cbox_w,Rect(650,592.06,134.15,15.64)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf3=NumberBox(~cbox_w,Rect(784.15,590.95,85.85,17.87)).background_(Color(0,1,0));
@@ -75,18 +83,21 @@ StaticText(~cbox_w,Rect(650,636.74,134.15,15.64)).string_("Bandwidth").font_(Fon
 ~cbox_bandfiltag=StaticText(~cbox_w,Rect(650,678.07,220,13.4));
 ~cbox_bandfiltag.string_("BandPassFilter: " ++ CaosBox.engine.busIndex(\bpf)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 //Bandpass out
-~cbox_bandoutpop=PopUpMenu(~cbox_w,Rect(650,694.82,220,16.75)).items=["BPF Out to Master","BPF Out to Reverb",
-	"BPF Out to Delay","BPF Out to Pitch"];
+~cbox_bandoutpop=PopUpMenu(~cbox_w,Rect(650,694.82,220,16.75))
+	.items_(["Master","Reverb","Delay","Pitch","LPF","HPF","Grains"]);
 ~cbox_bandoutpop.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
 ~cbox_bandoutpop.action={|menu|
-	switch(menu.value,
-		0,{~cbox_mastbandf.set(\out,CaosBox.engine.busIndex(\master));"+ BPF Out to Master".inform;},
-		1,{~cbox_mastbandf.set(\out,CaosBox.engine.busIndex(\reverb));"+ BPF Out to Reverb".inform;},
-		2,{~cbox_mastbandf.set(\out,CaosBox.engine.busIndex(\delay));"+ BPF Out to Delay".inform;},
-		3,{~cbox_mastbandf.set(\out,CaosBox.engine.busIndex(\pitch));"+ BPF Out to Pitch".inform;}
-	);
-
+	var dests = [\master, \reverb, \delay, \pitch, \lpf, \hpf, \grains];
+	var route = CaosBox.fxRoute(\bpf, dests[menu.value]);
+	var current;
+	if(route.isNil, {
+		current = dests.indexOf(CaosBox.fxRoute(\bpf));
+		current !? {|i| menu.value_(i) };
+	});
 };
+~cbox_bandoutpop.value_(
+	[\master, \reverb, \delay, \pitch, \lpf, \hpf, \grains].indexOf(CaosBox.fxRoute(\bpf))
+);
 //Bandpass cutfreq
 StaticText(~cbox_w,Rect(650,714.93,134.15,15.64)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf5=NumberBox(~cbox_w,Rect(784.15,713.81,85.85,17.87)).background_(Color(0,1,0));
@@ -110,22 +121,21 @@ StaticText(~cbox_w,Rect(650,759.61,134.15,15.64)).string_("Bandwidth").font_(Fon
 StaticText(~cbox_w,Rect(882,410,222,13.4)).string_("Granulator" ).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 StaticText(~cbox_w,Rect(882,426.75,222,13.4)).string_(" channel: " ++ CaosBox.engine.busIndex(\grains)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.85,0.85,0.85));
 //granulator out
-~cbox_grainpop=PopUpMenu(~cbox_w,Rect(882,443.51,222,16.75)).items=["Granulator Out to Master","Granulator Out to Reverb",
-	"Granulator Out to Delay","Granulator Out to Pitch",
-	"Granulator Out to LPF","Granulator Out to HPF",
-	"Granulator Out to BPF"];
+~cbox_grainpop=PopUpMenu(~cbox_w,Rect(882,443.51,222,16.75))
+	.items_(["Master","Reverb","Delay","Pitch","LPF","HPF","BPF"]);
 ~cbox_grainpop.background_(~cbox_grandcolor).stringColor_(Color.gray(0.5));
 ~cbox_grainpop.action={|menu|
-	switch(menu.value,
-		0,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\master));"+ Granulator Out to Master".inform;},
-		1,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\reverb));"+ Granulator Out to Reverb".inform;},
-		2,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\delay));"+ Granulator Out to Delay".inform;},
-		3,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\pitch));"+ Granulator Out to Pitch".inform;},
-		4,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\lpf));"+ Granulator Out to LPF".inform;},
-		5,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\hpf));"+ Granulator Out to HPF".inform;},
-		6,{~cbox_grains.set(\out,CaosBox.engine.busIndex(\bpf));"+ Granulator Out to BPF".inform;}
-	);
+	var dests = [\master, \reverb, \delay, \pitch, \lpf, \hpf, \bpf];
+	var route = CaosBox.fxRoute(\grains, dests[menu.value]);
+	var current;
+	if(route.isNil, {
+		current = dests.indexOf(CaosBox.fxRoute(\grains));
+		current !? {|i| menu.value_(i) };
+	});
 };
+~cbox_grainpop.value_(
+	[\master, \reverb, \delay, \pitch, \lpf, \hpf, \bpf].indexOf(CaosBox.fxRoute(\grains))
+);
 //
 //granulator values
 ~cbox_gtparam=ControlSpec.new(4,32,\lin,1,4);

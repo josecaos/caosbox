@@ -8,11 +8,14 @@ TestCaosBox : UnitTest {
 	var <automationNames;
 	var <savedTracks;
 	var <savedSeq;
+	var <savedFxRoutes;
 
 	setUp {
 
 		savedTracks = ~cbox_tracks;
 		savedSeq = ~cbox_seq;
+		savedFxRoutes = CaosBox.fxRoutes.copy;
+		CaosBox.fxRoutes.clear;
 		automationNames = #[\autor, \autod, \autop, \autog, \autolpf, \autohpf, \autobpf];
 
 		// Tdefs de prueba con los mismos nombres que usa CaosBox
@@ -28,6 +31,10 @@ TestCaosBox : UnitTest {
 		CaosMIDI.masterSyncs.clear;
 		CaosTrack.clearSolos;
 		CaosBox.prClearRandPatterns;
+		CaosBox.fxRoutes.clear;
+		savedFxRoutes.keysValuesDo {|fx, destination|
+			CaosBox.fxRoutes.put(fx, destination);
+		};
 		~cbox_tracks = savedTracks;
 		~cbox_seq = savedSeq;
 
@@ -473,6 +480,40 @@ TestCaosBox : UnitTest {
 		CaosBox.play;
 		this.assertEquals(sync.messages[2], \continue,
 			"al reanudar desde pausa manda Continue");
+
+	}
+
+	test_fxRouteCycleValidation {
+
+		var routes = Dictionary[
+			\pitch -> \delay,
+			\delay -> \reverb,
+			\reverb -> \grains
+		];
+
+		this.assert(CaosBox.prFxRouteWouldCycle(\grains, \pitch, routes),
+			"reverb -> grains -> pitch cierra el ciclo");
+		this.assert(CaosBox.prFxRouteWouldCycle(\grains, \delay, routes),
+			"un salto largo tambien se detecta");
+		this.assert(CaosBox.prFxRouteWouldCycle(\grains, \grains, routes),
+			"self-routing es ciclo");
+		this.assert(CaosBox.prFxRouteWouldCycle(\pitch, \master, routes).not,
+			"master es terminal");
+
+	}
+
+	test_fxRouteDefaultsAndNames {
+
+		this.assertEquals(CaosBox.fxRoute(\pitch), \master,
+			"sin ruta explicita, el FX va a master");
+		this.assert(CaosBox.fxRoute(\pitch, \pitch).isNil,
+			"self-routing devuelve nil");
+		this.assert(CaosBox.fxRoute(\notAnFx, \master).isNil,
+			"un FX desconocido devuelve nil");
+		this.assertEquals(CaosBox.fxNames.size, 7);
+		this.assertEquals(CaosBox.fxDestinations.size, 8);
+		this.assert(CaosBox.fxDestinations.includes(\master));
+		this.assert(CaosBox.fxDestinations.includes(\grains));
 
 	}
 

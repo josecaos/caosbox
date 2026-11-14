@@ -1,4 +1,4 @@
-## CaosBox v2.7.4
+## CaosBox v2.7.5
 
 **It's a not-so-common LiveCoding/AlgoRave music Secuencer/Processor for the CaosPercLib Class library, with a programming Interface and a GUI written in SuperCollider.**
 
@@ -58,29 +58,40 @@ Platform.userExtensionDir
 ### MIDI control
 ```
 CaosMIDI.devices;
+```
+```
 
 // Connect specific device
 CaosMIDI.connectOnly("USB X-Sessions");
-
+```
+```
 // Connect an instrument to an external synth
 // Percussions sends a value
 CaosMIDI.attachOut(\kick, "CH345", 0, [28,36,38,39,41,43].choose);
-
+```
+```
 // Melodic instruments send the sequenced scale
 CasoMIDI.detachOut(\kick);
 CaosMIDI.attachOut(\bass, "CH345", 0);
-
+```
+```
 // Play caos instruments with external keyboard
 CaosMIDI.attachIn(\bass, "MPK mini 3", 0);
 CaosMIDI.detachIn(\bass);
-
-// 
+```
+```
+// Master Clock
 CaosBox.attachMasterSync("CH345");// Start sending master signal
 CaosBox.detachSyncMaster("CH345");// Stop master sync
-
+```
+```
+// Slave Clock 
+CaosMIDI.attachSlaveSync("j2a_bridge"); // attach via j2a to Ardour
+CaosMIDI.detachSlaveSync("j2a_bridge");
+```
+```
 // Detect MIDI inputs
 CaosMIDI.monitor(true);
-
 
 ```
 

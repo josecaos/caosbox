@@ -5,17 +5,21 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.7.4";
+	classvar <version = "2.7.5";
 	classvar guiRegistry;
 	classvar randPatterns;
 	classvar lastPatterns;
 	classvar fills;
+	classvar <fxNames;
+	classvar <fxRoutes;
 
 	*initClass {
 
 		randPatterns = IdentityDictionary.new;
 		lastPatterns = IdentityDictionary.new;
 		fills = IdentityDictionary.new;
+		fxNames = #[\reverb, \delay, \pitch, \lpf, \hpf, \bpf, \grains];
+		fxRoutes = Dictionary.new;
 
 	}
 
@@ -84,6 +88,7 @@ CaosBox {
 
 		server = Server.local;
 		engine = CaosEngine.new(server);// server, buses con nombre y grupos
+		fxRoutes = Dictionary.new;
 
 		engine.boot({|eng|
 
@@ -147,6 +152,105 @@ CaosBox {
 		this.gui.routeChanged(track, name);
 
 		^name;
+
+	}
+
+	// --- ruteo de FX ---------------------------------------------------
+	// Los FX van a \master por defecto. Se puede rutear cualquier FX a otro
+	// FX o a master, sin self-routing y sin ciclos; master es terminal.
+
+	*fxRoute {|fx, destination|
+
+		var synth, index;
+
+		fx = fx.asSymbol;
+
+		if(fx == \master, {
+			("CaosBox.fxRoute: master is the terminal output").warn;
+			^nil;
+		});
+
+		if(fxNames.includes(fx).not, {
+			("CaosBox.fxRoute: unknown fx " ++ fx).warn;
+			^nil;
+		});
+
+		if(destination.isNil, {
+			^fxRoutes[fx] ? \master;
+		});
+
+		destination = destination.asSymbol;
+
+		if(destination != \master and: { fxNames.includes(destination).not }, {
+			("CaosBox.fxRoute: unknown destination " ++ destination).warn;
+			^nil;
+		});
+
+		if(destination == fx, {
+			("CaosBox.fxRoute: self-routing is not allowed for " ++ fx).warn;
+			^nil;
+		});
+
+		if(this.prFxRouteWouldCycle(fx, destination, fxRoutes), {
+			("CaosBox.fxRoute: cycle detected " ++ fx ++ " -> " ++ destination).warn;
+			^nil;
+		});
+
+		synth = this.prFxSynth(fx);
+		if(synth.isNil, {
+			("CaosBox.fxRoute: fx not ready " ++ fx).warn;
+			^nil;
+		});
+
+		index = engine !? {|eng| eng.busIndex(destination)};
+		if(index.isNil, {
+			("CaosBox.fxRoute: engine not ready").warn;
+			^nil;
+		});
+
+		synth.set(\out, index);
+		fxRoutes[fx] = destination;
+
+		^destination;
+
+	}
+
+	// destinos disponibles para un selector de FX: master + todos los FX
+	*fxDestinations { ^#[\master] ++ fxNames }
+
+	*prFxSynth {|fx|
+
+		^switch(fx,
+			\reverb, { ~cbox_mastrev },
+			\delay, { ~cbox_mastdel },
+			\pitch, { ~cbox_mastpit },
+			\lpf, { ~cbox_mastlowf },
+			\hpf, { ~cbox_masthighf },
+			\bpf, { ~cbox_mastbandf },
+			\grains, { ~cbox_grains },
+			{ nil }
+		);
+
+	}
+
+	// ¿agregar fx -> destination cerraria un ciclo?
+	*prFxRouteWouldCycle {|fx, destination, routes|
+
+		var current = destination;
+		var table = routes ? fxRoutes;
+		var guard = 0;
+
+		while { current.notNil
+			and: { current != \master }
+			and: { guard <= fxNames.size } } {
+
+			if(current == fx, { ^true });
+
+			current = table[current] ? \master;
+			guard = guard + 1;
+		};
+
+		^false;
 
 	}
 
@@ -1124,6 +1228,7 @@ CaosBox {
 			.do { |name| Tdef(name).stop };
 
 		this.prClearRandPatterns;
+		fxRoutes = Dictionary.new;
 
 		~cbox_url = nil;
 

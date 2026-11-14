@@ -56,29 +56,45 @@
 //aux tag
 ~cbox_auxrtag=StaticText(~cbox_w,Rect(308,426.75,119.48,13.4));
 ~cbox_auxrtag.string_("Reverb:" ++ CaosBox.engine.busIndex(\reverb)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
+//reverb out
+~cbox_auxrout=PopUpMenu(~cbox_w,Rect(308,443.51,119.48,16.75))
+	.items_(["Master","Delay","Pitch","LPF","HPF","BPF","Grains"]);
+~cbox_auxrout.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
+~cbox_auxrout.action={|menu|
+	var dests = [\master, \delay, \pitch, \lpf, \hpf, \bpf, \grains];
+	var route = CaosBox.fxRoute(\reverb, dests[menu.value]);
+	var current;
+	if(route.isNil, {
+		current = dests.indexOf(CaosBox.fxRoute(\reverb));
+		current !? {|i| menu.value_(i) };
+	});
+};
+~cbox_auxrout.value_(
+	[\master, \delay, \pitch, \lpf, \hpf, \bpf, \grains].indexOf(CaosBox.fxRoute(\reverb))
+);
 //reverb mix
-~cbox_auxrmix=StaticText(~cbox_w,Rect(308,443.51,39.83,16.75));//
+~cbox_auxrmix=StaticText(~cbox_w,Rect(308,463.51,39.83,16.75));//
 ~cbox_auxrmix.string_("mix").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
-~cbox_numr=NumberBox(~cbox_w,Rect(308,462.5,39.83,22.34)).background_(Color(0,1,0));
-~cbox_auxrfader=Slider(~cbox_w,Rect(308,484.84,39.83,201.05)).background_(Color(alpha:0));
+~cbox_numr=NumberBox(~cbox_w,Rect(308,482.5,39.83,22.34)).background_(Color(0,1,0));
+~cbox_auxrfader=Slider(~cbox_w,Rect(308,504.84,39.83,181.05)).background_(Color(alpha:0));
 ~cbox_auxrfader.action={~cbox_mastrev.set(\mix,~cbox_auxrfader.value);~cbox_numr.value_(~cbox_auxrfader.value)};
 ~cbox_numr.action={~cbox_mastrev.set(\mix,~cbox_numr.value);~cbox_auxrfader.value_(~cbox_numr.value)};
 ~cbox_auxrfader.value=0;
 ~cbox_numr.value=0;
 //reverb room
-~cbox_auxroom=StaticText(~cbox_w,Rect(347.83,443.51,39.83,16.75));//
+~cbox_auxroom=StaticText(~cbox_w,Rect(347.83,463.51,39.83,16.75));//
 ~cbox_auxroom.string_("room").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
-~cbox_numroom=NumberBox(~cbox_w,Rect(347.83,462.5,39.83,22.34)).background_(Color(0,1,0));
-~cbox_auxroomfader=Slider(~cbox_w,Rect(347.83,484.84,39.83,201.05)).background_(Color(alpha:0));
+~cbox_numroom=NumberBox(~cbox_w,Rect(347.83,482.5,39.83,22.34)).background_(Color(0,1,0));
+~cbox_auxroomfader=Slider(~cbox_w,Rect(347.83,504.84,39.83,181.05)).background_(Color(alpha:0));
 ~cbox_auxroomfader.action={~cbox_mastrev.set(\room,~cbox_auxroomfader.value);~cbox_numroom.value_(~cbox_auxroomfader.value)};
 ~cbox_numroom.action={~cbox_mastrev.set(\room,~cbox_numroom.value);~cbox_auxroomfader.value_(~cbox_numroom.value)};
 ~cbox_auxroomfader.value=0.1;
 ~cbox_numroom.value=0.1;
 //reverb damp
-~cbox_auxd=StaticText(~cbox_w,Rect(387.66,443.51,39.83,16.75));//
+~cbox_auxd=StaticText(~cbox_w,Rect(387.66,463.51,39.83,16.75));//
 ~cbox_auxd.string_("damp").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
-~cbox_numd=NumberBox(~cbox_w,Rect(387.66,462.5,39.83,22.34)).background_(Color(0,1,0));
-~cbox_auxdfader=Slider(~cbox_w,Rect(387.66,484.84,39.83,201.05)).background_(Color(alpha:0));
+~cbox_numd=NumberBox(~cbox_w,Rect(387.66,482.5,39.83,22.34)).background_(Color(0,1,0));
+~cbox_auxdfader=Slider(~cbox_w,Rect(387.66,504.84,39.83,181.05)).background_(Color(alpha:0));
 ~cbox_auxdfader.action={~cbox_mastrev.set(\damp,~cbox_auxdfader.value);~cbox_numd.value_(~cbox_auxdfader.value)};
 ~cbox_numd.action={~cbox_mastrev.set(\damp,~cbox_numd.value);~cbox_auxdfader.value_(~cbox_numd.value)};
 ~cbox_auxdfader.value=0.1;
@@ -100,6 +116,22 @@ StaticText(~cbox_w,Rect(308,689.24,119.48,13.4)).string_("Auto/Speed").font_(Fon
 //aux2 tag
 ~cbox_auxdtag=StaticText(~cbox_w,Rect(433.17,426.75,79.66,13.4));
 ~cbox_auxdtag.string_("Delay:" ++ CaosBox.engine.busIndex(\delay)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
+//delay out
+~cbox_auxdout=PopUpMenu(~cbox_w,Rect(433.17,443.51,79.66,16.75))
+	.items_(["Master","Reverb","Pitch","LPF","HPF","BPF","Grains"]);
+~cbox_auxdout.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
+~cbox_auxdout.action={|menu|
+	var dests = [\master, \reverb, \pitch, \lpf, \hpf, \bpf, \grains];
+	var route = CaosBox.fxRoute(\delay, dests[menu.value]);
+	var current;
+	if(route.isNil, {
+		current = dests.indexOf(CaosBox.fxRoute(\delay));
+		current !? {|i| menu.value_(i) };
+	});
+};
+~cbox_auxdout.value_(
+	[\master, \reverb, \pitch, \lpf, \hpf, \bpf, \grains].indexOf(CaosBox.fxRoute(\delay))
+);
 //tipo delay
 StaticText(~cbox_w,Rect(433.17,641.21,79.66,16.75)).string_("Cub/Lin").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~cbox_bott=Button(~cbox_w,Rect(433.17,661.32,79.66,24.57));
@@ -108,19 +140,19 @@ StaticText(~cbox_w,Rect(433.17,641.21,79.66,16.75)).string_("Cub/Lin").font_(Fon
 ~cbox_bott.action={|val|if(val.value==0,{~cbox_mastdel.set(\delind,0);"->Cubic Delay<-".inform},
 	{~cbox_mastdel.set(\delind,1);"->Lineal Delay<-".inform})};
 //delay time
-~cbox_auxt=StaticText(~cbox_w,Rect(433.17,443.51,39.83,16.75));//
+~cbox_auxt=StaticText(~cbox_w,Rect(433.17,463.51,39.83,16.75));//
 ~cbox_auxt.string_("time").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
-~cbox_numt=NumberBox(~cbox_w,Rect(433.17,462.5,39.83,22.34)).background_(Color(0,1,0));
-~cbox_auxtfader=Slider(~cbox_w,Rect(433.17,484.84,39.83,150.79)).background_(Color(alpha:0));
+~cbox_numt=NumberBox(~cbox_w,Rect(433.17,482.5,39.83,22.34)).background_(Color(0,1,0));
+~cbox_auxtfader=Slider(~cbox_w,Rect(433.17,504.84,39.83,130.79)).background_(Color(alpha:0));
 ~cbox_auxtfader.action={~cbox_mastdel.set(\deltime,~cbox_auxtfader.value);~cbox_numt.value_(~cbox_auxtfader.value)};
 ~cbox_numt.action={~cbox_mastdel.set(\deltime,~cbox_numt.value);~cbox_auxtfader.value_(~cbox_numt.value)};
 ~cbox_auxtfader.value=0;
 ~cbox_numt.value=0;
 //delay feedback
-~cbox_auxf=StaticText(~cbox_w,Rect(473,443.51,39.83,16.75));//
+~cbox_auxf=StaticText(~cbox_w,Rect(473,463.51,39.83,16.75));//
 ~cbox_auxf.string_("feed").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
-~cbox_numf=NumberBox(~cbox_w,Rect(473,462.5,39.83,22.34)).background_(Color(0,1,0));
-~cbox_auxffader=Slider(~cbox_w,Rect(473,484.84,39.83,150.79)).background_(Color(alpha:0));
+~cbox_numf=NumberBox(~cbox_w,Rect(473,482.5,39.83,22.34)).background_(Color(0,1,0));
+~cbox_auxffader=Slider(~cbox_w,Rect(473,504.84,39.83,130.79)).background_(Color(alpha:0));
 ~cbox_auxffader.action={~cbox_mastdel.set(\delfeed,~cbox_auxffader.value*4);~cbox_numf.value_(~cbox_auxffader.value*4)};
 ~cbox_numf.action={~cbox_mastdel.set(\delfeed,~cbox_numf.value*4);~cbox_auxffader.value_(~cbox_numf.value/4)};
 ~cbox_auxffader.value=0.1;
@@ -142,29 +174,45 @@ StaticText(~cbox_w,Rect(433.17,689.24,79.66,13.4)).string_("Auto/Speed").font_(F
 //aux3 tag
 ~cbox_auxptag=StaticText(~cbox_w,Rect(518.52,426.75,119.48,13.4));
 ~cbox_auxptag.string_("Pitch:" ++ CaosBox.engine.busIndex(\pitch)).font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
+//pitch out
+~cbox_auxpout=PopUpMenu(~cbox_w,Rect(518.52,443.51,119.48,16.75))
+	.items_(["Master","Reverb","Delay","LPF","HPF","BPF","Grains"]);
+~cbox_auxpout.background_(Color(alpha:0)).stringColor_(Color.gray(0.5));
+~cbox_auxpout.action={|menu|
+	var dests = [\master, \reverb, \delay, \lpf, \hpf, \bpf, \grains];
+	var route = CaosBox.fxRoute(\pitch, dests[menu.value]);
+	var current;
+	if(route.isNil, {
+		current = dests.indexOf(CaosBox.fxRoute(\pitch));
+		current !? {|i| menu.value_(i) };
+	});
+};
+~cbox_auxpout.value_(
+	[\master, \reverb, \delay, \lpf, \hpf, \bpf, \grains].indexOf(CaosBox.fxRoute(\pitch))
+);
 //pitch rate
-~cbox_auxp=StaticText(~cbox_w,Rect(518.52,443.51,39.83,16.75));//
+~cbox_auxp=StaticText(~cbox_w,Rect(518.52,463.51,39.83,16.75));//
 ~cbox_auxp.string_("rate").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
-~cbox_nump=NumberBox(~cbox_w,Rect(518.52,462.5,39.83,22.34)).background_(Color(0,1,0));
-~cbox_auxpfader=Slider(~cbox_w,Rect(518.52,484.84,39.83,201.05)).background_(Color(alpha:0));
+~cbox_nump=NumberBox(~cbox_w,Rect(518.52,482.5,39.83,22.34)).background_(Color(0,1,0));
+~cbox_auxpfader=Slider(~cbox_w,Rect(518.52,504.84,39.83,181.05)).background_(Color(alpha:0));
 ~cbox_auxpfader.action={~cbox_mastpit.set(\pitch,~cbox_auxpfader.value*4);~cbox_nump.value_(~cbox_auxpfader.value*4)};
 ~cbox_nump.action={~cbox_mastpit.set(\pitch,~cbox_nump.value*4);~cbox_auxpfader.value_(~cbox_nump.value/4)};
 ~cbox_auxpfader.value=0.25;
 ~cbox_nump.value=1;
 // pitch dispersion
-~cbox_auxpd=StaticText(~cbox_w,Rect(558.34,443.51,39.83,16.75));//
+~cbox_auxpd=StaticText(~cbox_w,Rect(558.34,463.51,39.83,16.75));//
 ~cbox_auxpd.string_("pDis").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
-~cbox_numpd=NumberBox(~cbox_w,Rect(558.34,462.5,39.83,22.34)).background_(Color(0,1,0));
-~cbox_auxpdfader=Slider(~cbox_w,Rect(558.34,484.84,39.83,201.05)).background_(Color(alpha:0));
+~cbox_numpd=NumberBox(~cbox_w,Rect(558.34,482.5,39.83,22.34)).background_(Color(0,1,0));
+~cbox_auxpdfader=Slider(~cbox_w,Rect(558.34,504.84,39.83,181.05)).background_(Color(alpha:0));
 ~cbox_auxpdfader.action={~cbox_mastpit.set(\pitchDispersion,~cbox_auxpdfader.value);~cbox_numpd.value_(~cbox_auxpdfader.value)};
 ~cbox_numpd.action={~cbox_mastpit.set(\pitchDispersion,~cbox_numpd.value);~cbox_auxpdfader.value_(~cbox_numpd.value)};
 ~cbox_auxpdfader.value=0;
 ~cbox_numpd.value=0;
 //pitch time dispersion
-~cbox_auxtd=StaticText(~cbox_w,Rect(598.17,443.51,39.83,16.75));//
+~cbox_auxtd=StaticText(~cbox_w,Rect(598.17,463.51,39.83,16.75));//
 ~cbox_auxtd.string_("tDis").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
-~cbox_numtd=NumberBox(~cbox_w,Rect(598.17,462.5,39.83,22.34)).background_(Color(0,1,0));
-~cbox_auxtdfader=Slider(~cbox_w,Rect(598.17,484.84,39.83,201.05)).background_(Color(alpha:0));
+~cbox_numtd=NumberBox(~cbox_w,Rect(598.17,482.5,39.83,22.34)).background_(Color(0,1,0));
+~cbox_auxtdfader=Slider(~cbox_w,Rect(598.17,504.84,39.83,181.05)).background_(Color(alpha:0));
 ~cbox_auxtdfader.action={~cbox_mastpit.set(\timeDispersion,~cbox_auxtdfader.value/5);~cbox_numtd.value_(~cbox_auxtdfader.value/5)};
 ~cbox_numtd.action={~cbox_mastpit.set(\timeDispersion,~cbox_numtd.value/5);~cbox_auxtdfader.value_(~cbox_numtd.value/5)};
 ~cbox_auxtdfader.value=0;
