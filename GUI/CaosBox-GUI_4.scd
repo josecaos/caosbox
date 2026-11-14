@@ -24,6 +24,8 @@
 ~cbox_lowoutpop.value_(
 	[\master, \reverb, \delay, \pitch, \hpf, \bpf, \grains].indexOf(CaosBox.fxRoute(\lpf))
 );
+CaosBox.gui.addFxRoute(\lpf, ~cbox_lowoutpop,
+	[\master, \reverb, \delay, \pitch, \hpf, \bpf, \grains]);
 //Lowpass cutfreq
 StaticText(~cbox_w,Rect(650,463.61,134.15,15.64)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf1=NumberBox(~cbox_w,Rect(784.15,462.5,85.85,17.87)).background_(Color(0,1,0));
@@ -63,6 +65,8 @@ StaticText(~cbox_w,Rect(650,510.53,134.15,15.64)).string_("Bandwidth").font_(Fon
 ~cbox_highoutpop.value_(
 	[\master, \reverb, \delay, \pitch, \lpf, \bpf, \grains].indexOf(CaosBox.fxRoute(\hpf))
 );
+CaosBox.gui.addFxRoute(\hpf, ~cbox_highoutpop,
+	[\master, \reverb, \delay, \pitch, \lpf, \bpf, \grains]);
 //Highpass cutfreq
 StaticText(~cbox_w,Rect(650,592.06,134.15,15.64)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf3=NumberBox(~cbox_w,Rect(784.15,590.95,85.85,17.87)).background_(Color(0,1,0));
@@ -98,6 +102,8 @@ StaticText(~cbox_w,Rect(650,636.74,134.15,15.64)).string_("Bandwidth").font_(Fon
 ~cbox_bandoutpop.value_(
 	[\master, \reverb, \delay, \pitch, \lpf, \hpf, \grains].indexOf(CaosBox.fxRoute(\bpf))
 );
+CaosBox.gui.addFxRoute(\bpf, ~cbox_bandoutpop,
+	[\master, \reverb, \delay, \pitch, \lpf, \hpf, \grains]);
 //Bandpass cutfreq
 StaticText(~cbox_w,Rect(650,714.93,134.15,15.64)).string_("Cut Frequency").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0,0.5,0));
 ~cbox_numf5=NumberBox(~cbox_w,Rect(784.15,713.81,85.85,17.87)).background_(Color(0,1,0));
@@ -136,6 +142,8 @@ StaticText(~cbox_w,Rect(882,426.75,222,13.4)).string_(" channel: " ++ CaosBox.en
 ~cbox_grainpop.value_(
 	[\master, \reverb, \delay, \pitch, \lpf, \hpf, \bpf].indexOf(CaosBox.fxRoute(\grains))
 );
+CaosBox.gui.addFxRoute(\grains, ~cbox_grainpop,
+	[\master, \reverb, \delay, \pitch, \lpf, \hpf, \bpf]);
 //
 //granulator values
 ~cbox_gtparam=ControlSpec.new(4,32,\lin,1,4);

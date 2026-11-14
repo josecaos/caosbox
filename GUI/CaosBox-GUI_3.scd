@@ -72,6 +72,8 @@
 ~cbox_auxrout.value_(
 	[\master, \delay, \pitch, \lpf, \hpf, \bpf, \grains].indexOf(CaosBox.fxRoute(\reverb))
 );
+CaosBox.gui.addFxRoute(\reverb, ~cbox_auxrout,
+	[\master, \delay, \pitch, \lpf, \hpf, \bpf, \grains]);
 //reverb mix
 ~cbox_auxrmix=StaticText(~cbox_w,Rect(308,463.51,39.83,16.75));//
 ~cbox_auxrmix.string_("mix").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
@@ -132,6 +134,8 @@ StaticText(~cbox_w,Rect(308,689.24,119.48,13.4)).string_("Auto/Speed").font_(Fon
 ~cbox_auxdout.value_(
 	[\master, \reverb, \pitch, \lpf, \hpf, \bpf, \grains].indexOf(CaosBox.fxRoute(\delay))
 );
+CaosBox.gui.addFxRoute(\delay, ~cbox_auxdout,
+	[\master, \reverb, \pitch, \lpf, \hpf, \bpf, \grains]);
 //tipo delay
 StaticText(~cbox_w,Rect(433.17,641.21,79.66,16.75)).string_("Cub/Lin").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~cbox_bott=Button(~cbox_w,Rect(433.17,661.32,79.66,24.57));
@@ -190,6 +194,8 @@ StaticText(~cbox_w,Rect(433.17,689.24,79.66,13.4)).string_("Auto/Speed").font_(F
 ~cbox_auxpout.value_(
 	[\master, \reverb, \delay, \lpf, \hpf, \bpf, \grains].indexOf(CaosBox.fxRoute(\pitch))
 );
+CaosBox.gui.addFxRoute(\pitch, ~cbox_auxpout,
+	[\master, \reverb, \delay, \lpf, \hpf, \bpf, \grains]);
 //pitch rate
 ~cbox_auxp=StaticText(~cbox_w,Rect(518.52,463.51,39.83,16.75));//
 ~cbox_auxp.string_("rate").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));

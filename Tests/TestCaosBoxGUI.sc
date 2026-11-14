@@ -166,6 +166,32 @@ TestCaosBoxGUI : UnitTest {
 
 	}
 
+	test_routeChangedRefreshesThePopup {
+
+		var popup = CaosTestStateButton.new;
+
+		gui.addRoute(\bass, popup, [\master, \delay]);
+		gui.routeChanged(\bass, \delay);
+		0.01.wait;
+
+		this.assertEquals(popup.value, 1,
+			"la ruta de pista actualiza el popup");
+
+	}
+
+	test_fxRouteChangedRefreshesThePopup {
+
+		var popup = CaosTestStateButton.new;
+
+		gui.addFxRoute(\pitch, popup, [\master, \delay, \reverb]);
+		gui.fxRouteChanged(\pitch, \reverb);
+		0.01.wait;
+
+		this.assertEquals(popup.value, 2,
+			"la ruta de FX actualiza el popup");
+
+	}
+
 	test_muteAndSoloViewsAreRegistered {
 
 		var mute = CaosTestStateButton.new;

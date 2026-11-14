@@ -87,7 +87,7 @@
 
 ```bash
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_check_ext.scd      # compila
-HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 638 aserciones
+HOME=/tmp/dsh_sc_home sclang /tmp/dsh_run_all7.scd       # 646 aserciones
 HOME=/tmp/dsh_sc_home sclang /tmp/dsh_syntax3.scd        # 14 .scd
 ```
 

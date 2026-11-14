@@ -517,6 +517,34 @@ TestCaosBox : UnitTest {
 
 	}
 
+	test_fxTopologicalOrder {
+
+		var routes = Dictionary[
+			\reverb -> \delay,
+			\delay -> \pitch,
+			\pitch -> \grains
+		];
+		var order = CaosBox.prFxOrder(routes);
+
+		this.assertEquals(order.size, CaosBox.fxNames.size,
+			"el orden incluye todos los FX");
+		this.assert(order.indexOf(\reverb) < order.indexOf(\delay),
+			"reverb queda antes que delay");
+		this.assert(order.indexOf(\delay) < order.indexOf(\pitch),
+			"delay queda antes que pitch");
+		this.assert(order.indexOf(\pitch) < order.indexOf(\grains),
+			"pitch queda antes que grains");
+
+		this.assert(CaosBox.prFxOrder(Dictionary.new).notNil,
+			"sin rutas tambien hay orden");
+
+		this.assert(CaosBox.prFxOrder(Dictionary[
+			\pitch -> \delay,
+			\delay -> \pitch
+		]).isNil, "un ciclo no devuelve orden");
+
+	}
+
 }
 
 // Secuenciador falso para probar el transporte de CaosBox

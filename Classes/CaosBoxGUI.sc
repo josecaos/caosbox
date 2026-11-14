@@ -21,6 +21,7 @@ CaosBoxGUI {
 	var <colorListeners;
 	var <accentEntries;
 	var <routeViews;
+	var <fxRouteViews;
 	var <muteViews;
 	var <soloViews;
 	var <randomViews;
@@ -72,6 +73,7 @@ CaosBoxGUI {
 		colorListeners = List.new;
 		accentEntries = List.new;
 		routeViews = IdentityDictionary.new;
+		fxRouteViews = IdentityDictionary.new;
 		muteViews = IdentityDictionary.new;
 		soloViews = IdentityDictionary.new;
 		randomViews = IdentityDictionary.new;
@@ -250,6 +252,30 @@ CaosBoxGUI {
 	routeChanged {|track, name|
 
 		var entry = routeViews[track];
+		var index;
+
+		if(entry.notNil, {
+			index = entry[\buses].indexOf(name.asSymbol);
+			if(index.notNil, {
+				{ entry[\popup].value_(index) }.defer;
+			});
+		});
+
+		^this;
+
+	}
+
+	addFxRoute {|fx, popup, buses|
+
+		fxRouteViews.put(fx, (popup: popup, buses: buses));
+
+		^this;
+
+	}
+
+	fxRouteChanged {|fx, name|
+
+		var entry = fxRouteViews[fx];
 		var index;
 
 		if(entry.notNil, {

@@ -12,23 +12,23 @@
 
 - ### v2.7.5
     - FX Routing
-        - Add effect rejection to avoid self routing
-        - Add routing to any effect without FX execution order
+        - Add effects rejection to avoid self routing
+        - Add \fx node group to reorder
+        - Topological routing order
+        - Fx group reordering before it's destination
+            - Avoid latency
         - GUI
-            - Add FX selector to:
-                - Pitch
-                - Delay
-                - Reverb
+            - Complete FX select for all FX 
             - Update select options to previous fx routing
             - Chain selected value to GUI effect
         - API
-            - .fxRoute(fxOut, fxIn)
-            - CaosBox.fxRoute(\pitch);          // consulta -> \delay
-            - CaosBox.fxRoutes // shows routes
-            - CaosBox.fxNames // shows FX names 
+            - .fxRoute(source, destination)
+            - .fxRoute(source)
+            - CaosBox.fxRoutes // returns routes list
+            - CaosBox.fxNames // returns FX names 
             - CaosBox.fxDestinations
         - Tests
-            - 638 
+            - 646 
 
 - ### v2.7.4
     - Implement CaosMIDISlaveSync
@@ -47,7 +47,7 @@
         - 627 assertions
 
 - ### v2.7.3
-     MIDI
+    - MIDI
         - Master clock
             - API
                 - .attachMasterSync(device)

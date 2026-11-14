@@ -210,6 +210,8 @@ CaosBox {
 
 		synth.set(\out, index);
 		fxRoutes[fx] = destination;
+		this.prReorderFx;
+		this.gui.fxRouteChanged(fx, destination);
 
 		^destination;
 
@@ -251,6 +253,71 @@ CaosBox {
 		};
 
 		^false;
+
+	}
+
+	// orden topologico de los FX: cada fuente antes de su destino.
+	// Devuelve nil si el grafo tiene un ciclo.
+	*prFxOrder {|routes|
+
+		var indegree = Dictionary.new;
+		var order = List.new;
+		var queue = List.new;
+		var destination, fx;
+
+		fxNames.do {|name| indegree[name] = 0 };
+
+		routes.keysValuesDo {|source, dest|
+			if(fxNames.includes(dest), {
+				indegree[dest] = indegree[dest] + 1;
+			});
+		};
+
+		fxNames.do {|name|
+			if(indegree[name] == 0, { queue.add(name) });
+		};
+
+		while { queue.notEmpty } {
+			fx = queue.removeAt(0);
+			order.add(fx);
+			destination = routes[fx];
+			if(destination.notNil and: { fxNames.includes(destination) }, {
+				indegree[destination] = indegree[destination] - 1;
+				if(indegree[destination] == 0, { queue.add(destination) });
+			});
+		};
+
+		^if(order.size == fxNames.size, { order }, { nil });
+
+	}
+
+	// mueve los Synths del grupo \fx para que el orden real siga al grafo.
+	// Asi In.ar ve el bus tocado y las rutas hacia atras no se silencian.
+	*prReorderFx {
+
+		var order, group, previous, synth;
+
+		if(engine.isNil, { ^this });
+
+		order = this.prFxOrder(fxRoutes);
+		if(order.isNil, { ^this });
+
+		group = Group.basicNew(engine.server, engine.groupID(\fx));
+		previous = nil;
+
+		order.do {|fx|
+			synth = this.prFxSynth(fx);
+			if(synth.notNil, {
+				if(previous.isNil, {
+					synth.moveToHead(group);
+				}, {
+					synth.moveAfter(previous);
+				});
+				previous = synth;
+			});
+		};
+
+		^this;
 
 	}
 

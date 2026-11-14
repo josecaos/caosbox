@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////
-// CaosBox v2.6.6 - The API session
+// CaosBox v2.7.5 - The API session
 //
 // Este es el código con el que josecaos toca el secuenciador desde el
 // intérprete. Se guarda aquí como documentación y como prueba de regresión
@@ -88,14 +88,16 @@ x = m.melody(LCNE.dupOctave(Scale.minor.degrees, 3), 48);
 b = g.new;
 b.bass(\hpf,[60,60,60,63,60,60,60,72]/2,seqType:\rand,att:0.015,rel:0.25,filtMaxFreq: 120,filtTime:0.25,amp1:0.25,amp2:0.025);
 b.bass(\hpf,[60,60,60,63,60,60,60,72]/2,seqType:\rand,att:0.01,rel:6,filtMaxFreq: 120,filtTime:1,amp1:0.25,amp2:0.025);
-b.bass([\master,\grains,\lpf],x+12,seqType:\rand,att:0.01,rel:1,filtMaxFreq: 120,filtTime:1,amp1:0.25,amp2:0.025);
+b.bass([\master,\grains,\lpf],x,seqType:\rand,att:0.01,rel:1,filtMaxFreq: 120,filtTime:1,amp1:0.25,amp2:0.025);
+b.bass([\reverb],x,seqType:\rand,att:0.01,rel:1,filtMaxFreq: 120,filtTime:1,amp1:0.25,amp2:0.025);
 c.setSteps(\bass,Array.series(8,0,4));
 b.bass(\master,x,\seq);
 b.bass(\master,x/2,\rand,0.1,2,40,12920,0.01);
 b.bass(\grains,x/2,\rand,0.1,2,40,12920,0.01);
 b.offTrack();
-c.route(\bass, \master);
-
+c.route(\bass, \grains);
+c.fxRoute(\grains, \reverb);
+c.fxRoute(\reverb, \grains);
 
 e = g.new;
 e.bass2(\master);
@@ -176,7 +178,7 @@ CaosBox.play;
 CaosMIDI.devices;
 CaosMIDI.connectOnly("USB X-Session");
 
-// COntrola sintes externos
+// Controla sintes externos
 CaosMIDI.detachOut(\bass);
 CaosMIDI.detachOut(\kick);
 

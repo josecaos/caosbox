@@ -75,6 +75,10 @@ CaosBox.fxRoute(\reverb, \grains);
 CaosBox.fxRoute(\pitch);          // -> \delay
 CaosBox.fxRoute(\pitch, \master); // back to master
 ::
+After a valid route the FX synths are reordered in the code::\fx:: group
+following the route graph, so code::In.ar:: always reads a bus written earlier in
+the same block. The change does not add latency. The GUI selectors are updated
+through code::fxRouteChanged::.
 
 method:: fxRoutes
 Dictionary with the explicit routes. An FX without an entry goes to
