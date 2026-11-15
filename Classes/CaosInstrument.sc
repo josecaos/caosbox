@@ -81,6 +81,7 @@ CaosInstrument {
 		func = argFunc;
 		out = argOut ? defaultOut;
 		params = argParams ? Event.new;
+		this.prFixPadPulseWidth;
 		mode = argMode;
 		retrigger = argRetrigger;
 		noteOrder = argNoteOrder;
@@ -301,6 +302,8 @@ CaosInstrument {
 
 		if(targetDef.isNil, { ^this });
 
+		this.prFixPadPulseWidth(targetDef);
+
 		// el override manual manda: corta la secuencia automática de acordes
 		defNames = nil;
 		defStream = nil;
@@ -352,6 +355,18 @@ CaosInstrument {
 	isPlaying { ^nodeID.notNil }
 
 	// --- internals -----------------------------------------------------
+
+	// CaosPad reutiliza `iphase` como width de Pulse. Un width 0 es silencio;
+	// se corrige al construir la voz y al cambiar de timbre.
+	prFixPadPulseWidth {|def|
+
+		if((def ? defName) == CaosGear.waveformDef(\pulse), {
+			params[\iphase] = CaosGear.padPulseWidth(params[\iphase]);
+		});
+
+		^this;
+
+	}
 
 	prSelectDef {
 

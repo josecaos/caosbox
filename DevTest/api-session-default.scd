@@ -8,37 +8,44 @@
 Platform.userExtensionDir
 CaosBox.browse;
 CaosBoxGUI.colorAliases // Colores posibles para interfaz
-CaosBox.gui.color(\green); // Aplica color opcional para la GUI antes comenzar
+CaosBox.gui.color(\pink); // Aplica color opcional para la GUI antes comenzar
 CaosBox.gui.color.randomColor(true);
 //
 
 c = CaosBox;
 c.environment; //inicializa
+
 // c.environment(false); //inicializa Headless
-// Wait for GUI boot:
+// after GUI boot:
 c.play;
 c.pause;
 c.stop;
-c.bpm(18);
+c.bpm(115);
 c.freqAnalyzer(true);
 c.guiAlpha(0.5);
+
 //
 g = CaosGear;
-// available options
+
+// Pad, and chords available variations
 g.waveforms;
 g.chordVariants;
 g.validChords(\chords);
 g.validChords(\chords2);
+
 //// Percussion synths
+// Kick
 k = g.new;
 k.kick();
 k.kick(\lpf,0.15,0.5,amp1: 0.025,amp2:0.001);
 k.kick(\bpf,0.01,0.35,amp1: 0.025,amp2:0.01);
-k.kick(\lpf,0.05,0.5,2,0.5,60,62,42,amp1: 0.05,amp2:0.01);
+k.kick(\reverb,0.15,0.75,0.75,1,60,64,42,amp1: 0.15,amp2:0.001);
 k.kick([50,64]);
 k.toTrack([0,4,8,12,16,20,24,28], true);
 c.tracks[\kick].flam([0,16],0.25,2);
 c.tracks[\kick].removeFlam([0,16]);
+c.mute(\kick, true);
+c.setSteps(\kick, Array.series(16,0,2));
 k.kick(\master,0.01,0.5);
 k.toTrack([0,14,15,16], false);
 k.kick(\lpf,0.01,0.1);
@@ -57,10 +64,11 @@ c.repeater(\kick,[0,16],4);
 c.tracks[\kick].repeater([4,18,20,22,24], 8, 1/2);
 c.tracks[\kick].repeater([4,18,20,22,24], 4, 1/4);
 
+// Hihats
 h = g.new;
 h.hihats();
-h.hihats([\master,\hpf],0.01,0.15,12820,0.5,1,0.35,0.125);
-h.hihats([\master,\hpf],0.01,0.15,9820,0.5,1,0.45,0.15);
+h.hihats([\master,\hpf],0.01,0.25,12820,0.5,1,0.85,0.125);
+h.hihats([\pitch,\hpf],0.01,0.175,10820,0.5,1,0.75,0.25);
 h.toTrack([0,4,8,12,16,20,24,28]+2, true);
 c.tracks[\hihats].flam([0,8,12,20,28]+2,0.5,2);
 c.tracks[\hihats].removeFlam([4,12,20,28]+2);
@@ -70,25 +78,29 @@ h.toTrack([0,4,8,12,16,20,24,28], false);
 h.offTrack();
 c.setSteps(\hihats);
 
+// Snare
 t = g.new;
 t.snare();
-t.snare(\pitch,0.01,0.015);
+t.snare([\pitch, \delay],0.1,0.015);
 t.snare([\reverb, \grains],0.01,0.15,229,0.5,1,0.35,0.1);
 t.toTrack([0,8,16,24], true);
 t.snare(60);
 t.snare(60,0.01,0.125,136,0.125,1,0.25,0.125,[0.12,-0.12]);
 t.toTrack(Array, true);
 t.offTrack();
+
+
 /// melodic synths
-c.freqAnalyzer(true);
-// melody degrees
+
+// Main MELODY degrees
 m = g.new;
 x = m.melody(LCNE.dupOctave(Scale.minor.degrees, 3), 48);
 
+// Bass
 b = g.new;
 b.bass(\hpf,[60,60,60,63,60,60,60,72]/2,seqType:\rand,att:0.015,rel:0.25,filtMaxFreq: 120,filtTime:0.25,amp1:0.25,amp2:0.025);
 b.bass(\hpf,[60,60,60,63,60,60,60,72]/2,seqType:\rand,att:0.01,rel:6,filtMaxFreq: 120,filtTime:1,amp1:0.25,amp2:0.025);
-b.bass([\master,\grains,\lpf],x,seqType:\rand,att:0.01,rel:1,filtMaxFreq: 120,filtTime:1,amp1:0.25,amp2:0.025);
+b.bass([\master,\grains,\lpf],x,seqType:\rand,att:0.01,rel:3,filtMaxFreq: 120,filtTime:1,amp1:0.25,amp2:0.025);
 b.bass([\reverb],x,seqType:\rand,att:0.01,rel:1,filtMaxFreq: 120,filtTime:1,amp1:0.25,amp2:0.025);
 c.setSteps(\bass,Array.series(8,0,4));
 b.bass(\master,x,\seq);
@@ -99,26 +111,37 @@ c.route(\bass, \grains);
 c.fxRoute(\grains, \reverb);
 c.fxRoute(\reverb, \grains);
 
+// Bass2
 e = g.new;
 e.bass2(\master);
 b.bass2(\hpf,[60,60,60,63,60,60,60,72],seqType:\rand,att:0.01,rel:0.75,amp1:0.0125,amp2:0.01);
 e.bass2(\lpf,x,\rand,0.5,1,0.5,40,12920,0.5);
 c.setSteps(\bass2);
 
+// Synth Pad
 p = g.new;
-p.pad(\reverb,x/2,\rand,\pulse,0.25,2,amp:0.01);
+p.pad;
+p.pad(\master,[60,65],\rand,'pulse');
+p.pad(\reverb,x/2,\rand,'pulse',1,8,amp:0.5);
+p.pad(\master,x,\rand,\pulse,0.5,8,amp:0.5);
+p.pad(\master,[60,67],\rand,\pulse,0.5,8,amp:0.5);
 p.toTrack(Array.series(8,0,4));
+p.toTrack(0);
 p.offTrack([0,16]);
 // g.waveforms;
-p.updateTimbre(waveform: \pulse);
+q = p.pad(\master);
+p = p.updateTimbre(waveform: \pulse);
 
+// Synth Pad2
 r = g.new;
-r.pad2(\reverb,x/3,\rand,0.5,4,amp1:0.001,amp2:0.001);
+r.pad2(\reverb,x,\rand,0.1,1,60,0.25,16,amp1:0.01,amp2:0.01);
 r.toTrack(Array.series(8,2,4));
 r.offTrack([0,16]);
 
+// Chords Synth
 v = g.new;
-v.chords([\grains,\hpf],x,\rand,att:1,rel:2,amp:0.0075);
+v.chords([\grains,\hpf],x,\rand,CaosGear.validChords,att:1,rel:4,amp:0.075);
+v.chords([\grains,\hpf]);
 v.toTrack(Array.series(4,0,8));
 g.validChords(\chords); //print valid chords for the \chords instrument
 v.chords(\master,x,\rand,[\M7,\m7,\mmaj7,\Mmaj7,'5aug7'],att:0.25,rel:2,amp:0.005);
@@ -130,27 +153,32 @@ z.updateTimbre(chord: 'M');
 z.updateTimbre(chord: '5dim7');
 z.updateTimbre(chord: '5aug7');
 
+
+// Chords Synth2
 y = g.new;
 y.chords2(\master,x/2,\rand,[\Mmaj7,\m,\M,\m],0.01,2,amp:0.05);
 y.chords2([\lpf,\reverb],x,\rand,[\Mmaj7,\m,\M,\m],0.01,8,amp:0.0125);
 y.toTrack(Array.series(8,2,4));
 y.offTrack();
 
+// Line In
 i = g.new;
 i.lineIn(\grains,1,0.01,0.5);
-i.lineIn([\hpf,\grains],1,0.01,0.5);
+i.lineIn(\bpf,1,0.01,0.25);
 i.toTrack();
 c.setSteps(\in);// opcion para agregar steps
 i.offTrack;
 
+// FX Automation
 c.autoFx(\reverb,true,\slow, 0.75, [0.05,0.1,0-2,05,0.750,08,0.85,0.90,0.95,1], 0.82);
 c.autoFx(\hpf,true,\slow, Array.series(20,100,750), [0.5,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\lpf,true,\slowest, Array.series(15,100,50), [0.25,0.35,0.5,0.75,0.9,1]);
-c.autoFx(\bpf,true,\normal, Array.series(15,1000,500), [0.15,0.25,0.35,0.5,0.75,0.9,1]);
+c.autoFx(\bpf,true,\normal, [420,560,780,920], [0.75]);
 c.autoFx(\grains,true,\normal, [1,0.95,0.9,0.85],[1,0.95,0.9,0.85]);
-c.autoFx(\delay,true,\slow, [0.01,0.02],[0.25]);
-c.autoFx(\pitch,true,\slowest,[0.84,1, 0.16, 0.23],[0.01,0.025],0);
-z
+c.autoFx(\delay,true,\slow, [0.1],[0.25,0.5,0.75,0.125,0.125]);
+c.autoFx(\pitch,true,\slow,[1,1.6,1.6,0.98,0.88],0,0);
+
+// General
 c.bpm(20);
 c.randomTime(true, true, [126/2,126]);
 c.randomTime(true, true, [10,20,30,40,50,60,70,80,90,100]);
@@ -158,20 +186,22 @@ c.randomTime(false, false, [10,20,30,40,50,60,70,80,90,100]);
 c.toggleMetric();
 
 c.randPattern(\kick, density: 0.5);
-c.randPattern(\kick, density: 0.35, every: 4);
+c.randPattern(\hihats, density: 0.5);
+c.restorePattern(\kick);
+c.restorePattern(\hihats);
+c.tracks.p;
 c.stopRandPattern(\kick);
 c.fill(\snare, density: 0.15);
 c.fill(\hihats, density: 0.6, loops: 2);
-//
-c.restorePattern(\kick);
-c.restorePattern(\snare);
 
-// MIDI tests
+//
+c.fxRoute(\reverb, \grains);
+
+
+// MIDI Tests
 c = CaosBox;
 g = CaosGear;
 c.environment;
-
-MIDIClient.list;
 
 CaosBox.play;
 
@@ -192,10 +222,11 @@ CaosMIDI.attachOut(\bass, "CH345", 0); // nota actual
 CaosMIDI.attachOut(\kick, "CH345", 0, note: 72);
 
 // Soporte para teclados externos
-
-CaosMIDI.attachIn(\bass, "MPK mini 3", 0);
-CaosMIDI.attachIn(\pad, 0); // índice de CaosMIDI.inputs
-CaosMIDI.detachIn(\bass);
+// CaosMIDI.attachIn(\bass, "MPK mini 3", 0);
+CaosMIDI.attachIn(\pad, "MPK mini 3", 0); // índice de CaosMIDI.inputs
+CaosMIDI.detachIn(\pad);
+CaosMIDI.attachIn(\pad2, "MPK mini 3", 0); // índice de CaosMIDI.inputs
+CaosMIDI.attachIn(\bass, "MPK mini 3", 0); // índice de CaosMIDI.inputs
 
 // Master Sync
 CaosMIDI.attachMasterSync("CH345");
@@ -218,4 +249,5 @@ c.browse;
 c.version
 c.prPauseAutomations
 c.voices
+c.freqAnalyzer(true);
 

@@ -86,6 +86,44 @@ TestCaosInstrument : UnitTest {
 
 	}
 
+	test_updateTimbrePulseRepairsZeroWidth {
+
+		instrument = this.prSynth;
+
+		instrument.updateTimbre(waveform: 'pulse');
+
+		this.assertEquals(instrument.defName, \ambuno_pulse);
+		this.assertEquals(instrument.params[\iphase], 0.25,
+			"Pulse usa width; un width 0 dejaria el pad mudo");
+
+	}
+
+	test_updateTimbrePulseKeepsExplicitWidth {
+
+		instrument = this.prSynth;
+		instrument.params[\iphase] = 0.5;
+
+		instrument.updateTimbre(\ambuno_pulse);
+
+		this.assertEquals(instrument.params[\iphase], 0.5,
+			"un width explicito no se toca");
+
+	}
+
+	test_synthPulseRepairsZeroWidthAtConstruction {
+
+		instrument = CaosInstrument.synth(\pad, \amb, \ambuno_pulse, 50,
+			(iphase: 0), #[48], \free, spy, false, \seq, true);
+
+		this.assertEquals(instrument.params[\iphase], 0.25);
+
+		instrument.trigger;
+		this.assertEquals(
+			spy.lastMessage[spy.lastMessage.indexOf(\iphase) + 1], 0.25,
+			"el mensaje OSC lleva el width corregido");
+
+	}
+
 	test_updateTimbreChord {
 
 		instrument = CaosInstrument.synth(\chords, \chords, \acordesuno_m, 50,

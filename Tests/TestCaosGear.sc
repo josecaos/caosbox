@@ -119,6 +119,46 @@ TestCaosGear : UnitTest {
 
 	}
 
+	test_padPulseWidthIsAudible {
+
+		var pulse = gear.pad(50, [48], 'seq', 'pulse');
+
+		this.assertEquals(pulse.defName, \ambuno_pulse);
+		this.assertEquals(pulse.params[\iphase], 0.25,
+			"Pulse usa width; 0 seria silencio");
+
+	}
+
+	test_gearUpdateTimbreDelegatesToTheLastInstrument {
+
+		var pad = gear.pad(50, [48], 'seq');
+		var result = gear.updateTimbre(waveform: 'pulse');
+
+		this.assertEquals(pad.defName, \ambuno_pulse,
+			"el atajo actualiza el pad recien creado");
+		this.assertEquals(pad.params[\iphase], 0.25,
+			"el pad pulse conserva un width audible");
+		this.assert(result === gear, "el atajo conserva el CaosGear");
+
+	}
+
+	test_gearUpdateTimbreDelegatesForChords {
+
+		var chord2 = gear.chords2(50, [48], 'seq', #['M']);
+		var chord;
+
+		gear.updateTimbre(chord: 'M9');
+		this.assertEquals(chord2.defName, \acordesdos_M9,
+			"chords2 acepta M9");
+
+		chord = gear.chords(50, [48], 'seq', #['m']);
+
+		gear.updateTimbre(chord: 'M7');
+		this.assertEquals(chord.defName, \acordesuno_M7,
+			"chords acepta M7");
+
+	}
+
 	test_chordArraySelectsVariant {
 
 		var chord = gear.chords(50, [48], 'seq', #['m']);

@@ -82,4 +82,8 @@ p.updateTimbre(\ambuno_pulse);
 note:: An invalid waveform or chord leaves the current timbre unchanged and posts
 a warning. code::set(\chord, ...):: still does not change the SynthDef; use
 code::updateTimbre:: for that.
+
+With code::pad:: and code::waveform: 'pulse'::, code::iphase:: is used as the
+pulse width. When it is 0, code::updateTimbre:: changes it to 0.25 so the voice
+does not go silent; an explicit width is kept.
 ::

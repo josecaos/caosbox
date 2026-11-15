@@ -10,6 +10,13 @@
 
 # Changelog 
 
+- ### v2.7.6
+    - Bugfix: CaosGear.pad has no sound with \pulse waveform
+        - Pulse waveform has its own exception for Pulse arguments
+        - .updateTimbre new shortcut delegates to the last created instrument
+    - Tests
+        - 658 assertions
+
 - ### v2.7.5
     - FX Routing
         - Add effects rejection to avoid self routing
@@ -28,7 +35,7 @@
             - CaosBox.fxNames // returns FX names 
             - CaosBox.fxDestinations
         - Tests
-            - 646 
+            - 646 assertions
 
 - ### v2.7.4
     - Implement CaosMIDISlaveSync

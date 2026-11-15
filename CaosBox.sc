@@ -5,7 +5,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.7.5";
+	classvar <version = "2.7.6";
 	classvar guiRegistry;
 	classvar randPatterns;
 	classvar lastPatterns;

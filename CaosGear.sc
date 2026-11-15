@@ -29,6 +29,15 @@ CaosGear : CaosBox {
 
 	}
 
+	// `Pulse` de SuperCollider recibe width, no phase. CaosPad le pasa el
+	// argumento `phase` como width, asi que 0 deja la onda plana y muda.
+	// 0.25 conserva un ancho audible sin cambiar el resto del timbre.
+	*padPulseWidth {|value|
+
+		^if((value ? 0) == 0, { 0.25 }, { value });
+
+	}
+
 	*chordDef {|chord = 'M', family = \chords|
 
 		var prefix = if(family == \chords2, { "acordesdos_" }, { "acordesuno_" });
@@ -301,6 +310,22 @@ CaosGear : CaosBox {
 		});
 
 		^voice;
+
+	}
+
+	// Atajo para el ultimo instrumento creado. `pad`, `bass`, `chords`, etc.
+	// ya devuelven el instrumento; este metodo evita perder esa referencia
+	// cuando se construye y se ajusta el timbre en la misma sesion.
+	updateTimbre {|newDefName, waveform, chord|
+
+		if(instrument.isNil, {
+			("CaosGear.updateTimbre: no instrument; create one with pad/chords first").warn;
+			^this;
+		});
+
+		instrument.updateTimbre(newDefName, waveform, chord);
+
+		^this;
 
 	}
 

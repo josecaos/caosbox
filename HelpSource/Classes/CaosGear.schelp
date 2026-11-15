@@ -65,6 +65,7 @@ method:: pad2
 method:: chords
 method:: chords2
 method:: lineIn
+method:: updateTimbre
 
 code::
 g = CaosGear.new;
@@ -87,6 +88,25 @@ sequence use code::seqType::. To override the current chord manually, use
 link::Classes/CaosInstrument#-updateTimbre::. code::set(\chord, ...):: does not
 change the SynthDef.
 ::
+
+method:: updateTimbre
+Shortcut for the last instrument built. It is equivalent to calling
+code::updateTimbre:: on the object returned by code::pad::, code::chords:: or
+code::chords2::. The receiver stays a code::CaosGear::, so it can still be used
+to build or query.
+code::
+g = CaosGear.new;
+p = g.pad(waveform: 'sin');
+g.updateTimbre(waveform: 'tri'); // updates p, returns g
+
+c = g.chords(chordsArray: #['m']);
+g.updateTimbre(chord: 'M7');
+::
+
+note:: In code::pad::, the code::pulse:: variant reuses code::iphase:: as the
+pulse width: SuperCollider's code::Pulse:: has no phase argument. A value of 0
+leaves a flat, silent wave, so CaosBox changes it to 0.25. To choose another
+width, pass for example code::iphase: 0.1::. ::
 
 subsection:: Track routing
 
