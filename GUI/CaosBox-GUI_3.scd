@@ -136,30 +136,51 @@ StaticText(~cbox_w,Rect(308,689.24,119.48,13.4)).string_("Auto/Speed").font_(Fon
 );
 CaosBox.gui.addFxRoute(\delay, ~cbox_auxdout,
 	[\master, \reverb, \pitch, \lpf, \hpf, \bpf, \grains]);
-//tipo delay
-StaticText(~cbox_w,Rect(433.17,641.21,79.66,16.75)).string_("Cub/Lin").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
+//tipo de tiempo: figuras musicales + Free
+StaticText(~cbox_w,Rect(433.17,641.21,79.66,16.75)).string_("Div").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~cbox_bott=Button(~cbox_w,Rect(433.17,661.32,79.66,24.57));
-~cbox_bott.states=[["CombC",Color.white,Color.gray(0.25)],
-	["CombL",Color.black,Color.gray(0.35)]];
-~cbox_bott.action={|val|if(val.value==0,{~cbox_mastdel.set(\delind,0);"->Cubic Delay<-".inform},
-	{~cbox_mastdel.set(\delind,1);"->Lineal Delay<-".inform})};
-//delay time
+~cbox_bott.states=CaosBox.delayDivisionLabels.collect {|label|
+	[label, Color.white, Color.gray(0.3)]
+};
+~cbox_bott.value_(CaosBox.delayDivisionIndex);
+~cbox_bott.action={|button|
+	CaosBox.delaySetDivision(button.value, TempoClock.default.tempo);
+};
+//delay time (0..8 s) / figura actual
 ~cbox_auxt=StaticText(~cbox_w,Rect(433.17,463.51,39.83,16.75));//
 ~cbox_auxt.string_("time").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~cbox_numt=NumberBox(~cbox_w,Rect(433.17,482.5,39.83,22.34)).background_(Color(0,1,0));
 ~cbox_auxtfader=Slider(~cbox_w,Rect(433.17,504.84,39.83,130.79)).background_(Color(alpha:0));
-~cbox_auxtfader.action={~cbox_mastdel.set(\deltime,~cbox_auxtfader.value);~cbox_numt.value_(~cbox_auxtfader.value)};
-~cbox_numt.action={~cbox_mastdel.set(\deltime,~cbox_numt.value);~cbox_auxtfader.value_(~cbox_numt.value)};
+~cbox_auxtfader.action={|slider|
+	if(CaosBox.delayIsFree, {
+		CaosBox.delaySetFreeTime(slider.value * CaosBox.delayTimeMax);
+	});
+};
+~cbox_numt.action={|num|
+	if(CaosBox.delayIsFree, {
+		CaosBox.delaySetFreeTime(num.value);
+	});
+};
 ~cbox_auxtfader.value=0;
 ~cbox_numt.value=0;
-//delay feedback
+CaosBox.delayRefresh;
+//delay feedback (delfeed es decay time en segundos)
 ~cbox_auxf=StaticText(~cbox_w,Rect(473,463.51,39.83,16.75));//
 ~cbox_auxf.string_("feed").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~cbox_numf=NumberBox(~cbox_w,Rect(473,482.5,39.83,22.34)).background_(Color(0,1,0));
 ~cbox_auxffader=Slider(~cbox_w,Rect(473,504.84,39.83,130.79)).background_(Color(alpha:0));
-~cbox_auxffader.action={~cbox_mastdel.set(\delfeed,~cbox_auxffader.value*4);~cbox_numf.value_(~cbox_auxffader.value*4)};
-~cbox_numf.action={~cbox_mastdel.set(\delfeed,~cbox_numf.value*4);~cbox_auxffader.value_(~cbox_numf.value/4)};
-~cbox_auxffader.value=0.1;
+~cbox_auxffader.action={|slider|
+	var decay = slider.value * CaosBox.delayDecayMax;
+	~cbox_numf.value_(decay);
+	~cbox_mastdel !? {|synth| synth.set(\delfeed,decay)};
+};
+~cbox_numf.action={|num|
+	var decay = num.value.clip(0, CaosBox.delayDecayMax);
+	num.value_(decay);
+	~cbox_auxffader.value_(decay / CaosBox.delayDecayMax);
+	~cbox_mastdel !? {|synth| synth.set(\delfeed,decay)};
+};
+~cbox_auxffader.value=0.025;
 ~cbox_numf.value=0.1;
 //delay valor atomatizacion
 StaticText(~cbox_w,Rect(433.17,689.24,79.66,13.4)).string_("Auto/Speed").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.5,0.5,0.5));

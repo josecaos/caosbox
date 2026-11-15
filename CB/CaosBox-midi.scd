@@ -15,11 +15,15 @@ var specs;
 	var mapped = map.value(val);
 	var faderVal = if(faderMap.notNil, { faderMap.value(val) }, { val / 127 });
 
-	nodeGetter.value !? {|node| node.set(key, mapped) };
-	{
-		faderGetter.value !? {|fader| fader.value_(faderVal) };
-		numGetter.value !? {|num| num.value_(mapped) };
-	}.defer;
+	if(key == \deltime and: { CaosBox.delayIsFree.not }, {
+		CaosBox.delayQuantize(mapped, TempoClock.default.tempo);
+	}, {
+		nodeGetter.value !? {|node| node.set(key, mapped) };
+		{
+			faderGetter.value !? {|fader| fader.value_(faderVal) };
+			numGetter.value !? {|num| num.value_(mapped) };
+		}.defer;
+	});
 };
 
 // [CC, nodo, parámetro, espec, fader, numbox, faderMap (opcional)]
@@ -31,8 +35,8 @@ specs = [
 	[29, { ~cbox_mastrev },    \mix,              {|v| v.linlin(0,127,0.01,1) }, { ~cbox_auxrfader },     { ~cbox_numr },     nil],
 	[28, { ~cbox_mastrev },    \room,             {|v| v.linlin(0,127,0.01,1.3)}, { ~cbox_auxroomfader }, { ~cbox_numroom }, nil],
 	[27, { ~cbox_mastrev },    \damp,             {|v| v.linlin(0,127,1,0.01) }, { ~cbox_auxdfader },    { ~cbox_numd },     {|v| 1 - (v/127)}],
-	[11, { ~cbox_mastdel },    \deltime,          {|v| v.linlin(0,127,0,1) },    { ~cbox_auxtfader },     { ~cbox_numt },     nil],
-	[14, { ~cbox_mastdel },    \delfeed,          {|v| v.linlin(0,127,0,1) },    { ~cbox_auxffader },     { ~cbox_numf },     nil],
+	[11, { ~cbox_mastdel },    \deltime,          {|v| v.linlin(0,127,CaosBox.delayTimeMin,CaosBox.delayTimeMax) }, { ~cbox_auxtfader }, { ~cbox_numt }, nil],
+	[14, { ~cbox_mastdel },    \delfeed,          {|v| v.linlin(0,127,0,CaosBox.delayDecayMax) }, { ~cbox_auxffader }, { ~cbox_numf }, {|v| v/127}],
 	[36, { ~cbox_mastpit },    \pitch,            {|v| v.linlin(0,127,0.01,4) }, { ~cbox_auxpfader },     { ~cbox_nump },     nil],
 	[35, { ~cbox_mastpit },    \pitchDispersion,  {|v| v.linlin(0,127,0.01,1) }, { ~cbox_auxpdfader },    { ~cbox_numpd },    nil],
 	[34, { ~cbox_mastpit },    \timeDispersion,   {|v| v.linlin(0,127,0.01,1) }, { ~cbox_auxtdfader },    { ~cbox_numtd },    nil],

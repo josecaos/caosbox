@@ -8,6 +8,8 @@
 (
 ~cbox_seq = CaosSequencer.new(
 	step: { |index|
+		// el delay metrico sigue al tempo actual, sin costo por muestra
+		CaosBox.delayUpdate;
 		// el playhead lo dibuja cada rejilla; el LED viejo ya no existe
 		{ CaosBox.gui.playhead(index) }.defer(0.01);
 		// cada pista despacha su step: percusion toca la funcion guardada,
@@ -25,8 +27,10 @@
 			[\inbus, eng.busIndex(\reverb), \out, eng.busIndex(\master)],
 			eng.groupID(\fx));
 		~cbox_mastdel = Synth(\aux2,
-			[\inbus, eng.busIndex(\delay), \out, eng.busIndex(\master)],
+			[\inbus, eng.busIndex(\delay), \out, eng.busIndex(\master),
+				\delfeed, 0.1],
 			eng.groupID(\fx));
+		CaosBox.delayApply;
 		~cbox_mastpit = Synth(\aux3,
 			[\inbus, eng.busIndex(\pitch), \out, eng.busIndex(\master)],
 			eng.groupID(\fx));

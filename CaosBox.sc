@@ -5,13 +5,24 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.7.6";
+	classvar <version = "2.8.0";
 	classvar guiRegistry;
 	classvar randPatterns;
 	classvar lastPatterns;
 	classvar fills;
 	classvar <fxNames;
 	classvar <fxRoutes;
+	// Rangos del delay: `delfeed` es decay time (segundos), no un
+	// coeficiente de feedback. 8 s alcanza para figuras largas a tempos
+	// normales; en tempos muy lentos se recorta.
+	classvar <delayTimeMin = 0.005;
+	classvar <delayTimeMax = 8.0;
+	classvar <delayDecayMax = 4.0;
+	// Figuras en beats de negra. La ultima opcion es Free.
+	classvar <delayDivisionLabels;
+	classvar <delayDivisionBeats;
+	classvar <>delayDivisionIndex = 2; // 1/4
+	classvar delayLastSeconds = 0;
 
 	*initClass {
 
@@ -20,6 +31,14 @@ CaosBox {
 		fills = IdentityDictionary.new;
 		fxNames = #[\reverb, \delay, \pitch, \lpf, \hpf, \bpf, \grains];
 		fxRoutes = Dictionary.new;
+		delayDivisionLabels = #[
+			"1/1", "1/2", "1/4", "1/4T", "1/8", "1/8T",
+			"1/16", "1/16T", "1/32", "1/32T", "Free"
+		];
+		delayDivisionBeats = [
+			4, 2, 1, 2/3, 1/2, 1/3,
+			1/4, 1/6, 1/8, 1/12, nil
+		];
 
 	}
 
@@ -89,6 +108,9 @@ CaosBox {
 		server = Server.local;
 		engine = CaosEngine.new(server);// server, buses con nombre y grupos
 		fxRoutes = Dictionary.new;
+		// arranque musical: delay sincronizado en 1/4
+		delayDivisionIndex = 2;
+		delayLastSeconds = 0;
 
 		engine.boot({|eng|
 
@@ -114,6 +136,150 @@ CaosBox {
 		if(engine.isNil, { ^out });
 
 		^engine.resolveOut(out);
+
+	}
+
+	// --- delay: tiempo libre o sincronizado al tempo ------------------
+
+	*delayIsFree {
+
+		^delayDivisionIndex == (delayDivisionLabels.size - 1);
+
+	}
+
+	*delayLabel {
+
+		^delayDivisionLabels[delayDivisionIndex];
+
+	}
+
+	*delaySeconds {|bpm|
+
+		var beats = delayDivisionBeats[delayDivisionIndex];
+
+		if(beats.isNil, { ^0 });
+
+		^(60 / (bpm ? TempoClock.default.tempo)) * beats;
+
+	}
+
+	*delayClampTime {|seconds|
+
+		^(seconds ? 0).clip(delayTimeMin, delayTimeMax);
+
+	}
+
+	*delayNearestDivision {|seconds, bpm|
+
+		var beats, best = 0, bestDiff = inf, diff;
+
+		bpm = bpm ? TempoClock.default.tempo;
+		beats = (seconds ? 0) * bpm / 60;
+
+		(delayDivisionLabels.size - 1).do {|index|
+			diff = (delayDivisionBeats[index] - beats).abs;
+			if(diff < bestDiff, {
+				best = index;
+				bestDiff = diff;
+			});
+		};
+
+		^best;
+
+	}
+
+	*delayUpdateGui {
+
+		var free = this.delayIsFree;
+		var seconds = this.delaySeconds;
+
+		~cbox_bott !? {|button| button.value_(delayDivisionIndex) };
+		~cbox_numt !? {|num|
+			num.enabled_(free);
+			if(free, {
+				num.value_(delayLastSeconds);
+			}, {
+				num.string_(this.delayLabel);
+			});
+		};
+		~cbox_auxtfader !? {|slider|
+			slider.enabled_(free);
+			slider.value_(if(free, { delayLastSeconds / delayTimeMax }, {
+				(seconds / delayTimeMax).clip(0, 1)
+			}));
+		};
+
+		^this;
+
+	}
+
+	*delayRefresh {
+
+		{ this.delayUpdateGui }.defer;
+		^this;
+
+	}
+
+	*delaySetFreeTime {|seconds|
+
+		var value = (seconds ? 0).clip(0, delayTimeMax);
+
+		delayDivisionIndex = delayDivisionLabels.size - 1;
+		delayLastSeconds = value;
+		~cbox_mastdel !? {|synth| synth.set(\deltime, value) };
+		this.delayRefresh;
+
+		^value;
+
+	}
+
+	*delayApply {|bpm|
+
+		var seconds;
+
+		if(this.delayIsFree, { ^this.delaySetFreeTime(0) });
+
+		seconds = this.delayClampTime(this.delaySeconds(bpm));
+		~cbox_mastdel !? {|synth| synth.set(\deltime, seconds) };
+		delayLastSeconds = seconds;
+		this.delayRefresh;
+
+		^seconds;
+
+	}
+
+	*delaySetDivision {|index, bpm|
+
+		index = index.asInteger.clip(0, delayDivisionLabels.size - 1);
+		delayDivisionIndex = index;
+		this.delayApply(bpm);
+
+		^index;
+
+	}
+
+	*delayQuantize {|seconds, bpm|
+
+		^this.delaySetDivision(
+			this.delayNearestDivision(seconds, bpm), bpm
+		);
+
+	}
+
+	*delayUpdate {|bpm|
+
+		var seconds;
+
+		if(this.delayIsFree, { ^this });
+
+		seconds = this.delayClampTime(this.delaySeconds(bpm));
+		if((seconds - delayLastSeconds).abs > 0.0001, {
+			~cbox_mastdel !? {|synth| synth.set(\deltime, seconds) };
+			delayLastSeconds = seconds;
+			this.delayRefresh;
+		});
+
+		^this;
 
 	}
 
@@ -1204,14 +1370,22 @@ CaosBox {
 				if(Tdef(\autod).isPlaying,{
 					^"Delay Automation is running, use .autoFx Method to stop it";
 				},{
-					if(arg1 < 0 or: {arg1 > 4} or: {arg2 < 0} or: {arg2 > 10}, {
-						^"Delay Time Parameter between 0 and 6, feedback parameter between 0 or 10";
+					if(arg1 < 0 or: {arg1 > delayTimeMax}
+						or: {arg2 < 0} or: {arg2 > delayDecayMax}, {
+						^("Delay: time 0.." ++ delayTimeMax
+							++ " s, decay 0.." ++ delayDecayMax ++ " s");
 					},
 					{
-						~cbox_numt.value=arg1;
-						~cbox_auxtfader.value=arg1;
+						if(this.delayIsFree, {
+							this.delaySetFreeTime(arg1);
+						}, {
+							this.delayQuantize(arg1, TempoClock.default.tempo);
+						});
 						~cbox_numf.value=arg2;
-						~cbox_auxffader.value=arg2;
+						~cbox_auxffader.value=arg2 / delayDecayMax;
+						~cbox_mastdel !? {|synth|
+							synth.set(\delfeed,arg2)
+						};
 						^"Delay Parameters, Seted";
 					});
 				});

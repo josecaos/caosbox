@@ -10,6 +10,31 @@
 
 # Changelog 
 
+- ### v2.8.0
+    - Delay clipping fix
+        - Avoid clipping/clicking when delay is automated
+            - deltime
+            - delfeed
+    - Delay type mode Deprecated
+        - Removed CombL
+    - Implement Delay synced with TempoClock.default.tempo
+        - Time sync as default option
+        - Free time in seconds (previous deltime)
+            - Restarts in cero after mode change
+        - deltime up to 8s
+        - delfeed up to 4s
+        - Sync mode applies to .autoFx, MIDI CC11 & MIDI CC14
+        - .fx() quantize and sends change to the fx synth
+    - GUI
+        - Delay time shows:
+            - Fractions on sync mode
+            - Seconds in free mode
+        - Delay time fader is disabled in sync mode as time determines duration
+        - Delay time calculated per step
+        - Delay automation values in seconds are quantized in to fraction to its closer value
+    - Tests
+        - 684 assertions
+
 - ### v2.7.6
     - Bugfix: CaosGear.pad has no sound with \pulse waveform
         - Pulse waveform has its own exception for Pulse arguments

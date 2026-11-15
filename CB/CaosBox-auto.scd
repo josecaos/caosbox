@@ -23,16 +23,21 @@ Tdef(\autor,{
 );
 (
 Tdef(\autod,{
-	var deltm,delf,univar;
+	var deltm,delf,univar,decay;
 	deltm=Prand(~cbox_autodelaytime,inf).asStream;
 	delf=Prand(~cbox_autodelayfeed,inf).asStream;
 	{
 		univar=[deltm.resume,delf.resume];
-		~cbox_mastdel.set(\deltime,univar[0]);
-		~cbox_mastdel.set(\delfeed,univar[1]);
+		if(CaosBox.delayIsFree, {
+			CaosBox.delaySetFreeTime(univar[0]);
+		}, {
+			CaosBox.delayQuantize(univar[0], TempoClock.default.tempo);
+		});
+		decay=univar[1].clip(0, CaosBox.delayDecayMax);
+		~cbox_mastdel.set(\delfeed,decay);
 		{
-			~cbox_numt.value=univar[0];~cbox_auxtfader.value=univar[0];
-			~cbox_numf.value=univar[1];~cbox_auxffader.value=univar[1]
+			~cbox_numf.value=decay;
+			~cbox_auxffader.value=decay / CaosBox.delayDecayMax;
 		}.defer(0.1);
 		(~cbox_seq.stepDur * ~cbox_divdel).wait;
 	}.loop;
