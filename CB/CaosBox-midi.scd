@@ -4,10 +4,9 @@
 (
 var specs;
 
-// El cliente MIDI se inicializa despues del boot para no bloquear la
-// bienvenida; el mapa XSession queda registrado mientras tanto.
-{ ~cbox_url !? { CaosMIDI.start(autoConnect: true) } }.defer(0.1);
-
+// MIDI es manual: se inicializa con CaosMIDI.start(true) cuando se va a
+// usar. El mapa XSession queda registrado desde ahora y funciona despues
+// del arranque manual.
 ~cbox_midi_funcs = List.new;
 
 // helper: nodo + fader + numbox

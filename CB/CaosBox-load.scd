@@ -17,7 +17,9 @@ Task({|i|
 	1.yield;
 	1.do{"To perform soundcheck, write: ' CaosBox.soundcheck('white') '".inform};
 	1.yield;
-	1.do{"+ CaosBox  is a not so common Algorave/Livecoding sequencer. \n + Written by: http://www.mixfuckedup.net".inform};
+	1.do{"To enable MIDI, write: CaosMIDI.start(true);".inform};
+	3.yield;
+	1.do{"+ CaosBox  is a not-so-common Algorave/Livecoding sequencer and processor. \n + Written by: http://www.mixfuckedup.net".inform};
 }).play;
 );
 

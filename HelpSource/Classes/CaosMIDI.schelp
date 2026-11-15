@@ -14,8 +14,14 @@ code::connectAll:: when there is only one controller. If MIDI is unavailable,
 code::start:: posts a warning and returns instead of stopping CaosBox.
 
 The legacy XSession mapping still lives in code::CB/CaosBox-midi.scd:: while the
-configurable mapping layer is developed. That script calls
-code::CaosMIDI.start(autoConnect: true):: to preserve the current startup.
+configurable mapping layer is developed. MIDI is disabled at startup so the
+welcome animation is not blocked by MIDI client initialization. When you need
+MIDI, evaluate:
+code::
+CaosMIDI.start(true);
+::
+The first call opens the MIDI client and may pause sclang for a few seconds;
+that is expected.
 
 classmethods::
 
@@ -24,7 +30,8 @@ Initializes the MIDI client. With code::autoConnect: true:: it also connects all
 inputs.
 code::
 CaosMIDI.start;                    // init, no input connected
-CaosMIDI.start(autoConnect: true); // legacy XSession bootstrap
+CaosMIDI.start(true);              // init + connect all inputs
+CaosMIDI.start(autoConnect: true); // same, keyword form
 ::
 
 method:: inputs

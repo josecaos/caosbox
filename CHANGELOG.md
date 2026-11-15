@@ -10,6 +10,13 @@
 
 # Changelog 
 
+- ### v2.8.1-r1
+    - Startup
+        - Remove MIDI client at boot
+        - CHanged to Manual startup with: 
+            - CaosMIDI.start(true)
+        - Welcome message informs the manual command
+
 - ### v2.8.1
     - Bugfix: Synced delay sounds late
         - Apply dry + wet * mix(0.5) signal to delay

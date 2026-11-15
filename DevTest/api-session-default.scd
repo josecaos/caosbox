@@ -12,20 +12,21 @@ CaosBox.gui.color(\pink); // Aplica color opcional para la GUI antes comenzar
 CaosBox.gui.color.randomColor(true);
 //
 
+(
 c = CaosBox;
+g = CaosGear;
+)
 c.environment; //inicializa
-
 // c.environment(false); //inicializa Headless
+
 // after GUI boot:
 c.play;
+
 c.pause;
 c.stop;
 c.bpm(115);
 c.freqAnalyzer(true);
 c.guiAlpha(0.5);
-
-//
-g = CaosGear;
 
 // Pad, and chords available variations
 g.waveforms;
@@ -40,6 +41,7 @@ k.kick();
 k.kick(\lpf,0.15,0.5,amp1: 0.025,amp2:0.001);
 k.kick(\bpf,0.01,0.35,amp1: 0.025,amp2:0.01);
 k.kick(\reverb,0.15,0.75,0.75,1,60,64,42,amp1: 0.15,amp2:0.001);
+k.kick(\delay,0.15,0.75,0.75,1,60,64,42,amp1: 0.25,amp2:0.01);
 k.kick([50,64]);
 k.toTrack([0,4,8,12,16,20,24,28], true);
 c.tracks[\kick].flam([0,16],0.25,2);
@@ -67,9 +69,11 @@ c.tracks[\kick].repeater([4,18,20,22,24], 4, 1/4);
 // Hihats
 h = g.new;
 h.hihats();
-h.hihats([\master,\hpf],0.01,0.25,12820,0.5,1,0.85,0.125);
+h.hihats([\reverb, \delay],0.01,0.125,6820,0.5,1,0.55,0.125);
 h.hihats([\pitch,\hpf],0.01,0.175,10820,0.5,1,0.75,0.25);
 h.toTrack([0,4,8,12,16,20,24,28]+2, true);
+h.toTrack(0, false);
+h.toTrack(Array.series(8,0,4));
 c.tracks[\hihats].flam([0,8,12,20,28]+2,0.5,2);
 c.tracks[\hihats].removeFlam([4,12,20,28]+2);
 h.hihats([\reverb],att:0.01,rel:0.75,amp1:1);
@@ -82,7 +86,7 @@ c.setSteps(\hihats);
 t = g.new;
 t.snare();
 t.snare([\pitch, \delay],0.1,0.015);
-t.snare([\reverb, \grains],0.01,0.15,229,0.5,1,0.35,0.1);
+t.snare([\lpf],0.01,0.125,329,0.5,1,0.125,0.15);
 t.toTrack([0,8,16,24], true);
 t.snare(60);
 t.snare(60,0.01,0.125,136,0.125,1,0.25,0.125,[0.12,-0.12]);
@@ -154,6 +158,13 @@ z.updateTimbre(chord: '5dim7');
 z.updateTimbre(chord: '5aug7');
 
 
+g = CaosGear;
+v = g.new;
+v.pad(\master);
+v.toTrack([0, 4, 8, 12]);
+v.updateTimbre(waveform: \pulse); // el mismo p cambia de timbre
+
+
 // Chords Synth2
 y = g.new;
 y.chords2(\master,x/2,\rand,[\Mmaj7,\m,\M,\m],0.01,2,amp:0.05);
@@ -170,13 +181,15 @@ c.setSteps(\in);// opcion para agregar steps
 i.offTrack;
 
 // FX Automation
-c.autoFx(\reverb,true,\slow, 0.75, [0.05,0.1,0-2,05,0.750,08,0.85,0.90,0.95,1], 0.82);
+c.autoFx(\reverb,false,\slow, 0.75, [0.05,0.1,0-2,05,0.750,08,0.85,0.90,0.95,1], 0.82);
 c.autoFx(\hpf,true,\slow, Array.series(20,100,750), [0.5,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\lpf,true,\slowest, Array.series(15,100,50), [0.25,0.35,0.5,0.75,0.9,1]);
 c.autoFx(\bpf,true,\normal, [420,560,780,920], [0.75]);
-c.autoFx(\grains,true,\normal, [1,0.95,0.9,0.85],[1,0.95,0.9,0.85]);
-c.autoFx(\delay,true,\slow, [0.1],[0.25,0.5,0.75,0.125,0.125]);
-c.autoFx(\pitch,true,\slow,[1,1.6,1.6,0.98,0.88],0,0);
+c.autoFx(\grains,true,\slowest, [1,0.95,0.9,0.85],[1,0.95,0.9,0.85]);
+c.autoFx(\delay,false,\slowest, [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],[0.25,0.5,0.75,1]+3);
+c.autoFx(\pitch,false,\slowest,[1,1.6,1.6,0.98,0.88],0,0);
+
+c.fx(\delay,0.1,4)
 
 // General
 c.bpm(20);
