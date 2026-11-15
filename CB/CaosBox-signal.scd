@@ -26,15 +26,22 @@ SynthDef(\aux1,{|inbus=52,out=50,vol=1,mix=0,room=0.1,damp=0.1|
 // deltime: 0..8 s; delfeed: 0..4 s de decay time, no un coeficiente
 // de feedback. El modo libre/metrico se resuelve en sclang y aqui solo
 // llega el tiempo final en segundos.
-SynthDef(\aux2,{|inbus=54,out=50,vol=1,deltime=0,delfeed=0|
-	var aux2,env,dt,decay;
-	aux2=In.ar(inbus,2);
+SynthDef(\aux2,{|inbus=54,out=50,vol=1,deltime=0,delfeed=0,mix=0.5|
+	var dry,wet,env,dt,decay,active;
+	dry=In.ar(inbus,2);
 	// suaviza los saltos de la automatizacion: evita el click del puntero
 	dt=deltime.clip(0.005,8).lag(0.08);
 	decay=delfeed.clip(0,4).lag(0.08);
-	aux2=CombC.ar(aux2,8,dt,decay);
+	wet=CombC.ar(dry,8,dt,decay);
+	// 0 en Free significa "sin delay": el wet se apaga y queda solo el dry.
+	// El lag evita el click al entrar o salir de ese estado.
+	active=(deltime > 0.0001).lag(0.02);
+	// el dry siempre esta: el delay es un insert, no un send que reemplaza
+	// la señal seca. Asi el ataque del step suena a tiempo y despues llega
+	// el eco. `mix` controla solo la parte húmeda.
+	wet=dry + (wet * mix * active);
 	env=EnvGen.ar(Env.asr(0.01,0.98,0.01),1);
-	Out.ar(out,Pan2.ar(aux2*env,[1,-1])*vol)
+	Out.ar(out,Pan2.ar(wet*env,[1,-1])*vol)
 }).add;
 //aux3 pitch
 SynthDef(\aux3,{|inbus=56,out=50,vol=1,pitch=1,pitchDispersion=0,timeDispersion=0|

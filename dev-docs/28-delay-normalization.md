@@ -40,6 +40,12 @@ dura 12 s y se recorta a 8 s.
 - `deltime` se limita a 0.005..8; `delfeed` a 0..4.
 - El modo libre/metrico se resuelve en sclang; al Synth solo llega el tiempo
   en segundos.
+- La salida es `dry + wet * mix` (mix 0.5 por defecto). El dry siempre esta:
+  el delay es un insert, no un send que reemplaza la señal seca. Esto era lo
+  que faltaba en modo sync: con un 1/4 el ataque del step se iba directo al
+  eco y parecia que el step no sonaba.
+- Un `deltime` de 0 en Free apaga el wet con un pequeño `lag`: queda solo el
+  dry, sin el comb cerrado de 5 ms.
 
 ## Modo metrico
 
@@ -56,8 +62,13 @@ mandar.
 El tiempo se calcula una vez por step del secuenciador:
 
 ```text
-segundos = (60 / TempoClock.default.tempo) * beats
+segundos = beats / TempoClock.default.tempo
 ```
+
+`TempoClock.tempo` esta en **beats por segundo**, no en BPM. Ese detalle hacia
+que todos los tiempos sincronizados se multiplicaran por 60 y cayeran en el
+tope de 8 s; por eso las repeticiones parecian atadas al `maxdelaytime` y el
+feedback casi no se notaba.
 
 No hay calculo por muestra ni UGens nuevos. Si cambia el BPM, el random time o
 el clock externo, el siguiente step reajusta el delay.
@@ -82,10 +93,13 @@ cuadricula. La comunicacion directa de figuras desde la API queda pendiente.
   - manda el cambio al Synth, no solo al GUI.
 - `autoFx('delay', ...)`: cuantiza el tiempo en metrico y actualiza el decay.
 - MIDI CC11 y CC14: tiempo 0..8 y decay 0..4; CC11 cuantiza en metrico.
+- El boton de automatizacion quedo con los estados correctos (`Auto Off` /
+  `Auto On`) y la API arranca y detiene el `Tdef` directamente, sin depender
+  del estado del boton.
 
 ## Pruebas
 
 - Rangos, default 1/4 y 1/4T.
 - Cuantizacion a la figura mas cercana.
 - API de delay en Free: fader normalizado y envio al Synth.
-- Suite completa: 684 aserciones, 0 fallos.
+- Suite completa: 686 aserciones, 0 fallos.

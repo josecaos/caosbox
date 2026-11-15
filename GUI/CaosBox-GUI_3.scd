@@ -137,7 +137,7 @@ StaticText(~cbox_w,Rect(308,689.24,119.48,13.4)).string_("Auto/Speed").font_(Fon
 CaosBox.gui.addFxRoute(\delay, ~cbox_auxdout,
 	[\master, \reverb, \pitch, \lpf, \hpf, \bpf, \grains]);
 //tipo de tiempo: figuras musicales + Free
-StaticText(~cbox_w,Rect(433.17,641.21,79.66,16.75)).string_("Div").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
+StaticText(~cbox_w,Rect(433.17,641.21,79.66,16.75)).string_("Time Mode").font_(Font("Dejavu Sans",12,true)).align_(\center).background_(Color(0.5,0.5,0.5));
 ~cbox_bott=Button(~cbox_w,Rect(433.17,661.32,79.66,24.57));
 ~cbox_bott.states=CaosBox.delayDivisionLabels.collect {|label|
 	[label, Color.white, Color.gray(0.3)]
@@ -262,26 +262,26 @@ StaticText(~cbox_w,Rect(518.52,689.24,119.48,13.4)).string_("Auto/Speed").font_(
 //autoreverb
 StaticText(~cbox_w,Rect(308,739.5,119.48,16.75)).string_("Automation:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 ~cbox_autobotr=Button(~cbox_w,Rect(308,756.26,119.48,33.51));
-~cbox_autobotr.states=[[" Auto On ",Color.white,Color(alpha:0.25)],
-	[" Auto Off ",Color.black,Color.green(0.9)]];
+~cbox_autobotr.states=[[" Auto Off ",Color.white,Color(alpha:0.25)],
+	[" Auto On ",Color.black,Color.green(0.9)]];
 ~cbox_autobotr.action={|val|if(val.value==1,{Tdef(\autor).play},{Tdef(\autor).stop})};
 //autodelay
 StaticText(~cbox_w,Rect(433.17,739.5,79.66,16.75)).string_("Automation:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 ~cbox_autobotd=Button(~cbox_w,Rect(433.17,756.26,79.66,33.51));
-~cbox_autobotd.states=[[" Auto On ",Color.white,Color(alpha:0.25)],
-	[" Auto Off ",Color.black,Color.green(0.9)]];
+~cbox_autobotd.states=[[" Auto Off ",Color.white,Color(alpha:0.25)],
+	[" Auto On ",Color.black,Color.green(0.9)]];
 ~cbox_autobotd.action={|val|if(val.value==1,{Tdef(\autod).play},{Tdef(\autod).stop})};
 //autopitch
 StaticText(~cbox_w,Rect(518.52,739.5,119.48,16.75)).string_("Automation:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 ~cbox_autobotp=Button(~cbox_w,Rect(518.52,756.26,119.48,33.51));
-~cbox_autobotp.states=[[" Auto On ",Color.white,Color(alpha:0.25)],
-	[" Auto Off ",Color.black,Color.green(0.9)]];
+~cbox_autobotp.states=[[" Auto Off ",Color.white,Color(alpha:0.25)],
+	[" Auto On ",Color.black,Color.green(0.9)]];
 ~cbox_autobotp.action={|val|if(val.value==1,{Tdef(\autop).play},{Tdef(\autop).stop})};
 //autograin
 StaticText(~cbox_w,Rect(882,739.5,222,16.75)).string_("Automation:").font_(Font("Dejavu Sans",11,true)).align_(\center).background_(Color(0.75,0.75,0.75));
 ~cbox_autobotg=Button(~cbox_w,Rect(882,756.26,222,33.51));
-~cbox_autobotg.states=[[" Auto On ",Color.gray(0.85),Color(alpha:0.25)],
-	[" Auto Off ",Color.black,Color.green(0.5)]];
+~cbox_autobotg.states=[[" Auto Off ",Color.gray(0.85),Color(alpha:0.25)],
+	[" Auto On ",Color.black,Color.green(0.5)]];
 ~cbox_autobotg.action={|val|if(val.value==1,{Tdef(\autog).play},{Tdef(\autog).stop})};
 //
 );

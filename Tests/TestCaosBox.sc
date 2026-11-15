@@ -574,10 +574,24 @@ TestCaosBox : UnitTest {
 
 	test_delaySyncQuantizesToNearestDivision {
 
-		this.assertEquals(CaosBox.delayNearestDivision(0.5, 120), 2,
+		this.assertEquals(CaosBox.delayNearestDivision(0.5, 2.0), 2,
 			"0.5 s a 120 BPM es 1/4");
-		this.assertEquals(CaosBox.delayNearestDivision(0.25, 120), 4,
+		this.assertEquals(CaosBox.delayNearestDivision(0.25, 2.0), 4,
 			"0.25 s a 120 BPM es 1/8");
+
+	}
+
+	test_delaySecondsUsesTempoClockUnits {
+
+		var oldDivision = CaosBox.delayDivisionIndex;
+
+		CaosBox.delayDivisionIndex = 2;
+		this.assertEquals(CaosBox.delaySeconds(2.0), 0.5,
+			"1/4 a 2 beats por segundo dura 0.5 s");
+		this.assertEquals(CaosBox.delaySeconds(1.0), 1.0,
+			"1/4 a 1 beat por segundo dura 1 s");
+
+		CaosBox.delayDivisionIndex = oldDivision;
 
 	}
 
@@ -590,12 +604,12 @@ TestCaosBox : UnitTest {
 		var numt = CaosTestGuiValue.new;
 		var timeFader = CaosTestGuiValue.new;
 
-		TempoClock.default.tempo = 120;
+		TempoClock.default.tempo = 2.0;
 		~cbox_bott = button;
 		~cbox_numt = numt;
 		~cbox_auxtfader = timeFader;
 
-		CaosBox.delaySetDivision(2, 120);
+		CaosBox.delaySetDivision(2, 2.0);
 		CaosBox.delayUpdateGui;
 
 		this.assertEquals(button.value, 2);
@@ -605,7 +619,7 @@ TestCaosBox : UnitTest {
 		this.assertEquals(timeFader.value, 0.5 / CaosBox.delayTimeMax,
 			"el fader refleja el tiempo metrico");
 
-		CaosBox.delaySetDivision(CaosBox.delayDivisionLabels.size - 1, 120);
+		CaosBox.delaySetDivision(CaosBox.delayDivisionLabels.size - 1, 2.0);
 		CaosBox.delayUpdateGui;
 
 		this.assert(numt.enabled, "Free vuelve a habilitar el numbox");
@@ -613,7 +627,7 @@ TestCaosBox : UnitTest {
 		this.assertEquals(numt.value, 0, "Free arranca en cero");
 		this.assertEquals(button.value, CaosBox.delayDivisionLabels.size - 1);
 
-		CaosBox.delaySetDivision(oldDivision, 120);
+		CaosBox.delaySetDivision(oldDivision, 2.0);
 		~cbox_bott = saved[0];
 		~cbox_numt = saved[1];
 		~cbox_auxtfader = saved[2];
@@ -628,13 +642,13 @@ TestCaosBox : UnitTest {
 		var synth = CaosTestDelaySynth.new;
 
 		~cbox_mastdel = synth;
-		CaosBox.delaySetDivision(2, 120);
-		CaosBox.delayUpdate(60);
+		CaosBox.delaySetDivision(2, 2.0);
+		CaosBox.delayUpdate(1.0);
 
 		this.assertEquals(synth.params, [\deltime, 1.0],
 			"un 1/4 a 60 BPM dura un segundo");
 
-		CaosBox.delaySetDivision(oldDivision, 120);
+		CaosBox.delaySetDivision(oldDivision, 2.0);
 		~cbox_mastdel = saved;
 
 	}
@@ -656,7 +670,7 @@ TestCaosBox : UnitTest {
 		~cbox_auxffader = feedFader;
 		~cbox_mastdel = synth;
 
-		CaosBox.delaySetDivision(CaosBox.delayDivisionLabels.size - 1, 120);
+		CaosBox.delaySetDivision(CaosBox.delayDivisionLabels.size - 1, 2.0);
 		this.assertEquals(CaosBox.fx(\delay, 0.5, 1.0), "Delay Parameters, Seted");
 		CaosBox.delayUpdateGui;
 
@@ -674,7 +688,7 @@ TestCaosBox : UnitTest {
 		this.assert(CaosBox.fx(\delay, 0.5, 5.0).isString,
 			"un decay fuera de rango se rechaza");
 
-		CaosBox.delaySetDivision(oldDivision, 120);
+		CaosBox.delaySetDivision(oldDivision, 2.0);
 		~cbox_numt = saved[0];
 		~cbox_auxtfader = saved[1];
 		~cbox_numf = saved[2];

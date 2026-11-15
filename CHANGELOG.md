@@ -10,21 +10,38 @@
 
 # Changelog 
 
+- ### v2.8.1
+    - Bugfix: Synced delay sounds late
+        - Apply dry + wet * mix(0.5) signal to delay
+    - Bugfix: Synced delay does not follow metric
+        - TempoClock.tempo measures beats per second not beats per minute
+            - Correct delay time calculation
+                - seconds = beats / tempo
+    - Bugfix: Delay's free mode does not respect 0 value
+        - Disable wet signal when deltime is 0 in Free mode
+    - Bugfix: Automation buttons inverted
+        - Fixed all automation states to match functionality
+            - Auto On / Auto Off states corrected for reverb, delay, pitch and grains
+        - Delay API controls GUI directly
+            - .autoFx('delay') starts and stops Tdef directly
+    - Tests
+        - 686 assertions
+
 - ### v2.8.0
     - Delay clipping fix
         - Avoid clipping/clicking when delay is automated
             - deltime
             - delfeed
-    - Delay type mode Deprecated
+    - Delay type button changed functionality
         - Removed CombL
-    - Implement Delay synced with TempoClock.default.tempo
-        - Time sync as default option
-        - Free time in seconds (previous deltime)
-            - Restarts in cero after mode change
-        - deltime up to 8s
-        - delfeed up to 4s
-        - Sync mode applies to .autoFx, MIDI CC11 & MIDI CC14
-        - .fx() quantize and sends change to the fx synth
+        - Implement Delay synced with TempoClock.default.tempo
+            - Time sync as default option
+            - Free time in seconds (previous deltime)
+                - Restarts in cero after mode change
+            - deltime up to 8s
+            - delfeed up to 4s
+            - Sync mode applies to .autoFx, MIDI CC11 & MIDI CC14
+            - .fx() quantize and sends change to the fx synth
     - GUI
         - Delay time shows:
             - Fractions on sync mode

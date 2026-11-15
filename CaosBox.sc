@@ -5,7 +5,7 @@ CaosBox {
 
 	classvar <server,url;
 	classvar <engine;
-	classvar <version = "2.8.0";
+	classvar <version = "2.8.1";
 	classvar guiRegistry;
 	classvar randPatterns;
 	classvar lastPatterns;
@@ -153,13 +153,14 @@ CaosBox {
 
 	}
 
-	*delaySeconds {|bpm|
+	*delaySeconds {|tempo|
 
 		var beats = delayDivisionBeats[delayDivisionIndex];
 
 		if(beats.isNil, { ^0 });
 
-		^(60 / (bpm ? TempoClock.default.tempo)) * beats;
+		// TempoClock.tempo esta en beats por segundo, no en BPM.
+		^(1 / (tempo ? TempoClock.default.tempo)) * beats;
 
 	}
 
@@ -169,12 +170,12 @@ CaosBox {
 
 	}
 
-	*delayNearestDivision {|seconds, bpm|
+	*delayNearestDivision {|seconds, tempo|
 
 		var beats, best = 0, bestDiff = inf, diff;
 
-		bpm = bpm ? TempoClock.default.tempo;
-		beats = (seconds ? 0) * bpm / 60;
+		tempo = tempo ? TempoClock.default.tempo;
+		beats = (seconds ? 0) * tempo;
 
 		(delayDivisionLabels.size - 1).do {|index|
 			diff = (delayDivisionBeats[index] - beats).abs;
@@ -233,13 +234,13 @@ CaosBox {
 
 	}
 
-	*delayApply {|bpm|
+	*delayApply {|tempo|
 
 		var seconds;
 
 		if(this.delayIsFree, { ^this.delaySetFreeTime(0) });
 
-		seconds = this.delayClampTime(this.delaySeconds(bpm));
+		seconds = this.delayClampTime(this.delaySeconds(tempo));
 		~cbox_mastdel !? {|synth| synth.set(\deltime, seconds) };
 		delayLastSeconds = seconds;
 		this.delayRefresh;
@@ -248,31 +249,31 @@ CaosBox {
 
 	}
 
-	*delaySetDivision {|index, bpm|
+	*delaySetDivision {|index, tempo|
 
 		index = index.asInteger.clip(0, delayDivisionLabels.size - 1);
 		delayDivisionIndex = index;
-		this.delayApply(bpm);
+		this.delayApply(tempo);
 
 		^index;
 
 	}
 
-	*delayQuantize {|seconds, bpm|
+	*delayQuantize {|seconds, tempo|
 
 		^this.delaySetDivision(
-			this.delayNearestDivision(seconds, bpm), bpm
+			this.delayNearestDivision(seconds, tempo), tempo
 		);
 
 	}
 
-	*delayUpdate {|bpm|
+	*delayUpdate {|tempo|
 
 		var seconds;
 
 		if(this.delayIsFree, { ^this });
 
-		seconds = this.delayClampTime(this.delaySeconds(bpm));
+		seconds = this.delayClampTime(this.delaySeconds(tempo));
 		if((seconds - delayLastSeconds).abs > 0.0001, {
 			~cbox_mastdel !? {|synth| synth.set(\deltime, seconds) };
 			delayLastSeconds = seconds;
@@ -1220,15 +1221,17 @@ CaosBox {
 					);
 					~cbox_autodelaytime=argArr1.asArray;
 					~cbox_autodelayfeed=argArr2.asArray;
-					(~cbox_url +/+ "CB/CaosBox-auto.scd").load;
 					if(Tdef(\autod).isPlaying,{
+						this.prSetView(~cbox_autobotd, 1);
 						^"Delay Automation already running";
-					},{
-						this.prSetView(~cbox_autobotd, 1, true);
-						^"Delay Automation running";
 					});
+					(~cbox_url +/+ "CB/CaosBox-auto.scd").load;
+					Tdef(\autod).play;
+					this.prSetView(~cbox_autobotd, 1);
+					^"Delay Automation running";
 				}, {
-					this.prSetView(~cbox_autobotd, 0, true);
+					Tdef(\autod).stop;
+					this.prSetView(~cbox_autobotd, 0);
 					^"Delay Automation stopped";
 				});
 			},
